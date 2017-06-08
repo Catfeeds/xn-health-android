@@ -1,6 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#45a74f</color>
+    <color name="colorPrimaryDark">#45a74f</color>
+    <color name="colorAccent">#45a74f</color>
+
+    <!--****************账号管理*************-->
+    <!--登录状态栏颜色-->
+    <color name="c_4c494a">#4C494A</color>
+    <color name="c_2b2d3a">#2B2D3A</color>
+    <color name="c_f2f2f4">#F2F2F4</color>
+    <color name="c_e7e7e7">#E7E7E7</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#E7E7E7</color>
+
+
+    <color name="activity_title_bg">#45a74f</color>
+    <color name="main_tab_text_select">#45a74f</color>
+    <color name="login_select">#45a74f</color>
+    <color name="login_unselect">#3a7e41</color>
+
+    <!--颜色值规范-->
+    <color name="c_000000">#000000</color>
+    <color name="c_ffffff">#FFFFFF</color>
+    <color name="c_fafafa">#FAFAFA</color>
+    <color name="c_979797">#979797</color>
+    <color name="c_c8c8c8">#C8C8C8</color>
+    <color name="c_3da3ff">#3DA3FF</color>
+    <color name="c_6f6f6f">#6F6F6F</color>
+    <color name="c_ff000">#FF0000</color>
+    <color name="state_color_blue">#3DA3FF</color>
+    <color name="state_color_white">#FFFFFF</color>
+
+    <!--共用的蓝色-->
+    <color name="color_common_blue">#3DA3FF</color>
+
+    <color name="color_common_gray">#c6c6c6</color>
+    <color name="color_common_gray2">#f0f0f0</color>
+    <color name="color_common_gray3">#4e4c4c</color>
+    <color name="color_click_bg">#3FC8C8C8</color>
+    <color name="color_pop_bg">#443b3a3a</color>
+    <color name="title_bar">#00ffffff</color>
+    <!--分割线颜色-->
+    <color name="splitLine_Color">#dededf</color>
+    <!--共用的白色-->
+    <color name="color_common_white">#FFFFFF</color>
+    <!--共用的黑色-->
+    <!--<color name="color_common_black">#000000</color>-->
+    <color name="color_common_black">#2B2D3A</color>
+    <!--白色标题背景颜色-->
+    <color name="color_white_titlebg">#FAFAFA</color>
+    <!--编辑框提示输入颜色-->
+    <color name="color_hint">#979797</color>
+    <!--编辑框输入内容后颜色-->
+    <color name="color_input">#979797</color>
+    <!--共用的分割线颜色-->
+    <color name="color_split_line">#C8C8C8</color>
+    <!--按钮正常颜色-->
+    <color name="color_normal_btn">#3DA3FF</color>
+    <!--按钮禁用颜色-->
+    <color name="color_disable_btn">#C8C8C8</color>
+    <!--按钮按下的颜色-->
+    <color name="color_click_btn">#3082cc</color>
+    <!--内容以及行标题颜色-->
+    <color name="color_title_font">#6F6F6F</color>
+    <!--内容，选择区号英文以及部分备注信息字体颜色-->
+    <color name="color_content_font">#979797</color>
+    <!--共用的主界面背景颜色-->
+    <color name="color_commonbg">#F2F2F4</color>
+    <!--搜索框背景颜色-->
+    <color name="color_search_bg">#F1F1F1</color>
+    <!--搜索框背景颜色-->
+    <color name="color_order_detail_popbg">#F2F2F2</color>
+    <!--接单城市国家列表英文字体颜色-->
+    <color name="color_country_en">#a0a0a0</color>
+    <!--登录提示字体颜色（带透明度）-->
+    <color name="color_login_hint">#96ffffff</color>
+    <!--登录按钮正常背景颜色-->
+    <color name="color_login_normal_bg">#33FFFFFF</color>
+    <!--登录按钮按下背景颜色-->
+    <color name="color_login_click_bg">#7FFFFFFF</color>
+
+    <!--透明度颜色-->
+    <color name="transparent">#00000000</color>
+    <color name="color_withdrawl_deal">#ff8904</color>
+    <color name="color_common_font">#6f6f6f</color>
+    <color name="color_common_hint">#c8c8c8</color>
+    <color name="tran_black">#d01b1a1a</color>
+
+    <color name="color_draw_btnbg">#F0F0F0</color>
+
+    <!--订单状态颜色-->
+
+    <color name="order_jieji">#399dbe</color>
+    <color name="order_songji">#3da3ff</color>
+    <color name="order_top_menu">#3da3ff</color>
+    <color name="order_baoche">#f64365</color>
+    <color name="order_danci">#ff8904</color>
+
+    <!--添加车辆图片-->
+    <color name="addcar_blue">#3DA3FF</color>
+    <!--dialog-->
+    <color name="dialog_tips_content_txt">#444444</color>
+    <color name="dialog_tips_bg">#FAFAFA</color>
+    <color name="dialog_tips_title_txt">#030303</color>
+    <color name="divider_selection">#f2f2f2</color>
+    <color name="dialog_tips_btn">#d6d6d6</color>
+    <color name="dialog_tips_line">#EAEAEA</color>
+    <color name="dialog_tips_negative_btn_txt">#0076ff</color>
+    <color name="dialog_tips_negative_btn_txt_red">#fe3824</color>
+    <color name="dialog_tips_positive_btn_txt">#0076ff</color>
+
+    <!--订单itme-->
+    <color name="color_catch_air">#399dbe</color>
+    <color name="color_order_price">#E24749</color>
+    <!--透明黑色背景-->
+    <color name="bg_black_8">#6a000000</color>
+    <!--订单详情-->
+    <color name="color_order_detail_red">#ed5461</color>
+    <color name="color_order_detail_red2">#b9434d</color>
+    <color name="color_order_detail_red3">#e24749</color>
+    <color name="color_day_yellow">#FF9620</color>
+
+    <color name="prompt_orange_bg">#ffbe54</color>
+    <color name="color_evalate_border">#e6e6e6</color>
+    <color name="line_driver_color">#e9c95c</color>
+
+    <!--司导认证 hintcolor-->
+
+    <color name="driver_auth_hint">#c8c8c8</color>
+    <color name="driver_auth_text">#6f6f6f</color>
+    <color name="driver_auth_text_input">#2b2d3a</color>
+    <color name="driver_auth_bg">#f0f0f2</color>
+    <!--车辆管理模块相关颜色-->
+    <color name="color_car_list_blue">#3a9cf4</color>
+
+    <!---->
+    <color name="regi_line_color">#c8c8c8</color>
+
 </resources>

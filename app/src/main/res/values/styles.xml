@@ -1,11 +1,131 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!--pop底部弹出弹框动画-->
+    <style name="popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
+    </style>
+
+    <!--dialog弹框长分割线styles设置-->
+    <style name="style_dialog_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/dialog_tips_line</item>
+    </style>
+    <!--dialog弹框短分割线styles设置-->
+    <style name="style_dialog_vline">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/dialog_tips_line</item>
+    </style>
+
+    <!--弹框styles设置-->
+    <style name="TipsDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!-- 自己想要的背景 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 屏幕背景不变暗 -->
+    </style>
+
+
+    <!--加载框-->
+    <style name="LoadingDialogLight" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!-- 自己想要的背景 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 屏幕背景不变暗 -->
+    </style>
+
+    <!--activity_share dialog style-->
+    <style name="ActivityDialogStyleBottom" parent="android:Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+    </style>
+
+    <style name="ActivityDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowAnimationStyle">@style/AnimBottom</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+    </style>
+    <!--长的分割线styles设置-->
+    <style name="style_split_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+
+
+    <!--短的分割线styles设置-->
+    <style name="style_split_vline">
+        <item name="android:layout_width">@dimen/dimens_0.5_dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+
+    //底部弹出动画
+
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
+    </style>
+    //右侧滑动动画
+
+    <style name="AnimLeft" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_bottom_left_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_bottom_left_out</item>
+    </style>
+
+    <!--长的分割线-->
+    <style name="hline">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/white</item>
     </style>
 
 </resources>

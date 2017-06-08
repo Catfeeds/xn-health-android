@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialog_tips_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_tips_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_tips_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55px"
+        android:layout_marginRight="55px"
+        android:layout_marginTop="23px"
+        android:gravity="center"
+        android:textColor="@color/dialog_tips_title_txt"
+        android:textSize="@dimen/dimens_16_font" />
+    <TextView
+        android:id="@+id/dialog_tips_content_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55px"
+        android:layout_marginRight="55px"
+        android:layout_marginTop="15px"
+        android:gravity="center"
+        android:textColor="@color/dialog_tips_content_txt"
+        android:textSize="@dimen/dimens_14_font" />
+
+    <View
+       style="@style/style_split_line"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="43px"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_tips_negative_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="43px"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_tips_negative_btn_sel"
+            android:gravity="center"
+            android:textColor="@color/dialog_tips_negative_btn_txt"
+            android:textSize="@dimen/dimens_17_font" />
+
+        <View
+            android:id="@+id/dialog_tips_divider_left_line"
+            style="@style/style_split_vline"
+            android:minHeight="@dimen/dimens_40_height"
+            />
+
+        <Button
+            android:id="@+id/dialog_tips_middle_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="43px"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_tips_middle_btn_sel"
+            android:gravity="center"
+            android:textColor="@color/dialog_tips_positive_btn_txt"
+            android:textSize="@dimen/dimens_17_font" />
+
+        <View
+            android:id="@+id/dialog_tips_divider_right_line"
+            style="@style/style_split_vline"
+            android:minHeight="@dimen/dimens_40_height"
+            />
+
+        <Button
+            android:id="@+id/dialog_tips_positive_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="43px"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_tips_positive_btn_sel"
+            android:gravity="center"
+            android:textColor="@color/dialog_tips_negative_btn_txt"
+            android:textSize="@dimen/dimens_16_font" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

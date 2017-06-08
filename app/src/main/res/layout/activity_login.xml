@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_login_icon"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="86dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/icon"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/icon"
+            android:layout_marginLeft="35dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+        <EditText
+            android:id="@+id/edit_username"
+            android:hint="@string/username"
+           android:maxLines="1"
+            android:background="@null"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="58dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+    <LinearLayout
+        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/icon"
+            android:layout_marginLeft="35dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+        <EditText
+            android:id="@+id/edit_userpass"
+            android:hint="@string/password"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:background="@null"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="58dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    
+    
+    <Button
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="@string/txt_login"
+        android:layout_marginRight="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="45dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector_login_btn"
+        android:layout_height="44dp" />
+
+    <FrameLayout
+       android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginTop="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/tv_start_registr"
+            android:textSize="14dp"
+            android:textColor="#666666"
+            android:layout_gravity="left"
+            android:text="新用户注册"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp" />
+
+      <TextView
+          android:textSize="14dp"
+          android:textColor="#666666"
+          android:layout_gravity="right"
+            android:text="忘记密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+
+</LinearLayout>
+
+</ScrollView>
+</layout>
