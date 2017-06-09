@@ -162,7 +162,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         commonDialog.show();
     }
-
     /**
      * @param str
      * @param onNegativeListener
