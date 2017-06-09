@@ -15,5 +15,4 @@
             <!--星星满图-->
             <attr format="reference" name="starFill"/>
         </declare-styleable>
-
 </resources>
