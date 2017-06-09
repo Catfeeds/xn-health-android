@@ -5,12 +5,21 @@ import android.content.Intent;
 import android.database.DatabaseUtils;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityLoginBinding;
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * Created by 李先俊 on 2017/6/8.
@@ -18,7 +27,7 @@ import com.chengdai.ehealthproject.uitls.ImgUtils;
 
 public class LoginActivity extends AbsBaseActivity {
 
-    private ActivityLoginBinding activityLoginBinding;
+    private ActivityLoginBinding mBinding;
 
     /**
      * 打开当前页面
@@ -35,16 +44,68 @@ public class LoginActivity extends AbsBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityLoginBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_login, null, false);
-        addMainView(activityLoginBinding.getRoot());
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_login, null, false);
+        addMainView(mBinding.getRoot());
 
         setTopTitle(getString(R.string.txt_login));
 
-        ImgUtils.loadImgIdforRound(this,R.mipmap.icon,activityLoginBinding.imgLoginIcon);
+        ImgUtils.loadImgIdforRound(this,R.mipmap.icon,mBinding.imgLoginIcon);
 
-        activityLoginBinding.tvStartRegistr.setOnClickListener(v -> {
+        initViews();
+
+    }
+
+    private void initViews() {
+        mBinding.tvStartRegistr.setOnClickListener(v -> {
             RegisterActivity.open(this);
         });
 
+        mBinding.btnLogin.setOnClickListener(v -> {
+
+            if(TextUtils.isEmpty(mBinding.editUsername.getText().toString())){
+                showToast("请输入账号");
+                return;
+            }
+
+            if(TextUtils.isEmpty(mBinding.editUserpass.getText().toString())){
+                showToast("请输入密码");
+                return;
+            }
+
+            loginRequest();
+
+        });
+
     }
+
+
+    /**
+     * 登录请求
+     */
+    private void loginRequest() {
+
+        HashMap<String,String> hashMap=new HashMap<>();
+
+        hashMap.put("loginName",mBinding.editUsername.getText().toString());
+        hashMap.put("loginPwd",mBinding.editUserpass.getText().toString());
+        hashMap.put("kind","f1");
+        hashMap.put("systemCode",MyConfig.SYSTEMCODE);
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().UserLogin("805043", StringUtils.getJsonToString(hashMap) )
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(data -> {
+                    if(data!=null){
+                        SPUtilHelpr.saveUserToken(data.getToken());
+                        SPUtilHelpr.saveUserId(data.getUserId());
+
+                        if(!TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
+                            MainActivity.open(this);
+                            finish();
+                        }
+                    }
+                },Throwable::printStackTrace));
+
+
+    }
+
 }

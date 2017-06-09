@@ -1,122 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--公用FramTextView-->
-    <declare-styleable name="CommonFramTextView">
-        <attr name="cftv_title" format="string"/>
-        <attr name="cftv_content" format="string"/>
-        <attr name="cftv_content_color" format="color"/>
-        <attr name="cftv_title_color" format="color"/>
-    </declare-styleable>
 
-    <!--公用FramEditView-->
-    <declare-styleable name="CommonFramEditView">
-        <attr name="cfev_title" format="string"/>
-        <attr name="cfev_content" format="string"/>
-    </declare-styleable>
+    //评分控件
 
-    <!--公用FramView-->
-    <declare-styleable name="CommonFramView">
-        <attr name="cfv_title" format="string"/>
-        <attr name="cfv_icon" format="reference"/>
-    </declare-styleable>
+    <?xml version="1.0" encoding="utf-8"?>
+        <declare-styleable name="RatingBar">
+            <!--星星间距-->
+            <attr format="dimension" name="starDistance"/>
+            <!--星星大小-->
+            <attr format="dimension" name="starSize"/>
+            <!--星星个数-->
+            <attr format="integer" name="starCount"/>
+            <!--星星空图-->
+            <attr format="reference" name="starEmpty"/>
+            <!--星星满图-->
+            <attr format="reference" name="starFill"/>
+        </declare-styleable>
 
-    <declare-styleable name="ManagerView">
-        <attr name="icon_res" format="reference"/>
-        <attr name="mv_title" format="string"/>
-        <attr name="mv_content" format="string"/>
-    </declare-styleable>
-
-    <declare-styleable name="QuestionView">
-        <attr name="qs_title" format="string"/>
-        <attr name="qs_hint" format="string"/>
-        <attr name="qs_isshow" format="string"/>
-    </declare-styleable>
-
-    <!--我的管理模块公用-->
-    <declare-styleable name="SettingView">
-        <attr name="st_title" format="string"/>
-        <attr name="st_icon" format="reference"/>
-    </declare-styleable>
-
-    <declare-styleable name="LineTextView">
-        <attr name="ltv_title" format="string"/>
-        <attr name="ltv_titleColor" format="reference"/>
-        <attr name="ltv_contentColor" format="reference"/>
-    </declare-styleable>
-
-    <declare-styleable name="LocalProgressView">
-        <attr name="lpg_title" format="string"/>
-        <attr name="lpg_max_progress" format="float"/>
-        <attr name="lpg_progress_height" format="dimension"/>
-    </declare-styleable>
-
-    <declare-styleable name="LineDotView">
-        <attr name="ldv_content" format="string"/>
-    </declare-styleable>
-
-    <!--星星-->
-    <declare-styleable name="starView">
-        <attr name="defoultImage" format="color|reference"></attr>
-        <attr name="hightImage" format="reference|color"></attr>
-        <attr name="counterAll" format="integer"></attr>
-        <attr name="childWidth" format="dimension|reference"></attr>
-        <attr name="half_star" format="reference|color"></attr>
-        <attr name="support_half" format="boolean"></attr>
-        <attr name="seletedable" format="boolean"></attr>
-        <attr name="precision">
-            <enum name="decimal" value="0" />
-            <enum name="half" value="1" />
-            <enum name="whole" value="2" />
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="ScrollPicker">
-        <attr name="min_text_size" format="dimension" />
-        <attr name="max_text_size" format="dimension" />
-        <attr name="start_color" format="color" />
-        <attr name="end_color" format="color" />
-        <attr name="visible_item_count" format="integer" />
-        <!-- 是否循环滚动，默认为true，开启-->
-        <attr name="is_circulation" format="boolean" />
-    </declare-styleable>
-
-
-    <declare-styleable name="SecuriteView">
-        <attr name="sv_title" format="string"/>
-    </declare-styleable>
-
-    <!--提现账户删除-->
-    <declare-styleable name="SwipeMenuLayout">
-        <attr name="swipeEnable" format="boolean"/>
-        <attr name="ios" format="boolean"/>
-        <attr name="leftSwipe" format="boolean"/>
-    </declare-styleable>
-    <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-    </declare-styleable>
-
-
-    <!--密码输入layout-->
-    <declare-styleable name="PassWordLayoutStyle">
-        <attr name="rect_input_color" format="reference"></attr>
-        <attr name="rect_no_input_color" format="reference"></attr>
-        <attr name="line_color" format="reference"></attr>
-        <attr name="drc_color" format="reference"></attr>
-        <attr name="draw_width" format="integer"></attr>
-        <attr name="draw_height" format="integer"></attr>
-        <attr name="line_height" format="integer"></attr>
-        <attr name="line_width" format="integer"></attr>
-        <attr name="rect_inputed_color" format="integer"></attr>
-    </declare-styleable>
-
-
-    <!--注册页验证码输入View-->
-    <declare-styleable name="RegiPassWordViewStyle">
-        <attr name="regi_line_color" format="reference"></attr> //边框颜色 默认灰色
-        <attr name="regi_txt_color" format="reference"></attr>//字体颜色 默认黑色
-        <attr name="regi_maxLength" format="integer"></attr>//密码长度 默认6位
-    </declare-styleable>
 
 
 </resources>

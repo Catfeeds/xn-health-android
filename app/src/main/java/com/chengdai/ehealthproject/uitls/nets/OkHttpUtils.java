@@ -59,22 +59,26 @@ public class OkHttpUtils {
         }
     };
 
-    private final static OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-//            .cache(cache)
-            .retryOnConnectionFailure(true)//允许失败重试
-            .cookieJar(new CookiesManager())  //cookie 管理
-            .addInterceptor(getInterceptor(LogUtil.isLog))    //网络日志
-//            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-            .build();
+    private  static OkHttpClient client;
 
     /**
      * 获取 OkHttpClient 对象
      * @return OkHttpClient
      */
     public static OkHttpClient getInstance() {
+        if(client==null){
+            client = new OkHttpClient.Builder()
+                    .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .cache(cache)
+                    .retryOnConnectionFailure(true)//允许失败重试
+                    .cookieJar(new CookiesManager())  //cookie 管理
+                    .addInterceptor(getInterceptor(LogUtil.isLog))    //网络日志
+//            .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
+                    .build();
+        }
+
         return client;
     }
 

@@ -29,8 +29,9 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
+            android:inputType="number"
             android:id="@+id/edit_username"
-            android:hint="输入用户名"
+            android:hint="请输入手机号"
            android:maxLines="1"
             android:background="@null"
             android:layout_marginLeft="28dp"
@@ -62,9 +63,10 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
+
             android:layout_weight="1"
-            android:id="@+id/edit_userpass"
-            android:hint="输入验证码"
+            android:id="@+id/edit_phone_code"
+            android:hint="请输入验证码"
             android:textSize="16sp"
             android:maxLines="1"
             android:background="@null"
@@ -103,6 +105,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
+            android:id="@+id/edit_password"
+            android:inputType="textPassword"
             android:hint="设置密码"
             android:textSize="16sp"
             android:maxLines="1"
@@ -124,6 +128,7 @@
     
     
     <Button
+        android:id="@+id/btn_register"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:text="注册"
@@ -144,6 +149,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkbox_regi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -174,6 +180,7 @@
 
 
     <TextView
+        android:id="@+id/tv_gologin"
         android:layout_marginTop="24dp"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/main_tab_text_select"

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:background="@color/activity_title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <LinearLayout
+
+            android:gravity="center_vertical"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="杭州"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginLeft="9dp"
+                android:src="@mipmap/into_down"
+                android:layout_width="12dp"
+                android:layout_height="12dp" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            style="@style/title_top"
+            android:text="周边"
+           />
+
+        <ImageView
+            android:layout_marginRight="15dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="9dp"
+            android:src="@mipmap/swipt"
+            android:layout_width="18dp"
+            android:layout_height="18dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+    <include layout="@layout/layout_search"/>
+    
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+        <include layout="@layout/layout_surrounding_menu"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+</layout>

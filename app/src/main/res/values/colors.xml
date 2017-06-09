@@ -13,6 +13,9 @@
     <color name="white">#ffffff</color>
     <color name="gray">#E7E7E7</color>
 
+    <color name="text_gray">#999999</color>
+    <color name="text_color">#484848</color>
+
 
     <color name="activity_title_bg">#45a74f</color>
     <color name="main_tab_text_select">#45a74f</color>

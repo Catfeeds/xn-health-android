@@ -3,6 +3,8 @@ package com.chengdai.ehealthproject.uitls.nets;
 
 import android.content.Context;
 
+import com.chengdai.ehealthproject.base.BaseActivity;
+
 import java.lang.ref.SoftReference;
 
 /**
@@ -18,8 +20,8 @@ public class SimpleErrorVerify implements ErrorVerify {
 
     @Override
     public void call(String code, String desc) {
-       /* if (mContext!=null && mContext.get()!=null && mContext.get() instanceof BaseActivity) {
-            ((BaseActivity) mContext.get()).showSimpleWran(desc);
-        }*/
+        if (mContext!=null && mContext.get()!=null && mContext.get() instanceof BaseActivity) {
+            ((BaseActivity) mContext.get()).showToast(desc);
+        }
     }
 }

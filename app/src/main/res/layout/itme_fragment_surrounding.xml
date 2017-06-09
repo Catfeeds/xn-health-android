@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="15dp"
+    android:paddingBottom="22dp"
+    xmlns:ratingbar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    
+    <ImageView
+        android:id="@+id/img_shop_title"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/hotel"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
+
+
+        <TextView
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/img_shop_title"
+            android:id="@+id/tv_store_title"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="14sp"
+            android:textColor="@color/text_color"
+            tools:text="好吃好吃啊后士大夫士大夫"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+            <com.dming.starbar.StarBar
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="14dp"
+                android:layout_toRightOf="@+id/img_shop_title"
+                android:id="@+id/starBar"
+                android:layout_below="@+id/tv_store_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ratingbar:starEmpty="@mipmap/starbar_icon"
+                ratingbar:starFill="@mipmap/starbar_icon"
+                ratingbar:starDistance="5dp"
+                ratingbar:starCount="0"
+                ratingbar:starSize="30dp"/>
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/img_onsale"
+                android:layout_toRightOf="@+id/starBar"
+                android:layout_below="@+id/tv_store_title"
+                android:layout_marginLeft="12dp"
+                android:src="@mipmap/onsale"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_marginTop="12dp"
+                android:layout_toRightOf="@+id/img_onsale"
+                android:layout_below="@+id/tv_store_title"
+                android:layout_marginLeft="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:textColor="@color/text_gray"
+                tools:text="10折"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@+id/img_shop_title"
+            android:layout_below="@+id/starBar"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="12sp"
+            android:textColor="@color/text_gray"
+            tools:text="天使城8号楼"
+            android:layout_marginRight="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    
+    <FrameLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/starBar"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content">
+
+
+    
+    <ImageView
+        android:src="@mipmap/location"
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
+
+
+    <TextView
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginLeft="25dp"
+        tools:text="3.5km"
+        android:src="@mipmap/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"  />
+    </FrameLayout>
+    </RelativeLayout>
+
+
+
+

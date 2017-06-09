@@ -4,7 +4,7 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fram_title"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/title_height"
         android:background="@color/activity_title_bg">
 
         <TextView

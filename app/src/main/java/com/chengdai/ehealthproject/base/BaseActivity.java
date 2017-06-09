@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.NetUtils;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.chengdai.ehealthproject.weigit.dialog.LoadingDialog;
@@ -138,6 +139,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setNegativeBtn("确定", null);
 
         commonDialog.show();
+    }
+
+    public void showToast(String str){
+        ToastUtil.show(this,str);
     }
 
     /**

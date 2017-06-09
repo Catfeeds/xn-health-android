@@ -61,6 +61,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
+            android:inputType="textPassword"
             android:id="@+id/edit_userpass"
             android:hint="@string/password"
             android:textSize="16sp"
@@ -84,6 +85,7 @@
     
     
     <Button
+        android:id="@+id/btn_login"
         android:textSize="16sp"
         android:textColor="@color/white"
         android:text="@string/txt_login"

@@ -1,6 +1,7 @@
 package com.chengdai.ehealthproject.uitls.nets;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.chengdai.ehealthproject.base.BaseActivity;
 import com.chengdai.ehealthproject.model.api.BaseResponseModel;
@@ -12,6 +13,7 @@ import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -19,13 +21,17 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class RxTransformerHelper {
 
+    /*0=成功；1=权限错误；2=参数错误；3=业务错误；9=未知错误*/
+
     public static final String REQUESTOK = "0";   //请求后台成功
 
-    public static final String REQUESTFERROR = "3";  //请求后台失败
+    public static final String REQUESTFECODE3= "3";
 
-    public static final String REQUESTFLOGIN = "4";  //请先登录
+    public static final String REQUESTFECODE4 = "4";//重新登录
 
-    public static final String NET_ERROR = "-1";     //网络错误
+    public static final String REQUESTFECODE9 = "9";
+
+    public static final String NET_ERROR = "-1";
 
 
     /**
@@ -48,7 +54,9 @@ public class RxTransformerHelper {
                     if (errorVerify != null) {
                         errorVerify.call(baseResponse.getErrorCode(), baseResponse.getErrorInfo());
                     }
+
                 }
+                LogUtil.E("网络请求"+isSuccess+responseCode);
                 return isSuccess;
             } else {
                 return false;
@@ -73,16 +81,17 @@ public class RxTransformerHelper {
     private static  <T> Function<Throwable,T> doError(Context context,ErrorVerify errorVerify) {
         return throwable -> {
             throwable.printStackTrace();
+            errorVerify.call("0",throwable.toString());
             if (errorVerify != null) {
                 if(!NetUtils.isNetworkConnected())
                 {
-                    errorVerify.call(NET_ERROR, "dd"+throwable.toString());
+                    errorVerify.call(NET_ERROR, "暂无网络");
 
                 }else {
                     if(LogUtil.isLog){
                         errorVerify.call("0",throwable.toString());
                     }else{
-                        errorVerify.call("0", "ff");
+                        errorVerify.call("0", "未知错误");
                     }
                 }
             }
@@ -98,7 +107,7 @@ public class RxTransformerHelper {
             if (response instanceof BaseResponseModel) {
                 BaseResponseModel baseResponse = (BaseResponseModel) response;
                 String state = baseResponse.getErrorCode();
-                if (REQUESTFLOGIN.equals(state)) {
+                if (REQUESTFECODE4.equals(state)) {
                     OnOkFailure.StartDoFailure(context, baseResponse.getErrorInfo());  //请求成功 但是服务器状态错误  如 被迫下线
                     return false;
                 }
@@ -126,9 +135,14 @@ public class RxTransformerHelper {
     applySchedulersAndAllFilter(Context context, ErrorVerify errorVerify) {
         return observable -> observable
                 .compose(applySchedulers())
+                .doOnSubscribe(disposable -> {
+                    if (context instanceof BaseActivity)
+                        ((BaseActivity) context).showLoadingDialog();
+                })
+                .subscribeOn(AndroidSchedulers.mainThread()) //指定 doOnSubscribe工作线程
                 .filter(verifyNotEmpty())
-                .filter(verifyResultCode(context))
                 .filter(verifyBusiness(errorVerify))
+                .filter(verifyResultCode(context))
                 .onErrorReturn(doError(context,errorVerify))
                 .doFinally(() -> {
                     if (context instanceof BaseActivity)

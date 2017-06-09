@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
+import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
 
 /**周边
  * Created by 李先俊 on 2017/6/8.
@@ -17,7 +18,7 @@ import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
 
 public class SurroundingFragment extends BaseLazyFragment{
 
-    private FragmentHealthManagerBinding managerBinding;
+    private FragmentSurroundingBinding managerBinding;
 
     private boolean isCreate;
 
@@ -36,7 +37,7 @@ public class SurroundingFragment extends BaseLazyFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        managerBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_health_manager, null, false);
+        managerBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_surrounding, null, false);
 
         isCreate=true;
 

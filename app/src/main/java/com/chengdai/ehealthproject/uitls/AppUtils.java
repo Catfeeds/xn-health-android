@@ -49,6 +49,11 @@ public class AppUtils {
     public static Disposable startCodeDown(int count, Button btn){
         return Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())    // 创建一个按照给定的时间间隔发射从0开始的整数序列
                 .take(count)//只发射开始的N项数据或者一定时间内的数据
+                .doOnSubscribe(disposable -> {
+                    RxView.enabled(btn).accept(false);
+                    RxTextView.text(btn).accept("60秒后重发");
+
+                })
                 .subscribe(aLong ->{
                     RxView.enabled(btn).accept(false);
                     RxTextView.text(btn).accept((count - aLong) + "秒后重发");

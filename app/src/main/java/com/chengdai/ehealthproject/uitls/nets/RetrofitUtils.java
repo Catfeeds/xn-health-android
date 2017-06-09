@@ -6,12 +6,11 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
 import retrofit2.Retrofit;
-
-
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
- * 目标：简单易用，高效，稳定
+ *
  * 服务器api
  * Created by Administrator on 2016/9/1.
  */
@@ -19,13 +18,13 @@ public class RetrofitUtils {
 
     public static RetrofitUtils retrofitUtils;
 
-    private ApiServer apiServer;
+    private  ApiServer apiServer;
 
     public RetrofitUtils() {
         apiServer = new Retrofit.Builder()
                 .baseUrl(getBaseURL())
                 .client(OkHttpUtils.getInstance())
-                .addConverterFactory(RsaGsonConverterFactory.create())
+                .addConverterFactory(FastJsonConVerter.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build().create(ApiServer.class);
     }
@@ -43,7 +42,7 @@ public class RetrofitUtils {
     }
 
 
-    public ApiServer getApiServer() {
+    private ApiServer getApiServer() {
         return apiServer;
     }
 
@@ -57,7 +56,14 @@ public class RetrofitUtils {
      * @return
      */
     public static String getBaseURL() {
-        return "http://devapi2017.yitu8.cn/driver/";//正式版服务器的url
+
+        /*121.40.48.48:5301*//*正式*/
+
+        /*118.178.124.16:5301*//*测试*/
+
+        /*api*//*开发*/
+
+        return "http://121.43.101.148:8901/forward-service/";//正式版服务器的url
     }
 
 }
