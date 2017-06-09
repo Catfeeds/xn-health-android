@@ -83,7 +83,6 @@ public class LoginActivity extends AbsBaseActivity {
      * 登录请求
      */
     private void loginRequest() {
-
         HashMap<String,String> hashMap=new HashMap<>();
 
         hashMap.put("loginName",mBinding.editUsername.getText().toString());
