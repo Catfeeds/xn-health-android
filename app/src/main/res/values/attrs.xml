@@ -3,7 +3,6 @@
 
     //评分控件
 
-    <?xml version="1.0" encoding="utf-8"?>
         <declare-styleable name="RatingBar">
             <!--星星间距-->
             <attr format="dimension" name="starDistance"/>
