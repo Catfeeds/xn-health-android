@@ -16,13 +16,7 @@ import java.util.List;
 
 public class SurroundingMenuLeftAdapter extends CommonAdapter {
 
-
     private String typeName;
-
-    public String getTypeName() {
-        return typeName;
-    }
-
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
@@ -36,7 +30,6 @@ public class SurroundingMenuLeftAdapter extends CommonAdapter {
 
     @Override
     protected void convert(ViewHolder viewHolder, Object item, int position) {
-
 
         TextView tv=viewHolder.getView(R.id.tv_txt);
         StoreTypeModel model= (StoreTypeModel) item;
