@@ -62,7 +62,6 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
         setSubLeftImgState(true);
 
         leftMenuRequest();
-
     }
 
     /**
