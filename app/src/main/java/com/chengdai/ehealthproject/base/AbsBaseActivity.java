@@ -4,6 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -150,6 +151,19 @@ public abstract class AbsBaseActivity extends BaseActivity {
         TextView tvSubTitle = (TextView) findViewById(R.id.tv_top_right);
         tvSubTitle.setText(subTitle);
         tvSubTitle.setVisibility(View.VISIBLE);
+    }
+
+   public void setSubLeftImgState(boolean isShow) {
+       ImageView tvSubTitle = (ImageView) findViewById(R.id.img_back);
+       FrameLayout frameLayout = (FrameLayout) findViewById(R.id.fram_img_back);
+       if(isShow){
+           tvSubTitle.setVisibility(View.VISIBLE);
+           frameLayout.setVisibility(View.VISIBLE);
+       }else{
+           tvSubTitle.setVisibility(View.GONE);
+           frameLayout.setVisibility(View.GONE);
+       }
+
     }
 
     /**

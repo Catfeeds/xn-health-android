@@ -41,6 +41,10 @@
         <activity android:name=".model.user.LoginActivity"
             android:launchMode="singleTask"
             />
+       //周边商户选择
+        <activity android:name=".model.tabsurrounding.activitys.SurroundingMenuSeletActivity"
+            android:launchMode="singleTask"
+            />
 
 
 

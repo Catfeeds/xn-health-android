@@ -8,5 +8,6 @@ public class MyConfig {
 
     public final static String COMPANYCODE="CD-JKEG000011";
     public final static String SYSTEMCODE="CD-JKEG000011";
+    public final static String IMGURL="http://or4e1nykg.bkt.clouddn.com/";
 
 }

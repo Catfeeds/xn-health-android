@@ -66,6 +66,8 @@ public class MainActivity extends BaseActivity {
 
         mainBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
 
+        mainBinding.pagerMain.setOffscreenPageLimit(fragments.size());
+
        mSubscription.add( RxRadioGroup.checkedChanges(mainBinding.layoutMainButtom.radiogroup) //点击切换
                .subscribe(integer -> {
                    switch (integer){

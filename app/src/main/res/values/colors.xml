@@ -21,7 +21,7 @@
     <color name="main_tab_text_select">#45a74f</color>
     <color name="login_select">#45a74f</color>
     <color name="login_unselect">#3a7e41</color>
-
+    <color name="banner_select">#45a74f</color>
     <!--颜色值规范-->
     <color name="c_000000">#000000</color>
     <color name="c_ffffff">#FFFFFF</color>

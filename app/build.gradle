@@ -56,6 +56,7 @@ dependencies {
 
     compile 'com.alibaba:fastjson:1.1.57.android'
 
-    compile 'com.youth.banner:banner:1.4.2'
+    compile 'com.youth.banner:banner:1.4.9'
     compile 'com.liaoinstan.springview:library:1.2.6'
+    compile 'com.zhy:base-adapter:3.0.3'
 }

@@ -4,6 +4,27 @@
     <string name="username">账号</string>
     <string name="password">密码</string>
     <string name="txt_register">注册</string>
+    <string name="store_type">商户分类</string>
+    <string name="txt_food">健康美食</string>
+    <string name="txt_movement">运动健身</string>
+    <string name="txt_women_home">女人馆</string>
+    <string name="txt_life">养生休闲</string>
+    <string name="txt_hotel">酒店住宿</string>
+    <string name="txt_dabaojian">医疗保健</string>
+    <string name="txt_life2">便民生活</string>
+    <string name="txt_sopping">周边购物</string>
+
+
+    <string-array name="store_type">
+        <item>健康美食</item>
+        <item>运动健身 </item>
+        <item>女人馆</item>
+        <item>养生休闲</item>
+        <item>酒店住宿</item>
+        <item>医疗保健</item>
+        <item>便民生活</item>
+        <item>周边购物</item>
+    </string-array>
 
 
 </resources>

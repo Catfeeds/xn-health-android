@@ -57,7 +57,7 @@ public class SPUtilHelpr {
 	 * @return
 	 */
 	public static boolean isLogin(){
-		return TextUtils.isEmpty(getUserToken());
+		return !TextUtils.isEmpty(getUserToken());
 	}
 
 }

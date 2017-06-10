@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:banner="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -13,7 +13,6 @@
         android:layout_height="@dimen/title_height">
 
         <LinearLayout
-
             android:gravity="center_vertical"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="15dp"
@@ -36,13 +35,13 @@
 
         </LinearLayout>
 
-
         <TextView
             style="@style/title_top"
             android:text="周边"
            />
 
         <ImageView
+            android:visibility="gone"
             android:layout_marginRight="15dp"
             android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="9dp"
@@ -52,23 +51,56 @@
 
     </FrameLayout>
 
+
+    <com.liaoinstan.springview.widget.SpringView
+        android:id="@+id/springview_surrounding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <include layout="@layout/layout_search"/>
 
-    <include layout="@layout/layout_search"/>
-    
+
     <com.youth.banner.Banner
         android:id="@+id/banner"
+        banner:indicator_drawable_selected="@drawable/banner_select"
+        banner:indicator_drawable_unselected="@drawable/banner_un_select"
+        banner:indicator_width="8dp"
+        banner:indicator_height="8dp"
+        banner:indicator_margin="5dp"
+        banner:delay_time="4000"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
 
-        <include layout="@layout/layout_surrounding_menu"/>
+        <include  android:id="@+id/layout_surrounding_menu" layout="@layout/layout_surrounding_menu"/>
+
+        <View
+            android:layout_marginTop="15dp"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <TextView
+            android:textColor="@color/text_color"
+            android:text="好店推荐"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+        <com.chengdai.ehealthproject.weigit.views.LinearLayoutForListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
     </LinearLayout>
 
+    </com.liaoinstan.springview.widget.SpringView>
 
 </LinearLayout>
 </layout>

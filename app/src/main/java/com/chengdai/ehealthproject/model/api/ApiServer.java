@@ -1,6 +1,8 @@
 package com.chengdai.ehealthproject.model.api;
 
 
+import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
 import com.chengdai.ehealthproject.model.user.model.PhoneCodeSendState;
 import com.chengdai.ehealthproject.model.user.model.UserRegisterState;
 
@@ -47,6 +49,25 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<UserRegisterState>> UserLogin( @Field("code") String code,@Field("json") String  json);
+    /**
+     * 获取banner
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<BannerModel>> GetBanner(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取banner
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<StoreTypeModel>> GetStoreType(@Field("code") String code, @Field("json") String  json);
 
 
 }
