@@ -6,7 +6,6 @@ package com.chengdai.ehealthproject.model.tabsurrounding.model;
 
 public class StoreTypeModel {
 
-
     /**
      * code : FL201703261345184657
      * type : 1
