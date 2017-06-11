@@ -13,6 +13,7 @@
     <string name="txt_dabaojian">医疗保健</string>
     <string name="txt_life2">便民生活</string>
     <string name="txt_sopping">周边购物</string>
+    <string name="txt_register_read">我已阅读并同意遵守法律申明和隐私条款</string>
 
 
     <string-array name="store_type">

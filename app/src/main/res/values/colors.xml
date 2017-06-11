@@ -16,7 +16,7 @@
     <color name="text_gray">#999999</color>
     <color name="text_color">#484848</color>
 
-
+    <color name="regi_read">#45a74f</color>
     <color name="activity_title_bg">#45a74f</color>
     <color name="main_tab_text_select">#45a74f</color>
     <color name="login_select">#45a74f</color>
@@ -119,7 +119,7 @@
     <!--透明黑色背景-->
     <color name="bg_black_8">#6a000000</color>
     <!--订单详情-->
-    <color name="color_order_detail_red">#ed5461</color>
+    <color name="red">#ed5461</color>
     <color name="color_order_detail_red2">#b9434d</color>
     <color name="color_order_detail_red3">#e24749</color>
     <color name="color_day_yellow">#FF9620</color>

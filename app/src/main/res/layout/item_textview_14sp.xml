@@ -9,7 +9,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_marginLeft="20dp"
-        android:textStyle="bold"
         android:textColor="@color/text_color"
         android:gravity="center_vertical"
         tools:text="sdfsdf"

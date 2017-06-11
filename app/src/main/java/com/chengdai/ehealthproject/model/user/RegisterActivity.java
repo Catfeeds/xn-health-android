@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
@@ -12,10 +15,10 @@ import com.chengdai.ehealthproject.databinding.ActivityRegisterBinding;
 import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.TextReadUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
-import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -53,9 +56,25 @@ public class RegisterActivity extends AbsBaseActivity {
 
         initViews();
 
+        initTvReadView();
+
+    }
+
+    private void initTvReadView() {
+        TextReadUtils t=new TextReadUtils();
+        t.setPos(9,13).setPos2(14,18).setOnSpanTextClickListener(type -> {
+            if(type==1){
+                showToast("法律申明");
+            }else{
+                showToast("隐私条款");
+            }
+        }).setSpanTextColor(ContextCompat.getColor(this, R.color.red))
+          .setShowData(mBinding.tvIRead,getString(R.string.txt_register_read));
+
     }
 
     private void initViews() {
+
 
         mBinding.btnSendCode.setOnClickListener(v -> {
 

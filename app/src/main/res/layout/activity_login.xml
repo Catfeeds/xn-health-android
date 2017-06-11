@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/icon"
-            android:layout_marginLeft="35dp"
+            android:src="@mipmap/phone"
+            android:layout_marginLeft="45dp"
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
@@ -33,7 +33,7 @@
             android:hint="@string/username"
            android:maxLines="1"
             android:background="@null"
-            android:layout_marginLeft="28dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginRight="58dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,8 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/icon"
-            android:layout_marginLeft="35dp"
+            android:src="@mipmap/password"
+            android:layout_marginLeft="45dp"
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
@@ -67,7 +67,7 @@
             android:textSize="16sp"
             android:maxLines="1"
             android:background="@null"
-            android:layout_marginLeft="28dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginRight="58dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
