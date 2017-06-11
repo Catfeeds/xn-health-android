@@ -95,7 +95,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
                     LayoutInflater inflater = LayoutInflater.from(this);
                     LinearLayout  leftHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_left_head, null);//得到头部的布局
 
-                    mBinding.listMenuLeft.addHeaderView(leftHeadView);
+                    mBinding.listMenuLeft.addHeaderView(leftHeadView,null,false);
 
                    mAdapterLeftMenuList=new SurroundingMenuLeftAdapter(this,R.layout.item_textview_16sp,storeTypeModels,mTypeName);
                    mBinding.listMenuLeft.setAdapter(mAdapterLeftMenuList);
@@ -125,9 +125,9 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
     private void initRightList() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_right_head, null);//得到头部的布局
+        LinearLayout rightHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_right_head, null);//得到头部的布局
 
-        mBinding.listMenuRight.addHeaderView(leftHeadView);
+        mBinding.listMenuRight.addHeaderView(rightHeadView,null,false);
 
         mAdapterRightMenuList =new SurroundingMenuLeftAdapter(this, R.layout.item_textview_14sp,new ArrayList<>(),"");
 
