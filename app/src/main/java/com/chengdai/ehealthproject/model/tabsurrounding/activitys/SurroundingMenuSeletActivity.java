@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
@@ -15,7 +17,9 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -29,6 +33,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
     private ActivitySurroundingMenuselectBinding mBinding;
 
     private SurroundingMenuLeftAdapter mAdapterLeftMenuList;
+    private SurroundingMenuLeftAdapter mAdapterRightMenuList;
 
     private String mTypeName;
 
@@ -61,13 +66,17 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
         setSubLeftImgState(true);
 
+        initRightList();
+
         leftMenuRequest();
+
     }
 
     /**
      * 一级菜单请求
      */
     private void leftMenuRequest() {
+
 
         Map<String,String> map=new HashMap();
 
@@ -82,9 +91,14 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
                 .compose(RxTransformerListHelper.applySchedulerResult(this))
                 .flatMap(storeTypeModels -> {
 
+
+                    LayoutInflater inflater = LayoutInflater.from(this);
+                    LinearLayout  leftHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_left_head, null);//得到头部的布局
+
+                    mBinding.listMenuLeft.addHeaderView(leftHeadView);
+
                    mAdapterLeftMenuList=new SurroundingMenuLeftAdapter(this,R.layout.item_textview_16sp,storeTypeModels,mTypeName);
                    mBinding.listMenuLeft.setAdapter(mAdapterLeftMenuList);
-
                    return Observable.fromIterable(storeTypeModels);})
 
                 .filter(m -> m!=null && mTypeName.equals(m.getName()))
@@ -99,11 +113,25 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
 
          mBinding.listMenuLeft.setOnItemClickListener((parent, view, position, id) -> {
-            StoreTypeModel model= (StoreTypeModel) mAdapterLeftMenuList.getItem(position);
+
+             int newPosition=position-mBinding.listMenuLeft.getHeaderViewsCount();
+
+            StoreTypeModel model= (StoreTypeModel) mAdapterLeftMenuList.getItem(newPosition);
             mAdapterLeftMenuList.setTypeName(model.getName());
             rightMenuRequest(model.getCode());
         });
 
+    }
+
+    private void initRightList() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_right_head, null);//得到头部的布局
+
+        mBinding.listMenuRight.addHeaderView(leftHeadView);
+
+        mAdapterRightMenuList =new SurroundingMenuLeftAdapter(this, R.layout.item_textview_14sp,new ArrayList<>(),"");
+
+        mBinding.listMenuRight.setAdapter(mAdapterRightMenuList);
     }
 
 
@@ -122,7 +150,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
         mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map2))
                 .compose(RxTransformerListHelper.applySchedulerResult(this))
                 .subscribe(names -> {
-                    mBinding.listMenuRight.setAdapter(new SurroundingMenuLeftAdapter(this, R.layout.item_textview_14sp,names,""));
+                    mAdapterRightMenuList.setDatas(names);
 
         },Throwable::printStackTrace));
     }

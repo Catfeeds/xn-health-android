@@ -19,6 +19,9 @@
    </ListView>
 
     <ListView
+        android:listSelector="@color/gray"
+        android:divider="@color/white"
+        android:dividerHeight="1dp"
         android:scrollbars="none"
         android:id="@+id/list_menu_right"
         android:background="@color/gray"

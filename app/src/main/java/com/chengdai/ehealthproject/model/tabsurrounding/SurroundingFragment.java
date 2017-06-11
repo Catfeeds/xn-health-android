@@ -213,7 +213,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("systemCode", MyConfig.SYSTEMCODE);
         map.put("token", SPUtilHelpr.getUserToken());
 
-        RetrofitUtils.getLoaderServer().GetBanner("806052", StringUtils.getJsonToString(map))
+        mSubscription.add(RetrofitUtils.getLoaderServer().GetBanner("806052", StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
                 .map(banners -> {
                     List images=new ArrayList();
@@ -231,7 +231,7 @@ public class SurroundingFragment extends BaseLazyFragment{
                     mBinding.banner.start();
 
 
-                },Throwable::printStackTrace);
+                },Throwable::printStackTrace));
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**周边商户分类选择左
@@ -18,8 +19,14 @@ public class SurroundingMenuLeftAdapter extends CommonAdapter {
 
     private String typeName;
 
+
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+        notifyDataSetChanged();
+    }
+
+    public void setDatas(List<StoreTypeModel> datas) {
+        this.mDatas = datas;
         notifyDataSetChanged();
     }
 

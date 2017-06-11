@@ -54,7 +54,7 @@ public class RegisterActivity extends AbsBaseActivity {
 
         ImgUtils.loadImgIdforRound(this,R.mipmap.icon,mBinding.imgLoginIcon);
 
-        initViews();
+         initViews();
 
         initTvReadView();
 
