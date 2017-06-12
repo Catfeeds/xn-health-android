@@ -19,20 +19,20 @@
             android:textSize="18sp" />
 
         <FrameLayout
-            android:visibility="gone"
+           android:paddingLeft="15dp"
             android:id="@+id/fram_img_back"
             android:layout_width="44dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:layout_marginLeft="15dp">
+        >
 
             <ImageView
+               android:visibility="gone"
                 android:id="@+id/img_back"
-                android:visibility="gone"
                 android:layout_width="13dp"
-                android:layout_height="22dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/back_img" />
 
             <TextView
                 android:id="@+id/tv_back"

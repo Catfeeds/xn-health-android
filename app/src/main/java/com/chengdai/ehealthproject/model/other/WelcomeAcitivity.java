@@ -29,11 +29,12 @@ public class WelcomeAcitivity extends BaseActivity {
         super.onResume();
       mSubscription.add(Observable.timer(2, TimeUnit.SECONDS)
               .subscribe(aLong -> {//延迟两秒进行跳转
-              if(SPUtilHelpr.isLogin()){
+                  MainActivity.open(this);
+           /*   if(SPUtilHelpr.isLogin()){
                   MainActivity.open(this);
               }else{
                   LoginActivity.open(this);
-              }
+              }*/
               finish();
         },Throwable::printStackTrace));
 

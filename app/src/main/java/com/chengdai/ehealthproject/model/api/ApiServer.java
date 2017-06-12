@@ -1,7 +1,11 @@
 package com.chengdai.ehealthproject.model.api;
 
 
+import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
+import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
 import com.chengdai.ehealthproject.model.user.model.PhoneCodeSendState;
 import com.chengdai.ehealthproject.model.user.model.UserRegisterState;
@@ -68,6 +72,46 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseListModel<StoreTypeModel>> GetStoreType(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取商户列表
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<StoreListModel>> GetStoreList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取商户详情
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<StoreDetailsModel>> GetStoreDetails(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 支付
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<String>> Pay(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 点赞请求
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> DZRequest(@Field("code") String code, @Field("json") String  json);
 
 
 }

@@ -1,9 +1,12 @@
 package com.chengdai.ehealthproject.model.tabsurrounding;
 
+import android.app.Activity;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +16,20 @@ import android.widget.TextView;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
+import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.SurroundingMenuSeletActivity;
+import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
+import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingMenuLeftAdapter;
+import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
@@ -26,11 +38,17 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.youth.banner.BannerConfig;
+import com.zhy.adapter.abslistview.CommonAdapter;
+import com.zhy.adapter.abslistview.ViewHolder;
+
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.reactivex.Observable;
 
 
 /**周边
@@ -42,7 +60,10 @@ public class SurroundingFragment extends BaseLazyFragment{
     private FragmentSurroundingBinding mBinding;
 
     private boolean isCreate=false;
+    private StoreTypeListAdapter mStoreTypeAdapter;
+    private SurroundingStoreTypeAdapter mStoreMenuAdapter;
 
+    private int mStoreStart=0;
 
     /**
      * 获得fragment实例
@@ -82,10 +103,20 @@ public class SurroundingFragment extends BaseLazyFragment{
         mBinding.springviewSurrounding.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
+                mStoreStart=0;
+
+                storeTypeRequest(null);
+
+                bannerDataRequest(null);
+
+                getStoreListRequest(null,1);
+
                 mBinding.springviewSurrounding.onFinishFreshAndLoad();
             }
             @Override
             public void onLoadmore() {
+                mStoreStart++;
+                getStoreListRequest(null,2);
                 mBinding.springviewSurrounding.onFinishFreshAndLoad();
             }
         });
@@ -97,7 +128,7 @@ public class SurroundingFragment extends BaseLazyFragment{
     private void initViews() {
 
         //健康美食
-        setTvListener(mBinding.layoutSurroundingMenu.linFood,mActivity.getResources().getString(R.string.txt_food));
+      /*  setTvListener(mBinding.layoutSurroundingMenu.linFood,mActivity.getResources().getString(R.string.txt_food));
 
         setTvListener(mBinding.layoutSurroundingMenu.linMovement,mActivity.getResources().getString(R.string.txt_movement));
 
@@ -111,49 +142,34 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         setTvListener(mBinding.layoutSurroundingMenu.linLife2,mActivity.getResources().getString(R.string.txt_life2));
 
-        setTvListener(mBinding.layoutSurroundingMenu.linShopping,mActivity.getResources().getString(R.string.txt_sopping));
+        setTvListener(mBinding.layoutSurroundingMenu.linShopping,mActivity.getResources().getString(R.string.txt_sopping));*/
 
-/*        //运动健身
-        mBinding.layoutSurroundingMenu.linMovement.setOnClickListener(v -> {
-
-        });
-
-        //女人馆
-        mBinding.layoutSurroundingMenu.linWomenhome.setOnClickListener(v -> {
+        mBinding.lvStoreList.setOnItemClickListener((parent, view, position, id) -> {
+            StoreListModel.ListBean model= (StoreListModel.ListBean) mStoreTypeAdapter.getItem(position-mBinding.lvStoreList.getHeaderViewsCount());
+            StoredetailsActivity.open(mActivity,model.getCode());
 
         });
 
-       //养生休闲
-        mBinding.layoutSurroundingMenu.linWomenhome.setOnClickListener(v -> {
+        mBinding.gridStoreType.setOnItemClickListener((parent, view, position, id) -> {
+
+            if(mStoreMenuAdapter!=null){
+                StoreTypeModel model= (StoreTypeModel) mStoreMenuAdapter.getItem(position);
+                if(model!=null){
+                    SurroundingMenuSeletActivity.open(mActivity,model.getCode());
+                }
+            }
 
         });
 
-       //酒店住宿
-        mBinding.layoutSurroundingMenu.linHotel.setOnClickListener(v -> {
-
-        });
-
-       //医疗保健
-        mBinding.layoutSurroundingMenu.linDabaojian.setOnClickListener(v -> {
-
-        });
-
-       //便民生活
-        mBinding.layoutSurroundingMenu.linLife2.setOnClickListener(v -> {
-
-        });
-
-     //周边购物
-        mBinding.layoutSurroundingMenu.linShopping.setOnClickListener(v -> {
-
-        });*/
+        mStoreTypeAdapter = new StoreTypeListAdapter(mActivity,new ArrayList<>(),false);
+        mBinding.lvStoreList.setAdapter(mStoreTypeAdapter);
 
 
     }
 
-    private void setTvListener(LinearLayout lin,String tv) {
+    private void setTvListener(LinearLayout lin,String txt) {
         lin.setOnClickListener(v -> {
-            SurroundingMenuSeletActivity.open(mActivity,tv);
+            SurroundingMenuSeletActivity.open(mActivity,txt);
         });
     }
 
@@ -167,7 +183,6 @@ public class SurroundingFragment extends BaseLazyFragment{
         mBinding.banner.setOnBannerListener((position) -> {  //banner点击事件
             ToastUtil.show(getActivity(),position+"");
         });
-
     }
 
 
@@ -191,7 +206,11 @@ public class SurroundingFragment extends BaseLazyFragment{
     protected void lazyLoad() {
         if (isCreate){
 
-            bannerDataRequest();
+            storeTypeRequest(mActivity);
+
+            bannerDataRequest(mActivity);
+
+            getStoreListRequest(mActivity,1);
 
             if(mBinding!=null && mBinding.banner!=null){
                 mBinding.banner.start();
@@ -206,7 +225,7 @@ public class SurroundingFragment extends BaseLazyFragment{
     /**
      * 获取banner图片
      */
-    private void bannerDataRequest() {
+    private void bannerDataRequest(Context context) {
         Map map=new HashMap();
 
         map.put("type","2");
@@ -214,11 +233,11 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("token", SPUtilHelpr.getUserToken());
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetBanner("806052", StringUtils.getJsonToString(map))
-                .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
+                .compose(RxTransformerListHelper.applySchedulerResult(context))
                 .map(banners -> {
                     List images=new ArrayList();
                     for(BannerModel ba:banners){
-                        images.add(MyConfig.IMGURL+ba.getPic());
+                        if(ba !=null && !TextUtils.isEmpty(ba.getPic())) images.add(MyConfig.IMGURL+ba.getPic());
                     }
                     return images;
 
@@ -233,6 +252,92 @@ public class SurroundingFragment extends BaseLazyFragment{
 
                 },Throwable::printStackTrace));
     }
+
+    /**
+     * 获取商户列表
+     * @param act
+     * @param lopdType 加载类型 1 下拉 2上拉
+     */
+    public void getStoreListRequest(Activity act,int lopdType){
+       Map map=new HashMap();
+
+        map.put("userId",SPUtilHelpr.getUserId());
+        map.put("city","杭州");
+        map.put("area","余杭区");
+        map.put("start",mStoreStart+"");
+        map.put("limit","10");
+        map.put("companyCode",MyConfig.COMPANYCODE);
+        map.put("systemCode",MyConfig.SYSTEMCODE);
+
+        //点赞和取消点赞
+      mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217",StringUtils.getJsonToString(map))
+
+                .compose(RxTransformerHelper.applySchedulerResult(act))
+
+                .subscribe(storeListModel -> {
+                    if(lopdType==1){
+                        if(storeListModel.getList()==null || storeListModel.getList().size()==0){ //分页
+
+                            return;
+                        }
+                        mStoreTypeAdapter.setData(storeListModel.getList());
+
+                    }else{
+                        if(storeListModel.getList()==null || storeListModel.getList().size()==0 ){ //分页
+                            if(mStoreStart>0){
+                                mStoreStart--;
+                            }
+                            return;
+                        }
+
+                        mStoreTypeAdapter.addData(storeListModel.getList());
+                    }
+
+
+                },Throwable::printStackTrace));
+
+
+    }
+
+
+
+
+    private void storeTypeRequest(Context context) {
+
+
+        Map<String,String> map=new HashMap();
+
+        map.put("parentCode","0");
+        map.put("type","2");
+        map.put("status","1");
+        map.put("companyCode",MyConfig.COMPANYCODE);
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+
+        //先请求一级菜单，再请求二级菜单
+        mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map))
+
+                .compose(RxTransformerListHelper.applySchedulerResult(context))
+
+                .subscribe(r -> {
+                    mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,r);
+                    mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
+
+                },Throwable::printStackTrace));
+
+    }
+
+    /**
+     * 点赞效果刷新
+     * @param
+     */
+    @Subscriber(tag="dzUpdate") //  StoreTypeListAdapter StoredetailsActivity
+    public void dzUpdate(DZUpdateModel dzUpdateModel){
+        if(mStoreTypeAdapter!=null){
+            mStoreTypeAdapter.setDzInfo(dzUpdateModel);
+        }
+
+    }
+
 
     @Override
     protected void onInvisible() {

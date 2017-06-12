@@ -45,6 +45,18 @@
         <activity android:name=".model.tabsurrounding.activitys.SurroundingMenuSeletActivity"
             android:launchMode="singleTask"
             />
+        //商户详情
+        <activity android:name=".model.tabsurrounding.activitys.StoredetailsActivity"
+            android:launchMode="singleTask"
+            />
+        //商户分类列表
+        <activity android:name=".model.tabsurrounding.activitys.StoreTypeActivity"
+            android:launchMode="singleTask"
+            />
+    //支付
+        <activity android:name=".model.tabsurrounding.activitys.PayActivity"
+            android:launchMode="singleTask"
+            />
 
 
 

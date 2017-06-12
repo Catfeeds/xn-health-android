@@ -17,11 +17,11 @@ import java.util.List;
 
 public class SurroundingMenuLeftAdapter extends CommonAdapter {
 
-    private String typeName;
+    private String typeCode;
 
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setTypeName(String typeCode) {
+        this.typeCode = typeCode;
         notifyDataSetChanged();
     }
 
@@ -30,9 +30,9 @@ public class SurroundingMenuLeftAdapter extends CommonAdapter {
         notifyDataSetChanged();
     }
 
-    public SurroundingMenuLeftAdapter(Context context, int layoutId, List<StoreTypeModel> datas, String typeName) {
+    public SurroundingMenuLeftAdapter(Context context, int layoutId, List<StoreTypeModel> datas, String typeCode) {
         super(context, layoutId, datas);
-        this.typeName=typeName;
+        this.typeCode=typeCode;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SurroundingMenuLeftAdapter extends CommonAdapter {
         StoreTypeModel model= (StoreTypeModel) item;
 
         if(model!=null ){
-            if(typeName.equals(model.getName())){
+            if(typeCode.equals(model.getCode())){
                 tv.setBackgroundColor(mContext.getResources().getColor(R.color.white));
             }else{
                 tv.setBackgroundColor(mContext.getResources().getColor(R.color.gray));

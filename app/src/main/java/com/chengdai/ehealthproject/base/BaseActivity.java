@@ -20,6 +20,8 @@ import com.chengdai.ehealthproject.uitls.nets.NetUtils;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.chengdai.ehealthproject.weigit.dialog.LoadingDialog;
 
+import org.simple.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,12 +45,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(this);
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        EventBus.getDefault().register(this);
     }
 
 
 
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
 
         if (commonDialog != null) {
@@ -99,7 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 显示dialog
      */
     public void showLoadingDialog() {
-        if (loadingDialog != null) {
+        if (loadingDialog != null ) {
             loadingDialog.showDialog();
         }
     }

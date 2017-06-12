@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 
+import org.simple.eventbus.EventBus;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 
@@ -30,10 +32,12 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mSubscription = new CompositeDisposable();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
 
         if (mSubscription != null && !mSubscription.isDisposed()) {

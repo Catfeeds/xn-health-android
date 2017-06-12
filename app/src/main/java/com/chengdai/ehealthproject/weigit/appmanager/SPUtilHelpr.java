@@ -1,10 +1,12 @@
 package com.chengdai.ehealthproject.weigit.appmanager;
 
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.base.BaseApplication;
 import com.chengdai.ehealthproject.uitls.SPUtils;
+import com.chengdai.ehealthproject.uitls.nets.OnOkFailure;
 
 /**
  * SPUtils 工具辅助类
@@ -42,13 +44,15 @@ public class SPUtilHelpr {
 		SPUtils.put(BaseApplication.getInstance(),USERID,s);
 	}
 
-    /**
+
+	/**
 	 * 设置用户token
 	 * @param
 	 */
 	public static String getUserId()
 	{
-	return  SPUtils.getString(BaseApplication.getInstance(),USERID,"");
+	  return SPUtils.getString(BaseApplication.getInstance(),USERID,"");
+
 	}
 
 
@@ -56,8 +60,13 @@ public class SPUtilHelpr {
 	 * 判断用户是否登录
 	 * @return
 	 */
-	public static boolean isLogin(){
-		return !TextUtils.isEmpty(getUserToken());
+	public static boolean isLogin(Context context){
+		if(TextUtils.isEmpty(getUserToken())){
+			OnOkFailure.StartDoFailure(context,"请先登录");
+			return false;
+		}
+
+		return true;
 	}
 
 }

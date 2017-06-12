@@ -55,7 +55,13 @@
     <com.liaoinstan.springview.widget.SpringView
         android:id="@+id/springview_surrounding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -76,7 +82,20 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
 
-        <include  android:id="@+id/layout_surrounding_menu" layout="@layout/layout_surrounding_menu"/>
+        <com.chengdai.ehealthproject.weigit.views.GridViewForScrollView
+            android:verticalSpacing="28dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:numColumns="4"
+            android:id="@+id/grid_store_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </com.chengdai.ehealthproject.weigit.views.GridViewForScrollView>
+
+        <include  android:visibility="gone" android:id="@+id/layout_surrounding_menu" layout="@layout/layout_surrounding_menu"/>
 
         <View
             android:layout_marginTop="15dp"
@@ -93,12 +112,16 @@
             android:layout_height="50dp" />
 
 
-        <com.chengdai.ehealthproject.weigit.views.LinearLayoutForListView
+        <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+            android:scrollbars="none"
+            android:id="@+id/lv_store_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
 
     </LinearLayout>
+
+        </ScrollView>
 
     </com.liaoinstan.springview.widget.SpringView>
 

@@ -59,4 +59,7 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.liaoinstan.springview:library:1.2.6'
     compile 'com.zhy:base-adapter:3.0.3'
+
+    /*事件总线*/
+    compile 'org.simple:androideventbus:1.0.5.1'
 }

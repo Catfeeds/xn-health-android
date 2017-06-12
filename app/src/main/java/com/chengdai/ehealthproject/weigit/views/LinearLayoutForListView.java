@@ -23,7 +23,7 @@ public class LinearLayoutForListView extends LinearLayout {
     public LinearLayoutForListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-    private void bindView(){
+    private void  bindView(){
         setOrientation(LinearLayout.VERTICAL);
         final int count = mAdapter.getCount();
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);

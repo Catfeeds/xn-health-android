@@ -29,6 +29,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
+            android:textColorHint="@color/text_hint_color"
             android:inputType="number"
             android:id="@+id/edit_username"
             android:hint="请输入手机号"
@@ -63,7 +64,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
-
+            android:textColorHint="@color/text_hint_color"
             android:layout_weight="1"
             android:id="@+id/edit_phone_code"
             android:hint="请输入验证码"
@@ -105,6 +106,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp" />
         <EditText
+            android:textColorHint="@color/text_hint_color"
             android:id="@+id/edit_password"
             android:inputType="textPassword"
             android:hint="设置密码"

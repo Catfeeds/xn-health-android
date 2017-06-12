@@ -14,6 +14,7 @@
     <color name="gray">#E7E7E7</color>
 
     <color name="text_gray">#999999</color>
+    <color name="text_hint_color">#858585</color>
     <color name="text_gray2">#7f7e7e</color>
     <color name="text_color">#484848</color>
 
@@ -125,7 +126,7 @@
     <color name="color_order_detail_red3">#e24749</color>
     <color name="color_day_yellow">#FF9620</color>
 
-    <color name="prompt_orange_bg">#ffbe54</color>
+    <color name="orange">#ff6702</color>
     <color name="color_evalate_border">#e6e6e6</color>
     <color name="line_driver_color">#e9c95c</color>
 

@@ -88,10 +88,8 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
         //先请求一级菜单，再请求二级菜单
        mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map))
-                .compose(RxTransformerListHelper.applySchedulerResult(this))
+                .compose(RxTransformerListHelper.applySchedulerResult(null))
                 .flatMap(storeTypeModels -> {
-
-
                     LayoutInflater inflater = LayoutInflater.from(this);
                     LinearLayout  leftHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_left_head, null);//得到头部的布局
 
@@ -101,7 +99,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
                    mBinding.listMenuLeft.setAdapter(mAdapterLeftMenuList);
                    return Observable.fromIterable(storeTypeModels);})
 
-                .filter(m -> m!=null && mTypeName.equals(m.getName()))
+                .filter(m -> m!=null && mTypeName.equals(m.getCode()))
 
                 .map(storeTypeModel -> storeTypeModel.getCode())
 
@@ -117,7 +115,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
              int newPosition=position-mBinding.listMenuLeft.getHeaderViewsCount();
 
             StoreTypeModel model= (StoreTypeModel) mAdapterLeftMenuList.getItem(newPosition);
-            mAdapterLeftMenuList.setTypeName(model.getName());
+            mAdapterLeftMenuList.setTypeName(model.getCode());
             rightMenuRequest(model.getCode());
         });
 
@@ -132,6 +130,14 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
         mAdapterRightMenuList =new SurroundingMenuLeftAdapter(this, R.layout.item_textview_14sp,new ArrayList<>(),"");
 
         mBinding.listMenuRight.setAdapter(mAdapterRightMenuList);
+
+        mBinding.listMenuRight.setOnItemClickListener((parent, view, position, id) -> {
+
+            int newPosition=position-mBinding.listMenuRight.getHeaderViewsCount();
+
+            StoreTypeActivity.open(this);
+
+        });
     }
 
 
@@ -147,7 +153,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
         map2.put("companyCode", MyConfig.COMPANYCODE);
         map2.put("systemCode", MyConfig.SYSTEMCODE);
 
-        mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map2))
+        mSubscription.add(RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map2))
                 .compose(RxTransformerListHelper.applySchedulerResult(this))
                 .subscribe(names -> {
                     mAdapterRightMenuList.setDatas(names);

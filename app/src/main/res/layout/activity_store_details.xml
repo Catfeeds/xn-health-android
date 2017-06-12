@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -6,6 +8,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/img_detail"
         android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="225dp" />
@@ -18,11 +21,11 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tv_store_name"
             android:textSize="16sp"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_weight="1"
-            tools:text="xffffff"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
@@ -34,16 +37,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:src="@mipmap/location"
+                android:id="@+id/img_dz"
+                android:src="@mipmap/good_hand_un"
                 android:layout_width="15dp"
                 android:layout_height="15dp" />
-
 
             <TextView
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:layout_marginLeft="25dp"
-                tools:text="3.5km"
+                android:id="@+id/tv_dzsum"
                 android:src="@mipmap/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"  />
@@ -54,8 +57,8 @@
 
     
     <TextView
+        android:id="@+id/tv_description"
         android:layout_marginBottom="15dp"
-        tools:text="adfdfdfdfdfdfdfdfdfddf"
         android:ellipsize="end"
         android:maxLines="1"
         android:layout_marginLeft="15dp"
@@ -73,52 +76,79 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end"
+
+        <LinearLayout
             android:layout_weight="1"
-            tools:text="xffffff"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_weight="1"
+                tools:text="xffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/bookphone" />
+
+                <TextView
+                    android:id="@+id/tv_phone_number"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    tools:text="xffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <Button
+
+            android:id="@+id/btn_pay"
+            android:background="@color/orange"
+            android:gravity="center"
             android:textSize="14sp"
             android:layout_marginRight="15dp"
-            android:layout_gravity="right"
+            android:layout_gravity="right|center_vertical"
             android:textColor="@color/white"
             android:text="买单"
             android:layout_width="wrap_content"
-            android:layout_height="35dp" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
   
-    <LinearLayout
-        android:gravity="center_vertical"
+<View
+    android:layout_marginTop="10dp"
+    android:background="@color/gray"
+    android:layout_width="match_parent"
+    android:layout_height="10dp"/>
+
+    <TextView
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:src="@mipmap/icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-
-        <TextView
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        tools:text="xffffff"
-        android:layout_width="match_parent"
+        android:text="图文详情"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-
-    </LinearLayout>
 
     <View
         android:layout_marginTop="15dp"
@@ -126,6 +156,21 @@
         />
 
 
+    <ImageView
+        android:id="@+id/img_"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/tv_description2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:text="图文详情"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 
 </LinearLayout>
+
+</layout>
