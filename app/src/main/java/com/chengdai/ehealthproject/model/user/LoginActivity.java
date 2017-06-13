@@ -91,8 +91,8 @@ public class LoginActivity extends AbsBaseActivity {
         hashMap.put("systemCode",MyConfig.SYSTEMCODE);
         mSubscription.add(RetrofitUtils.getLoaderServer().UserLogin("805043", StringUtils.getJsonToString(hashMap) )
                 .compose(RxTransformerHelper.applySchedulerResult(this))
+                .filter( data -> data!=null)
                 .subscribe(data -> {
-                    if(data!=null){
                         SPUtilHelpr.saveUserToken(data.getToken());
                         SPUtilHelpr.saveUserId(data.getUserId());
 
@@ -100,7 +100,7 @@ public class LoginActivity extends AbsBaseActivity {
                             MainActivity.open(this);
                             finish();
                         }
-                    }
+
                 },Throwable::printStackTrace));
 
 

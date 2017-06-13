@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
+import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelSelectActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.SurroundingMenuSeletActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
@@ -50,6 +52,8 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 
+import static com.chengdai.ehealthproject.weigit.appmanager.MyConfig.HOTELTYPE;
+
 
 /**周边
  * Created by 李先俊 on 2017/6/8.
@@ -63,7 +67,8 @@ public class SurroundingFragment extends BaseLazyFragment{
     private StoreTypeListAdapter mStoreTypeAdapter;
     private SurroundingStoreTypeAdapter mStoreMenuAdapter;
 
-    private int mStoreStart=0;
+    private int mStoreStart=1;
+    private LocationModel locationModel;
 
     /**
      * 获得fragment实例
@@ -103,7 +108,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         mBinding.springviewSurrounding.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                mStoreStart=0;
+                mStoreStart=1;
 
                 storeTypeRequest(null);
 
@@ -155,7 +160,14 @@ public class SurroundingFragment extends BaseLazyFragment{
             if(mStoreMenuAdapter!=null){
                 StoreTypeModel model= (StoreTypeModel) mStoreMenuAdapter.getItem(position);
                 if(model!=null){
-                    SurroundingMenuSeletActivity.open(mActivity,model.getCode());
+
+                    if(HOTELTYPE.equals(model.getType())){  //酒店类型
+                        HotelSelectActivity.open(mActivity);
+                    }else{
+                        SurroundingMenuSeletActivity.open(mActivity,model.getCode());
+                    }
+
+
                 }
             }
 
@@ -206,11 +218,20 @@ public class SurroundingFragment extends BaseLazyFragment{
     protected void lazyLoad() {
         if (isCreate){
 
+            locationModel = SPUtilHelpr.getLocationInfo();
+
             storeTypeRequest(mActivity);
 
             bannerDataRequest(mActivity);
 
             getStoreListRequest(mActivity,1);
+
+
+            if(locationModel!=null && !TextUtils.isEmpty(locationModel.getCityName())){
+                mBinding.tvLocation.setText(locationModel.getCityName());
+            }else{
+                mBinding.tvLocation.setText(R.string.txt_change_city);
+            }
 
             if(mBinding!=null && mBinding.banner!=null){
                 mBinding.banner.start();
@@ -234,10 +255,11 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetBanner("806052", StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
+                .filter(banners -> banners!=null)
                 .map(banners -> {
                     List images=new ArrayList();
                     for(BannerModel ba:banners){
-                        if(ba !=null && !TextUtils.isEmpty(ba.getPic())) images.add(MyConfig.IMGURL+ba.getPic());
+                        if(ba !=null && !TextUtils.isEmpty(ba.getPic())) images.add(ba.getPic());
                     }
                     return images;
 
@@ -256,14 +278,21 @@ public class SurroundingFragment extends BaseLazyFragment{
     /**
      * 获取商户列表
      * @param act
-     * @param lopdType 加载类型 1 下拉 2上拉
+     * @param loadType 加载类型 1 下拉 2上拉
      */
-    public void getStoreListRequest(Activity act,int lopdType){
+    public void getStoreListRequest(Activity act,int loadType){
        Map map=new HashMap();
 
         map.put("userId",SPUtilHelpr.getUserId());
-        map.put("city","杭州");
-        map.put("area","余杭区");
+
+        if(locationModel !=null){
+            map.put("province", locationModel.getProvinceName());
+            map.put("city", locationModel.getCityName());
+            map.put("area", locationModel.getAreaName());
+            map.put("longitude", locationModel.getLatitude());
+            map.put("latitude", locationModel.getLongitud());
+        }
+
         map.put("start",mStoreStart+"");
         map.put("limit","10");
         map.put("companyCode",MyConfig.COMPANYCODE);
@@ -274,8 +303,10 @@ public class SurroundingFragment extends BaseLazyFragment{
 
                 .compose(RxTransformerHelper.applySchedulerResult(act))
 
+              .filter(storeListModel -> storeListModel!=null)
+
                 .subscribe(storeListModel -> {
-                    if(lopdType==1){
+                    if(loadType==1){
                         if(storeListModel.getList()==null || storeListModel.getList().size()==0){ //分页
 
                             return;
@@ -284,7 +315,7 @@ public class SurroundingFragment extends BaseLazyFragment{
 
                     }else{
                         if(storeListModel.getList()==null || storeListModel.getList().size()==0 ){ //分页
-                            if(mStoreStart>0){
+                            if(mStoreStart>1){
                                 mStoreStart--;
                             }
                             return;
@@ -317,6 +348,8 @@ public class SurroundingFragment extends BaseLazyFragment{
         mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
+
+                .filter(storeTypeModels -> storeTypeModels!=null)
 
                 .subscribe(r -> {
                     mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,r);

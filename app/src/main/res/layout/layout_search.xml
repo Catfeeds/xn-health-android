@@ -25,7 +25,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:src="@mipmap/icon" />
+            android:src="@mipmap/search" />
 
         <EditText
             android:id="@+id/edit_serchView"

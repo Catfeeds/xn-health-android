@@ -117,7 +117,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="15dp"
-            android:background="@mipmap/icon" />
+            android:background="@mipmap/yuepay" />
 
         <TextView
             android:id="@+id/txt_balace"
@@ -156,7 +156,7 @@
         android:layout_height="50dp">
 
         <ImageView
-            android:background="@mipmap/icon"
+            android:background="@mipmap/zufubao"
             android:layout_marginLeft="15dp"
             android:layout_width="25dp"
             android:layout_height="25dp" />
@@ -196,7 +196,7 @@
         android:layout_height="50dp">
 
         <ImageView
-            android:src="@mipmap/icon"
+            android:src="@mipmap/weixin"
             android:layout_marginLeft="15dp"
             android:layout_width="25dp"
             android:layout_height="25dp" />

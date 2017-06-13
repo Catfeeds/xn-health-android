@@ -132,7 +132,8 @@ public abstract class AbsBaseActivity extends BaseActivity {
     }
 
     public void hintTitleView() {
-        visibility(findViewById(R.id.fram_title));
+      FrameLayout frameLayout= (FrameLayout) findViewById(R.id.fram_title);
+        frameLayout.setVisibility(View.GONE);
     }
 
     /**
@@ -165,6 +166,8 @@ public abstract class AbsBaseActivity extends BaseActivity {
        }
 
     }
+
+
 
     /**
      * 设置title right 图片点击事件

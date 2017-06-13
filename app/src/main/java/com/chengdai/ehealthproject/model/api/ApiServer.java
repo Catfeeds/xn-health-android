@@ -4,6 +4,7 @@ package com.chengdai.ehealthproject.model.api;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
@@ -112,6 +113,16 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<IsSuccessModes>> DZRequest(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取酒店list数据
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<HotelListModel>> GetHotelList(@Field("code") String code, @Field("json") String  json);
 
 
 }

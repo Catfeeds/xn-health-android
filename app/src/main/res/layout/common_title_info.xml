@@ -19,6 +19,7 @@
             android:textSize="18sp" />
 
         <FrameLayout
+            android:visibility="gone"
            android:paddingLeft="15dp"
             android:id="@+id/fram_img_back"
             android:layout_width="44dp"

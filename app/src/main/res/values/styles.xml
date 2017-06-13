@@ -100,6 +100,12 @@
         <item name="android:background">@color/gray</item>
     </style>
 
+    <style name="while_line">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/whilte_80</item>
+    </style>
+
 
     <!--短的分割线styles设置-->
     <style name="style_split_vline">

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
@@ -21,6 +23,9 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney;
+import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney2;
+
 /**
  * Created by 李先俊 on 2017/6/12.
  */
@@ -34,6 +39,8 @@ public class PayActivity extends AbsBaseActivity {
     private String  mStoreCode;
 
     private Double mDiscountMoney=0.0;
+
+    private int mPayType=1;
 
     /**
      * 打开当前页面
@@ -78,25 +85,28 @@ public class PayActivity extends AbsBaseActivity {
      */
     private void initPayTypeSelectState() {
 
-        ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_,mBinding.imgBalace);
-        ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgWeixin);
-        ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgZhifubao);
+        ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
+        ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+        ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
 
         mBinding.linBalace.setOnClickListener(v -> {
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_,mBinding.imgBalace);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgWeixin);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgZhifubao);
+            mPayType=1;
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
         });
      mBinding.linWeipay.setOnClickListener(v -> {
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgBalace);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_,mBinding.imgWeixin);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgZhifubao);
+            mPayType=2;
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
         });
 
      mBinding.linZhifubao.setOnClickListener(v -> {
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgBalace);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_un,mBinding.imgWeixin);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.good_hand_,mBinding.imgZhifubao);
+           mPayType=3;
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+            ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
         });
 
 
@@ -105,23 +115,49 @@ public class PayActivity extends AbsBaseActivity {
 
 
     private void initViews() {
+
+        mBinding.edtPrice.setFilters(new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (source.equals(".") && dest.toString().length() == 0) {
+                    return "0.";
+                }
+                if (dest.toString().contains(".")) {
+                    int index = dest.toString().indexOf(".");
+                    int mlength = dest.toString().substring(index).length();
+                    if (mlength == 3) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        }});
+
         mBinding.tvRate.setText((int)(rate*10)+"折");
 
         mBinding.txtPay.setOnClickListener(v -> {
             if(SPUtilHelpr.isLogin(this)){
-                payRequest();
-            }
 
+                if(mPayType != 1){
+                    showToast("暂未开通此支付功能");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(mBinding.edtPrice.getText().toString())){
+                    showToast("请输入消费金额");
+                    return;
+                }
+
+                payRequest(mPayType);
+            }
         });
 
         RxTextView.textChanges(mBinding.edtPrice).subscribe(charSequence -> {
             if(!TextUtils.isEmpty(charSequence.toString())){
 
-                mDiscountMoney= (Float.valueOf(charSequence.toString())*0.7);
+                mDiscountMoney= (Double.valueOf(charSequence.toString())*rate);
 
-                mBinding.txtDiscountMoney.setText(mDiscountMoney+"");
-
-                LogUtil.E("钱"+doubleFormatMoney(mDiscountMoney));
+                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney(mDiscountMoney)+"");
 
             }else{
                 mDiscountMoney=0.0;
@@ -131,7 +167,7 @@ public class PayActivity extends AbsBaseActivity {
         });
     }
 
-    private void payRequest() {
+    private void payRequest(int PayType) {
 /*// 用户编号（必填）
     private String userId;
 
@@ -148,8 +184,8 @@ public class PayActivity extends AbsBaseActivity {
 
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("storeCode", mStoreCode);
-        map.put("amount",mDiscountMoney*1000);
-        map.put("payType","1");
+        map.put("amount",doubleFormatMoney2(mDiscountMoney)*1000);
+        map.put("payType",PayType);
 
         mSubscription.add(RetrofitUtils.getLoaderServer().Pay("808271", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
@@ -163,11 +199,6 @@ public class PayActivity extends AbsBaseActivity {
 
                 },Throwable::printStackTrace));
 
-    }
-    public static String doubleFormatMoney(double money){
-        DecimalFormat df = new DecimalFormat("#######0.000");
-        String showMoney = df.format((money/1000));
-        return showMoney.substring(0,showMoney.length()-1);
     }
 
 }

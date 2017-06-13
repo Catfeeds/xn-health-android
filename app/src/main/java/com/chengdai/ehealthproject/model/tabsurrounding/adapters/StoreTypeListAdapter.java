@@ -96,7 +96,11 @@ public class StoreTypeListAdapter extends CommonAdapter {
             map.put("userId", SPUtilHelpr.getUserId());
 
             RetrofitUtils.getLoaderServer().DZRequest("808240", StringUtils.getJsonToString(map))
+
                     .compose(RxTransformerHelper.applySchedulerResult(mContext))
+
+                    .filter(isSuccessModes -> isSuccessModes!=null)
+
                     .subscribe(baseResponseModel -> {
 
                         if(storeListModel!=null && baseResponseModel.isSuccess()){

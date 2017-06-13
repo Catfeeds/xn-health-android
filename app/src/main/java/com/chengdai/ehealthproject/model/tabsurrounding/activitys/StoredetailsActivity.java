@@ -8,21 +8,22 @@ import android.os.Bundle;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
-import com.chengdai.ehealthproject.databinding.ActivityStoreTypeBinding;
-import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import org.simple.eventbus.EventBus;
-import org.simple.eventbus.Subscriber;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**商户详情
@@ -37,6 +38,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
     private StoreDetailsModel mStoreDetailsModel;
 
+    private List<String> imgs;
 
     /**
      * 打开当前页面
@@ -92,6 +94,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
             //点赞和取消点赞
             RetrofitUtils.getLoaderServer().DZRequest("808240", StringUtils.getJsonToString(map))
                     .compose(RxTransformerHelper.applySchedulerResult(this))
+                    .filter(isSuccessModes -> isSuccessModes!=null)
                     .subscribe(baseResponseModel -> {
                         if(mStoreDetailsModel!=null && baseResponseModel.isSuccess()){
                             if(mStoreDetailsModel.isDZ()){
@@ -135,12 +138,24 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
                 .compose(RxTransformerHelper.applySchedulerResult(this))
 
+               .filter(storeDetailsModel -> storeDetailsModel!=null)
+
                 .subscribe(storeListModel -> {
+
                     mStoreDetailsModel=storeListModel;
-                    ImgUtils.loadImgURL(this,MyConfig.IMGURL+storeListModel.getPic(),mBinding.imgDetail);
+
+                    imgs= Arrays.asList(storeListModel.getPic().split("\\|\\|"));
+
+                    //设置图片集合
+                    mBinding.bannerStoreDetail.setImages(imgs);
+                    mBinding.bannerStoreDetail.setImageLoader(new GlideImageLoader());
+                    //banner设置方法全部调用完毕时最后调用
+                    mBinding.bannerStoreDetail.start();
+                    mBinding.bannerStoreDetail.startAutoPlay();
+
+
 
                     mBinding.tvStoreName.setText(storeListModel.getName());
-
                     mBinding.tvDescription.setText(storeListModel.getSlogan());
                     mBinding.tvDescription2.setText(storeListModel.getDescription());
 
@@ -150,6 +165,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
                     mBinding.tvDzsum.setText(storeListModel.getTotalDzNum()+"");
 
+                    ImgUtils.loadImgURL(this,MyConfig.IMGURL+storeListModel.getPic(),mBinding.imgTxtDetails);
 
                     if(storeListModel.isDZ()){
                         ImgUtils.loadImgId(this,R.mipmap.good_hand_,mBinding.imgDz);

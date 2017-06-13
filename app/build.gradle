@@ -62,4 +62,10 @@ dependencies {
 
     /*事件总线*/
     compile 'org.simple:androideventbus:1.0.5.1'
+
+     ///高德定位
+    compile 'com.amap.api:location:latest.integration'
+    /*磁盘缓存*/
+    compile 'com.jakewharton:disklrucache:2.0.2'
+    'com.zzhoujay.richtext:richtext:2.5.2'
 }

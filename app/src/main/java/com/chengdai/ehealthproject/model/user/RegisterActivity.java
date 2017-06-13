@@ -160,16 +160,14 @@ public class RegisterActivity extends AbsBaseActivity {
 
         mSubscription.add(RetrofitUtils.getLoaderServer().UserRegister("805041",StringUtils.getJsonToString(hashMap) )
                 .compose(RxTransformerHelper.applySchedulerResult(this))
+                .filter( data -> data!=null)
                 .subscribe(data -> {
-                    if(data!=null){
-
                         if(!TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
                             showWarnListen("注册成功",view -> {
                                 LoginActivity.open(this);
                                 finish();
                             });
                         }
-                    }
                 },Throwable::printStackTrace));
 
 

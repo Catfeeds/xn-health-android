@@ -18,6 +18,7 @@
     <string name="txt_register_read">我已阅读并同意遵守法律申明和隐私条款</string>
     <string name="txt_all">全部</string>
     <string name="txt_pay">支付</string>
+    <string name="txt_change_city">选择城市</string>
 
 
     <string-array name="store_type">

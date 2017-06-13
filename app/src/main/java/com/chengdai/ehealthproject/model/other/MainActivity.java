@@ -7,9 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseActivity;
+import com.chengdai.ehealthproject.base.BaseLocationActivity;
 import com.chengdai.ehealthproject.databinding.ActivityMainBinding;
+import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthcircle.HealthCircleFragment;
 import com.chengdai.ehealthproject.model.healthmanager.fragments.HealthManagerFragment;
@@ -17,8 +20,14 @@ import com.chengdai.ehealthproject.model.healthstore.HealthStoreFragment;
 import com.chengdai.ehealthproject.model.tabmy.MyFragment;
 import com.chengdai.ehealthproject.model.tabsurrounding.SurroundingFragment;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
+import com.chengdai.ehealthproject.uitls.DiskLruCacheHelper;
+import com.chengdai.ehealthproject.uitls.LogUtil;
+import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxRadioGroup;
+
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +36,7 @@ import java.util.List;
  * 主页面
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseLocationActivity {
 
     private ActivityMainBinding mainBinding;
 
@@ -43,10 +52,48 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void locationSuccessful(AMapLocation aMapLocation) {
+        LocationModel locationModel  = new LocationModel(aMapLocation.getCountry(),
+                aMapLocation.getProvince(),aMapLocation.getCity(),aMapLocation.getDistrict(),aMapLocation.getLatitude()+"",aMapLocation.getLongitude()+"");
+        SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
+
+        showToast("定位成功");
+
+    }
+
+    @Override
+    protected void locationFailure(AMapLocation aMapLocation) {
+        SPUtilHelpr.saveLocationInfo("");
+        LogUtil.E("定位失败"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
+    }
+
+    @Override
+    protected void onNegativeButton() {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+//        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);;
+
+        addMainView(mainBinding.getRoot());
+
+        hintTitleView();
+
         initViewState();
+
+         startLocation();
+    }
+
+    /**
+     * 启动定位
+     * @param i
+     */
+    @Subscriber(tag="EventStartLocationMainActivity")
+    public void startLocationEvenbus(int i){
+        startLocation();
     }
 
 
@@ -91,5 +138,11 @@ public class MainActivity extends BaseActivity {
 
           },Throwable::printStackTrace));
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SPUtilHelpr.saveLocationInfo("");
     }
 }

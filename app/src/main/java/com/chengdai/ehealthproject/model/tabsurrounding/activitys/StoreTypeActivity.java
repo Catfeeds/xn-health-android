@@ -10,16 +10,24 @@ import android.widget.LinearLayout;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreTypeBinding;
+import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.chengdai.ehealthproject.weigit.appmanager.MyConfig.HOTELTYPE;
 
 /**商户类型列表
  * Created by 李先俊 on 2017/6/12.
@@ -30,15 +38,26 @@ public class StoreTypeActivity extends AbsBaseActivity {
     private ActivityStoreTypeBinding mBinding;
     private StoreTypeListAdapter mAdapter;
 
+    private int mStoreStart=1;
+
+    private String mCategory; //接口查询大类
+
+    private String mType;//接口查询小类
+
+
     /**
      * 打开当前页面
      * @param context
+     * @param mCategory 大类
+     * @param mType 小类
      */
-    public static void open(Context context){
+    public static void open(Context context,String mCategory,String mType){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,StoreTypeActivity.class);
+        intent.putExtra("mCategory",mCategory);
+        intent.putExtra("mType",mType);
         context.startActivity(intent);
     }
 
@@ -54,12 +73,16 @@ public class StoreTypeActivity extends AbsBaseActivity {
 
         setTopTitle(getString(R.string.store_type_list));
 
+        if(getIntent() !=  null){
+            mType=getIntent().getStringExtra("mType");
+            mCategory=getIntent().getStringExtra("mCategory");
+        }
 
         initViews();
 
         setSubLeftImgState(true);
 
-        getStoreListRequest();
+        getStoreListRequest(this,1);
     }
 
     private void initViews() {
@@ -68,25 +91,69 @@ public class StoreTypeActivity extends AbsBaseActivity {
 
         mBinding.lvStoreType.addHeaderView(leftHeadView,null,false);
 
+        mAdapter = new StoreTypeListAdapter(this,new ArrayList<>(),true);
+        mBinding.lvStoreType.setAdapter(mAdapter);
+
+
         mBinding.lvStoreType.setOnItemClickListener((parent, view, position, id) -> {
 
             StoreListModel.ListBean model= (StoreListModel.ListBean) mAdapter.getItem(position-mBinding.lvStoreType.getHeaderViewsCount());
-            StoredetailsActivity.open(this,model.getCode());
+
+            LogUtil.E("type"+model.getType());
+
+            if(HOTELTYPE.equals(model.getType())){  //酒店类型
+                HotelSelectActivity.open(this);
+            }else{
+                StoredetailsActivity.open(this,model.getCode());
+            }
 
         });
+
+
+        mBinding.springvew.setType(SpringView.Type.FOLLOW);
+        mBinding.springvew.setGive(SpringView.Give.TOP);
+        mBinding.springvew.setHeader(new DefaultHeader(this));
+        mBinding.springvew.setFooter(new DefaultFooter(this));
+
+
+        mBinding.springvew.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                mStoreStart=1;
+                getStoreListRequest(null,1);
+                mBinding.springvew.onFinishFreshAndLoad();
+            }
+
+            @Override
+            public void onLoadmore() {
+                mStoreStart++;
+                getStoreListRequest(null,2);
+                mBinding.springvew.onFinishFreshAndLoad();
+            }
+        });
+
     }
 
 
     /**
      * 获取商户列表
      */
-    public void getStoreListRequest(){
+    public void getStoreListRequest(Context context,int loadType){
+        LocationModel locationModel =SPUtilHelpr.getLocationInfo();
         Map map=new HashMap();
-
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("city","杭州");
-        map.put("area","余杭区");
-        map.put("start","0");
+        map.put("category", mCategory);
+        map.put("type", mType);
+
+/*        if(locationModel !=null){
+            map.put("province", locationModel.getProvinceName());
+            map.put("city", locationModel.getCityName());
+            map.put("area", locationModel.getAreaName());
+            map.put("longitude", locationModel.getLatitude());
+            map.put("latitude", locationModel.getLongitud());
+        }*/
+
+        map.put("start",mStoreStart+"");
         map.put("limit","10");
         map.put("limit","10");
         map.put("companyCode", MyConfig.COMPANYCODE);
@@ -94,11 +161,30 @@ public class StoreTypeActivity extends AbsBaseActivity {
 
        mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreList("808217", StringUtils.getJsonToString(map))
 
-                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .compose(RxTransformerHelper.applySchedulerResult(context))
+
+               .filter(storeListModel -> storeListModel!=null)
 
                 .subscribe(storeListModel -> {
-                    mAdapter = new StoreTypeListAdapter(this,storeListModel.getList(),true);
-                    mBinding.lvStoreType.setAdapter(mAdapter);
+
+                    if(loadType==1){
+                        if(storeListModel.getList()==null || storeListModel.getList().size()==0){ //分页
+
+                            return;
+                        }
+                        mAdapter.setData(storeListModel.getList());
+
+                    }else{
+                        if(storeListModel.getList()==null || storeListModel.getList().size()==0 ){ //分页
+                            if(mStoreStart>1){
+                                mStoreStart--;
+                            }
+                            return;
+                        }
+
+                        mAdapter.addData(storeListModel.getList());
+                    }
+
 
                 },Throwable::printStackTrace));
 

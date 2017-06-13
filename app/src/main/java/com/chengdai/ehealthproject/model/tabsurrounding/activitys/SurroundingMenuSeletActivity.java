@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySurroundingMenuselectBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingMenuLeftAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
@@ -37,6 +38,9 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
     private String mTypeName;
 
+    private String mCategory; //用户点击大类
+
+
     /**
      * 打开当前页面
      * @param context
@@ -58,7 +62,10 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
         mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_surrounding_menuselect, null, false);
 
-        if(getIntent()!=null) mTypeName= getIntent().getStringExtra("typeName");
+        if(getIntent()!=null) {
+            mTypeName= getIntent().getStringExtra("typeName");
+            mCategory =mTypeName;
+        }
 
         addMainView(mBinding.getRoot());
 
@@ -88,7 +95,11 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
         //先请求一级菜单，再请求二级菜单
        mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map))
+
                 .compose(RxTransformerListHelper.applySchedulerResult(null))
+
+               .filter(storeTypeModels -> storeTypeModels!=null)
+
                 .flatMap(storeTypeModels -> {
                     LayoutInflater inflater = LayoutInflater.from(this);
                     LinearLayout  leftHeadView = (LinearLayout) inflater.inflate(R.layout.list_menu_left_head, null);//得到头部的布局
@@ -110,14 +121,6 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
                 },Throwable::printStackTrace));
 
 
-         mBinding.listMenuLeft.setOnItemClickListener((parent, view, position, id) -> {
-
-             int newPosition=position-mBinding.listMenuLeft.getHeaderViewsCount();
-
-            StoreTypeModel model= (StoreTypeModel) mAdapterLeftMenuList.getItem(newPosition);
-            mAdapterLeftMenuList.setTypeName(model.getCode());
-            rightMenuRequest(model.getCode());
-        });
 
     }
 
@@ -135,9 +138,27 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
             int newPosition=position-mBinding.listMenuRight.getHeaderViewsCount();
 
-            StoreTypeActivity.open(this);
+            StoreTypeModel model= (StoreTypeModel) mAdapterRightMenuList.getItem(newPosition);
+
+            if(model !=null){
+                StoreTypeActivity.open(this,mCategory,model.getCode());
+            }
 
         });
+
+        mBinding.listMenuLeft.setOnItemClickListener((parent, view, position, id) -> {
+
+            int newPosition=position-mBinding.listMenuLeft.getHeaderViewsCount();
+
+            StoreTypeModel model= (StoreTypeModel) mAdapterLeftMenuList.getItem(newPosition);
+            if( model != null) {
+                mCategory=model.getCode();
+                mAdapterLeftMenuList.setTypeName(model.getCode());
+                rightMenuRequest(model.getCode());
+            }
+
+        });
+
     }
 
 
@@ -155,6 +176,7 @@ public class SurroundingMenuSeletActivity extends AbsBaseActivity {
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map2))
                 .compose(RxTransformerListHelper.applySchedulerResult(this))
+                .filter(storeTypeModels -> storeTypeModels!=null )
                 .subscribe(names -> {
                     mAdapterRightMenuList.setDatas(names);
 
