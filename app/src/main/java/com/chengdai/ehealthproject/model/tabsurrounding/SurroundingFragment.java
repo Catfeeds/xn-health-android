@@ -18,6 +18,7 @@ import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelSelectActivity;
+import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.SurroundingMenuSeletActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
@@ -151,7 +152,12 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         mBinding.lvStoreList.setOnItemClickListener((parent, view, position, id) -> {
             StoreListModel.ListBean model= (StoreListModel.ListBean) mStoreTypeAdapter.getItem(position-mBinding.lvStoreList.getHeaderViewsCount());
-            StoredetailsActivity.open(mActivity,model.getCode());
+
+            if(HOTELTYPE.equals(model.getType())){  //酒店类型
+                HoteldetailsActivity.open(mActivity,model.getCode());
+            }else{
+                StoredetailsActivity.open(mActivity,model.getCode());
+            }
 
         });
 
@@ -161,13 +167,7 @@ public class SurroundingFragment extends BaseLazyFragment{
                 StoreTypeModel model= (StoreTypeModel) mStoreMenuAdapter.getItem(position);
                 if(model!=null){
 
-                    if(HOTELTYPE.equals(model.getType())){  //酒店类型
-                        HotelSelectActivity.open(mActivity);
-                    }else{
-                        SurroundingMenuSeletActivity.open(mActivity,model.getCode());
-                    }
-
-
+                    SurroundingMenuSeletActivity.open(mActivity,model.getCode());
                 }
             }
 
@@ -292,7 +292,7 @@ public class SurroundingFragment extends BaseLazyFragment{
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
         }
-
+        map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
         map.put("companyCode",MyConfig.COMPANYCODE);

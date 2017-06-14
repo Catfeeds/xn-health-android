@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreTypeBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -22,6 +23,8 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,12 +104,13 @@ public class StoreTypeActivity extends AbsBaseActivity {
 
             LogUtil.E("type"+model.getType());
 
+
+
             if(HOTELTYPE.equals(model.getType())){  //酒店类型
-                HotelSelectActivity.open(this);
+                HoteldetailsActivity.open(this,model.getCode());
             }else{
                 StoredetailsActivity.open(this,model.getCode());
             }
-
         });
 
 
@@ -152,7 +156,7 @@ public class StoreTypeActivity extends AbsBaseActivity {
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
         }*/
-
+        map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
         map.put("limit","10");
@@ -191,6 +195,16 @@ public class StoreTypeActivity extends AbsBaseActivity {
 
     }
 
+    /**
+     * 点赞效果刷新
+     * @param
+     */
+    @Subscriber(tag="dzUpdate") //  StoreTypeListAdapter StoredetailsActivity
+    public void dzUpdate(DZUpdateModel dzUpdateModel){
+        if(mAdapter!=null){
+            mAdapter.setDzInfo(dzUpdateModel);
+        }
 
+    }
 
 }

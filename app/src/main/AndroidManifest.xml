@@ -85,6 +85,19 @@
         <activity android:name=".model.tabsurrounding.activitys.HotelSelectActivity"
             android:launchMode="singleTask"
             />
+    //酒店详情
+        <activity android:name=".model.tabsurrounding.activitys.HoteldetailsActivity"
+            android:launchMode="singleTask"
+            />
+
+   //酒店订单创建
+        <activity android:name=".model.tabsurrounding.activitys.HotelOrderCreateActivity"
+            android:launchMode="singleTask"
+            />
+   //酒店订单支付
+        <activity android:name=".model.tabsurrounding.activitys.HotelOrderPayActivity"
+            android:launchMode="singleTask"
+            />
 
 
 

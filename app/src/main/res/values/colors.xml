@@ -15,8 +15,9 @@
     <color name="whilte_80">#d2fcfcfc</color>
 
     <color name="text_gray">#999999</color>
-    <color name="text_hint_color">#858585</color>
+    <color name="text_hint_color">#a1a1a1</color>
     <color name="text_gray2">#7f7e7e</color>
+    <color name="text_gray3">#626262</color>
     <color name="text_color">#484848</color>
 
     <color name="regi_read">#45a74f</color>
@@ -36,6 +37,7 @@
     <color name="c_ff000">#FF0000</color>
     <color name="state_color_blue">#3DA3FF</color>
     <color name="state_color_white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
     <!--共用的蓝色-->
     <color name="color_common_blue">#3DA3FF</color>

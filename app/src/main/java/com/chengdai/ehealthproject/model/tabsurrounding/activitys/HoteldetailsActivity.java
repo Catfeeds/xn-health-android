@@ -7,22 +7,21 @@ import android.os.Bundle;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
+import com.chengdai.ehealthproject.databinding.ActivityHotelDetailsBinding;
+import com.chengdai.ehealthproject.databinding.ActivityHotelSelectBinding;
 import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
-import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
-import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zzhoujay.richtext.RichText;
 
 import org.simple.eventbus.EventBus;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +30,9 @@ import java.util.Map;
  * Created by 李先俊 on 2017/6/12.
  */
 
-public class StoredetailsActivity extends AbsBaseActivity {
+public class HoteldetailsActivity extends AbsBaseActivity {
 
-    private ActivityStoreDetailsBinding mBinding;
+    private ActivityHotelDetailsBinding mBinding;
 
     private String storeCode;
 
@@ -50,7 +49,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
         if(context==null){
             return;
         }
-        Intent intent=new Intent(context,StoredetailsActivity.class);
+        Intent intent=new Intent(context,HoteldetailsActivity.class);
 
         intent.putExtra("storeCode",storeCode);
 
@@ -62,7 +61,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_store_details, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_hotel_details, null, false);
 
         addMainView(mBinding.getRoot());
 
@@ -74,10 +73,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
         getStoreDetailsRequest(storeCode);
 
-        mBinding.btnPay.setOnClickListener(v -> {
-            if(mStoreDetailsModel!=null)
-                 PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
-        });
+        initViews();
 
 
         mBinding.imgDz.setOnClickListener(v -> {
@@ -121,6 +117,18 @@ public class StoredetailsActivity extends AbsBaseActivity {
                     },Throwable::printStackTrace);
 
 
+        });
+
+    }
+
+    private void initViews() {
+        mBinding.btnPay.setOnClickListener(v -> {
+            if(mStoreDetailsModel!=null)
+                 PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
+        });
+
+        mBinding.btnBookHotel.setOnClickListener(v -> {
+            HotelSelectActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getPic(),mStoreDetailsModel.getName());
         });
 
     }

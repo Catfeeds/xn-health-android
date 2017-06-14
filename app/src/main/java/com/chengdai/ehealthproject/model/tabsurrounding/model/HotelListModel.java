@@ -1,13 +1,17 @@
 package com.chengdai.ehealthproject.model.tabsurrounding.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by 李先俊 on 2017/6/13.
  */
 
-public class HotelListModel {
+public class HotelListModel implements Parcelable {
 
 
     /**
@@ -74,7 +78,7 @@ public class HotelListModel {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Parcelable {
         /**
          * code : FW2017061314370406755962
          * name : *房间名称
@@ -238,5 +242,103 @@ public class HotelListModel {
         public void setSystemCode(String systemCode) {
             this.systemCode = systemCode;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.code);
+            dest.writeString(this.name);
+            dest.writeString(this.category);
+            dest.writeString(this.type);
+            dest.writeString(this.storeCode);
+            dest.writeString(this.storeUser);
+            dest.writeString(this.slogan);
+            dest.writeString(this.advPic);
+            dest.writeString(this.pic);
+            dest.writeString(this.description);
+            dest.writeSerializable(this.price);
+            dest.writeString(this.status);
+            dest.writeInt(this.totalNum);
+            dest.writeInt(this.remainNum);
+            dest.writeString(this.companyCode);
+            dest.writeString(this.systemCode);
+        }
+
+        public ListBean() {
+        }
+
+        protected ListBean(Parcel in) {
+            this.code = in.readString();
+            this.name = in.readString();
+            this.category = in.readString();
+            this.type = in.readString();
+            this.storeCode = in.readString();
+            this.storeUser = in.readString();
+            this.slogan = in.readString();
+            this.advPic = in.readString();
+            this.pic = in.readString();
+            this.description = in.readString();
+            this.price = (BigDecimal) in.readSerializable();
+            this.status = in.readString();
+            this.totalNum = in.readInt();
+            this.remainNum = in.readInt();
+            this.companyCode = in.readString();
+            this.systemCode = in.readString();
+        }
+
+        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
+            @Override
+            public ListBean createFromParcel(Parcel source) {
+                return new ListBean(source);
+            }
+
+            @Override
+            public ListBean[] newArray(int size) {
+                return new ListBean[size];
+            }
+        };
     }
+
+    public HotelListModel() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.pageNO);
+        dest.writeInt(this.start);
+        dest.writeInt(this.pageSize);
+        dest.writeInt(this.totalCount);
+        dest.writeInt(this.totalPage);
+        dest.writeTypedList(this.list);
+    }
+
+    protected HotelListModel(Parcel in) {
+        this.pageNO = in.readInt();
+        this.start = in.readInt();
+        this.pageSize = in.readInt();
+        this.totalCount = in.readInt();
+        this.totalPage = in.readInt();
+        this.list = in.createTypedArrayList(ListBean.CREATOR);
+    }
+
+    public static final Creator<HotelListModel> CREATOR = new Creator<HotelListModel>() {
+        @Override
+        public HotelListModel createFromParcel(Parcel source) {
+            return new HotelListModel(source);
+        }
+
+        @Override
+        public HotelListModel[] newArray(int size) {
+            return new HotelListModel[size];
+        }
+    };
 }

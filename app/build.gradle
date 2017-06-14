@@ -67,5 +67,5 @@ dependencies {
     compile 'com.amap.api:location:latest.integration'
     /*磁盘缓存*/
     compile 'com.jakewharton:disklrucache:2.0.2'
-    'com.zzhoujay.richtext:richtext:2.5.2'
+    compile 'com.zzhoujay.richtext:richtext:2.5.2'
 }

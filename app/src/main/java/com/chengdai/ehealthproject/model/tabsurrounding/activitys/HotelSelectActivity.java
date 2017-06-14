@@ -4,21 +4,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityHotelSelectBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.HotelSelectListAdapter;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelOrderCreateModel;
+import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.chengdai.ehealthproject.weigit.popwindows.SelectUseDayPopup;
+import com.youth.banner.Banner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static com.chengdai.ehealthproject.uitls.DateUtil.DATE_YMD;
 
 /**房间选择
  * Created by 李先俊 on 2017/6/13.
@@ -29,15 +41,32 @@ public class HotelSelectActivity extends AbsBaseActivity{
     private ActivityHotelSelectBinding mBinding;
     private HotelSelectListAdapter hotelAdapter;
 
+    private String mHotelAddress;
+    private String mHotelName;
+
+    private List<String> mImgs=new ArrayList<>();
+    private TextView tvIntoData;
+    private TextView tvOutData;
+    private TextView tvDateSum;
+
+    private Date mStartDate;
+    private Date mEndDate;
+
+
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context, String mHotelAddress, String imgs,String name){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,HotelSelectActivity.class);
+
+        intent.putExtra("mHotelAddress",mHotelAddress);
+        intent.putExtra("mImages",imgs);
+        intent.putExtra("hotelName",name);
+
         context.startActivity(intent);
     }
 
@@ -52,6 +81,10 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
         setTopTitle("酒店选择");
 
+        setSubLeftImgState(true);
+
+        getIntentData();
+
         initViews();
 
         getHotelDataRequest();
@@ -62,9 +95,9 @@ public class HotelSelectActivity extends AbsBaseActivity{
      */
     private void initViews() {
 
-        LayoutInflater inflater = LayoutInflater.from(this);
-        LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.layout_hotel_select_head, null);//得到头部的布局
-        mBinding.listHotelSelect.addHeaderView(leftHeadView,null,false);
+        LinearLayout mHeadView = initHeadViews();
+
+        mBinding.listHotelSelect.addHeaderView(mHeadView,null,false);
 
         hotelAdapter = new HotelSelectListAdapter(this,new ArrayList<>());
 
@@ -78,8 +111,108 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
        });
 
+        mBinding.btnBookHotel.setOnClickListener(v -> {
+
+            if(mStartDate ==null){
+
+                showToast("请选择入住时间");
+
+                return;
+            }
+
+            if(mEndDate == null){
+
+                showToast("请选择离开时间");
+
+                return;
+            }
+
+            if(DateUtil.isNewer2(mStartDate,mEndDate)){
+                showToast("离开时间不能小于入住时间");
+                return;
+            }
+
+           if(DateUtil.isNewer( DateUtil.parse(DateUtil.format(new Date(),DateUtil.DATE_YMD)),mStartDate)){
+                showToast("入住时间不能小于当前时间");
+                return;
+            }
 
 
+            HotelOrderCreateModel hmodel=new
+                    HotelOrderCreateModel(tvIntoData.getText().toString(),tvOutData.getText().toString(),
+                    DateUtil.getDatesBetweenTwoDate(mStartDate,mEndDate).size()-1
+                    ,mHotelAddress,hotelAdapter.getSelectItem());
+
+            hmodel.setStartData("2017-06-18");
+            hmodel.setEndDate("2017-06-19");
+
+            hmodel.setHotelName(mHotelName);
+
+            HotelOrderCreateActivity.open(this,hmodel);
+        });
+
+
+
+    }
+
+    /**
+     * 初始化HeaderView
+     * @return
+     */
+    @NonNull
+    private LinearLayout initHeadViews() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LinearLayout mHeadView = (LinearLayout) inflater.inflate(R.layout.layout_hotel_select_head, null);//得到头部的布局
+
+
+        //出发日期点击
+
+        RelativeLayout intoLayout= (RelativeLayout) mHeadView.findViewById(R.id.relayout_into_data);
+        tvIntoData = (TextView) mHeadView.findViewById(R.id.tv_into_select_data);
+        tvOutData = (TextView) mHeadView.findViewById(R.id.tv_out_select_data);
+        tvDateSum = (TextView) mHeadView.findViewById(R.id.tv_datesum);
+
+//        tvIntoData.setText(DateUtil.format(new Date(),DATE_FMT_YMD));
+//        tvOutData.setText(DateUtil.format(new Date(),DATE_FMT_YMD));
+
+        intoLayout.setOnClickListener(v -> {
+            new SelectUseDayPopup(this,false)
+                    .setSureOnClick((selected, showData) -> {
+                        mStartDate = DateUtil.parse(selected,DATE_YMD);
+                        tvIntoData.setText(showData);
+                        if(mEndDate != null && mStartDate!=null){
+                            int sum=DateUtil.getDatesBetweenTwoDate(mStartDate,mEndDate).size()-1;
+                            tvDateSum.setText("共"+sum+"晚");
+                        }
+
+            }).showPopupWindow();
+        });
+
+       //离开
+        RelativeLayout outLayout= (RelativeLayout) mHeadView.findViewById(R.id.relayout_out_data);
+
+        outLayout.setOnClickListener(v -> {
+            new SelectUseDayPopup(this,false)
+                    .setSureOnClick((selected, showData) -> {
+                        mEndDate = DateUtil.parse(selected,DATE_YMD);
+                        tvOutData.setText(showData);
+                        if(mEndDate != null && mStartDate!=null){
+                            int sum=DateUtil.getDatesBetweenTwoDate(mStartDate,mEndDate).size()-1;
+                            tvDateSum.setText("共"+sum+"晚");
+                        }
+
+                    }).showPopupWindow();
+        });
+
+
+        Banner bannerView= (Banner) mHeadView.findViewById(R.id.banner);
+        //设置图片集合
+        bannerView.setImages(mImgs);
+        bannerView.setImageLoader(new GlideImageLoader());
+        //banner设置方法全部调用完毕时最后调用
+        bannerView.start();
+        bannerView.startAutoPlay();
+        return mHeadView;
     }
 
     /**
@@ -91,6 +224,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
 //        map.put("category","FL2017061016211611994528");
 //        map.put("type","FL2017061219492431865712");
         map.put("start","0");
+        map.put("status","2");
         map.put("limit","10");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
@@ -107,4 +241,17 @@ public class HotelSelectActivity extends AbsBaseActivity{
     }
 
 
+    public void getIntentData() {
+
+        if(getIntent()!=null){
+
+            mHotelAddress=getIntent().getStringExtra("mHotelAddress");
+            mHotelName=getIntent().getStringExtra("hotelName");
+
+            mImgs=StringUtils.splitAsList(getIntent().getStringExtra("mImages"),"\\|\\|");
+
+
+        }
+
+    }
 }

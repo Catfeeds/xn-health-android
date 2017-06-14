@@ -106,6 +106,12 @@
         <item name="android:background">@color/whilte_80</item>
     </style>
 
+    <style name="split_line_10">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+
 
     <!--短的分割线styles设置-->
     <style name="style_split_vline">
@@ -141,5 +147,13 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
+    <declare-styleable name="ScrollPicker">
+        <attr name="min_text_size" format="dimension" />
+        <attr name="max_text_size" format="dimension" />
+        <attr name="start_color" format="color" />
+        <attr name="end_color" format="color" />
+        <attr name="visible_item_count" format="integer" />
+        <!-- 是否循环滚动，默认为true，开启-->
+        <attr name="is_circulation" format="boolean" />
+    </declare-styleable>
 </resources>

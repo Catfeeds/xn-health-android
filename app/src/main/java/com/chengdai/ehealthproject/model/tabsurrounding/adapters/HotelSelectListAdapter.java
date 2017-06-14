@@ -18,7 +18,7 @@ import java.util.List;
 
 public class HotelSelectListAdapter extends CommonAdapter{
 
-    private int mSelectPosition=-1;
+    private int mSelectPosition=0;
 
     public void setSelectPosition(int mSelectPosition) {
         this.mSelectPosition = mSelectPosition;
@@ -26,7 +26,12 @@ public class HotelSelectListAdapter extends CommonAdapter{
     }
 
     public HotelListModel.ListBean getSelectItem(){
-        return (HotelListModel.ListBean) mDatas.get(mSelectPosition);
+
+        if(mSelectPosition>-1 && mSelectPosition<mDatas.size()){
+            return (HotelListModel.ListBean) mDatas.get(mSelectPosition);
+        }
+
+        return  null;
     }
 
     public HotelSelectListAdapter(Context context, List<HotelListModel.ListBean> datas) {
