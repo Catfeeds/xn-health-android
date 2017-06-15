@@ -156,4 +156,18 @@
         <!-- 是否循环滚动，默认为true，开启-->
         <attr name="is_circulation" format="boolean" />
     </declare-styleable>
+
+    <style name="MyTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/tab_select</item>
+        <item name="tabIndicatorHeight">1dp</item>
+        <item name="tabTextAppearance">@style/MyTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/tab_select</item>
+    </style>
+
+    <!--接送机Tablayout 字体大小-->
+    <style name="MyTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
 </resources>

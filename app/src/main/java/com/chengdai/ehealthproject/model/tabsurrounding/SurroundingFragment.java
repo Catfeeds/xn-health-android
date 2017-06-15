@@ -249,6 +249,7 @@ public class SurroundingFragment extends BaseLazyFragment{
     private void bannerDataRequest(Context context) {
         Map map=new HashMap();
 
+        map.put("location","1");//0普通1推荐
         map.put("type","2");
         map.put("systemCode", MyConfig.SYSTEMCODE);
         map.put("token", SPUtilHelpr.getUserToken());
@@ -285,13 +286,13 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         map.put("userId",SPUtilHelpr.getUserId());
 
-        if(locationModel !=null){
+/*        if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
-        }
+        }*/
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
@@ -344,7 +345,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode", MyConfig.SYSTEMCODE);
 
-        //先请求一级菜单，再请求二级菜单
+
         mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreType("808007", StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerListHelper.applySchedulerResult(context))

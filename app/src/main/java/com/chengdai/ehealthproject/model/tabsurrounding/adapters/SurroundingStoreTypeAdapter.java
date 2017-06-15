@@ -21,8 +21,10 @@ public class SurroundingStoreTypeAdapter extends CommonAdapter {
 
 
     public void setDatas(List<StoreTypeModel> datas) {
-        this.mDatas = datas;
-        notifyDataSetChanged();
+        if(datas!=null){
+            this.mDatas = datas;
+            notifyDataSetChanged();
+        }
     }
 
     public SurroundingStoreTypeAdapter(Context context, List<StoreTypeModel> datas) {

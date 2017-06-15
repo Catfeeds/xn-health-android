@@ -2,9 +2,11 @@ package com.chengdai.ehealthproject.model.tabsurrounding.adapters;
 
 import android.content.Context;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
+import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelRoomDetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
 import com.zhy.adapter.abslistview.CommonAdapter;
@@ -61,6 +63,21 @@ public class HotelSelectListAdapter extends CommonAdapter{
         TextView tvHotelSlogan=viewHolder.getView(R.id.tv_hotel_slogan);
         CheckBox checkBox=viewHolder.getView(R.id.checkbox_hotel_select);
 
+        FrameLayout fraHotelCheckBox=viewHolder.getView(R.id.fra_hotel_checkbox);
+        FrameLayout fraHotelItemInfo=viewHolder.getView(R.id.fra_hotel_item_info);
+
+        fraHotelCheckBox.setOnClickListener(v -> {
+            mSelectPosition=position;
+            notifyDataSetChanged();
+        });
+
+        fraHotelItemInfo.setOnClickListener(v -> {
+
+            HotelRoomDetailsActivity.open(mContext,model);
+
+        });
+
+
         if(mSelectPosition == position){
             checkBox.setChecked(true);
         }else{
@@ -72,9 +89,7 @@ public class HotelSelectListAdapter extends CommonAdapter{
             tvPrice.setText(model.getPrice().doubleValue()+"");
             tvHotelNum.setText(model.getRemainNum ()+"");
             tvHotelSlogan.setText(model.getSlogan ());
-
         }
-
 
     }
 

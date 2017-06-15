@@ -114,7 +114,7 @@ public class RegisterActivity extends AbsBaseActivity {
         });
 
         mBinding.tvGologin.setOnClickListener(v -> {
-            LoginActivity.open(this);
+            LoginActivity.open(this,true);
             finish();
         });
     }
@@ -164,7 +164,7 @@ public class RegisterActivity extends AbsBaseActivity {
                 .subscribe(data -> {
                         if(!TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
                             showWarnListen("注册成功",view -> {
-                                LoginActivity.open(this);
+                                LoginActivity.open(this,true);
                                 finish();
                             });
                         }

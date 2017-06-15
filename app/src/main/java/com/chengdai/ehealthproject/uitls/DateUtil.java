@@ -132,8 +132,12 @@ public class DateUtil {
 
 
     public static String format(Date date, String fmt) {
-        SimpleDateFormat sdf = new SimpleDateFormat(fmt);
-        return sdf.format(date);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+            return sdf.format(date);
+        }catch (Exception e){
+            return "";
+        }
     }
 
     public static String format(Date date) {
@@ -182,26 +186,6 @@ public class DateUtil {
             e.printStackTrace();
         }
         return date;
-    }
-
-    /**
-     * 将字符串时间转换为年月日格式
-     *
-     * @param time
-     * @return
-     */
-    public static String showTime(String time) {
-        SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
-        try {
-            return sf2.format(sf1.parse(time));
-        } catch (ParseException e) {
-            // str1返回的时间格式有误
-            e.printStackTrace();
-        }
-        return null;
     }
 
 

@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
+import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
+import com.chengdai.ehealthproject.model.dataadapters.TablayoutAdapter;
+import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
 
 /**我的
  * Created by 李先俊 on 2017/6/8.
@@ -17,7 +20,7 @@ import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
 
 public class MyFragment extends BaseLazyFragment{
 
-    private FragmentHealthManagerBinding managerBinding;
+    private FragmentMyBinding mBinding;
 
     private boolean isCreate;
 
@@ -36,12 +39,17 @@ public class MyFragment extends BaseLazyFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        managerBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_health_manager, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_my, null, false);
+
+
+        mBinding.tvSurroundingService.setOnClickListener(v -> {
+
+            HotelOrderStateLookActivity.open(mActivity);
+        });
+
 
         isCreate=true;
-
-        return managerBinding.getRoot();
-
+        return mBinding.getRoot();
     }
 
     @Override
@@ -49,6 +57,7 @@ public class MyFragment extends BaseLazyFragment{
 
         if (isCreate){
 
+            isCreate=false;
         }
 
     }

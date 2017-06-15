@@ -23,7 +23,7 @@ public class OnOkFailure {
         if (context == null) {
             Intent intent = new Intent(BaseApplication.getInstance(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("data", false);
+            intent.putExtra("isStartMain", false);
             BaseApplication.getInstance().startActivity(intent);
             ToastUtil.show(BaseApplication.getInstance(),errorMessage);
             return;
@@ -31,7 +31,7 @@ public class OnOkFailure {
 
         try{
             if(context instanceof  Activity){
-                LoginActivity.open(context);
+                LoginActivity.open(context,false);
             }
 
         }catch (Exception e){

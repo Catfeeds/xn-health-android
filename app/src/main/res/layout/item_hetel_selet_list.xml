@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    
-    <CheckBox
-        android:id="@+id/checkbox_hotel_select"
-        android:layout_marginLeft="15dp"
-        android:layout_gravity="center_vertical"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:focusable="false"
-        android:clickable="false"
-        />
 
+    <FrameLayout
+        android:id="@+id/fra_hotel_checkbox"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:layout_gravity="center_vertical"
+            android:id="@+id/checkbox_hotel_select"
+            android:layout_marginLeft="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:focusable="false"
+            android:clickable="false"
+            />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/fra_hotel_item_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginRight="80dp"
         android:orientation="vertical">
 
@@ -114,7 +127,8 @@
     </LinearLayout>
 
 
+    </FrameLayout>
 
 
 
-</FrameLayout>
+</LinearLayout>

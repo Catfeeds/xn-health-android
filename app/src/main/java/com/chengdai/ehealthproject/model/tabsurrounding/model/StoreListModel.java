@@ -1,5 +1,7 @@
 package com.chengdai.ehealthproject.model.tabsurrounding.model;
 
+import com.chengdai.ehealthproject.uitls.StringUtils;
+
 import java.util.List;
 
 /**商户列表list model
@@ -193,6 +195,17 @@ public class StoreListModel {
             return advPic;
         }
 
+        public String getSplitAdvPic(){
+
+            List<String> list= StringUtils.splitAsList(advPic,"\\|\\|");
+
+            if(list.size()>1){
+                return list.get(0);
+            }
+
+            return advPic;
+
+        }
         public void setAdvPic(String advPic) {
             this.advPic = advPic;
         }
@@ -200,6 +213,19 @@ public class StoreListModel {
         public String getPic() {
             return pic;
         }
+
+        public String getSplitPic(){
+
+            List<String> list= StringUtils.splitAsList(pic,"\\|\\|");
+
+            if(list.size()>1){
+                return list.get(0);
+            }
+
+            return pic;
+
+        }
+
 
         public void setPic(String pic) {
             this.pic = pic;

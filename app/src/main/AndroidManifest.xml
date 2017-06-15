@@ -99,7 +99,24 @@
             android:launchMode="singleTask"
             />
 
+   //酒店房间详情
+        <activity android:name=".model.tabsurrounding.activitys.HotelRoomDetailsActivity"
+            android:launchMode="singleTask"
+            />
 
+     //酒店订单查看
+        <activity android:name=".model.tabmy.activitys.HotelOrderStateLookActivity"
+            android:launchMode="singleTask"
+            />
+
+        //酒店订单详情查看
+        <activity android:name=".model.tabmy.activitys.OrderDetailsActivity"
+            android:launchMode="singleTask"
+            />
+       //酒店订单详情查看
+        <activity android:name=".model.tabmy.activitys.HotelOrderDetailsActivity"
+            android:launchMode="singleTask"
+            />
 
     </application>
 

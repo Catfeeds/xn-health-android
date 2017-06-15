@@ -26,8 +26,11 @@ public class SurroundingMenuLeftAdapter extends CommonAdapter {
     }
 
     public void setDatas(List<StoreTypeModel> datas) {
-        this.mDatas = datas;
-        notifyDataSetChanged();
+        if(datas!=null){
+            this.mDatas = datas;
+            notifyDataSetChanged();
+        }
+
     }
 
     public SurroundingMenuLeftAdapter(Context context, int layoutId, List<StoreTypeModel> datas, String typeCode) {

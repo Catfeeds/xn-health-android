@@ -38,8 +38,11 @@ public class StoreTypeListAdapter extends CommonAdapter {
     }
 
     public void setData(List<StoreListModel.ListBean> datas){
-        this.mDatas=datas;
-        notifyDataSetChanged();
+        if(datas!=null){
+            this.mDatas=datas;
+            notifyDataSetChanged();
+        }
+
     }
 
     public void addData(List<StoreListModel.ListBean> datas){
@@ -133,7 +136,7 @@ public class StoreTypeListAdapter extends CommonAdapter {
 
         if(storeListModel != null){
 
-            ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+ storeListModel.getAdvPic(),imgTitle);
+            ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+ storeListModel.getSplitAdvPic(),imgTitle);
 
             tvTitle.setText(storeListModel.getName());
 

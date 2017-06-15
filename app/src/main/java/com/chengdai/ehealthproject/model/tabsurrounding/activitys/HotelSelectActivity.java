@@ -22,6 +22,9 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.popwindows.SelectUseDayPopup;
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -51,6 +54,10 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
     private Date mStartDate;
     private Date mEndDate;
+
+    private int mPageStart=1;
+
+
 
 
     /**
@@ -87,13 +94,36 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
         initViews();
 
-        getHotelDataRequest();
+        getHotelDataRequest(this);
     }
 
     /**
      *
      */
     private void initViews() {
+
+
+        mBinding.springview.setType(SpringView.Type.FOLLOW);
+        mBinding.springview.setGive(SpringView.Give.TOP);
+        mBinding.springview.setHeader(new DefaultHeader(this));
+        mBinding.springview.setFooter(new DefaultFooter(this));
+
+        mBinding.springview.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageStart=1;
+                getHotelDataRequest(null);
+                mBinding.springview.onFinishFreshAndLoad();
+            }
+
+            @Override
+            public void onLoadmore() {
+                mPageStart++;
+                getHotelDataRequest(null);
+                mBinding.springview.onFinishFreshAndLoad();
+            }
+        });
+
 
         LinearLayout mHeadView = initHeadViews();
 
@@ -103,15 +133,18 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
         mBinding.listHotelSelect.setAdapter(hotelAdapter);
 
-        mBinding.listHotelSelect.setOnItemClickListener((parent, view, position, id) -> {
-
+/*        mBinding.listHotelSelect.setOnItemClickListener((parent, view, position, id) -> {
            if(hotelAdapter !=null){
                hotelAdapter.setSelectPosition(position-mBinding.listHotelSelect.getHeaderViewsCount());
            }
 
-       });
+       });*/
 
         mBinding.btnBookHotel.setOnClickListener(v -> {
+
+            if(hotelAdapter.getSelectItem() ==null){
+                showToast("暂无可用房间");
+            }
 
             if(mStartDate ==null){
 
@@ -218,23 +251,36 @@ public class HotelSelectActivity extends AbsBaseActivity{
     /**
      * 获取商户详情
      */
-    public void getHotelDataRequest(){
+    public void getHotelDataRequest(Context context){
         Map map=new HashMap();
 
 //        map.put("category","FL2017061016211611994528");
 //        map.put("type","FL2017061219492431865712");
-        map.put("start","0");
+        map.put("start",mPageStart);
         map.put("status","2");
         map.put("limit","10");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetHotelList("808415",StringUtils.getJsonToString(map))
-                .compose(RxTransformerHelper.applySchedulerResult(this))
-                .filter(hotelListModel -> hotelListModel!=null && hotelListModel.getList()!=null)
+                .compose(RxTransformerHelper.applySchedulerResult(context))
                 .subscribe(hotelListModel -> {
+
+                    if(hotelListModel == null || hotelListModel.getList()==null || hotelListModel.getList().size()==0){
+                        if(mPageStart>1){
+                            mPageStart--;
+                        }
+                        return;
+                    }
+
                     if(hotelAdapter !=null ){
-                        hotelAdapter.setData(hotelListModel.getList());
+
+                        if(mPageStart==1){
+                            hotelAdapter.setData(hotelListModel.getList());
+                        }else{
+                            hotelAdapter.addData(hotelListModel.getList());
+                        }
+
                     }
                 },Throwable::printStackTrace));
 

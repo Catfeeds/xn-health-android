@@ -131,7 +131,9 @@ public class MainActivity extends BaseLocationActivity {
                            mainBinding.pagerMain.setCurrentItem(3,false);
                            break;
                        case R.id.radio_main_tab_5:
-                           LoginActivity.open(this);
+
+                           if(!SPUtilHelpr.isLogin(this)) LoginActivity.open(this,false);
+
                            mainBinding.pagerMain.setCurrentItem(4,false);
                            break;
                    }

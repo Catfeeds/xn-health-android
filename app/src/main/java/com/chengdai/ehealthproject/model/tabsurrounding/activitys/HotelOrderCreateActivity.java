@@ -89,9 +89,15 @@ public class HotelOrderCreateActivity extends AbsBaseActivity {
     }
 
     /**
-     *
+     *确认订单
      */
     private void createOrderRequest() {
+
+        if(!SPUtilHelpr.isLogin(this)){
+
+            return;
+        }
+
 
         Map<String,String> map=new HashMap();
 
@@ -138,7 +144,7 @@ public class HotelOrderCreateActivity extends AbsBaseActivity {
     private void setShowData() {
 
         if(mHotelModel !=null ){
-            ImgUtils.loadImgURL(this, MyConfig.IMGURL+mHotelModel.getPic(),mBinding.imgHotelInfo);
+            ImgUtils.loadImgURL(this, MyConfig.IMGURL+mHotelModel.getSplitAdvPic(),mBinding.imgHotelInfo);
 
             mBinding.tvHotelSize.setText(mHotelModel.getName());
             mBinding.tvHotelInfo.setText(mHotelModel.getSlogan());

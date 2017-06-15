@@ -180,6 +180,10 @@ public class PayActivity extends AbsBaseActivity {
     // 支付类型（必填） 1-余额支付  2-微信APP支付 3-支付宝APP支付
     private String payType;*/
 
+  if(!SPUtilHelpr.isLogin(this)){
+    return;
+  }
+
         Map map=new HashMap();
 
         map.put("userId", SPUtilHelpr.getUserId());

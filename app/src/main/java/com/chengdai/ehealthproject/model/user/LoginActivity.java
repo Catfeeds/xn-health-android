@@ -29,15 +29,19 @@ public class LoginActivity extends AbsBaseActivity {
 
     private ActivityLoginBinding mBinding;
 
+    private boolean isStartMain;
+
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context,boolean isStartMain){
         if(context==null){
             return;
         }
-        context.startActivity(new Intent(context,LoginActivity.class));
+        Intent intent=new Intent(context,LoginActivity.class);
+        intent.putExtra("isStartMain",isStartMain);
+        context.startActivity(intent);
     }
 
 
@@ -97,7 +101,10 @@ public class LoginActivity extends AbsBaseActivity {
                         SPUtilHelpr.saveUserId(data.getUserId());
 
                         if(!TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
-                            MainActivity.open(this);
+                            if(isStartMain){
+                                MainActivity.open(this);
+                            }
+                      
                             finish();
                         }
 

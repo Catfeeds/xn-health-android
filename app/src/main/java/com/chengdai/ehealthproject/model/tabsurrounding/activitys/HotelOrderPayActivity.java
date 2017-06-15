@@ -4,17 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityHotelOrderPayBinding;
-import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelOrderCreateModel;
+import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelOrderPayModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import java.util.HashMap;
@@ -90,7 +90,7 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
 
             mBinding.tvHotelSize.setText(mPayModel.getmHotelModel().getName());
             mBinding.tvHotelInfo.setText(mPayModel.getmHotelModel().getSlogan());
-            ImgUtils.loadImgURL(this,mPayModel.getmHotelModel().getAdvPic(),mBinding.imgHotelInfo);
+            ImgUtils.loadImgURL(this, MyConfig.IMGURL+mPayModel.getmHotelModel().getSplitAdvPic(),mBinding.imgHotelInfo);
 
             mBinding.tvPrice.setText(getString(R.string.price_sing)+mPayModel.getmHotelModel().getPrice());
         }
@@ -118,7 +118,10 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
                         .subscribe(payState -> {
 
                             if(payState!=null && payState.isSuccess()){
-                                showToast("支付成功");
+
+                                MainActivity.open(this);
+                                finish();
+
                             }else{
                                 showToast("支付失败");
                             }
