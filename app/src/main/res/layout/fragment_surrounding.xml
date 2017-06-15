@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/layout_search"/>
+        <include  android:id="@+id/search" layout="@layout/layout_search_no_input"/>
 
 
     <com.youth.banner.Banner

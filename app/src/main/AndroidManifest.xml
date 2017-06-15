@@ -117,6 +117,10 @@
         <activity android:name=".model.tabmy.activitys.HotelOrderDetailsActivity"
             android:launchMode="singleTask"
             />
+        //周边搜索
+        <activity android:name=".model.common.model.activitys.SearchActivity"
+            android:launchMode="singleTask"
+            />
 
     </application>
 

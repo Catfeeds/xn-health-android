@@ -17,6 +17,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelSelectActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
@@ -175,6 +176,11 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         mStoreTypeAdapter = new StoreTypeListAdapter(mActivity,new ArrayList<>(),false);
         mBinding.lvStoreList.setAdapter(mStoreTypeAdapter);
+
+
+        mBinding.search.linSerchtop.setOnClickListener(v -> {
+            SearchActivity.open(mActivity,"周边搜索");
+        });
 
 
     }
