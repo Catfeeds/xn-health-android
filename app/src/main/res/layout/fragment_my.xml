@@ -14,15 +14,37 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"/>
 
-    <TextView
-        android:paddingLeft="15dp"
-        android:id="@+id/tv_surrounding_service"
-        android:gravity="center_vertical"
-        android:text="周边服务"
+
+
+    <LinearLayout
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="45dp" />
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        
+        <TextView
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:id="@+id/tv_surrounding_service"
+            android:gravity="center_vertical"
+            android:text="周边服务"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
 
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
 
 
 

@@ -167,6 +167,8 @@ public class RegisterActivity extends AbsBaseActivity {
                                 LoginActivity.open(this,true);
                                 finish();
                             });
+                        }else{
+                            showToast("注册失败");
                         }
                 },Throwable::printStackTrace));
 

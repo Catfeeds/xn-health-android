@@ -57,7 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/tv_slogan"
-        android:layout_width="80dp"
+        android:layout_width="65dp"
         android:layout_height="wrap_content"
         android:id="@+id/frameLayout">
 
