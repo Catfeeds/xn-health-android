@@ -13,6 +13,7 @@ import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
 import java.util.Date;
@@ -76,7 +77,7 @@ public class OrderDetailsActivity extends AbsBaseActivity{
 
         mBinding.tvCode.setText(mShowData.getCode());
         mBinding.tvOrderState.setText("已支付");
-        mBinding.tvPrice.setText(getString(R.string.price_sing)+mShowData.getPrice());
+        mBinding.tvPrice.setText(getString(R.string.price_sing)+ StringUtils.showPrice(mShowData.getPrice()));
 
 
         if(mShowData.getStore()!=null){

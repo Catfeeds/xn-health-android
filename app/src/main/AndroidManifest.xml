@@ -60,6 +60,10 @@
         <activity android:name=".model.user.RegisterActivity"
             android:launchMode="singleTask"
             />
+        //找回密码
+        <activity android:name=".model.user.FindPassWordActivity"
+            android:launchMode="singleTask"
+            />
         //登录
         <activity android:name=".model.user.LoginActivity"
             android:launchMode="singleTask"
@@ -121,7 +125,18 @@
         <activity android:name=".model.common.model.activitys.SearchActivity"
             android:launchMode="singleTask"
             />
-
+        //Web
+        <activity android:name=".model.common.model.activitys.WebViewActivity"
+            android:launchMode="singleTask"
+            />
+        //设置界面
+        <activity android:name=".model.tabmy.activitys.SettingActivity"
+            android:launchMode="singleTask"
+            />
+        //城市选择
+        <activity android:name=".model.common.model.activitys.CitySelectActivity"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

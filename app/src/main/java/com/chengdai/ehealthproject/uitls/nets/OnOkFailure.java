@@ -18,7 +18,7 @@ public class OnOkFailure {
 
     public static void StartDoFailure(final Context context, String errorMessage) {
 
-        ToastUtil.show(context,"请先登录");
+//        ToastUtil.show(context,"请先登录");
 
         if (context == null) {
             Intent intent = new Intent(BaseApplication.getInstance(), LoginActivity.class);

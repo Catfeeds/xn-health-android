@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.chengdai.ehealthproject.uitls.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -101,7 +102,7 @@ public class OrderRecordModel implements Parcelable {
         private String code;
         private String userId;
         private String storeCode;
-        private int price;
+        private BigDecimal price;
         private int backAmount;
         private String createDatetime;
         private String status;
@@ -140,11 +141,11 @@ public class OrderRecordModel implements Parcelable {
             this.storeCode = storeCode;
         }
 
-        public int getPrice() {
+        public BigDecimal getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(BigDecimal price) {
             this.price = price;
         }
 
@@ -950,6 +951,9 @@ public class OrderRecordModel implements Parcelable {
             };
         }
 
+        public ListBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -960,7 +964,7 @@ public class OrderRecordModel implements Parcelable {
             dest.writeString(this.code);
             dest.writeString(this.userId);
             dest.writeString(this.storeCode);
-            dest.writeInt(this.price);
+            dest.writeSerializable(this.price);
             dest.writeInt(this.backAmount);
             dest.writeString(this.createDatetime);
             dest.writeString(this.status);
@@ -976,14 +980,11 @@ public class OrderRecordModel implements Parcelable {
             dest.writeParcelable(this.storeUser, flags);
         }
 
-        public ListBean() {
-        }
-
         protected ListBean(Parcel in) {
             this.code = in.readString();
             this.userId = in.readString();
             this.storeCode = in.readString();
-            this.price = in.readInt();
+            this.price = (BigDecimal) in.readSerializable();
             this.backAmount = in.readInt();
             this.createDatetime = in.readString();
             this.status = in.readString();
@@ -999,7 +1000,7 @@ public class OrderRecordModel implements Parcelable {
             this.storeUser = in.readParcelable(StoreUserBean.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+        public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
             @Override
             public ListBean createFromParcel(Parcel source) {
                 return new ListBean(source);

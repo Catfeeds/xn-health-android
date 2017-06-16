@@ -40,6 +40,8 @@ public class MainActivity extends BaseLocationActivity {
 
     private ActivityMainBinding mainBinding;
 
+    private int mTabIndex=1;//记录用户点击下标 用于未登录时恢复状态
+
     /**
      * 打开当前页面
      * @param context
@@ -57,7 +59,9 @@ public class MainActivity extends BaseLocationActivity {
                 aMapLocation.getProvince(),aMapLocation.getCity(),aMapLocation.getDistrict(),aMapLocation.getLatitude()+"",aMapLocation.getLongitude()+"");
         SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
 
-        showToast("定位成功");
+        LogUtil.E("定位成功");
+
+//        showToast("定位成功");
 
     }
 
@@ -115,7 +119,48 @@ public class MainActivity extends BaseLocationActivity {
 
         mainBinding.pagerMain.setOffscreenPageLimit(fragments.size());
 
-       mSubscription.add( RxRadioGroup.checkedChanges(mainBinding.layoutMainButtom.radiogroup) //点击切换
+        mainBinding.layoutMainButtom.radioMainTab1.setOnClickListener(v -> {
+            mainBinding.pagerMain.setCurrentItem(0,false);
+            mTabIndex=1;
+        });
+        mainBinding.layoutMainButtom.radioMainTab2.setOnClickListener(v -> {
+            mainBinding.pagerMain.setCurrentItem(1,false);
+            mTabIndex=2;
+        });
+        mainBinding.layoutMainButtom.radioMainTab3.setOnClickListener(v -> {
+            mainBinding.pagerMain.setCurrentItem(2,false);
+            mTabIndex=3;
+        });
+        mainBinding.layoutMainButtom.radioMainTab4.setOnClickListener(v -> {
+            mainBinding.pagerMain.setCurrentItem(3,false);
+            mTabIndex=4;
+        });
+         mainBinding.layoutMainButtom.radioMainTab5.setOnClickListener(v -> {
+             if(!SPUtilHelpr.isLogin(this)){
+
+                 switch (mTabIndex){
+                     case 1:
+                         mainBinding.layoutMainButtom.radioMainTab1.setChecked(true);
+                         break;
+                     case 2:
+                         mainBinding.layoutMainButtom.radioMainTab2.setChecked(true);
+                         break;
+                     case 3:
+                         mainBinding.layoutMainButtom.radioMainTab3.setChecked(true);
+                         break;
+                     case 4:
+                         mainBinding.layoutMainButtom.radioMainTab4.setChecked(true);
+                         break;
+                 }
+
+                 LoginActivity.open(this,true);
+             }else{
+                 mTabIndex=5;
+                 mainBinding.pagerMain.setCurrentItem(4,false);
+             }
+        });
+
+/*       mSubscription.add( RxRadioGroup.checkedChanges(mainBinding.layoutMainButtom.radiogroup) //点击切换
                .subscribe(integer -> {
                    switch (integer){
                        case R.id.radio_main_tab_1:
@@ -132,13 +177,17 @@ public class MainActivity extends BaseLocationActivity {
                            break;
                        case R.id.radio_main_tab_5:
 
-                           if(!SPUtilHelpr.isLogin(this)) LoginActivity.open(this,false);
+                           if(!SPUtilHelpr.isLogin(this)){
+                               LoginActivity.open(this,false);
+                           }else{
+                               mainBinding.pagerMain.setCurrentItem(4,false);
+                           }
 
-                           mainBinding.pagerMain.setCurrentItem(4,false);
+
                            break;
                    }
 
-          },Throwable::printStackTrace));
+          },Throwable::printStackTrace));*/
 
     }
 

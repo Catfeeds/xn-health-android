@@ -1,8 +1,10 @@
 package com.chengdai.ehealthproject.model.api;
 
 
+import com.chengdai.ehealthproject.model.common.model.AmountModel;
 import com.chengdai.ehealthproject.model.common.model.CodeModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
+import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
@@ -164,6 +166,36 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<HotelOrderRecordModel>> HotelOrderRecordRequest(@Field("code") String code, @Field("json") String  json);
+
+/**
+     * 获取账户余额
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<AmountModel>> getAmount(@Field("code") String code, @Field("json") String  json);
+
+/**
+     * 获取账户余额
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<UserInfoModel>> GetUserInfo(@Field("code") String code, @Field("json") String  json);
+
+/**
+     * 找回密码
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> FindPassWord(@Field("code") String code, @Field("json") String  json);
 
 
 }

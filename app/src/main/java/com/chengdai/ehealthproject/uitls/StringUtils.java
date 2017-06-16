@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +66,16 @@ public class StringUtils {
         {
             return sourceDate;
         }
+    }
+
+    public static String showPrice(BigDecimal big){
+
+        if(big !=null){
+            return (big.doubleValue()/1000)+"";
+        }
+
+        return "0";
+
     }
 
 }

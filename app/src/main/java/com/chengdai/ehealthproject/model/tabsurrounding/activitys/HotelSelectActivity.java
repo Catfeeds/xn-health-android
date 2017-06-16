@@ -144,6 +144,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
             if(hotelAdapter.getSelectItem() ==null){
                 showToast("暂无可用房间");
+                return;
             }
 
             if(mStartDate ==null){
@@ -170,21 +171,18 @@ public class HotelSelectActivity extends AbsBaseActivity{
                 return;
             }
 
-
             HotelOrderCreateModel hmodel=new
                     HotelOrderCreateModel(tvIntoData.getText().toString(),tvOutData.getText().toString(),
                     DateUtil.getDatesBetweenTwoDate(mStartDate,mEndDate).size()-1
                     ,mHotelAddress,hotelAdapter.getSelectItem());
 
-            hmodel.setStartData("2017-06-18");
-            hmodel.setEndDate("2017-06-19");
+            hmodel.setStartData(mStartDate.toString());
+            hmodel.setEndDate(mEndDate.toString());
 
             hmodel.setHotelName(mHotelName);
 
             HotelOrderCreateActivity.open(this,hmodel);
         });
-
-
 
     }
 

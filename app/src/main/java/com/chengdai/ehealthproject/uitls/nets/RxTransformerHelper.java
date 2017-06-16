@@ -89,6 +89,7 @@ public class RxTransformerHelper {
 
                 }else {
                     if(LogUtil.isLog){
+                        LogUtil.E("请求错误"+throwable.toString());
                         errorVerify.call("0",throwable.toString());
                     }else{
                         errorVerify.call("0", "未知错误");

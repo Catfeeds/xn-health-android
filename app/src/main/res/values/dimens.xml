@@ -145,5 +145,6 @@
     <!--分割线高度设置-->
     <dimen name="splitLine_Height">0.5dp</dimen>
     <dimen name="title_height">44dp</dimen>
+    <dimen name="banner_height">220dp</dimen>
 
 </resources>

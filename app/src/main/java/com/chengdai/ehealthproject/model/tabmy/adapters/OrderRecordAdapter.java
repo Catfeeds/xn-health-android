@@ -10,6 +10,7 @@ import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -61,7 +62,7 @@ public class OrderRecordAdapter extends CommonAdapter<OrderRecordModel.ListBean>
             tvDate.setText(DateUtil.format( new Date(item.getCreateDatetime()), DateUtil.DATE_YMD));
         }
 
-        tvPrice.setText(mContext.getString(R.string.price_sing)+item.getPrice());
+        tvPrice.setText(mContext.getString(R.string.price_sing)+ StringUtils.showPrice(item.getPrice()));
 
 
         tvCode.setText(item.getCode());

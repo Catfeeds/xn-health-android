@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.chengdai.ehealthproject.uitls.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -386,7 +387,7 @@ public class HotelOrderRecordModel  {
             private String advPic;
             private String pic;
             private String description;
-            private int price;
+            private BigDecimal price;
             private String status;
             private int totalNum;
             private int remainNum;
@@ -483,11 +484,11 @@ public class HotelOrderRecordModel  {
                 this.description = description;
             }
 
-            public int getPrice() {
+            public BigDecimal getPrice() {
                 return price;
             }
 
-            public void setPrice(int price) {
+            public void setPrice(BigDecimal price) {
                 this.price = price;
             }
 
@@ -547,6 +548,9 @@ public class HotelOrderRecordModel  {
                 this.systemCode = systemCode;
             }
 
+            public ProductBean() {
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -564,7 +568,7 @@ public class HotelOrderRecordModel  {
                 dest.writeString(this.advPic);
                 dest.writeString(this.pic);
                 dest.writeString(this.description);
-                dest.writeInt(this.price);
+                dest.writeSerializable(this.price);
                 dest.writeString(this.status);
                 dest.writeInt(this.totalNum);
                 dest.writeInt(this.remainNum);
@@ -572,9 +576,6 @@ public class HotelOrderRecordModel  {
                 dest.writeInt(this.orderNo);
                 dest.writeString(this.companyCode);
                 dest.writeString(this.systemCode);
-            }
-
-            public ProductBean() {
             }
 
             protected ProductBean(Parcel in) {
@@ -588,7 +589,7 @@ public class HotelOrderRecordModel  {
                 this.advPic = in.readString();
                 this.pic = in.readString();
                 this.description = in.readString();
-                this.price = in.readInt();
+                this.price = (BigDecimal) in.readSerializable();
                 this.status = in.readString();
                 this.totalNum = in.readInt();
                 this.remainNum = in.readInt();

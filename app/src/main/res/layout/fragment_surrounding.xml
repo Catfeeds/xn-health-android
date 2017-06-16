@@ -81,7 +81,7 @@
         banner:indicator_margin="5dp"
         banner:delay_time="4000"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="@dimen/banner_height"/>
 
         <com.chengdai.ehealthproject.weigit.views.GridViewForScrollView
             android:verticalSpacing="28dp"

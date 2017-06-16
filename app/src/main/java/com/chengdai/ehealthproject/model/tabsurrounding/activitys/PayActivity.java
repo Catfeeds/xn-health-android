@@ -19,6 +19,7 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -188,7 +189,7 @@ public class PayActivity extends AbsBaseActivity {
 
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("storeCode", mStoreCode);
-        map.put("amount",doubleFormatMoney2(mDiscountMoney)*1000);
+        map.put("amount",new BigDecimal(doubleFormatMoney2(mDiscountMoney)*1000).intValue());
         map.put("payType",PayType);
 
         mSubscription.add(RetrofitUtils.getLoaderServer().Pay("808271", StringUtils.getJsonToString(map))

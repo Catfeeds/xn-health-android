@@ -11,7 +11,7 @@
     <color name="c_f2f2f4">#F2F2F4</color>
     <color name="c_e7e7e7">#E7E7E7</color>
     <color name="white">#ffffff</color>
-    <color name="gray">#E7E7E7</color>
+    <color name="gray">#ececec</color>
     <color name="whilte_80">#d2fcfcfc</color>
 
     <color name="text_gray">#999999</color>
@@ -39,6 +39,7 @@
     <color name="state_color_blue">#3DA3FF</color>
     <color name="state_color_white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="black_2">#303030</color>
 
     <!--共用的蓝色-->
     <color name="color_common_blue">#3DA3FF</color>

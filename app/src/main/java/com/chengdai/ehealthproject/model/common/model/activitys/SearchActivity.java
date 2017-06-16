@@ -14,8 +14,11 @@ import android.widget.TextView;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySearchBinding;
+import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
+import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
+import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -29,6 +32,8 @@ import com.liaoinstan.springview.widget.SpringView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.chengdai.ehealthproject.weigit.appmanager.MyConfig.HOTELTYPE;
 
 /**
  * Created by 李先俊 on 2017/6/15.
@@ -95,17 +100,16 @@ public class SearchActivity extends AbsBaseActivity {
             }
         });
 
-        mBinding.search.imgSearch.setOnClickListener(v -> {
+/*        mBinding.search.imgSearch.setOnClickListener(v -> {
 
             if(TextUtils.isEmpty(mBinding.search.editSerchView.getText().toString())){
                 showToast("请输入搜索内容");
                 return;
             }
 
-
             getStoreListRequest(this,mBinding.search.editSerchView.getText().toString());
 
-        });
+        });*/
 
         mBinding.search.editSerchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -115,7 +119,6 @@ public class SearchActivity extends AbsBaseActivity {
                 }
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     getStoreListRequest(SearchActivity.this,str);
-
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);//隐藏键盘
                     return true;
@@ -123,6 +126,18 @@ public class SearchActivity extends AbsBaseActivity {
                 return false;
             }
         });
+
+        mBinding.listlayout.listview.setOnItemClickListener((parent, view, position, id) -> {
+            StoreListModel.ListBean model= (StoreListModel.ListBean) mStoreTypeAdapter.getItem(position);
+
+            if(HOTELTYPE.equals(model.getType())){  //酒店类型
+                HoteldetailsActivity.open(this,model.getCode());
+            }else{
+                StoredetailsActivity.open(this,model.getCode());
+            }
+
+        });
+
 
     }
 
@@ -134,14 +149,14 @@ public class SearchActivity extends AbsBaseActivity {
         Map map=new HashMap();
 
         map.put("userId", SPUtilHelpr.getUserId());
-
-/*        if(locationModel !=null){
+        LocationModel  locationModel =SPUtilHelpr.getLocationInfo();
+        if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
-        }*/
+        }
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");

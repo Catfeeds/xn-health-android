@@ -12,7 +12,7 @@
 
         <com.youth.banner.Banner
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="@dimen/banner_height"
             banner:delay_time="4000"
             banner:indicator_drawable_selected="@drawable/banner_select"
             banner:indicator_drawable_unselected="@drawable/banner_un_select"

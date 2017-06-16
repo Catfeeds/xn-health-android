@@ -21,6 +21,7 @@ import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.chengdai.ehealthproject.weigit.dialog.LoadingDialog;
 
 import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -314,6 +315,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.finish();
     }
 
+    @Subscriber(tag="baseacivity_finish")  //结束当前界面
+    private void finishAll(boolean isFinish){
+        this.finish();
+    }
 
     /**
      * 设置状态栏颜色（5.0以上系统）

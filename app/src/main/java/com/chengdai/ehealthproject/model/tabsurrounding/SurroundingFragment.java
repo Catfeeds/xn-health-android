@@ -18,6 +18,7 @@ import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
+import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelSelectActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
@@ -71,6 +72,9 @@ public class SurroundingFragment extends BaseLazyFragment{
 
     private int mStoreStart=1;
     private LocationModel locationModel;
+
+    private List<String> bannerLinks=new ArrayList<>();
+
 
     /**
      * 获得fragment实例
@@ -199,7 +203,11 @@ public class SurroundingFragment extends BaseLazyFragment{
         mBinding.banner.setImageLoader(new GlideImageLoader());
 
         mBinding.banner.setOnBannerListener((position) -> {  //banner点击事件
-            ToastUtil.show(getActivity(),position+"");
+
+            if(!TextUtils.isEmpty(bannerLinks.get(position))){
+                WebViewActivity.open(mActivity,bannerLinks.get(position));
+            }
+
         });
     }
 
@@ -255,7 +263,7 @@ public class SurroundingFragment extends BaseLazyFragment{
     private void bannerDataRequest(Context context) {
         Map map=new HashMap();
 
-        map.put("location","1");//0普通1推荐
+        map.put("location","0");//0周边1推荐
         map.put("type","2");
         map.put("systemCode", MyConfig.SYSTEMCODE);
         map.put("token", SPUtilHelpr.getUserToken());
@@ -266,7 +274,11 @@ public class SurroundingFragment extends BaseLazyFragment{
                 .map(banners -> {
                     List images=new ArrayList();
                     for(BannerModel ba:banners){
-                        if(ba !=null && !TextUtils.isEmpty(ba.getPic())) images.add(ba.getPic());
+                        if(ba !=null ){
+                            images.add(ba.getPic());
+                            bannerLinks.add(ba.getUrl());
+                        }
+
                     }
                     return images;
 
@@ -292,13 +304,13 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         map.put("userId",SPUtilHelpr.getUserId());
 
-/*        if(locationModel !=null){
+        if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
-        }*/
+        }
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
@@ -375,7 +387,6 @@ public class SurroundingFragment extends BaseLazyFragment{
         if(mStoreTypeAdapter!=null){
             mStoreTypeAdapter.setDzInfo(dzUpdateModel);
         }
-
     }
 
 

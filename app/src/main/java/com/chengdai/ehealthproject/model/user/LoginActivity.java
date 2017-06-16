@@ -80,6 +80,10 @@ public class LoginActivity extends AbsBaseActivity {
 
         });
 
+        mBinding.tvFindPwd.setOnClickListener(v -> {
+            FindPassWordActivity.open(this);
+        });
+
     }
 
 

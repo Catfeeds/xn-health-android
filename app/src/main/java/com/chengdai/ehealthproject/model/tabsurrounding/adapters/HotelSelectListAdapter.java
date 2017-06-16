@@ -9,6 +9,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelRoomDetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
+import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -86,13 +87,11 @@ public class HotelSelectListAdapter extends CommonAdapter{
 
         if( model!=null ){
             tvName.setText(model.getName());
-            tvPrice.setText(model.getPrice().doubleValue()+"");
+            tvPrice.setText(StringUtils.showPrice(model.getPrice()));
             tvHotelNum.setText(model.getRemainNum ()+"");
             tvHotelSlogan.setText(model.getSlogan ());
         }
-
     }
-
 
 
 }

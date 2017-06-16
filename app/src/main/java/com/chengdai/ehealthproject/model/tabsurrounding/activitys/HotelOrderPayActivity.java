@@ -92,9 +92,8 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
             mBinding.tvHotelInfo.setText(mPayModel.getmHotelModel().getSlogan());
             ImgUtils.loadImgURL(this, MyConfig.IMGURL+mPayModel.getmHotelModel().getSplitAdvPic(),mBinding.imgHotelInfo);
 
-            mBinding.tvPrice.setText(getString(R.string.price_sing)+mPayModel.getmHotelModel().getPrice());
+            mBinding.tvPrice.setText(getString(R.string.price_sing)+StringUtils.showPrice(mPayModel.getmHotelModel().getPrice()));
         }
-
 
     }
 

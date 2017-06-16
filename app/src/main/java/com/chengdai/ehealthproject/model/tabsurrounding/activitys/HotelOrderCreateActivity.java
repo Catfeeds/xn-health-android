@@ -149,7 +149,7 @@ public class HotelOrderCreateActivity extends AbsBaseActivity {
             mBinding.tvHotelSize.setText(mHotelModel.getName());
             mBinding.tvHotelInfo.setText(mHotelModel.getSlogan());
             mBinding.tvHotelNum.setText("1间");
-            mBinding.txtDiscountMoney.setText(mHotelModel.getPrice()+"");
+            mBinding.txtDiscountMoney.setText(StringUtils.showPrice(mHotelModel.getPrice())+"");
         }
 
         if(mHotelOrderCreateModel!=null) {

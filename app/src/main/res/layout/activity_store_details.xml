@@ -22,7 +22,7 @@
      banner:indicator_margin="5dp"
      android:id="@+id/banner_store_detail"
     android:layout_width="match_parent"
-    android:layout_height="220dp">
+    android:layout_height="@dimen/banner_height">
 
 
  </com.youth.banner.Banner>

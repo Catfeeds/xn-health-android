@@ -144,7 +144,7 @@ public class HotelRoomDetailsActivity extends AbsBaseActivity {
 
         RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
 
-        mBinding.tvPrice.setText(getString(R.string.price_sing)+storeListModel.getPrice()+"");
+        mBinding.tvPrice.setText(getString(R.string.price_sing)+StringUtils.showPrice(storeListModel.getPrice()));
 
     }
 

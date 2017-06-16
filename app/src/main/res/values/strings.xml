@@ -21,6 +21,7 @@
     <string name="txt_change_city">选择城市</string>
     <string name="price_sing">￥</string>
     <string name="search">搜索</string>
+    <string name="txt_setting">设置</string>
 
 
     <string-array name="store_type">

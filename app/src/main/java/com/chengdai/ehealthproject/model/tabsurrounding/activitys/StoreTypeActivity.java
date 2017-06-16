@@ -149,13 +149,13 @@ public class StoreTypeActivity extends AbsBaseActivity {
         map.put("category", mCategory);
         map.put("type", mType);
 
-/*        if(locationModel !=null){
+        if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
-        }*/
+        }
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
