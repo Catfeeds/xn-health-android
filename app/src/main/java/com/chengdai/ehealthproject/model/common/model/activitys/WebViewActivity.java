@@ -93,11 +93,6 @@ public class WebViewActivity extends AbsBaseActivity {
         }
     }
 
-    @Override
-    public boolean getBackIsFinish() {
-        goBack();
-        return false;
-    }
 
     @Override
     public void onBackPressed() {

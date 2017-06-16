@@ -156,6 +156,8 @@ public class SearchActivity extends AbsBaseActivity {
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
+        }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+            map.put("city", SPUtilHelpr.getResetLocationInfo().getCityName());
         }
         map.put("status","2");
         map.put("start",mStoreStart+"");
@@ -172,6 +174,22 @@ public class SearchActivity extends AbsBaseActivity {
                 .filter(storeListModel -> storeListModel!=null)
 
                 .subscribe(storeListModel -> {
+
+                    if(mStoreStart ==1){
+
+                        if(storeListModel.getList()==null ){ //分页
+                            showToast("暂无搜索内容");
+                            return;
+                        }
+
+                        if(storeListModel.getList().size()==0 ){ //分页
+                            showToast("暂无搜索内容");
+                        }
+
+                        mStoreTypeAdapter.setData(storeListModel.getList());
+                        return;
+                    }
+
                     if(storeListModel.getList()==null || storeListModel.getList().size()==0 ){ //分页
                         if(mStoreStart>1){
                             mStoreStart--;
@@ -181,13 +199,7 @@ public class SearchActivity extends AbsBaseActivity {
                         return;
                     }
 
-                    if(mStoreStart ==1){
-                        mStoreTypeAdapter.setData(storeListModel.getList());
-                        return;
-                    }
-
                     mStoreTypeAdapter.addData(storeListModel.getList());
-
 
                 },Throwable::printStackTrace));
 

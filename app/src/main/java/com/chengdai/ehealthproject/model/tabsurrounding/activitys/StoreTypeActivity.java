@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
@@ -24,7 +25,8 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-import org.simple.eventbus.Subscriber;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,7 +157,10 @@ public class StoreTypeActivity extends AbsBaseActivity {
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
+        }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+            map.put("city", SPUtilHelpr.getResetLocationInfo().getCityName());
         }
+
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
@@ -172,7 +177,7 @@ public class StoreTypeActivity extends AbsBaseActivity {
                 .subscribe(storeListModel -> {
 
                     if(loadType==1){
-                        if(storeListModel.getList()==null || storeListModel.getList().size()==0){ //分页
+                        if(storeListModel.getList()==null ){ //分页
 
                             return;
                         }
@@ -199,7 +204,7 @@ public class StoreTypeActivity extends AbsBaseActivity {
      * 点赞效果刷新
      * @param
      */
-    @Subscriber(tag="dzUpdate") //  StoreTypeListAdapter StoredetailsActivity
+    @Subscribe
     public void dzUpdate(DZUpdateModel dzUpdateModel){
         if(mAdapter!=null){
             mAdapter.setDzInfo(dzUpdateModel);

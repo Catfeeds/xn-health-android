@@ -264,22 +264,22 @@ public class HotelSelectActivity extends AbsBaseActivity{
                 .compose(RxTransformerHelper.applySchedulerResult(context))
                 .subscribe(hotelListModel -> {
 
-                    if(hotelListModel == null || hotelListModel.getList()==null || hotelListModel.getList().size()==0){
-                        if(mPageStart>1){
-                            mPageStart--;
+                    if(mPageStart==1){
+                        if(hotelListModel==null || hotelListModel.getList()==null){
+                            return;
                         }
+                        hotelAdapter.setData(hotelListModel.getList());
                         return;
                     }
-
-                    if(hotelAdapter !=null ){
-
-                        if(mPageStart==1){
-                            hotelAdapter.setData(hotelListModel.getList());
-                        }else{
-                            hotelAdapter.addData(hotelListModel.getList());
+                    if(mPageStart>1){
+                        if(hotelListModel==null || hotelListModel.getList()==null || hotelListModel.getList().size()==0){
+                            mPageStart--;
+                            return;
                         }
-
+                        hotelAdapter.addData(hotelListModel.getList());
                     }
+
+
                 },Throwable::printStackTrace));
 
     }

@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -26,15 +28,15 @@ public abstract class BaseFragment extends Fragment {
         super.onAttach(context);
         mActivity = getActivity();
     }
-
+    @Subscribe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mSubscription = new CompositeDisposable();
         EventBus.getDefault().register(this);
     }
 
+    @Subscribe
     @Override
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
@@ -45,6 +47,7 @@ public abstract class BaseFragment extends Fragment {
         }
         mActivity = null;
     }
+
 
 
     /**

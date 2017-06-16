@@ -65,7 +65,7 @@ public class SideBar extends View {
             //  paint.setTypeface(Typeface.DEFAULT_BOLD);
             paint.setAntiAlias(true);
             paint.setTextSize(DensityUtil.sp2px(this.getContext(), 16f));
-            paint.setColor(Color.parseColor("#2296F0"));
+            paint.setColor(Color.parseColor("#000000"));
             // paint.setColor(Color.parseColor("#353432"));
             // 选中的状态
          /*   if (i == choose) {
@@ -108,7 +108,7 @@ public class SideBar extends View {
                         }
                         if (mTextDialog != null) {
                             mTextDialog.setText(b[c]);
-                            //  mTextDialog.setVisibility(View.VISIBLE);
+                              mTextDialog.setVisibility(View.VISIBLE);
                         }
 
                         choose = c;

@@ -1,6 +1,7 @@
 package com.chengdai.ehealthproject.uitls.nets;
 
 
+import com.chengdai.ehealthproject.BuildConfig;
 import com.chengdai.ehealthproject.model.api.ApiServer;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -57,6 +58,9 @@ public class RetrofitUtils {
      */
     public static String getBaseURL() {
 
+        if (BuildConfig.IS_DEBUG){
+
+        }
         /*121.40.48.48:5301*//*正式*/
 
         /*118.178.124.16:5301*//*测试*/

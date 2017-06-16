@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
+import com.chengdai.ehealthproject.model.common.model.CityModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.common.model.activitys.CitySelectActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelSelectActivity;
@@ -46,7 +48,9 @@ import com.youth.banner.BannerConfig;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
-import org.simple.eventbus.Subscriber;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -186,6 +190,9 @@ public class SurroundingFragment extends BaseLazyFragment{
             SearchActivity.open(mActivity,"周边搜索");
         });
 
+        mBinding.linLocation.setOnClickListener(v -> {
+            CitySelectActivity.open(mActivity);
+        });
 
     }
 
@@ -310,6 +317,8 @@ public class SurroundingFragment extends BaseLazyFragment{
             map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
+        }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+            map.put("city", SPUtilHelpr.getResetLocationInfo().getCityName());
         }
         map.put("status","2");
         map.put("start",mStoreStart+"");
@@ -317,7 +326,6 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
 
-        //点赞和取消点赞
       mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217",StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(act))
@@ -326,8 +334,7 @@ public class SurroundingFragment extends BaseLazyFragment{
 
                 .subscribe(storeListModel -> {
                     if(loadType==1){
-                        if(storeListModel.getList()==null || storeListModel.getList().size()==0){ //分页
-
+                        if(storeListModel.getList()==null){ //分页
                             return;
                         }
                         mStoreTypeAdapter.setData(storeListModel.getList());
@@ -382,13 +389,26 @@ public class SurroundingFragment extends BaseLazyFragment{
      * 点赞效果刷新
      * @param
      */
-    @Subscriber(tag="dzUpdate") //  StoreTypeListAdapter StoredetailsActivity
+    @Subscribe//  StoreTypeListAdapter StoredetailsActivity
     public void dzUpdate(DZUpdateModel dzUpdateModel){
         if(mStoreTypeAdapter!=null){
             mStoreTypeAdapter.setDzInfo(dzUpdateModel);
         }
     }
 
+    /**
+     * 城市选择
+     * @param
+     */
+    @Subscribe
+    public void citySelect(CityModel cityModel){
+        if(cityModel!=null){
+            SPUtilHelpr.saveRestLocationInfo(cityModel.getName());
+            SPUtilHelpr.saveLocationInfo("");
+            mBinding.tvLocation.setText(cityModel.getName());
+            getStoreListRequest(null,1);
+        }
+    }
 
     @Override
     protected void onInvisible() {

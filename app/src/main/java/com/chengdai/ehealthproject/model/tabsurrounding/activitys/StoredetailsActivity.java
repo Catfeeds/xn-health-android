@@ -20,7 +20,8 @@ import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zzhoujay.richtext.RichText;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -115,7 +116,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
                             dz.setDz(mStoreDetailsModel.isDZ());
                             dz.setDzSum(mStoreDetailsModel.getTotalDzNum());
 
-                            EventBus.getDefault().post(dz,"dzUpdate"); //SurroundingFragment 点赞效果刷新
+                            EventBus.getDefault().post(dz); //SurroundingFragment 点赞效果刷新
                         }
 
                     },Throwable::printStackTrace);

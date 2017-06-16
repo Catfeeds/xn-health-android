@@ -15,13 +15,16 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.NetUtils;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.chengdai.ehealthproject.weigit.dialog.LoadingDialog;
 
-import org.simple.eventbus.EventBus;
-import org.simple.eventbus.Subscriber;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +42,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private CommonDialog commonDialog;
     protected LoadingDialog loadingDialog;
     protected CompositeDisposable mSubscription;
+
+    @Subscribe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +55,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
-
+        EventBus.getDefault().unregister(this);
         if (commonDialog != null) {
             commonDialog.closeDialog();
             commonDialog = null;
@@ -107,24 +110,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (loadingDialog != null ) {
             loadingDialog.showDialog();
         }
-    }
-
-
-    /**
-     * 返回键的处理，返回值为是否关闭当前页
-     *
-     * @return
-     */
-    public boolean getBackIsFinish() {
-        return true;
-    }
-
-    public void goBack(boolean isfinish) {
-        if (isFinishing()) {
-            return;
-        }
-
-        finish();
     }
 
 
@@ -315,9 +300,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.finish();
     }
 
-    @Subscriber(tag="baseacivity_finish")  //结束当前界面
-    private void finishAll(boolean isFinish){
-        this.finish();
+    @Subscribe
+    public void finishAll(EventBusModel i){
+        if("AllFINISH".equals(i.getTag())){
+            this.finish();
+        }
     }
 
     /**

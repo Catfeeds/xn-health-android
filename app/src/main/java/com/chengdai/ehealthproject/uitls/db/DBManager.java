@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 import com.chengdai.ehealthproject.model.common.model.CityModel;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -126,6 +127,10 @@ public class DBManager {
         public int compare(CityModel lhs, CityModel rhs) {
             String a = lhs.getPinyin().substring(0, 1);
             String b = rhs.getPinyin().substring(0, 1);
+
+            lhs.setFirstChar(a.toUpperCase());
+            rhs.setFirstChar(b.toUpperCase());
+
             return a.compareTo(b);
         }
     }

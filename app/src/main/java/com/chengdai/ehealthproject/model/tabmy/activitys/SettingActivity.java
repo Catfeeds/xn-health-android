@@ -8,11 +8,12 @@ import android.os.Bundle;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySettingBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
-import org.simple.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 李先俊 on 2017/6/16.
@@ -48,7 +49,11 @@ public class SettingActivity extends AbsBaseActivity{
         mBinding.btnLogin.setOnClickListener(v -> {
             SPUtilHelpr.saveUserId("");
             SPUtilHelpr.saveUserToken("");
-            EventBus.getDefault().post(true,"baseacivity_finish"); //结束掉所有界面
+
+            EventBusModel eventBusModel=new EventBusModel();
+            eventBusModel.setTag("AllFINISH");
+
+            EventBus.getDefault().post(eventBusModel); //结束掉所有界面
             LoginActivity.open(this,true);
             finish();
         });

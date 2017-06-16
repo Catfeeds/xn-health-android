@@ -20,7 +20,8 @@ import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zzhoujay.richtext.RichText;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -111,7 +112,7 @@ public class HoteldetailsActivity extends AbsBaseActivity {
                             dz.setDz(mStoreDetailsModel.isDZ());
                             dz.setDzSum(mStoreDetailsModel.getTotalDzNum());
 
-                            EventBus.getDefault().post(dz,"dzUpdate"); //SurroundingFragment 点赞效果刷新
+                            EventBus.getDefault().post(dz); //SurroundingFragment 点赞效果刷新
                         }
 
                     },Throwable::printStackTrace);

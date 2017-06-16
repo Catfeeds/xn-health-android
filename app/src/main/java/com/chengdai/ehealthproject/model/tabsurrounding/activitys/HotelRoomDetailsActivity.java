@@ -23,7 +23,6 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
-import org.simple.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;

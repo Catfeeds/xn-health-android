@@ -18,7 +18,8 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -124,7 +125,7 @@ public class StoreTypeListAdapter extends CommonAdapter {
                                 dz.setDz(storeListModel.isDZ());
                                 dz.setDzSum(storeListModel.getTotalDzNum());
 
-                                EventBus.getDefault().post(dz,"dzUpdate");
+                                EventBus.getDefault().post(dz);
                             }
 
                         }

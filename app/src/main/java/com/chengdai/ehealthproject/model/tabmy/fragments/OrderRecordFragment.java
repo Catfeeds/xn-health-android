@@ -134,7 +134,7 @@ public class OrderRecordFragment extends BaseLazyFragment {
                 .compose(RxTransformerHelper.applySchedulerResult(context))
                 .subscribe(r -> {
                     if(mPageStart==1){
-                       if(r==null || r.getList()==null || r.getList().size()==0){
+                       if(r==null || r.getList()==null){
                          return;
                          }
                         mAdapter.setData(r.getList());

@@ -13,6 +13,7 @@
         android:layout_height="@dimen/title_height">
 
         <LinearLayout
+            android:id="@+id/lin_location"
             android:gravity="center_vertical"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="15dp"

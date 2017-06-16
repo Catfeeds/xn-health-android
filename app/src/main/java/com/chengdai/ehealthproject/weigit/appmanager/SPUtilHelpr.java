@@ -81,7 +81,28 @@ public class SPUtilHelpr {
 		}
 
 		return locationModel;
+	}
+	/**
+	 * 获取选择定位信息
+	 * @param
+	 */
+	public static LocationModel getResetLocationInfo()
+	{
+		LocationModel locationModel = new LocationModel();
 
+		locationModel.setCityName(SPUtils.getString(BaseApplication.getInstance(),"LOCATIONINFRESET",""));
+
+		return locationModel;
+
+	}
+
+	/**
+	 * 保存选择定位信息
+	 * @param s
+	 */
+	public static void saveRestLocationInfo(String s)
+	{
+		SPUtils.put(BaseApplication.getInstance(),"LOCATIONINFRESET",s);
 	}
 
 

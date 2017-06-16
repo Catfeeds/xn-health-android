@@ -2,12 +2,14 @@ package com.chengdai.ehealthproject.uitls;
 
 import android.util.Log;
 
+import com.chengdai.ehealthproject.BuildConfig;
+
 
 /**
  *log工具类
  */
 public class LogUtil {
-    public static  Boolean isLog= true;
+    public static  Boolean isLog= BuildConfig.IS_DEBUG;
 
     private static final String TAG="LOG_YITU";
 

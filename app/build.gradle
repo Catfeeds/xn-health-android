@@ -13,9 +13,18 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField "boolean", "IS_DEBUG", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+     debug {
+            buildConfigField "boolean", "IS_DEBUG", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -24,6 +33,12 @@ android {
 
     dataBinding {
         enabled true;
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 
 }
@@ -55,7 +70,8 @@ dependencies {
     compile 'com.liaoinstan.springview:library:1.2.6'
     compile 'com.zhy:base-adapter:3.0.3'
     /*事件总线*/
-    compile 'org.simple:androideventbus:1.0.5.1'
+//    compile 'org.simple:androideventbus:1.0.5.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
     ///高德定位
     compile 'com.amap.api:location:latest.integration'
     /*磁盘缓存*/

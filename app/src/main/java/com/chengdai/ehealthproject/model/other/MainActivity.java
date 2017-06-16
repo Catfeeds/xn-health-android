@@ -3,13 +3,11 @@ package com.chengdai.ehealthproject.model.other;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseActivity;
 import com.chengdai.ehealthproject.base.BaseLocationActivity;
 import com.chengdai.ehealthproject.databinding.ActivityMainBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
@@ -20,14 +18,9 @@ import com.chengdai.ehealthproject.model.healthstore.HealthStoreFragment;
 import com.chengdai.ehealthproject.model.tabmy.MyFragment;
 import com.chengdai.ehealthproject.model.tabsurrounding.SurroundingFragment;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
-import com.chengdai.ehealthproject.uitls.DiskLruCacheHelper;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxRadioGroup;
-
-import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,16 +83,6 @@ public class MainActivity extends BaseLocationActivity {
 
          startLocation();
     }
-
-    /**
-     * 启动定位
-     * @param i
-     */
-    @Subscriber(tag="EventStartLocationMainActivity")
-    public void startLocationEvenbus(int i){
-        startLocation();
-    }
-
 
     /**
      * 初始化View状态
