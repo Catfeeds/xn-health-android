@@ -46,7 +46,7 @@ public class SettingActivity extends AbsBaseActivity{
         setTopTitle(getString(R.string.txt_setting));
         setSubLeftImgState(true);
 
-        mBinding.btnLogin.setOnClickListener(v -> {
+        mBinding.txtLogout.setOnClickListener(v -> {
             SPUtilHelpr.saveUserId("");
             SPUtilHelpr.saveUserToken("");
 

@@ -5,6 +5,8 @@ import com.chengdai.ehealthproject.model.common.model.AmountModel;
 import com.chengdai.ehealthproject.model.common.model.CodeModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
+import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
@@ -197,5 +199,44 @@ public interface ApiServer {
     @POST("api")
     Observable<BaseResponseModel<IsSuccessModes>> FindPassWord(@Field("code") String code, @Field("json") String  json);
 
+/**
+     * 获取商城列表
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<ShopListModel>> GetShopList(@Field("code") String code, @Field("json") String  json);
 
+
+/**
+     * 获取商城列表
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<getOrderAddressModel>> GetAddress(@Field("code") String code, @Field("json") String  json);
+
+/**
+     * 设置默认地址
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> SetDefultAddress(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 添加
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<CodeModel>> AddAddress(@Field("code") String code, @Field("json") String  json);
 }

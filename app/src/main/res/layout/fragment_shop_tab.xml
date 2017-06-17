@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:banner="http://schemas.android.com/apk/res-auto">
-
+<layout >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:banner="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,44 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
 
-        <LinearLayout
-            android:id="@+id/lin_location"
-            android:gravity="center_vertical"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_location"
-                android:text="杭州"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:layout_marginLeft="9dp"
-                android:src="@mipmap/into_down"
-                android:layout_width="12dp"
-                android:layout_height="12dp" />
-
-
-        </LinearLayout>
-
         <TextView
             style="@style/title_top"
-            android:text="周边"
+            android:text="商城"
            />
-
-        <ImageView
-            android:visibility="gone"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginLeft="9dp"
-            android:src="@mipmap/swipt"
-            android:layout_width="18dp"
-            android:layout_height="18dp" />
 
     </FrameLayout>
 
@@ -107,7 +72,22 @@
 
         <TextView
             android:textColor="@color/text_color"
-            android:text="好店推荐"
+            android:text="积分商城"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+        <View
+            android:layout_marginTop="15dp"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <TextView
+            android:textColor="@color/text_color"
+            android:text="人气推荐"
             android:gravity="center"
             android:textSize="15dp"
             android:layout_width="match_parent"

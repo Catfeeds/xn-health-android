@@ -54,6 +54,15 @@ public class StringUtils {
 
     }
 
+    /**
+     * 切割获取广告图片
+     * @param s
+     * @return
+     */
+   public static List<String> splitBannerList(String s){
+        return splitAsList(s,"\\|\\|");
+    }
+
 
     //int前面补零
     public static String frontCompWithZoreString(String sourceDate,int formatLength)

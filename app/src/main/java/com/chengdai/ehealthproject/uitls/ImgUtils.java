@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.chengdai.ehealthproject.uitls.glidetransforms.GlideCircleTransform;
 import com.chengdai.ehealthproject.uitls.glidetransforms.GlideRoundTransform;
 
 
@@ -51,6 +52,14 @@ public class ImgUtils {
             return;
         }
         Glide.with(activity).load(URL) .transform(new GlideRoundTransform(activity)).into(img);
+    }
+
+    public static void  loadImgIdforCircle(Context activity,String URL,ImageView img){
+        if(activity==null || img==null)
+        {
+            return;
+        }
+        Glide.with(activity).load(URL) .transform(new GlideCircleTransform(activity)).into(img);
     }
 
 }

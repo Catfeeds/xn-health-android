@@ -14,20 +14,23 @@
     <color name="gray">#ececec</color>
     <color name="gray_4">#f4f4f4</color>
     <color name="whilte_80">#d2fcfcfc</color>
-
+    <color name="fontColor_support">#999999</color>
     <color name="text_gray">#999999</color>
     <color name="text_hint_color">#a1a1a1</color>
     <color name="text_gray2">#7f7e7e</color>
     <color name="text_gray3">#626262</color>
     <color name="text_color">#484848</color>
-
+    <color name="intervalColor">#f0f0f0</color>
     <color name="regi_read">#45a74f</color>
     <color name="activity_title_bg">#45a74f</color>
+    <color name="flow_tag_bg">#45a74f</color>
     <color name="main_tab_text_select">#45a74f</color>
     <color name="login_select">#45a74f</color>
     <color name="login_unselect">#3a7e41</color>
     <color name="banner_select">#45a74f</color>
     <color name="tab_select">#45a74f</color>
+    <color name="fontColor_hint">#979797</color>
+    <color name="lineColor">#eeeeee</color>
     <!--颜色值规范-->
     <color name="c_000000">#000000</color>
     <color name="c_ffffff">#FFFFFF</color>
@@ -41,7 +44,8 @@
     <color name="state_color_white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="black_2">#303030</color>
-
+    <color name="lineColor_gray">#dedede</color>
+    <color name="fontColor_gray">#7f7e7e</color>
     <!--共用的蓝色-->
     <color name="color_common_blue">#3DA3FF</color>
 
@@ -93,6 +97,7 @@
 
     <!--透明度颜色-->
     <color name="transparent">#00000000</color>
+    <color name="transparent_black">#8a050505</color>
     <color name="color_withdrawl_deal">#ff8904</color>
     <color name="color_common_font">#6f6f6f</color>
     <color name="color_common_hint">#c8c8c8</color>
@@ -133,6 +138,8 @@
     <color name="color_day_yellow">#FF9620</color>
 
     <color name="orange">#ff6702</color>
+    <color name="txt_orange">#ff6702</color>
+    <color name="price_color">#ed5461</color>
     <color name="orange_btn">#ffa302</color>
     <color name="color_evalate_border">#e6e6e6</color>
     <color name="line_driver_color">#e9c95c</color>

@@ -110,32 +110,45 @@
 
      //酒店订单查看
         <activity android:name=".model.tabmy.activitys.HotelOrderStateLookActivity"
-            android:launchMode="singleTask"
             />
 
         //酒店订单详情查看
         <activity android:name=".model.tabmy.activitys.OrderDetailsActivity"
-            android:launchMode="singleTask"
             />
        //酒店订单详情查看
         <activity android:name=".model.tabmy.activitys.HotelOrderDetailsActivity"
-            android:launchMode="singleTask"
             />
         //周边搜索
         <activity android:name=".model.common.model.activitys.SearchActivity"
-            android:launchMode="singleTask"
             />
         //Web
         <activity android:name=".model.common.model.activitys.WebViewActivity"
-            android:launchMode="singleTask"
             />
         //设置界面
         <activity android:name=".model.tabmy.activitys.SettingActivity"
-            android:launchMode="singleTask"
             />
         //城市选择
         <activity android:name=".model.common.model.activitys.CitySelectActivity"
-            android:launchMode="singleTask"
+            />
+        //商城分类
+        <activity android:name=".model.healthstore.acitivtys.ShopMenuSeletActivity"
+            />
+        //商城分类列表
+        <activity android:name=".model.healthstore.acitivtys.ShopTypeListSelectActivity"
+            />
+        //商城搜索
+        <activity android:name=".model.healthstore.acitivtys.SearchShopActivity"
+            />
+
+        //商城详情
+        <activity android:name=".model.healthstore.acitivtys.ShopDetailsActivity"
+            />
+
+        //商城详情
+        <activity android:name=".model.healthstore.acitivtys.ShopPayActivity"
+            />
+        //商城详情
+        <activity android:name=".model.common.model.activitys.AddAddressActivity"
             />
     </application>
 

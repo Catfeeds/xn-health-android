@@ -20,6 +20,7 @@ public class SPUtilHelpr {
 	private static final String USERTOKEN="user_toke";
 	private static final String USERID="user_id";
 	private static final String LOCATIONINFO="location_info";
+	private static final String ISFIRSTADDADDRESS="isfirstaddaddress";//是否第一次添加地址
 
 	/**
 	 * 设置用户token
@@ -37,6 +38,24 @@ public class SPUtilHelpr {
 	public static String getUserToken()
 	{
 	return  SPUtils.getString(BaseApplication.getInstance(),USERTOKEN,"");
+	}
+
+	/**
+	 * 设置用户token
+	 * @param
+	 */
+	public static void changeIsFirstAddressState(boolean isfirst)
+	{
+		SPUtils.put(BaseApplication.getInstance(),ISFIRSTADDADDRESS,isfirst);
+	}
+
+/**
+	 * 设置用户token
+	 * @param
+	 */
+	public static boolean isFirstAddressState()
+	{
+     	return  SPUtils.getBoolean(BaseApplication.getInstance(),ISFIRSTADDADDRESS,true);
 	}
 
 	/**

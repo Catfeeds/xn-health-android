@@ -96,6 +96,7 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_surrounding, null, false);
 
+
         isCreate=true;
 
         initBanner();
@@ -196,12 +197,6 @@ public class SurroundingFragment extends BaseLazyFragment{
 
     }
 
-    private void setTvListener(LinearLayout lin,String txt) {
-        lin.setOnClickListener(v -> {
-            SurroundingMenuSeletActivity.open(mActivity,txt);
-        });
-    }
-
     private void initBanner() {
 
         mBinding.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -271,7 +266,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         Map map=new HashMap();
 
         map.put("location","0");//0周边1推荐
-        map.put("type","2");
+        map.put("type","2"); //(1 菜单 2 banner 3 模块 4 引流)
         map.put("systemCode", MyConfig.SYSTEMCODE);
         map.put("token", SPUtilHelpr.getUserToken());
 
@@ -365,7 +360,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         Map<String,String> map=new HashMap();
 
         map.put("parentCode","0");
-        map.put("type","2");
+        map.put("type","2");            //1 -商城分类 2 店铺分类
         map.put("status","1");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode", MyConfig.SYSTEMCODE);

@@ -86,6 +86,12 @@ public class SelectUseDayPopup extends BasePopupWindow implements View.OnClickLi
         initDate();
     }
 
+    @Override
+    protected void initLayout() {
+        super.initLayout();
+        setAnimotionStyle(R.style.popwin_anim_style);
+    }
+
     private void initDate(){
         List<String> yearsData = dateUtil.getYears();
         List<String> monthData = dateUtil.getMonths();
