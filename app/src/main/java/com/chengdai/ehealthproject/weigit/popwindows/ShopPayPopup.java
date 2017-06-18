@@ -42,6 +42,8 @@ public class ShopPayPopup extends BasePopupWindow{
 
     private TagAdapter mTagAdapter;
 
+    private ShopListModel.ListBean.ProductSpecsListBean mSelectProductData;
+
 
     public void setmData(ShopListModel.ListBean mData) {
         this.mData = mData;
@@ -49,19 +51,29 @@ public class ShopPayPopup extends BasePopupWindow{
         if(mData!=null){
 
             mPaySum=0;
+
             mQuantitySum=0;
 
-            ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+mData.getSplitAdvPic(),mBinding.imgPhoto);
+            ImgUtils.loadImgIdforRound(mContext, MyConfig.IMGURL+mData.getSplitAdvPic(),mBinding.imgPhoto);
 
             if(mData.getProductSpecsList() != null && mData.getProductSpecsList().size() >0 && mData.getProductSpecsList().get(0) !=null){
+
+                if(mData.getProductSpecsList().get(0).getQuantity()>mPaySum){
+                    mPaySum=1;
+                }
+
+            mSelectProductData=mData.getProductSpecsList().get(0);
 
             mBinding.txtQuantity.setText("库存"+mData.getProductSpecsList().get(0).getQuantity());
             mBinding.txtPrice.setText(mContext.getString(R.string.price_sing)+ StringUtils.showPrice(mData.getProductSpecsList().get(0).getPrice1()));
 
              mQuantitySum=mData.getProductSpecsList().get(0).getQuantity(); //设置产品库存
 
+
              initTagViewState(mData);//设置规格显示状态
         }
+
+        mBinding.txtNumber.setText(mPaySum+"");
 
       }
 
@@ -112,7 +124,7 @@ public class ShopPayPopup extends BasePopupWindow{
             if(!SPUtilHelpr.isLogin(mContext)){
                 return;
             }
-            ShopPayActivity.open(mContext);
+            ShopPayActivity.open(mContext,mSelectProductData,mPaySum);
         });
 
         mBinding.layoutCancel.setOnClickListener(v -> {
@@ -133,10 +145,15 @@ public class ShopPayPopup extends BasePopupWindow{
 
                 if(mData.getProductSpecsList()!=null && mData.getProductSpecsList().size()>x && mData.getProductSpecsList().get(x)!=null){
 
+                    mSelectProductData=mData.getProductSpecsList().get(x);
+
                     mQuantitySum=mData.getProductSpecsList().get(x).getQuantity(); //重置产品库存
 
-                    mPaySum=0;                                                     //重置选择数量
+                    if(mQuantitySum>mPaySum){
+                        mPaySum=1;
+                    }
 
+                    mBinding.txtNumber.setText(mPaySum+"");
                     mBinding.txtQuantity.setText("库存"+mData.getProductSpecsList().get(x).getQuantity());
                     mBinding.txtPrice.setText(mContext.getString(R.string.price_sing)+ StringUtils.showPrice(mData.getProductSpecsList().get(x).getPrice1()));
                     mBinding.txtNumber.setText("0");
@@ -184,4 +201,5 @@ public class ShopPayPopup extends BasePopupWindow{
     protected View getClickToDismissView() {
         return mBinding.dismissview;
     }
+
 }

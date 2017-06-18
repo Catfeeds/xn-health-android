@@ -16,15 +16,15 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 public class GlideRoundTransform extends BitmapTransformation {
 
-    private static float radius = 0f;
+    private static float radius = 15;
 
     public GlideRoundTransform(Context context) {
-        this(context, 4);
+        this(context, 50);
     }
 
     public GlideRoundTransform(Context context, int dp) {
         super(context);
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+//        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
     @Override protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {

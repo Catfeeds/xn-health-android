@@ -139,11 +139,6 @@ public class PayActivity extends AbsBaseActivity {
         mBinding.txtPay.setOnClickListener(v -> {
             if(SPUtilHelpr.isLogin(this)){
 
-                if(mPayType != 1){
-                    showToast("暂未开通此支付功能");
-                    return;
-                }
-
                 if(TextUtils.isEmpty(mBinding.edtPrice.getText().toString())){
                     showToast("请输入消费金额");
                     return;
@@ -192,15 +187,51 @@ public class PayActivity extends AbsBaseActivity {
         map.put("amount",new BigDecimal(doubleFormatMoney2(mDiscountMoney)*1000).intValue());
         map.put("payType",PayType);
 
-        mSubscription.add(RetrofitUtils.getLoaderServer().Pay("808271", StringUtils.getJsonToString(map))
+        switch (PayType){
+            case 1:
+                yuPay(map);//余额支付
+                break;
+            case 3://支付宝支付
+                aliPay(map);
+                break;
+        }
+
+    }
+
+    /**
+     * 余额支付
+     * @param map
+     */
+    private void yuPay(Map map){
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().SurroundingPay("808271", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
-                  if(TextUtils.isEmpty(data)){
-                      showToast("支付失败");
-                  }else{
-                      showToast("支付成功");
-                      finish();
-                  }
+                    if(TextUtils.isEmpty(data)){
+                        showToast("支付失败");
+                    }else{
+                        showToast("支付成功");
+                        finish();
+                    }
+
+                },Throwable::printStackTrace));
+
+    }
+    /**
+     * 余额支付
+     * @param map
+     */
+    private void aliPay(Map map){
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().SurroundingAliPay("808271", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(data -> {
+          /*          if(TextUtils.isEmpty(data)){
+                        showToast("支付失败");
+                    }else{
+                        showToast("支付成功");
+                        finish();
+                    }*/
 
                 },Throwable::printStackTrace));
 

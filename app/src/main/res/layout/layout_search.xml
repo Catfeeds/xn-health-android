@@ -28,6 +28,8 @@
             android:src="@mipmap/search" />
 
         <EditText
+            android:singleLine="true"
+            android:inputType="text"
             android:imeOptions="actionSearch"
             android:id="@+id/edit_serchView"
             android:layout_width="match_parent"

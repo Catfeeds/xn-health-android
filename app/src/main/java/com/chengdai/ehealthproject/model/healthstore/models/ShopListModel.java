@@ -319,6 +319,16 @@ public class ShopListModel implements Parcelable {
             private String companyCode;
             private String systemCode;
 
+            private int mBuyNum=0;//自定义属性 用于保存用户选择数量
+
+            public int getmBuyNum() {
+                return mBuyNum;
+            }
+
+            public void setmBuyNum(int mBuyNum) {
+                this.mBuyNum = mBuyNum;
+            }
+
             public String getCode() {
                 return code;
             }
@@ -391,6 +401,9 @@ public class ShopListModel implements Parcelable {
                 this.systemCode = systemCode;
             }
 
+            public ProductSpecsListBean() {
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -407,9 +420,7 @@ public class ShopListModel implements Parcelable {
                 dest.writeInt(this.orderNo);
                 dest.writeString(this.companyCode);
                 dest.writeString(this.systemCode);
-            }
-
-            public ProductSpecsListBean() {
+                dest.writeInt(this.mBuyNum);
             }
 
             protected ProductSpecsListBean(Parcel in) {
@@ -422,6 +433,7 @@ public class ShopListModel implements Parcelable {
                 this.orderNo = in.readInt();
                 this.companyCode = in.readString();
                 this.systemCode = in.readString();
+                this.mBuyNum = in.readInt();
             }
 
             public static final Creator<ProductSpecsListBean> CREATOR = new Creator<ProductSpecsListBean>() {

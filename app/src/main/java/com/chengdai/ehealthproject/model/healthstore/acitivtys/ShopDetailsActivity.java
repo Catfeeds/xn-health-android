@@ -68,7 +68,6 @@ public class ShopDetailsActivity extends AbsBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if(shopPayPopup !=null){
-            shopPayPopup.dismiss();
             shopPayPopup=null;
         }
     }
@@ -104,14 +103,23 @@ public class ShopDetailsActivity extends AbsBaseActivity {
 
             if(shopPayPopup == null ){
                 shopPayPopup = new ShopPayPopup(this);
-                shopPayPopup.setmData(mData);
             }
+            shopPayPopup.setmData(mData);
             shopPayPopup.showPopupWindow();
 
         });
 
 
         initViewPager();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(shopPayPopup!=null){
+            shopPayPopup.dismiss();
+        }
     }
 
     /**

@@ -35,13 +35,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
-        <EditText
+        <TextView
             android:inputType="numberDecimal"
-            android:id="@+id/edt_price"
+            android:id="@+id/tv_price"
             android:gravity="right|center_vertical"
             android:layout_marginRight="15dp"
             android:textSize="15sp"
-            android:hint="请输入消费金额"
             android:background="@null"
             android:textColorHint="@color/text_hint_color"
             android:textColor="@color/text_color"
@@ -57,6 +56,7 @@
         android:layout_height="10dp"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/layout_discount"
         android:background="@color/white"
         android:gravity="center_vertical"

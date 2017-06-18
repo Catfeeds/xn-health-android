@@ -4,18 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityShopPayBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.AddAddressActivity;
+import com.chengdai.ehealthproject.model.common.model.activitys.AddressSelectActivity;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,17 +36,23 @@ public class ShopPayActivity extends AbsBaseActivity{
 
     private ActivityShopPayBinding mBinding;
 
+    private ShopListModel.ListBean.ProductSpecsListBean mSelectProductData;
+
+    private List<getOrderAddressModel> mAddressList ;//是收货地址
+
+    private int mBuyNum=0;//购买数量
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context, ShopListModel.ListBean.ProductSpecsListBean data,int buyNum){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,ShopPayActivity.class);
-
+        intent.putExtra("data",data);
+        intent.putExtra("buynum",buyNum);
         context.startActivity(intent);
     }
 
@@ -55,12 +68,95 @@ public class ShopPayActivity extends AbsBaseActivity{
 
         setTopTitle(getString(R.string.txt_pay));
 
-        getAddressRequst();
+        if(getIntent() != null){
+            mSelectProductData=getIntent().getParcelableExtra("data");
+            mBuyNum = getIntent().getIntExtra("buynum",0);
+        }
 
-        mBinding.layoutAdd.setOnClickListener(v -> {
-            AddAddressActivity.open(this);
+        initViews();
+
+        mBinding.textMoney.setText(StringUtils.getShowPriceSign(mSelectProductData.getPrice1(),mBuyNum));
+
+        mBinding.txtBuy.setOnClickListener(v -> {
+            if(mAddressList == null || mAddressList.size()==0){
+                showToast("请先选择收货地址");
+                return;
+            }
+            if(mBuyNum == 0){
+                showToast("至少选择一个数量");
+                return;
+            }
+
+          buyRequest();
+
         });
 
+    }
+
+    private void buyRequest() {
+
+        /* "productCode": "CP201703271142204949",
+    "toUser": "SYS_USER_CAIGO",
+    "quantity": "1",
+    "pojo": {
+        "receiver": "郑海清",
+        "reMobile": "15158110100",
+        "reAddress": "浙江省杭州市余杭区梦想小镇天使村",
+        "applyUser": "U2017032717333217771",
+        "applyNote": "下单测试",
+        "receiptType": "",
+        "receiptTitle": "",
+        "companyCode": "CD-CCG000007",
+        "systemCode": "CD-CCG000007"
+    }*/
+
+        Map object=new HashMap<>();
+
+        Map<String,String> pojo=new HashMap<>();
+
+        pojo.put("receiver", mAddressList.get(0).getAddressee());
+        pojo.put("reMobile", mAddressList.get(0).getMobile());
+        pojo.put("reAddress", mAddressList.get(0).getProvince() + " " + mAddressList.get(0).getCity() + " " + mAddressList.get(0).getDistrict() + " " + mAddressList.get(0).getDetailAddress());
+        pojo.put("applyUser", SPUtilHelpr.getUserId());
+        pojo.put("applyNote", mBinding.edtEnjoin.getText().toString().trim());
+        pojo.put("companyCode", MyConfig.COMPANYCODE);
+        pojo.put("systemCode", MyConfig.SYSTEMCODE);
+        pojo.put("token", SPUtilHelpr.getUserToken());
+
+        object.put("productSpecsCode", mSelectProductData.getCode());
+        object.put("quantity", mBuyNum+"");
+        object.put("pojo", pojo);
+
+
+
+       mSubscription.add( RetrofitUtils.getLoaderServer().ShopOrderCerate("808050",StringUtils.getJsonToString(object))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(codeModel -> {
+                   if(!TextUtils.isEmpty(codeModel)){
+                       showToast("下单成功");
+                       mSelectProductData.setmBuyNum(mBuyNum);
+                       ShopPayConfirmActivity.open(this,mSelectProductData,codeModel,true);
+                   }
+
+                },Throwable::printStackTrace));
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAddressRequst();
+    }
+
+    private void initViews() {
+        mBinding.layoutAdd.setOnClickListener(v -> {
+            AddressSelectActivity.open(this);
+        });
+
+        mBinding.layoutAddress.setOnClickListener(v -> {
+            AddressSelectActivity.open(this);
+        });
     }
 
 
@@ -78,11 +174,14 @@ public class ShopPayActivity extends AbsBaseActivity{
        mSubscription.add(RetrofitUtils.getLoaderServer().GetAddress("805165", StringUtils.getJsonToString(map))
                .compose(RxTransformerListHelper.applySchedulerResult(this))
                .subscribe(data ->{
+                   mAddressList=data;
                    setAddressState(data);
 
                },Throwable::printStackTrace));
 
    }
+
+
 
     /**
      * 设置地址显示状态 有地址是显示默认地址  无地址时显示添加按钮
@@ -101,5 +200,25 @@ public class ShopPayActivity extends AbsBaseActivity{
         }
     }
 
+    //AddressAdapter 刷新数据
+    @Subscribe
+    public  void getAddressRequestEvent(getOrderAddressModel model){
+        if(model != null ){
+
+            mAddressList = null;
+
+            mBinding.layoutAddress.setVisibility(View.VISIBLE);
+            mBinding.layoutNoAddress.setVisibility(View.GONE);
+
+            mBinding. txtConsignee.setText(model.getAddressee());
+            mBinding. txtPhone.setText(model.getMobile());
+            mBinding. txtAddress.setText("收货地址：" + model.getProvince() + " " + model.getCity() + " " + model.getDistrict() + "" + model.getDetailAddress());
+
+ /*           mBinding. txtConsignee.setText("");
+            mBinding. txtPhone.setText("");
+            mBinding. txtAddress.setText("");*/
+
+        }
+    }
 
 }

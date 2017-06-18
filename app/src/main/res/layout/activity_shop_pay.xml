@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    >
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -106,6 +108,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layout_noAddress"
             android:background="@color/white"
             android:orientation="vertical"
@@ -135,6 +138,7 @@
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
+
                     android:id="@+id/layout_add"
                     android:layout_marginLeft="15dp"
                     android:gravity="center"
@@ -238,8 +242,7 @@
 
                 <TextView
                     android:id="@+id/text_money"
-                    android:visibility="gone"
-                    android:text="￥699.00"
+                    tools:text="￥699.00"
                     android:textSize="18sp"
                     android:textColor="@color/txt_orange"
                     android:layout_marginLeft="15dp"

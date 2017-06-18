@@ -139,6 +139,7 @@
 
     <color name="orange">#ff6702</color>
     <color name="txt_orange">#ff6702</color>
+    <color name="fontColor_orange">#ff6702</color>
     <color name="price_color">#ed5461</color>
     <color name="orange_btn">#ffa302</color>
     <color name="color_evalate_border">#e6e6e6</color>

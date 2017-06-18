@@ -10,13 +10,17 @@ import android.text.TextUtils;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityAddAddressBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.lljjcoder.citypickerview.widget.CityPicker;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,16 +36,22 @@ public class AddAddressActivity extends AbsBaseActivity{
     private String mCity;
     private String mDistrict;
 
+    private boolean isDefault;
+
+    private getOrderAddressModel mShowData;
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context, boolean isDefault, getOrderAddressModel data){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,AddAddressActivity.class);
+
+        intent.putExtra("isDefault",isDefault);
+        intent.putExtra("data",data);
 
         context.startActivity(intent);
     }
@@ -58,11 +68,37 @@ public class AddAddressActivity extends AbsBaseActivity{
 
         setTopTitle("添加地址");
 
+        if(getIntent() !=null) {
+            isDefault=getIntent().getBooleanExtra("isDefault",true);
+            mShowData=getIntent().getParcelableExtra("data");
+        }
+
+
+        setShowData();
 
         getLocationInfo();
 
         initViews();
 
+
+    }
+
+    /**
+     * 设置传递过来的数据
+     */
+    private void setShowData() {
+
+        if(mShowData == null){
+            return;
+        }
+
+        mProvince=mShowData.getProvince();
+        mCity=mShowData.getCity();
+        mDistrict=mShowData.getDistrict();
+        mBinding.txtAddress.setText(mShowData.getProvince()+" "+mShowData.getCity()+" "+mShowData.getDistrict());
+        mBinding.edtName.setText(mShowData.getAddressee());
+        mBinding.edtPhone.setText(mShowData.getMobile());
+        mBinding.edtDetailed.setText(mShowData.getDetailAddress());
 
 
     }
@@ -97,9 +133,44 @@ public class AddAddressActivity extends AbsBaseActivity{
                 return;
             }
 
-            addAressRequest();
-
+            if(mShowData != null){  //编辑地址
+                editAddressRequest();
+            }else{                     //新增地址
+                addAressRequest();
+            }
         });
+    }
+
+
+    private  void editAddressRequest(){
+        Map<String,String> object=new HashMap<>();
+        object.put("code", mShowData.getCode());
+        object.put("userId", SPUtilHelpr.getUserId());
+        object.put("addressee",mBinding.edtName.getText().toString().trim());
+        object.put("mobile", mBinding.edtPhone.getText().toString().trim());
+        object.put("province", mProvince);
+        object.put("city", mCity);
+        object.put("district", mDistrict);
+        object.put("detailAddress", mBinding.edtDetailed.getText().toString().trim());
+        object.put("token", SPUtilHelpr.getUserToken());
+        object.put("systemCode", MyConfig.SYSTEMCODE);
+
+      mSubscription.add(  RetrofitUtils.getLoaderServer().editAddress("805162",StringUtils.getJsonToString(object))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(isSuccessModes -> {
+                    if(isSuccessModes!=null && isSuccessModes.isSuccess())
+                    {
+                        showToast("编辑成功");
+                        EventBusModel model=new EventBusModel();
+                        model.setTag("AddressSelectRefesh");   //AddressSelectActivity
+                        EventBus.getDefault().post(model);
+
+                        finish();
+                    }
+
+                },Throwable::printStackTrace));
+
+
     }
 
 
@@ -110,14 +181,14 @@ public class AddAddressActivity extends AbsBaseActivity{
 
         Map<String,String> object=new HashMap<>();
 
-        if (SPUtilHelpr.isFirstAddressState()) {
+        if (isDefault) {
 
             object.put("isDefault", "1");
         } else {
             object.put("isDefault", "0");
         }
         object.put("userId",SPUtilHelpr.getUserId());
-        object.put("addressee",mBinding.txtAddress.getText().toString().trim());
+        object.put("addressee",mBinding.edtName.getText().toString().trim());
         object.put("mobile", mBinding.edtPhone.getText().toString().trim());
         object.put("province", mProvince);
         object.put("city", mCity);
@@ -130,9 +201,14 @@ public class AddAddressActivity extends AbsBaseActivity{
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                .filter(codeModel -> codeModel!=null && !TextUtils.isEmpty(codeModel.getCode()))
                 .subscribe(codeModel -> {
-                    SPUtilHelpr.changeIsFirstAddressState(false);
                     showToast("添加成功");
+
+                    EventBusModel model=new EventBusModel();
+                    model.setTag("AddressSelectRefesh");   //AddressSelectActivity
+                    EventBus.getDefault().post(model);
+
                     finish();
+
                 },Throwable::printStackTrace));
 
     }
@@ -185,15 +261,13 @@ public class AddAddressActivity extends AbsBaseActivity{
 
         LocationModel mLocationModel=  SPUtilHelpr.getLocationInfo();
 
-        if(mLocationModel == null){
-            return;
+        if(mLocationModel != null){
+            mProvince =mLocationModel.getProvinceName();
+
+            mCity =mLocationModel.getCityName();
+
+            mDistrict =mLocationModel.getAreaName();
         }
-
-        mProvince =mLocationModel.getProvinceName();
-
-        mCity =mLocationModel.getCityName();
-
-        mDistrict =mLocationModel.getAreaName();
 
         if(TextUtils.isEmpty(mProvince)){
             mProvince="北京市";

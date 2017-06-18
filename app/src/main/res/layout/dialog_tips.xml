@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_tips_layout"
     android:layout_width="match_parent"
@@ -11,9 +11,9 @@
         android:id="@+id/dialog_tips_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55px"
-        android:layout_marginRight="55px"
-        android:layout_marginTop="23px"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginTop="23dp"
         android:gravity="center"
         android:textColor="@color/dialog_tips_title_txt"
         android:textSize="@dimen/dimens_16_font" />
@@ -21,9 +21,9 @@
         android:id="@+id/dialog_tips_content_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55px"
-        android:layout_marginRight="55px"
-        android:layout_marginTop="15px"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="@color/dialog_tips_content_txt"
         android:textSize="@dimen/dimens_14_font" />
@@ -33,16 +33,16 @@
         android:layout_marginTop="10dp"
         />
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="43px"
+        android:layout_height="43dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/dialog_tips_negative_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="43px"
+            android:minHeight="43dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="@drawable/dialog_tips_negative_btn_sel"
@@ -60,7 +60,7 @@
             android:id="@+id/dialog_tips_middle_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="43px"
+            android:minHeight="43dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="@drawable/dialog_tips_middle_btn_sel"
@@ -78,7 +78,7 @@
             android:id="@+id/dialog_tips_positive_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="43px"
+            android:minHeight="43dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="@drawable/dialog_tips_positive_btn_sel"
@@ -86,6 +86,6 @@
             android:textColor="@color/dialog_tips_negative_btn_txt"
             android:textSize="@dimen/dimens_16_font" />
 
-    </com.zhy.autolayout.AutoLinearLayout>
+    </LinearLayout>
 
-</com.zhy.autolayout.AutoLinearLayout>
+</LinearLayout>

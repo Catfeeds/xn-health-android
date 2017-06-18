@@ -46,6 +46,13 @@ public class ImgUtils {
         }
         Glide.with(activity).load(URL).into(img);
     }
+    public static void  loadImgIdforRound(Context activity,String URL,ImageView img){
+        if(activity==null || img==null)
+        {
+            return;
+        }
+        Glide.with(activity).load(URL) .transform(new GlideRoundTransform(activity)).into(img);
+    }
     public static void  loadImgIdforRound(Context activity,int URL,ImageView img){
         if(activity==null || img==null)
         {

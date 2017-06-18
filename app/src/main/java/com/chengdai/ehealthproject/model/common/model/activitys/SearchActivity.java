@@ -100,16 +100,20 @@ public class SearchActivity extends AbsBaseActivity {
             }
         });
 
-/*        mBinding.search.imgSearch.setOnClickListener(v -> {
 
-            if(TextUtils.isEmpty(mBinding.search.editSerchView.getText().toString())){
-                showToast("请输入搜索内容");
-                return;
+/*      edit_search.setOnEditorActionListener((v, actionId, event) -> {
+            final String str = v.getText().toString();
+            if (StringUtil.isEmpty(str) || str.equals(pageState.keyWd)) {
+                return false;
             }
-
-            getStoreListRequest(this,mBinding.search.editSerchView.getText().toString());
-
-        });*/
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                enterSearch(str);
+                hiddenBoard(edit_search);//隐藏键盘
+                return true;
+            }
+            return false;
+        });
+*/
 
         mBinding.search.editSerchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

@@ -3,16 +3,14 @@ package com.chengdai.ehealthproject.model.tabmy;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
-import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
 import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
-import com.chengdai.ehealthproject.model.dataadapters.TablayoutAdapter;
+import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.SettingActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -57,6 +55,10 @@ public class MyFragment extends BaseLazyFragment{
         mBinding.tvSurroundingService.setOnClickListener(v -> {
 
             HotelOrderStateLookActivity.open(mActivity);
+        });
+
+        mBinding.linShop.setOnClickListener(v -> {
+            ShopOrderStateLookActivity.open(mActivity);
         });
 
         mBinding.linSetting.setOnClickListener(v -> {

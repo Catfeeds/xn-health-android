@@ -10,6 +10,20 @@ public class MyConfig {
     public final static String SYSTEMCODE="CD-JKEG000011";
     public final static String IMGURL="http://or4e1nykg.bkt.clouddn.com/";
     public final static String HOTELTYPE="FL2017061219492431865712";
-    public final static String HOTELTYPEBIG="FL2017061016211611994528";
+
+    /*1待支付 2 已支付待发货 3 已发货待收货 4 已收货 91用户取消 92 商户取消 93 快递异常*/
+    public final static String ORDERTYPEWAITPAY="1";
+    public final static String ORDERTYPEWAITFAHUO="2";
+    public final static String ORDERTYPEWAITSHOUHUO="3";
+    public final static String ORDERTYPEYISHOUHUO="4";
+    public final static String ORDERTYPECANCELUSER="91";
+    public final static String ORDERTYPECANCELSHOP="92";
+    public final static String ORDERTYPEERROR="93";
+
+
+
+
+
+
 
 }

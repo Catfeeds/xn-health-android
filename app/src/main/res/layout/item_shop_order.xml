@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                tools:text="订单号："
+                android:id="@+id/txt_orderId"
+                android:layout_marginLeft="15dp"
+                android:textSize="11sp"
+                android:maxLines="1"
+                android:enabled="true"
+                android:textColor="@color/fontColor_support"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:gravity="right"
+                tools:text="2017"
+                android:id="@+id/txt_time"
+                android:layout_marginRight="15dp"
+                android:textSize="11sp"
+                android:textColor="@color/fontColor_support"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <View
+            android:background="@color/lineColor"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="159dp">
+            
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+                
+                <ImageView
+                    android:src="@mipmap/icon"
+                    android:id="@+id/img_good"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="80dp"
+                    android:layout_height="65dp" />
+
+
+                <LinearLayout
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    tools:text="sdfsdf"
+                    android:id="@+id/txt_name"
+                    android:textSize="13sp"
+                    android:textColor="@color/fontColor_gray"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_toRightOf="@+id/img_good" />
+
+                    <TextView
+                        android:id="@+id/txt_number"
+                        tools:text="sdfsdf"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_alignStart="@+id/txt_name"
+                        android:textColor="@color/fontColor_support"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/txt_name" />
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/txt_price"
+                        tools:text="￥100398.00"
+                        android:textColor="@color/fontColor_orange"
+                        android:textSize="14sp"
+                        android:layout_marginRight="13dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:background="@color/lineColor"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+
+                <TextView
+                    android:id="@+id/txt_btn"
+                    android:layout_marginRight="15dp"
+                    android:gravity="center"
+                    android:background="@drawable/corners_orange"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    android:layout_width="72dp"
+                    android:layout_height="30dp" />
+
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+
+    <View
+        android:background="@color/lineColor"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+</LinearLayout>

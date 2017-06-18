@@ -5,7 +5,9 @@ import com.chengdai.ehealthproject.model.common.model.AmountModel;
 import com.chengdai.ehealthproject.model.common.model.CodeModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
+import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
@@ -101,14 +103,24 @@ public interface ApiServer {
     Observable<BaseResponseModel<StoreDetailsModel>> GetStoreDetails(@Field("code") String code, @Field("json") String  json);
 
     /**
-     * 支付
+     * 周边余额支付
      * @param code
      * @param json
      * @return
      */
     @FormUrlEncoded
     @POST("api")
-    Observable<BaseResponseModel<String>> Pay(@Field("code") String code, @Field("json") String  json);
+    Observable<BaseResponseModel<String>> SurroundingPay(@Field("code") String code, @Field("json") String  json);
+
+   /**
+     * 周边支付宝支付
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<String>> SurroundingAliPay(@Field("code") String code, @Field("json") String  json);
 
     /**
      * 点赞请求
@@ -228,10 +240,10 @@ public interface ApiServer {
              */
     @FormUrlEncoded
     @POST("api")
-    Observable<BaseResponseModel<IsSuccessModes>> SetDefultAddress(@Field("code") String code, @Field("json") String  json);
+    Observable<BaseResponseModel<Boolean>> SetDefultAddress(@Field("code") String code, @Field("json") String  json);
 
     /**
-     * 添加
+     * 添加收货地址
      * @param code
      * @param json
      * @return
@@ -239,4 +251,84 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<CodeModel>> AddAddress(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 商城订单下单
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<String>> ShopOrderCerate(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 商城支付 (余额)
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> ShopOrderPay(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 商城支付(支付宝)
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<AliPayRequestMode>> ShopOrderAliPay(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 商城订单列表
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<ShopOrderModel>> ShopOrderList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 商城订单详情
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<ShopOrderModel>> ShopOrderDetails(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 商城订取消
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> ShopOrderCancel(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 收货地址删除
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> AddressDelete(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 编辑收货地址
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> editAddress(@Field("code") String code, @Field("json") String  json);
 }

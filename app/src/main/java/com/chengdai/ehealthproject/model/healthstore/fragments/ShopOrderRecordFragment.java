@@ -1,4 +1,4 @@
-package com.chengdai.ehealthproject.model.tabmy.fragments;
+package com.chengdai.ehealthproject.model.healthstore.fragments;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseFragment;
+import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.CommonListRefreshBinding;
-import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.adapters.HotelOrderRecordAdapter;
+import com.chengdai.ehealthproject.model.tabmy.activitys.OrderDetailsActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderDetailsActivity;
+import com.chengdai.ehealthproject.model.tabmy.adapters.OrderRecordAdapter;
+import com.chengdai.ehealthproject.model.tabmy.adapters.ShopOrderListAdapter;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -30,19 +32,24 @@ import java.util.Map;
  * Created by 李先俊 on 2017/6/15.
  */
 
-public class HotelOrderRecordFragment extends BaseFragment {
+public class ShopOrderRecordFragment extends BaseLazyFragment {
 
     private CommonListRefreshBinding mBinding;
+    private boolean isCreate;
+
     private int mPageStart=1;
-    private HotelOrderRecordAdapter mAdapter;
+    private ShopOrderListAdapter mAdapter;
+
+    private String mState;
 
     /**
      * 获得fragment实例
      * @return
      */
-    public static HotelOrderRecordFragment getInstanse(){
-        HotelOrderRecordFragment fragment=new HotelOrderRecordFragment();
+    public static ShopOrderRecordFragment getInstanse(String state){
+        ShopOrderRecordFragment fragment=new ShopOrderRecordFragment();
         Bundle bundle=new Bundle();
+        bundle.putString("state",state);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -52,19 +59,35 @@ public class HotelOrderRecordFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.common_list_refresh, null, false);
+
+        isCreate=true;
+
+        if(getArguments()!=null){
+            mState=getArguments().getString("state","");
+        }
+
         initListView();
 
         initSpringView();
-        orderRecordRequest(mActivity);
+
+
         return mBinding.getRoot();
     }
 
     private void initListView() {
-        mAdapter = new HotelOrderRecordAdapter(mActivity,new ArrayList<>());
+
+
+        mAdapter = new ShopOrderListAdapter(mActivity,new ArrayList<>());
         mBinding.listview.setAdapter(mAdapter);
+
         mBinding.listview.setOnItemClickListener((parent, view, position, id) -> {
-            HotelOrderDetailsActivity.open(mActivity,mAdapter.getItem(position));
+
+            if(mAdapter !=null){
+                ShopOrderDetailsActivity.open(mActivity,mAdapter.getItem(position));
+            }
+
         });
+
     }
 
     private void initSpringView() {
@@ -91,20 +114,47 @@ public class HotelOrderRecordFragment extends BaseFragment {
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(getUserVisibleHint()){
+            orderRecordRequest(mActivity);
+        }
+    }
+
+    @Override
+    protected void lazyLoad() {
+
+        if(isCreate){
+            orderRecordRequest(mActivity);
+        }
+
+    }
+
+    @Override
+    protected void onInvisible() {
+
+    }
+
+
     public void orderRecordRequest(Context context){
 
-        Map<String,String> map=new HashMap();
+        Map<String,String> object=new HashMap();
 
-        map.put("applyUser",SPUtilHelpr.getUserId());
-        map.put("start",mPageStart+"");
-        map.put("limit","10");
-        map.put("status","1");
-        map.put("companyCode",MyConfig.COMPANYCODE);
-        map.put("systemCode", MyConfig.SYSTEMCODE);
+        object.put("applyUser", SPUtilHelpr.getUserId());
+        object.put("start", mPageStart+"");
+        object.put("limit", "10");
+        object.put("status", mState+"");
+        object.put("token", SPUtilHelpr.getUserToken());
+        object.put("systemCode", MyConfig.SYSTEMCODE);
+        object.put("type","1");//普通商城
 
-        mSubscription.add(RetrofitUtils.getLoaderServer().HotelOrderRecordRequest("808468", StringUtils.getJsonToString(map))
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().ShopOrderList("808068",StringUtils.getJsonToString(object))
                 .compose(RxTransformerHelper.applySchedulerResult(context))
-                .subscribe(r -> {
+                .subscribe(r->{
                     if(mPageStart==1){
                         if(r==null || r.getList()==null){
                             return;
@@ -122,6 +172,14 @@ public class HotelOrderRecordFragment extends BaseFragment {
 
                 },Throwable::printStackTrace));
 
+
+/*        mSubscription.add(RetrofitUtils.getLoaderServer().OrderRecordRequest("808245", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(context))
+                .subscribe(r -> {
+
+
+
+                },Throwable::printStackTrace));*/
 
     }
 

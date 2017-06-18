@@ -40,23 +40,29 @@ public class SPUtilHelpr {
 	return  SPUtils.getString(BaseApplication.getInstance(),USERTOKEN,"");
 	}
 
-	/**
+/*
+	*/
+/**
 	 * 设置用户token
 	 * @param
-	 */
+	 *//*
+
 	public static void changeIsFirstAddressState(boolean isfirst)
 	{
 		SPUtils.put(BaseApplication.getInstance(),ISFIRSTADDADDRESS,isfirst);
 	}
 
+*/
 /**
 	 * 设置用户token
 	 * @param
-	 */
+	 *//*
+
 	public static boolean isFirstAddressState()
 	{
      	return  SPUtils.getBoolean(BaseApplication.getInstance(),ISFIRSTADDADDRESS,true);
 	}
+*/
 
 	/**
 	 * 设置用户token

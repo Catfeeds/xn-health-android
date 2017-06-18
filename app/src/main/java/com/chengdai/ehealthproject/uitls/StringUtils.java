@@ -3,6 +3,7 @@ package com.chengdai.ehealthproject.uitls;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -63,7 +64,18 @@ public class StringUtils {
         return splitAsList(s,"\\|\\|");
     }
 
+    public static String subString(String s, int start, int end) {
 
+        try {
+            if (s == null || s.length() <= 0 || end < start || end < 0 || start < 0) {
+
+                return "";
+            }
+            return s.substring(start, end);
+        } catch (Exception ex) {
+            return "";
+        }
+    }
     //int前面补零
     public static String frontCompWithZoreString(String sourceDate,int formatLength)
     {
@@ -82,9 +94,66 @@ public class StringUtils {
         if(big !=null){
             return (big.doubleValue()/1000)+"";
         }
+        return "0";
+    }
+
+    /**
+     * 显示金钱乘规格
+     * @param big
+     * @param size
+     * @return
+     */
+        public static String showPrice(BigDecimal big,int size){
+
+        if(big !=null){
+            BigDecimal bigDecimal=new BigDecimal(size);
+            return (big.multiply(bigDecimal).doubleValue()/1000)+"";
+        }
 
         return "0";
 
+    }
+
+    public static String getOrderState(String state){
+
+        if(TextUtils.isEmpty(state)){
+            return "";
+        }
+
+        if (state.equals(MyConfig.ORDERTYPEWAITPAY)) { // 待支付
+            return"待支付";
+        } else if (state.equals(MyConfig.ORDERTYPEWAITFAHUO)) { // 已支付
+            return"待发货";
+        } else if (state.equals(MyConfig.ORDERTYPEWAITSHOUHUO)) { // 已发货
+            return"去收货";
+        } else if (state.equals(MyConfig.ORDERTYPEYISHOUHUO)) { // 已收货
+            return"已收货";
+        } else if (state.equals(MyConfig.ORDERTYPECANCELSHOP)) { // 用户取消
+            return"已取消";
+        } else if (state.equals(MyConfig.ORDERTYPECANCELUSER)) { // 商户取消
+            return"已取消";
+        } else if (state.equals(MyConfig.ORDERTYPEERROR)) {
+            return"快递异常";
+        }
+        return "";
+    }
+
+    /**
+     * 检查是否时待支付状态
+     * @param state
+     * @return
+     */
+    public static boolean canDoPay(String state){
+
+        return MyConfig.ORDERTYPEWAITPAY.equals(state);
+    }
+
+    public static String getShowPriceSign(BigDecimal bigDecimal){
+        return "￥"+showPrice(bigDecimal);
+    }
+
+   public static String getShowPriceSign(BigDecimal bigDecimal,int size){
+        return "￥"+showPrice(bigDecimal,size);
     }
 
 }
