@@ -108,15 +108,14 @@ public class ShopTypeListSelectActivity extends AbsBaseActivity {
 
             ShopListModel.ListBean model= (ShopListModel.ListBean) mAdapter.getItem(position-mBinding.lvStoreType.getHeaderViewsCount());
 
-            LogUtil.E("type"+model.getType());
+            ShopDetailsActivity.open(this,model);
 
-
-
-            if(HOTELTYPE.equals(model.getType())){  //酒店类型
+ /*           if(HOTELTYPE.equals(model.getType())){  //酒店类型
                 HoteldetailsActivity.open(this,model.getCode());
             }else{
                 StoredetailsActivity.open(this,model.getCode());
-            }
+            }*/
+
         });
 
 

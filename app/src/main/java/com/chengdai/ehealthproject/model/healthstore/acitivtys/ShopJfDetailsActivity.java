@@ -16,6 +16,7 @@ import com.chengdai.ehealthproject.databinding.ActivityShopJfdetailsBinding;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthstore.fragments.ShopCommodityFragment;
 import com.chengdai.ehealthproject.model.healthstore.fragments.ShopDeatilsFragment;
+import com.chengdai.ehealthproject.model.healthstore.fragments.ShopEvaluateFragment;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
@@ -101,6 +102,11 @@ public class ShopJfDetailsActivity extends AbsBaseActivity {
         //打开购物车
 
         mBinding.layoutPayCar.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(this)){
+                return;
+            }
+
             ShopPayCarSelectActivity.open(this);
         });
 
@@ -127,8 +133,8 @@ public class ShopJfDetailsActivity extends AbsBaseActivity {
         List<Fragment> fragments=new ArrayList<>();
         fragments.add(ShopCommodityFragment.getInstanse(mData, MyConfig.JFORDER));
         fragments.add(ShopDeatilsFragment.getInstanse(mData));
-        fragments.add(ShopCommodityFragment.getInstanse(mData,MyConfig.JFORDER));
-
+        fragments.add(ShopEvaluateFragment.getInstanse(mData));
+        mBinding.viewpager.setOffscreenPageLimit(3);
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
 
 

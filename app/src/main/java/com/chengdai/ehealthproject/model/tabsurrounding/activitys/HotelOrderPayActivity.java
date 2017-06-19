@@ -118,7 +118,7 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
 
                             if(payState!=null && payState.isSuccess()){
 
-                                MainActivity.open(this);
+                                MainActivity.open(this,1);
                                 finish();
 
                             }else{

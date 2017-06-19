@@ -106,7 +106,7 @@ public class LoginActivity extends AbsBaseActivity {
 
                         if(!TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
                             if(isStartMain){
-                                MainActivity.open(this);
+                                MainActivity.open(this,0);
                             }
                       
                             finish();

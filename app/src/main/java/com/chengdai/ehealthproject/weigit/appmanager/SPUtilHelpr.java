@@ -37,7 +37,7 @@ public class SPUtilHelpr {
 	 */
 	public static String getUserToken()
 	{
-	return  SPUtils.getString(BaseApplication.getInstance(),USERTOKEN,"");
+     	return  SPUtils.getString(BaseApplication.getInstance(),USERTOKEN,"");
 	}
 
 /*

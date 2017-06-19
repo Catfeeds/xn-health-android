@@ -9,10 +9,16 @@ import android.view.ViewGroup;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseFragment;
+import com.chengdai.ehealthproject.databinding.FragmentEvaluateBinding;
 import com.chengdai.ehealthproject.databinding.FragmentShopTabDetailsBinding;
+import com.chengdai.ehealthproject.model.healthstore.adapters.ShopEvaluateAdapter;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
+import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.zzhoujay.richtext.RichText;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,9 +28,12 @@ import java.util.Map;
 
 public class ShopEvaluateFragment extends BaseFragment {
 
-    private FragmentShopTabDetailsBinding mBinding;
+    private FragmentEvaluateBinding mBinding;
 
     private ShopListModel.ListBean mData;
+
+    private ShopEvaluateAdapter mAdapter;
+
 
     /**
      * 获得fragment实例
@@ -41,22 +50,23 @@ public class ShopEvaluateFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_shop_tab_details, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_evaluate, null, false);
 
         if(getArguments() != null){
             mData=getArguments().getParcelable("data");
         }
-
-        if(mData != null){
-            RichText.from(mData.getDescription()).into(mBinding.tvDetails);
-        }
-
-
+        mAdapter=new ShopEvaluateAdapter(mActivity,new ArrayList<>());
+        mBinding.listEvaluate.setAdapter(mAdapter);
+        getEvaluateRequest();
         return mBinding.getRoot();
     }
 
 
     private  void getEvaluateRequest(){
+
+        if(mData== null){
+            return;
+        }
 
         Map<String,String> object=new HashMap<>();
         object.put("productCode",mData.getCode());
@@ -65,6 +75,11 @@ public class ShopEvaluateFragment extends BaseFragment {
         object.put("type", "3");
 
 
+       mSubscription .add(RetrofitUtils.getLoaderServer().GgetEvaluate("808029", StringUtils.getJsonToString(object))
+                .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
+                .subscribe(r ->{
+//                    mAdapter.setData(r);
+                },Throwable::printStackTrace));
     }
 
 

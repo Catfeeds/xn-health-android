@@ -130,11 +130,14 @@ public class SearchShopActivity extends AbsBaseActivity {
         mBinding.listlayout.listview.setOnItemClickListener((parent, view, position, id) -> {
             ShopListModel.ListBean model= (ShopListModel.ListBean) mStoreTypeAdapter.getItem(position);
 
+            ShopDetailsActivity.open(this,model);
+/*
             if(HOTELTYPE.equals(model.getType())){  //酒店类型
                 HoteldetailsActivity.open(this,model.getCode());
             }else{
                 StoredetailsActivity.open(this,model.getCode());
             }
+*/
 
         });
 

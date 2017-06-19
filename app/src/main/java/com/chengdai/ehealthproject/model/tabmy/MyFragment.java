@@ -127,11 +127,7 @@ public class MyFragment extends BaseLazyFragment{
                 .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
-                    if(r.get(0).getAmount().intValue()>0){
-                        mBinding.tvJf.setText(r.get(0).getAmount().intValue());
-                    }else{
-                        mBinding.tvJf.setText("0");
-                    }
+                    mBinding.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));
 
@@ -139,7 +135,7 @@ public class MyFragment extends BaseLazyFragment{
     }
 
     /**
-     * 获取积分请求
+     * 获取用户信息请求
      */
     private  void getUserInfoRequest(){
 

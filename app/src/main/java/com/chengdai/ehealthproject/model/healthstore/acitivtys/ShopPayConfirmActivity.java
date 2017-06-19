@@ -228,7 +228,7 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
             EventBusModel eventBusModel=new EventBusModel();
             eventBusModel.setTag("AllFINISH");
             EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-            MainActivity.open(this);
+            MainActivity.open(this,2);
         }
 
         finish();

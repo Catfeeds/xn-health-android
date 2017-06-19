@@ -60,7 +60,7 @@ public class ShopHotJfAdapter extends CommonAdapter<ShopListModel.ListBean> {
 
         if(item.getProductSpecsList() !=null && item.getProductSpecsList().get(0)!=null){
             tv_jf_number.setText(StringUtils.showPrice(item.getProductSpecsList().get(0).getPrice1()));
-            tv_price.setText(StringUtils.getShowPriceSign(item.getProductSpecsList().get(0).getOriginalPrice()));
+            tv_price.setText("市场参考价:"+StringUtils.getShowPriceSign(item.getProductSpecsList().get(0).getOriginalPrice()));
         }
 
 

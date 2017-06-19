@@ -167,6 +167,10 @@ public class HealthStoreFragment extends BaseLazyFragment{
         });
 
         mBinding.imgJfshopInto.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
             ShopJfActivity.open(mActivity);
         });
 

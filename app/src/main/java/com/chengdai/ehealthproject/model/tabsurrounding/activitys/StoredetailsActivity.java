@@ -76,8 +76,12 @@ public class StoredetailsActivity extends AbsBaseActivity {
         getStoreDetailsRequest(storeCode);
 
         mBinding.btnPay.setOnClickListener(v -> {
-            if(mStoreDetailsModel!=null)
-                 PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
+            if(!SPUtilHelpr.isLogin(this)){
+                return;
+            }
+            if(mStoreDetailsModel!=null){
+                PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
+            }
         });
 
 

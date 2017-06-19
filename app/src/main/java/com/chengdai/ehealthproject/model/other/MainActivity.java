@@ -33,17 +33,24 @@ public class MainActivity extends BaseLocationActivity {
 
     private ActivityMainBinding mainBinding;
 
-    private int mTabIndex=1;//记录用户点击下标 用于未登录时恢复状态
+    private int mTabIndex=0;//记录用户点击下标 用于未登录时恢复状态
+
+    private int mShowIndex=0;//显示相应页面
+
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context,int select){
         if(context==null){
             return;
         }
-        context.startActivity(new Intent(context,MainActivity.class));
+        Intent intent= new Intent(context,MainActivity.class);
+
+        intent.putExtra("select",select);
+
+        context.startActivity(intent);
     }
 
     @Override
@@ -52,9 +59,6 @@ public class MainActivity extends BaseLocationActivity {
                 aMapLocation.getProvince(),aMapLocation.getCity(),aMapLocation.getDistrict(),aMapLocation.getLatitude()+"",aMapLocation.getLongitude()+"");
         SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
 
-        LogUtil.E("定位成功");
-
-//        showToast("定位成功");
 
     }
 
@@ -78,6 +82,10 @@ public class MainActivity extends BaseLocationActivity {
         addMainView(mainBinding.getRoot());
 
         hintTitleView();
+
+        if(getIntent()!=null){
+            mShowIndex=getIntent().getIntExtra("select",0);
+        }
 
         initViewState();
 
@@ -142,6 +150,8 @@ public class MainActivity extends BaseLocationActivity {
                  mainBinding.pagerMain.setCurrentItem(4,false);
              }
         });
+
+        mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
 
 /*       mSubscription.add( RxRadioGroup.checkedChanges(mainBinding.layoutMainButtom.radiogroup) //点击切换
                .subscribe(integer -> {

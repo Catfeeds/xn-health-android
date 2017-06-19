@@ -7,7 +7,9 @@ import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -20,11 +22,23 @@ import java.util.List;
 public class ShopEvaluateAdapter extends CommonAdapter<ShopEvaluateModel> {
 
 
-    public ShopEvaluateAdapter(Context context, int layoutId, List<ShopEvaluateModel> datas) {
-        super(context, layoutId, datas);
+    public ShopEvaluateAdapter(Context context, List<ShopEvaluateModel> datas) {
+        super(context, R.layout.item_evaluate, datas);
     }
 
+    public void setData(List<ShopEvaluateModel> datas){
+        if(datas!=null){
+            this.mDatas=datas;
+            notifyDataSetChanged();
+        }
+    }
 
+    public void addData(List<ShopEvaluateModel> datas){
+        if(datas!=null){
+            this.mDatas.addAll(datas);
+            notifyDataSetChanged();
+        }
+    }
     @Override
     protected void convert(ViewHolder viewHolder, ShopEvaluateModel item, int position) {
 
@@ -40,7 +54,7 @@ public class ShopEvaluateAdapter extends CommonAdapter<ShopEvaluateModel> {
 
         if(item .getUser() != null){
             txtName.setText(item.getUser().getNickname());
-            ImgUtils.loadImgIdforCircle(mContext,item.getUser().getPhoto(),imgEvalute);
+            ImgUtils.loadImgIdforCircle(mContext, MyConfig.IMGURL+item.getUser().getPhoto(),imgPhoto);
             if(item.getType().equals("3")){
                imgEvalute.setImageResource(R.mipmap.evaluate_good);
                 txtEvalute.setText("好评");

@@ -2,6 +2,7 @@ package com.chengdai.ehealthproject.model.tabsurrounding.adapters;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -86,8 +87,9 @@ public class StoreTypeListAdapter extends CommonAdapter {
         TextView   tvAddress=viewHolder.getView(R.id.tv_address);
         TextView   tvDZSUM=viewHolder.getView(R.id.tv_dz_sum);
         ImageView   imgIsDz=viewHolder.getView(R.id.img_isDZ);
+        FrameLayout frameLayout_dz=viewHolder.getView(R.id.frameLayout_dz);
 
-        imgIsDz.setOnClickListener(v -> {
+        frameLayout_dz.setOnClickListener(v -> {
 
             if(!SPUtilHelpr.isLogin(mContext)){
 

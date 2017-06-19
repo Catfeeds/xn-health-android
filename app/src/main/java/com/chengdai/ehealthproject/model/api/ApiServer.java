@@ -8,6 +8,7 @@ import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
 import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
 import com.chengdai.ehealthproject.model.healthstore.models.PayCarListModel;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
@@ -373,6 +374,16 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<JfPicModel>> GetJfPic(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取商品评价
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<ShopEvaluateModel>> GgetEvaluate(@Field("code") String code, @Field("json") String  json);
 
 
 

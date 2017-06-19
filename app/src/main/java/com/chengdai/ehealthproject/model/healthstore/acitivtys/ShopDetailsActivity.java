@@ -16,8 +16,10 @@ import com.chengdai.ehealthproject.databinding.ActivityShopDetailsBinding;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthstore.fragments.ShopCommodityFragment;
 import com.chengdai.ehealthproject.model.healthstore.fragments.ShopDeatilsFragment;
+import com.chengdai.ehealthproject.model.healthstore.fragments.ShopEvaluateFragment;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.chengdai.ehealthproject.weigit.popwindows.ShopAddPayCarPopup;
 import com.chengdai.ehealthproject.weigit.popwindows.ShopPayPopup;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -131,6 +133,11 @@ public class ShopDetailsActivity extends AbsBaseActivity {
         //打开购物车
 
         mBinding.layoutPayCar.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(this)){
+                return;
+            }
+
             ShopPayCarSelectActivity.open(this);
         });
 
@@ -158,9 +165,11 @@ public class ShopDetailsActivity extends AbsBaseActivity {
         List<Fragment> fragments=new ArrayList<>();
         fragments.add(ShopCommodityFragment.getInstanse(mData, MyConfig.PRICEORDER));
         fragments.add(ShopDeatilsFragment.getInstanse(mData));
-        fragments.add(ShopCommodityFragment.getInstanse(mData,MyConfig.PRICEORDER));
+        fragments.add(ShopEvaluateFragment.getInstanse(mData));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
+
+        mBinding.viewpager.setOffscreenPageLimit(3);
 
 
         mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
