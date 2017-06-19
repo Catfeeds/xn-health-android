@@ -11,17 +11,14 @@ import android.view.View;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
-import com.chengdai.ehealthproject.base.BaseFragment;
 import com.chengdai.ehealthproject.databinding.ActivityShopDetailsBinding;
+import com.chengdai.ehealthproject.databinding.ActivityShopJfdetailsBinding;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthstore.fragments.ShopCommodityFragment;
 import com.chengdai.ehealthproject.model.healthstore.fragments.ShopDeatilsFragment;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
-import com.chengdai.ehealthproject.weigit.popwindows.ShopAddPayCarPopup;
-import com.chengdai.ehealthproject.weigit.popwindows.ShopPayPopup;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxAdapterView;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +27,11 @@ import java.util.List;
  * Created by 李先俊 on 2017/6/17.
  */
 
-public class ShopDetailsActivity extends AbsBaseActivity {
+public class ShopJfDetailsActivity extends AbsBaseActivity {
 
-    private ActivityShopDetailsBinding mBinding;
+    private ActivityShopJfdetailsBinding mBinding;
 
     private ShopListModel.ListBean mData;
-    private ShopPayPopup shopPayPopup;
-    private ShopAddPayCarPopup addPayCarPopup;
-
 
     /**
      * 打开当前页面
@@ -47,7 +41,7 @@ public class ShopDetailsActivity extends AbsBaseActivity {
         if(context==null){
             return;
         }
-        Intent intent=new Intent(context,ShopDetailsActivity.class);
+        Intent intent=new Intent(context,ShopJfDetailsActivity.class);
         intent.putExtra("data",data);
         context.startActivity(intent);
     }
@@ -56,7 +50,7 @@ public class ShopDetailsActivity extends AbsBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_shop_details, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_shop_jfdetails, null, false);
         hintTitleView();
         addMainView(mBinding.getRoot());
 
@@ -70,12 +64,12 @@ public class ShopDetailsActivity extends AbsBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(shopPayPopup !=null){
+  /*      if(shopPayPopup !=null){
             shopPayPopup=null;
         }
         if(addPayCarPopup !=null){
             addPayCarPopup=null;
-        }
+        }*/
     }
 
     /**
@@ -104,51 +98,26 @@ public class ShopDetailsActivity extends AbsBaseActivity {
         });
 
 
- //购买
-        mBinding.tvPay.setOnClickListener(v -> {
-
-            if(shopPayPopup == null ){
-                shopPayPopup = new ShopPayPopup(this);
-            }
-            shopPayPopup.setmData(mData);
-            shopPayPopup.showPopupWindow();
-
-        });
-//添加到购物车
-        mBinding.tvAddPayCar.setOnClickListener(v -> {
-
-            if(addPayCarPopup==null){
-
-                addPayCarPopup = new ShopAddPayCarPopup(this);
-            }
-
-            addPayCarPopup.setmData(mData);
-
-            addPayCarPopup.showPopupWindow();
-
-        });
-
         //打开购物车
 
         mBinding.layoutPayCar.setOnClickListener(v -> {
             ShopPayCarSelectActivity.open(this);
         });
 
+        mBinding.tvChange.setOnClickListener(v -> {
+            if(mData!=null && mData.getProductSpecsList()!=null && mData.getProductSpecsList().size()>0){
+
+                if(!SPUtilHelpr.isLogin(this)){
+                    return;
+                }
+
+                ShopPayJfActivity.open(this,mData.getProductSpecsList().get(0),1,MyConfig.IMGURL+mData.getSplitAdvPic());
+            }
+        });
 
         initViewPager();
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if(shopPayPopup!=null){
-            shopPayPopup.dismiss();
-        }
-        if(addPayCarPopup!=null){
-            addPayCarPopup.dismiss();
-        }
-    }
 
     /**
      * 初始化ViewPgaer
@@ -156,9 +125,9 @@ public class ShopDetailsActivity extends AbsBaseActivity {
     private void initViewPager() {
 
         List<Fragment> fragments=new ArrayList<>();
-        fragments.add(ShopCommodityFragment.getInstanse(mData, MyConfig.PRICEORDER));
+        fragments.add(ShopCommodityFragment.getInstanse(mData, MyConfig.JFORDER));
         fragments.add(ShopDeatilsFragment.getInstanse(mData));
-        fragments.add(ShopCommodityFragment.getInstanse(mData,MyConfig.PRICEORDER));
+        fragments.add(ShopCommodityFragment.getInstanse(mData,MyConfig.JFORDER));
 
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
 

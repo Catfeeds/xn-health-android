@@ -29,6 +29,7 @@
     <color name="login_unselect">#3a7e41</color>
     <color name="banner_select">#45a74f</color>
     <color name="tab_select">#45a74f</color>
+    <color name="txt_title_bg">#45a74f</color>
     <color name="fontColor_hint">#979797</color>
     <color name="lineColor">#eeeeee</color>
     <!--颜色值规范-->

@@ -25,52 +25,7 @@ public class ShopListModel implements Parcelable {
      * list : [{"code":"CP2017061614173859925599","storeCode":"SYS_USER_JKEG","kind":"1","category":"FL2017061611323544926138","type":"FL2017061612233181756042","name":"来健身啊","slogan":"*广告语:*广告语:*广告语:*广告语:","advPic":"th (1)_1497593893907.jpg","pic":"th (2)_1497593897971.jpg","description":"*商品详述:*商品详述:*商品详述:*商品详述:","location":"1","orderNo":2,"status":"3","updater":"jkeg","updateDatetime":"Jun 17, 2017 10:59:10 AM","boughtCount":1,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011","productSpecsList":[{"code":"PS2017061618003802618928","name":"型号","productCode":"CP2017061614173859925599","originalPrice":20000000,"price1":10,"quantity":20,"orderNo":2,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011"}]},{"code":"CP2017061614030396682349","storeCode":"SYS_USER_JKEG","kind":"1","category":"FL2017061611260999346746","type":"FL2017061612201688937222","name":"这是新增的商品","slogan":"*广告语:*广告语:*广告语:","advPic":"th (3)_1497593042380.jpg","pic":"th (2)_1497593046390.jpg","description":"2222","location":"0","orderNo":2,"status":"3","updater":"jkeg","updateDatetime":"Jun 16, 2017 2:19:38 PM","boughtCount":0,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011","productSpecsList":[{"code":"PS2017061614191901350658","name":"型号","productCode":"CP2017061614030396682349","originalPrice":2000000,"price1":2000000,"quantity":20,"orderNo":1,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011"},{"code":"PS2017061614191901496451","name":"颜色","productCode":"CP2017061614030396682349","originalPrice":10000000,"price1":10000000,"quantity":10,"orderNo":20,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011"}]},{"code":"CP2017061613020166722208","storeCode":"SJ2017061611211296942716","kind":"1","category":"FL2017061611320646922221","type":"FL2017061612221012761076","name":"氨基酸","slogan":"*广告语:*广告语:*广告语:","advPic":"下载_1497589373877.jpg","pic":"th (2)_1497589382457.jpg","description":"*商品详述:*商品详述:*商品详述:","location":"1","orderNo":1,"status":"3","updater":"jkeg","updateDatetime":"Jun 16, 2017 1:05:54 PM","boughtCount":0,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011","productSpecsList":[{"code":"PS201706161305240212555","name":"颜色","productCode":"CP2017061613020166722208","originalPrice":10000000,"price1":10000000,"price2":0,"price3":0,"quantity":10000,"orderNo":1,"companyCode":"CD-JKEG000011","systemCode":"CD-JKEG000011"}]}]
      */
 
-    private int pageNO;
-    private int start;
-    private int pageSize;
-    private int totalCount;
-    private int totalPage;
     private List<ListBean> list;
-
-    public int getPageNO() {
-        return pageNO;
-    }
-
-    public void setPageNO(int pageNO) {
-        this.pageNO = pageNO;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public int getTotalPage() {
-        return totalPage;
-    }
-
-    public void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
-    }
 
     public List<ListBean> getList() {
         return list;
@@ -182,6 +137,7 @@ public class ShopListModel implements Parcelable {
         public String getAdvPic() {
             return advPic;
         }
+
         public String getSplitPic() {
 
             List<String> s= StringUtils.splitAsList(pic,"\\|\\|");
@@ -195,7 +151,7 @@ public class ShopListModel implements Parcelable {
 
         public String getSplitAdvPic() {
 
-            List<String> s= StringUtils.splitAsList(advPic,"\\|\\|");
+            List<String> s= StringUtils.splitBannerList(advPic);
             if(s .size()>1)
             {
                 return s.get(0);
@@ -516,6 +472,9 @@ public class ShopListModel implements Parcelable {
         };
     }
 
+    public ShopListModel() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -523,28 +482,14 @@ public class ShopListModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.pageNO);
-        dest.writeInt(this.start);
-        dest.writeInt(this.pageSize);
-        dest.writeInt(this.totalCount);
-        dest.writeInt(this.totalPage);
-        dest.writeList(this.list);
-    }
-
-    public ShopListModel() {
+        dest.writeTypedList(this.list);
     }
 
     protected ShopListModel(Parcel in) {
-        this.pageNO = in.readInt();
-        this.start = in.readInt();
-        this.pageSize = in.readInt();
-        this.totalCount = in.readInt();
-        this.totalPage = in.readInt();
-        this.list = new ArrayList<ListBean>();
-        in.readList(this.list, ListBean.class.getClassLoader());
+        this.list = in.createTypedArrayList(ListBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<ShopListModel> CREATOR = new Parcelable.Creator<ShopListModel>() {
+    public static final Creator<ShopListModel> CREATOR = new Creator<ShopListModel>() {
         @Override
         public ShopListModel createFromParcel(Parcel source) {
             return new ShopListModel(source);

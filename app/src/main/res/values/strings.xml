@@ -23,6 +23,7 @@
     <string name="search">搜索</string>
     <string name="txt_setting">设置</string>
     <string name="txt_city_select">城市选择</string>
+    <string name="txt_pay_car">购物车</string>
 
 
     <string-array name="store_type">

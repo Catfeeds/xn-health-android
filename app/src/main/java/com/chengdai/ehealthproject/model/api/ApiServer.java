@@ -6,6 +6,8 @@ import com.chengdai.ehealthproject.model.common.model.CodeModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
+import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
+import com.chengdai.ehealthproject.model.healthstore.models.PayCarListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
@@ -331,4 +333,47 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<IsSuccessModes>> editAddress(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 添加到购物车
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<CodeModel>> ShopAddPayCar(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取购物车列表数据
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<PayCarListModel>> GetPayCarList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 删除购物车列表数据
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> DeletePayCar(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 积分商城图片
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<JfPicModel>> GetJfPic(@Field("code") String code, @Field("json") String  json);
+
+
+
 }

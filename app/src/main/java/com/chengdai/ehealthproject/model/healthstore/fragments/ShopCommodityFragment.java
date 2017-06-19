@@ -16,6 +16,7 @@ import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.tabmy.fragments.HotelOrderRecordFragment;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
@@ -31,14 +32,19 @@ public class ShopCommodityFragment extends BaseFragment {
 
     private ShopListModel.ListBean mData;
 
+
+    private  int mType;//用于判断是积分还是价格
+
+
     /**
      * 获得fragment实例
      * @return
      */
-    public static ShopCommodityFragment getInstanse(ShopListModel.ListBean data){
+    public static ShopCommodityFragment getInstanse(ShopListModel.ListBean data,int type){
         ShopCommodityFragment fragment=new ShopCommodityFragment();
         Bundle bundle=new Bundle();
         bundle.putParcelable("data",data);
+        bundle.putInt("type",type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -50,6 +56,7 @@ public class ShopCommodityFragment extends BaseFragment {
 
         if(getArguments() != null){
             mData=getArguments().getParcelable("data");
+            mType=getArguments().getInt("type");
         }
 
         if(mData != null){
@@ -74,7 +81,12 @@ public class ShopCommodityFragment extends BaseFragment {
         mBinding.txtInfo.setText(mData.getSlogan());
 
         if(mData.getProductSpecsList()!=null && mData.getProductSpecsList().size()>0){
-            mBinding.txtPrice.setText(getString(R.string.price_sing)+StringUtils.showPrice(mData.getProductSpecsList().get(0).getPrice1()));
+            if(mType== MyConfig.JFORDER){
+                mBinding.txtPrice.setText(StringUtils.showPrice(mData.getProductSpecsList().get(0).getPrice1())+"  积分");
+            }else{
+                mBinding.txtPrice.setText(StringUtils.getShowPriceSign(mData.getProductSpecsList().get(0).getPrice1()));
+            }
+
         }
 
     }

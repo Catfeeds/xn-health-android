@@ -119,7 +119,7 @@ public class MainActivity extends BaseLocationActivity {
             mTabIndex=4;
         });
          mainBinding.layoutMainButtom.radioMainTab5.setOnClickListener(v -> {
-             if(!SPUtilHelpr.isLogin(this)){
+             if(!SPUtilHelpr.isLoginNoStart()){
 
                  switch (mTabIndex){
                      case 1:

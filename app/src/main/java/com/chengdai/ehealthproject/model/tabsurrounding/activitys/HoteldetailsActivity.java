@@ -129,6 +129,11 @@ public class HoteldetailsActivity extends AbsBaseActivity {
         });
 
         mBinding.btnBookHotel.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(this)){
+                return;
+            }
+
             HotelSelectActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getPic(),mStoreDetailsModel.getName());
         });
 

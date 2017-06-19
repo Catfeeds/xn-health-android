@@ -21,6 +21,10 @@ public class MyConfig {
     public final static String ORDERTYPEERROR="93";
 
 
+    public static final int JFORDER=1;//积分订单
+    public static final int PRICEORDER=2;//普通订单
+
+
 
 
 

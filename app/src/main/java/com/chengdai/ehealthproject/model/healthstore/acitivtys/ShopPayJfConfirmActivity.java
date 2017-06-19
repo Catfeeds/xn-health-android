@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
-import com.chengdai.ehealthproject.databinding.ActivityPayBinding;
+import com.chengdai.ehealthproject.databinding.ActivityJfPayConfirmBinding;
 import com.chengdai.ehealthproject.databinding.ActivityShopPayConfirmBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
@@ -22,36 +20,27 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney2;
-
-/**
+/**积分订单确认
  * Created by 李先俊 on 2017/6/12.
  */
 
-public class ShopPayConfirmActivity extends AbsBaseActivity {
+public class ShopPayJfConfirmActivity extends AbsBaseActivity {
 
-    private ActivityShopPayConfirmBinding mBinding;
+    private ActivityJfPayConfirmBinding mBinding;
 
     private String  mStoreCode;
-
-    private int mPayType=1;
 
     private boolean isStartMain=true;
 
     private  ShopListModel.ListBean.ProductSpecsListBean mData;
-
-    private  static final String CALLPAYTAG="ShopPayConfirmAcitivty";
-
 
 
     /**
@@ -62,7 +51,7 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
         if(context==null){
             return;
         }
-        Intent intent=new Intent(context,ShopPayConfirmActivity.class);
+        Intent intent=new Intent(context,ShopPayJfConfirmActivity.class);
         intent.putExtra("orderCode",orderCode);
         intent.putExtra("data",data);
         intent.putExtra("isStartMain",isStartMain);//是否打开主页
@@ -74,7 +63,7 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_shop_pay_confirm, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_jf_pay_confirm, null, false);
 
         addMainView(mBinding.getRoot());
 
@@ -88,48 +77,12 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
             isStartMain=getIntent().getBooleanExtra("isStartMain",true);
         }
 
-        if(mData!=null){
-            mBinding.tvPrice.setText(StringUtils.getShowPriceSign(mData.getPrice1(),mData.getmBuyNum()));
-            mBinding.txtDiscountMoney.setText(StringUtils.getShowPriceSign(mData.getPrice1(),mData.getmBuyNum()));
-        }
+        mBinding.tvJifen.setText(StringUtils.showPrice(mData.getPrice1()));
 
         initViews();
 
-        initPayTypeSelectState();
-
     }
 
-    /**
-     * 初始化支付方式选择状态
-     */
-    private void initPayTypeSelectState() {
-
-        ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
-        ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-        ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
-
-        mBinding.linBalace.setOnClickListener(v -> {
-            mPayType=1;
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
-        });
-     mBinding.linWeipay.setOnClickListener(v -> {
-            mPayType=2;
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
-        });
-
-     mBinding.linZhifubao.setOnClickListener(v -> {
-           mPayType=3;
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(ShopPayConfirmActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
-        });
-
-
-    }
 
 
 
@@ -137,24 +90,13 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
 
         mBinding.txtPay.setOnClickListener(v -> {
             if(SPUtilHelpr.isLogin(this)){
-              payRequest(mPayType);
+              payRequest(1);
             }
         });
 
     }
 
     private void payRequest(int PayType) {
-/*// 用户编号（必填）
-    private String userId;
-
-    // 商家编号（必填）
-    private String storeCode;
-
-    // 消费金额（必填）
-    private String amount;
-
-    // 支付类型（必填） 1-余额支付  2-微信APP支付 3-支付宝APP支付
-    private String payType;*/
 
     if(!SPUtilHelpr.isLogin(this)){
       return;
@@ -169,31 +111,8 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
         object.put("payType", PayType);
         object.put("token", SPUtilHelpr.getUserToken());
 
+        yuPay(object);//余额支付
 
-        switch (PayType){
-            case 1:
-                yuPay(object);//余额支付
-                break;
-            case 3://支付宝支付
-                aliPay(object);
-                break;
-        }
-
-
-    }
-
-    /**
-     * z支付宝支付
-     * @param object
-     */
-    private void aliPay(Map object) {
-        mSubscription.add(RetrofitUtils.getLoaderServer().ShopOrderAliPay("808052", StringUtils.getJsonToString(object))
-                .compose(RxTransformerHelper.applySchedulerResult(this))
-                .filter(data-> data!=null)
-                .subscribe(data -> {
-                    PayUtil.callAlipay(this,data.getSignOrder(),CALLPAYTAG);
-
-                },Throwable::printStackTrace));
     }
 
     /**
@@ -232,22 +151,6 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
         }
 
         finish();
-    }
-
-
-    /**
-     * 支付回调
-     * @param mo
-     */
-    @Subscribe
-    public void AliPayState(PaySucceedInfo mo){
-        if(mo == null || !TextUtils.equals(mo.getTag(),CALLPAYTAG)){
-            return;
-        }
-
-        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
-            payState();
-        }
     }
 
 }

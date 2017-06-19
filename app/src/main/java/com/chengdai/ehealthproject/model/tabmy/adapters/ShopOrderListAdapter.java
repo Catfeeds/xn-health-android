@@ -24,6 +24,7 @@ import java.util.List;
 
 public class ShopOrderListAdapter extends CommonAdapter<ShopOrderDetailBean> {
 
+    private int mType=MyConfig.JFORDER;
 
 
     public void setData(List<ShopOrderDetailBean> datas){
@@ -39,8 +40,9 @@ public class ShopOrderListAdapter extends CommonAdapter<ShopOrderDetailBean> {
             notifyDataSetChanged();
         }
     }
-    public ShopOrderListAdapter(Context context, List datas) {
+    public ShopOrderListAdapter(Context context, List datas,int type) {
         super(context, R.layout.item_shop_order, datas);
+        this.mType=type;
     }
 
 
@@ -72,7 +74,11 @@ public class ShopOrderListAdapter extends CommonAdapter<ShopOrderDetailBean> {
                 && item.getProductOrderList().get(0).getProduct()!=null ){
             ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+item.getProductOrderList().get(0).getProduct().getAdvPic(),imgGood);
 
-            txtPrice.setText(StringUtils.getShowPriceSign(item.getProductOrderList().get(0).getPrice1()));
+            if(mType == MyConfig.JFORDER){
+                txtPrice.setText(StringUtils.showPrice(item.getProductOrderList().get(0).getPrice1())+"  积分");
+            }else{
+                txtPrice.setText(StringUtils.getShowPriceSign(item.getProductOrderList().get(0).getPrice1()));
+            }
 
             tvNumber.setText("X" + item.getProductOrderList().get(0).getQuantity());
 

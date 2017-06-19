@@ -16,6 +16,7 @@ import com.chengdai.ehealthproject.databinding.FragmentShopTabBinding;
 import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.SearchShopActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopDetailsActivity;
+import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopJfActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopMenuSeletActivity;
 import com.chengdai.ehealthproject.model.healthstore.adapters.ShopTypeListAdapter;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
@@ -24,6 +25,7 @@ import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsAc
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
+import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -44,7 +46,7 @@ import java.util.Map;
 import static com.chengdai.ehealthproject.weigit.appmanager.MyConfig.HOTELTYPE;
 
 
-/**周边
+/**商城
  * Created by 李先俊 on 2017/6/8.
  */
 
@@ -104,6 +106,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
                 shopMenuRequest(null);
                 bannerDataRequest(null);
                 getStoreListRequest(null);
+                getJfPicRequest(null);
 
                 mBinding.springviewSurrounding.onFinishFreshAndLoad();
             }
@@ -163,6 +166,9 @@ public class HealthStoreFragment extends BaseLazyFragment{
             SearchShopActivity.open(mActivity,"商店搜索");
         });
 
+        mBinding.imgJfshopInto.setOnClickListener(v -> {
+            ShopJfActivity.open(mActivity);
+        });
 
     }
 
@@ -204,12 +210,13 @@ public class HealthStoreFragment extends BaseLazyFragment{
     protected void lazyLoad() {
         if (isCreate){
 
-            shopMenuRequest(mActivity);
+            getJfPicRequest(null);
 
-            bannerDataRequest(mActivity);
+            shopMenuRequest(null);
+
+            bannerDataRequest(null);
 
             getStoreListRequest(mActivity);
-
 
             if(mBinding!=null && mBinding.banner!=null){
                 mBinding.banner.start();
@@ -334,11 +341,42 @@ public class HealthStoreFragment extends BaseLazyFragment{
     }
 
 
+
+    /**
+     * 商城菜单
+     * @param context
+     */
+    private void getJfPicRequest(Context context) {
+
+        Map<String,String> map=new HashMap();
+
+        map.put("ckey","jfPic");
+        map.put("systemCode",MyConfig.SYSTEMCODE);
+        map.put("token",SPUtilHelpr.getUserToken());
+
+
+        mSubscription.add( RetrofitUtils.getLoaderServer().GetJfPic("807717", StringUtils.getJsonToString(map))
+
+                .compose(RxTransformerHelper.applySchedulerResult(context))
+                .subscribe(r -> {
+                    if(r !=null ){
+                        ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+r.getNote(),mBinding.imgJfshopInto);
+                    }
+
+                },Throwable::printStackTrace));
+
+    }
+
+
+
+
     @Override
     protected void onInvisible() {
         if(isCreate && mBinding!=null && mBinding.banner!=null){
             mBinding.banner.stopAutoPlay();
         }
-
     }
+
+
+
 }

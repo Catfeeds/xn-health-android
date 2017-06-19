@@ -9,23 +9,20 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySurroundingOrderStateBinding;
 import com.chengdai.ehealthproject.model.dataadapters.TablayoutAdapter;
-import com.chengdai.ehealthproject.model.tabmy.MyFragment;
-import com.chengdai.ehealthproject.model.tabmy.fragments.HotelOrderRecordFragment;
-import com.chengdai.ehealthproject.model.tabmy.fragments.OrderRecordFragment;
-import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelRoomDetailsActivity;
-import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
+import com.chengdai.ehealthproject.model.healthstore.fragments.ShopJfOrderRecordFragment;
+import com.chengdai.ehealthproject.model.healthstore.fragments.ShopOrderRecordFragment;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
-/**酒店订单查看
+/**积分订单查看
  * Created by 李先俊 on 2017/6/15.
  */
 
-public class HotelOrderStateLookActivity extends AbsBaseActivity {
+public class ShopJfOrderStateLookActivity extends AbsBaseActivity {
 
     private ActivitySurroundingOrderStateBinding mBinding;
 
     /*Tablayout 适配器*/
     private TablayoutAdapter tablayoutAdapter;
-
 
 
     /**
@@ -37,7 +34,7 @@ public class HotelOrderStateLookActivity extends AbsBaseActivity {
             return;
         }
 
-        Intent intent=new Intent(context,HotelOrderStateLookActivity.class);
+        Intent intent=new Intent(context,ShopJfOrderStateLookActivity.class);
         context.startActivity(intent);
     }
 
@@ -48,7 +45,7 @@ public class HotelOrderStateLookActivity extends AbsBaseActivity {
 
         mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_surrounding_order_state, null, false);
 
-        setTopTitle("消费记录");
+        setTopTitle("积分订单");
 
         setSubLeftImgState(true);
 
@@ -60,10 +57,14 @@ public class HotelOrderStateLookActivity extends AbsBaseActivity {
 
     private void initViewPager() {
         tablayoutAdapter=new TablayoutAdapter(getSupportFragmentManager());
-        tablayoutAdapter.addFrag(OrderRecordFragment.getInstanse(), "普通");
-        tablayoutAdapter.addFrag(HotelOrderRecordFragment.getInstanse(), "酒店住宿");
+        tablayoutAdapter.addFrag(ShopJfOrderRecordFragment.getInstanse(""), "全部");
+        tablayoutAdapter.addFrag(ShopJfOrderRecordFragment.getInstanse(MyConfig.ORDERTYPEWAITPAY), "待付款");
+        tablayoutAdapter.addFrag(ShopJfOrderRecordFragment.getInstanse(MyConfig.ORDERTYPEWAITFAHUO), "待发货");
+        tablayoutAdapter.addFrag(ShopJfOrderRecordFragment.getInstanse(MyConfig.ORDERTYPEWAITSHOUHUO), "待收货");
         mBinding.viewpagerOrder.setAdapter(tablayoutAdapter);
         mBinding.tablayout.setupWithViewPager(mBinding.viewpagerOrder);        //viewpager和tablayout关联
+
         mBinding.viewpagerOrder.setOffscreenPageLimit(tablayoutAdapter.getCount());
+
     }
 }

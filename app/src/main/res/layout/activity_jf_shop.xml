@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View style="@style/style_split_line"/>
+
+            <TextView
+                android:textColor="@color/text_color"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="热门兑换"
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+
+
+            <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+                android:divider="@color/gray"
+                android:dividerHeight="0.5dp"
+                android:listSelector="@color/white"
+                android:id="@+id/list_hot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </com.chengdai.ehealthproject.weigit.views.ListViewForScrollView>
+
+            <View style="@style/style_split_line"/>
+
+            <TextView
+                android:textColor="@color/text_color"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:text="积分兑换"
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+
+            <View style="@style/style_split_line"/>
+
+            <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+                android:divider="@color/gray"
+                android:dividerHeight="0.5dp"
+                android:listSelector="@color/white"
+                android:id="@+id/list_jf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </com.chengdai.ehealthproject.weigit.views.ListViewForScrollView>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>
+</layout>

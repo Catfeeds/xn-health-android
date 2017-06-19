@@ -9,9 +9,7 @@ import android.view.View;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
-import com.chengdai.ehealthproject.databinding.ActivityShopPayBinding;
-import com.chengdai.ehealthproject.model.common.model.EventBusModel;
-import com.chengdai.ehealthproject.model.common.model.activitys.AddAddressActivity;
+import com.chengdai.ehealthproject.databinding.ActivityShopPayJfBinding;
 import com.chengdai.ehealthproject.model.common.model.activitys.AddressSelectActivity;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
@@ -29,13 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**商城支付
+/**商城积分支付
  * Created by 李先俊 on 2017/6/17.
  */
 
-public class ShopPayActivity extends AbsBaseActivity{
+public class ShopPayJfActivity extends AbsBaseActivity{
 
-    private ActivityShopPayBinding mBinding;
+    private ActivityShopPayJfBinding mBinding;
 
     private ShopListModel.ListBean.ProductSpecsListBean mSelectProductData;
 
@@ -53,7 +51,7 @@ public class ShopPayActivity extends AbsBaseActivity{
         if(context==null){
             return;
         }
-        Intent intent=new Intent(context,ShopPayActivity.class);
+        Intent intent=new Intent(context,ShopPayJfActivity.class);
         intent.putExtra("data",data);
         intent.putExtra("buynum",buyNum);
         intent.putExtra("imgUrl",imgUrl);
@@ -64,7 +62,7 @@ public class ShopPayActivity extends AbsBaseActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_shop_pay, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_shop_pay_jf, null, false);
 
         addMainView(mBinding.getRoot());
 
@@ -89,7 +87,7 @@ public class ShopPayActivity extends AbsBaseActivity{
                 return;
             }
             if(mBuyNum == 0){
-                showToast("至少选择一个数量");
+                showToast("购买数量不能小于1");
                 return;
             }
 
@@ -102,13 +100,13 @@ public class ShopPayActivity extends AbsBaseActivity{
     private void setShowData() {
         if(mSelectProductData!=null){
 
-            mBinding.txtPriceSingle.setText(StringUtils.getShowPriceSign(mSelectProductData.getPrice1()));
+            mBinding.txtPriceSingle.setText("积分："+StringUtils.showPrice(mSelectProductData.getPrice1()));
 
             mBinding.txtName.setText(mSelectProductData.getName());
 
             mBinding.txtNumber.setText("X"+mBuyNum);
 
-            mBinding.textMoney.setText(StringUtils.getShowPriceSign(mSelectProductData.getPrice1(),mBuyNum));
+            mBinding.textMoney.setText("积分："+StringUtils.showPrice(mSelectProductData.getPrice1(),mBuyNum));
         }
 
         ImgUtils.loadImgURL(this,imgUrl,mBinding.imgGood);
@@ -158,9 +156,9 @@ public class ShopPayActivity extends AbsBaseActivity{
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(codeModel -> {
                    if(!TextUtils.isEmpty(codeModel)){
-                       showToast("下单成功");
+                       showToast("兑换成功");
                        mSelectProductData.setmBuyNum(mBuyNum);
-                       ShopPayConfirmActivity.open(this,mSelectProductData,codeModel,true);
+                       ShopPayJfConfirmActivity.open(this,mSelectProductData,codeModel,true);
                    }
 
                 },Throwable::printStackTrace));

@@ -11,9 +11,7 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.CommonListRefreshBinding;
-import com.chengdai.ehealthproject.model.tabmy.activitys.OrderDetailsActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.adapters.OrderRecordAdapter;
 import com.chengdai.ehealthproject.model.tabmy.adapters.ShopOrderListAdapter;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -32,7 +30,7 @@ import java.util.Map;
  * Created by 李先俊 on 2017/6/15.
  */
 
-public class ShopOrderRecordFragment extends BaseLazyFragment {
+public class ShopJfOrderRecordFragment extends BaseLazyFragment {
 
     private CommonListRefreshBinding mBinding;
     private boolean isCreate;
@@ -46,8 +44,8 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
      * 获得fragment实例
      * @return
      */
-    public static ShopOrderRecordFragment getInstanse(String state){
-        ShopOrderRecordFragment fragment=new ShopOrderRecordFragment();
+    public static ShopJfOrderRecordFragment getInstanse(String state){
+        ShopJfOrderRecordFragment fragment=new ShopJfOrderRecordFragment();
         Bundle bundle=new Bundle();
         bundle.putString("state",state);
         fragment.setArguments(bundle);
@@ -77,13 +75,13 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
     private void initListView() {
 
 
-        mAdapter = new ShopOrderListAdapter(mActivity,new ArrayList<>(),MyConfig.PRICEORDER);
+        mAdapter = new ShopOrderListAdapter(mActivity,new ArrayList<>(),MyConfig.JFORDER);
         mBinding.listview.setAdapter(mAdapter);
 
         mBinding.listview.setOnItemClickListener((parent, view, position, id) -> {
 
             if(mAdapter !=null){
-                ShopOrderDetailsActivity.open(mActivity,mAdapter.getItem(position),MyConfig.PRICEORDER);
+                ShopOrderDetailsActivity.open(mActivity,mAdapter.getItem(position),MyConfig.JFORDER);
             }
 
         });
@@ -149,7 +147,7 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
         object.put("status", mState+"");
         object.put("token", SPUtilHelpr.getUserToken());
         object.put("systemCode", MyConfig.SYSTEMCODE);
-        object.put("type","1");//普通商城
+        object.put("type","2");//积分商城
 
 
         mSubscription.add(RetrofitUtils.getLoaderServer().ShopOrderList("808068",StringUtils.getJsonToString(object))

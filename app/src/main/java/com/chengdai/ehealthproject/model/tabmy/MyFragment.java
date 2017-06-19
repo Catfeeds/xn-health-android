@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
+import com.chengdai.ehealthproject.databinding.ActivityShopAllOrderLookBinding;
 import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
+import com.chengdai.ehealthproject.model.tabmy.activitys.ShopAllOrderLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.SettingActivity;
@@ -58,7 +60,10 @@ public class MyFragment extends BaseLazyFragment{
         });
 
         mBinding.linShop.setOnClickListener(v -> {
-            ShopOrderStateLookActivity.open(mActivity);
+
+            ShopAllOrderLookActivity.open(mActivity);
+
+
         });
 
         mBinding.linSetting.setOnClickListener(v -> {

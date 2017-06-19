@@ -10,8 +10,6 @@ import android.view.View;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityShopPayBinding;
-import com.chengdai.ehealthproject.model.common.model.EventBusModel;
-import com.chengdai.ehealthproject.model.common.model.activitys.AddAddressActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.AddressSelectActivity;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
@@ -25,15 +23,16 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**商城支付
+/**商城购物车支付
  * Created by 李先俊 on 2017/6/17.
  */
 
-public class ShopPayActivity extends AbsBaseActivity{
+public class ShopCarPayActivity extends AbsBaseActivity{
 
     private ActivityShopPayBinding mBinding;
 
@@ -53,7 +52,7 @@ public class ShopPayActivity extends AbsBaseActivity{
         if(context==null){
             return;
         }
-        Intent intent=new Intent(context,ShopPayActivity.class);
+        Intent intent=new Intent(context,ShopCarPayActivity.class);
         intent.putExtra("data",data);
         intent.putExtra("buynum",buyNum);
         intent.putExtra("imgUrl",imgUrl);
@@ -138,6 +137,9 @@ public class ShopPayActivity extends AbsBaseActivity{
         Map object=new HashMap<>();
 
         Map<String,String> pojo=new HashMap<>();
+        List<String> codelist=new ArrayList<>();
+
+        codelist.add(mSelectProductData.getCode());
 
         pojo.put("receiver", mAddressList.get(0).getAddressee());
         pojo.put("reMobile", mAddressList.get(0).getMobile());
@@ -148,13 +150,14 @@ public class ShopPayActivity extends AbsBaseActivity{
         pojo.put("systemCode", MyConfig.SYSTEMCODE);
         pojo.put("token", SPUtilHelpr.getUserToken());
 
-        object.put("productSpecsCode", mSelectProductData.getCode());
+        object.put("cartCodeList",codelist );
         object.put("quantity", mBuyNum+"");
+
         object.put("pojo", pojo);
 
 
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().ShopOrderCerate("808050",StringUtils.getJsonToString(object))
+       mSubscription.add( RetrofitUtils.getLoaderServer().ShopOrderCerate("808051",StringUtils.getJsonToString(object))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(codeModel -> {
                    if(!TextUtils.isEmpty(codeModel)){

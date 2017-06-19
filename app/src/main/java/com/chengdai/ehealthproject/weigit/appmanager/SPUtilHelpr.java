@@ -144,4 +144,17 @@ public class SPUtilHelpr {
 		return true;
 	}
 
+	/**
+	 * 判断用户是否登录
+	 * @return
+	 */
+	public static boolean isLoginNoStart(){
+		if(TextUtils.isEmpty(getUserToken())){
+
+			return false;
+		}
+
+		return true;
+	}
+
 }

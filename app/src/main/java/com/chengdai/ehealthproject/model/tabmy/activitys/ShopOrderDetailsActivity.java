@@ -40,17 +40,21 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
 
     private  ShopOrderDetailBean data;
 
+    private  int mType;
+
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context, ShopOrderDetailBean data){
+    public static void open(Context context, ShopOrderDetailBean data,int type){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,ShopOrderDetailsActivity.class);
 
         intent.putExtra("data",data);
+
+        intent.putExtra("type",type);
 
         context.startActivity(intent);
     }
@@ -66,6 +70,7 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
         if(getIntent()!=null){
 
             data= getIntent().getParcelableExtra("data");
+            mType= getIntent().getIntExtra("type",MyConfig.JFORDER);
 
         }
 
@@ -98,7 +103,12 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
                 && data.getProductOrderList().get(0).getProduct()!=null ){
             ImgUtils.loadImgURL(this, MyConfig.IMGURL+data.getProductOrderList().get(0).getProduct().getAdvPic(),mBinding.imgGood);
 
-            mBinding.txtPrice.setText(StringUtils.getShowPriceSign(data.getProductOrderList().get(0).getPrice1()));
+
+           if(mType == MyConfig.JFORDER){
+               mBinding.txtPrice.setText(StringUtils.showPrice(data.getProductOrderList().get(0).getPrice1())+"  积分");
+           }else{
+               mBinding.txtPrice.setText(StringUtils.getShowPriceSign(data.getProductOrderList().get(0).getPrice1()));
+           }
 
             mBinding.txtNumber.setText("X" + data.getProductOrderList().get(0).getQuantity());
 
