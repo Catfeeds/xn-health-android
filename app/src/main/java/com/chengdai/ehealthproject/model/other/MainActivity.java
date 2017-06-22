@@ -10,6 +10,7 @@ import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLocationActivity;
 import com.chengdai.ehealthproject.databinding.ActivityMainBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthcircle.HealthCircleFragment;
@@ -22,6 +23,8 @@ import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +63,18 @@ public class MainActivity extends BaseLocationActivity {
                 aMapLocation.getProvince(),aMapLocation.getCity(),aMapLocation.getDistrict(),aMapLocation.getLatitude()+"",aMapLocation.getLongitude()+"");
         SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
 
+        EventBus.getDefault().post(aMapLocation);
 
     }
 
     @Override
     protected void locationFailure(AMapLocation aMapLocation) {
         SPUtilHelpr.saveLocationInfo("");
+
+        EventBusModel eventBusModel=new EventBusModel();
+        eventBusModel.setTag("locationFailure");
+        EventBus.getDefault().post(eventBusModel);
+
         LogUtil.E("定位失败"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
     }
 

@@ -1,17 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+<com.liaoinstan.springview.widget.SpringView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_gravity="center"
-        android:text="管理"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+     <TextView
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:text="健康管理"
+        android:textSize="18sp"
+        android:background="@color/activity_title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"/>
+
+      <include android:id="@+id/weatherlayout" layout="@layout/layout_location_weather"/>
+
+     <View
+        style="@style/split_line_10"/>
+            
+            <com.chengdai.ehealthproject.weigit.views.GridViewForScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.chengdai.ehealthproject.weigit.views.GridViewForScrollView>
+
+            <include android:id="@+id/jf" layout="@layout/layout_jf_info_head"/>
+
+            <View
+                style="@style/style_split_line"/>
+
+            <FrameLayout
+
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="健康任务"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                    android:text="0 分"
+                    android:textSize="14sp"
+                    android:textColor="@color/txt_title_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+                <TextView
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right"
+                    android:text="请测评 >"
+                    android:textSize="14sp"
+                    android:textColor="@color/red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:weightSum="4"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/health_manager_1" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:text="慢性病"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/health_manager_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:text="高风险"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/health_manager_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:text="亚健康"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@mipmap/health_manager_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:text="健康"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="10dp"
+                style="@style/split_line_10"/>
+
+
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:scaleType="fitXY"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/img_health_manager_banner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_marginTop="10dp"
+                style="@style/split_line_10"/>
+
+            <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </com.chengdai.ehealthproject.weigit.views.ListViewForScrollView>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</com.liaoinstan.springview.widget.SpringView>
 
 </layout>

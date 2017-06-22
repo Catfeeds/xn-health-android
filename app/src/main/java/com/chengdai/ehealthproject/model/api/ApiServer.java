@@ -9,6 +9,8 @@ import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
 import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.WeatherCityModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.WeatherModel;
 import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
 import com.chengdai.ehealthproject.model.healthstore.models.PayCarListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
@@ -425,7 +427,22 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<PinglunListModel>> GetPinglunLisData(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 获取行政区域编码
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("http://restapi.amap.com/v3/config/district")
+    Observable<WeatherCityModel> getCityCode(@Field("keywords") String keywords, @Field("key") String  key, @Field("subdistrict") String  subdistrict);
 
+    /**
+     * 根据区域码获取天气
+     * @return
+             */
+    /*http://restapi.amap.com/v3/weather/weatherInfo?city=330100&key=ad51a85d0046c4e083a9f263ae96868e*/
+    @FormUrlEncoded
+    @POST("http://restapi.amap.com/v3/weather/weatherInfo")
+    Observable<WeatherModel> getCityWeather(@Field("city") String city, @Field("key") String  key, @Field("extensions") String  extensions);
 
 
 }
