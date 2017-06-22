@@ -224,7 +224,6 @@ public class AddAddressActivity extends AbsBaseActivity{
                 .backgroundPop(0xa0000000)
                 .confirTextColor("#FE4332")
                 .cancelTextColor("#FE4332")
-                .province(SPUtilHelpr.getLocationInfo().getProvinceName())
                 .province(mProvince)
                 .city(mCity)
                 .district(mDistrict)

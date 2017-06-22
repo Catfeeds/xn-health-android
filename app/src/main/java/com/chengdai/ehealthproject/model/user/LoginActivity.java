@@ -53,6 +53,10 @@ public class LoginActivity extends AbsBaseActivity {
 
         setTopTitle(getString(R.string.txt_login));
 
+        if(getIntent()!=null){
+            isStartMain=getIntent().getBooleanExtra("isStartMain",true);
+        }
+
         ImgUtils.loadImgIdforRound(this,R.mipmap.icon,mBinding.imgLoginIcon);
 
         initViews();

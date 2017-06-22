@@ -1,6 +1,8 @@
 package com.chengdai.ehealthproject.uitls;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,7 +11,10 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.util.Log;
 import android.widget.Button;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -94,6 +99,34 @@ public class AppUtils {
     }
 
 
+
+    /*获取版本信息*/
+    public static String getPackgeName(Context context) {
+        String versionName = "";
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            versionName = pi.packageName;
+            if (versionName == null || versionName.length() <= 0) {
+                return "";
+            }
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versionName;
+    }
+
+    /**
+     * 根据包名跳转到系统自带的应用程序信息界面
+     *
+     * @param activity
+     */
+    public static void startDetailsSetting(Activity activity) {
+        Uri packageURI = Uri.parse("package:" + getPackgeName(activity));
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+        activity.startActivity(intent);
+        activity.finish();
+    }
 
     public static Boolean getAndroidVersion(int version) {
         if (Build.VERSION.SDK_INT >= version) {

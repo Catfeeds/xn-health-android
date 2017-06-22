@@ -100,7 +100,7 @@ public class SearchShopActivity extends AbsBaseActivity {
             }
         });
 
-        mBinding.search.imgSearch.setOnClickListener(v -> {
+/*        mBinding.search.imgSearch.setOnClickListener(v -> {
 
             if(TextUtils.isEmpty(mBinding.search.editSerchView.getText().toString())){
                 showToast("请输入搜索内容");
@@ -109,7 +109,7 @@ public class SearchShopActivity extends AbsBaseActivity {
 
             getStoreListRequest(this,mBinding.search.editSerchView.getText().toString());
 
-        });
+        });*/
 
         mBinding.search.editSerchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

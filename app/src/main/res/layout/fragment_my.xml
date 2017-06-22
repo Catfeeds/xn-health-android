@@ -250,6 +250,7 @@
         style="@style/style_split_line"/>
 
     <LinearLayout
+        android:id="@+id/healthcircle"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"

@@ -6,6 +6,9 @@ import com.chengdai.ehealthproject.model.common.model.CodeModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
+import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
+import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
+import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
 import com.chengdai.ehealthproject.model.healthstore.models.PayCarListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
@@ -384,6 +387,44 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseListModel<ShopEvaluateModel>> GgetEvaluate(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 获取商品评价
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<QiniuGetTokenModel>> GetQiniuTOken(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 发布帖子
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<CodeModel>> SendArticleInfo(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取帖子列表数据
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<ArticleModel>> GetArticleLisData(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 获取评论列表数据
+     * @param code
+     * @param json
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<PinglunListModel>> GetPinglunLisData(@Field("code") String code, @Field("json") String  json);
 
 
 

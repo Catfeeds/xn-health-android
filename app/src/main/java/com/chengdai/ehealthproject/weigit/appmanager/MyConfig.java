@@ -9,6 +9,8 @@ public class MyConfig {
     public final static String COMPANYCODE="CD-JKEG000011";
     public final static String SYSTEMCODE="CD-JKEG000011";
     public final static String IMGURL="http://or4e1nykg.bkt.clouddn.com/";
+    // 无损压缩
+    public static String IMGURLCOMPRESS = "?imageslim";
     public final static String HOTELTYPE="FL2017061219492431865712";
 
     /*1待支付 2 已支付待发货 3 已发货待收货 4 已收货 91用户取消 92 商户取消 93 快递异常*/
@@ -23,6 +25,9 @@ public class MyConfig {
 
     public static final int JFORDER=1;//积分订单
     public static final int PRICEORDER=2;//普通订单
+
+
+
 
 
 

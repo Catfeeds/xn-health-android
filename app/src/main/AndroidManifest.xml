@@ -268,6 +268,54 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+        //发帖
+        <activity android:name=".model.healthcircle.activitys.SendEditInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //评论列表查看
+     <activity android:name=".model.healthcircle.activitys.PinglunListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //帖子详情查看
+      <activity android:name=".model.healthcircle.activitys.InfoDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //帖子评论
+      <activity android:name=".model.healthcircle.activitys.PinglunInfoSendActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+     //个人帖子详情
+      <activity android:name=".model.healthcircle.activitys.PersonalLuntanActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+     //我的帖子详情
+      <activity android:name=".model.tabmy.activitys.MyLuntanActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        <!--评论列表查看-->
+
+        <!--图片选择-->
+        <activity
+            android:name=".model.common.model.activitys.ImageSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <!--相册-->
+        <activity
+            android:name="com.yanzhenjie.album.AlbumActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
     </application>
 
 </manifest>

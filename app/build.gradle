@@ -69,6 +69,7 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.9'
     compile 'com.liaoinstan.springview:library:1.2.6'
     compile 'com.zhy:base-adapter:3.0.3'
+    compile 'com.zhy:base-rvadapter:3.0.3'
     /*事件总线*/
     //    compile 'org.simple:androideventbus:1.0.5.1'
     compile 'org.greenrobot:eventbus:3.0.0'
@@ -82,4 +83,13 @@ dependencies {
     // citypicker
     compile 'liji.library.dev:citypickerview:0.9.0'
     compile files('libs/alipaySingle-20170510.jar')
+    // NineGridView
+    compile 'com.lzy.widget:ninegridview:0.2.0'
+    // 七牛
+    compile 'com.qiniu:qiniu-android-sdk:7.3.+'
+    // Compressor
+    compile('id.zelory:compressor:1.0.4') {
+        exclude group: 'io.reactivex', module: 'rxjava'
+    }
+    compile 'com.yanzhenjie:album:1.0.6'
 }

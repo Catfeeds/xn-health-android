@@ -6,8 +6,11 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.uitls.glidetransforms.GlideCircleTransform;
 import com.chengdai.ehealthproject.uitls.glidetransforms.GlideRoundTransform;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.zhy.adapter.abslistview.CommonAdapter;
 
 
 /**
@@ -53,6 +56,24 @@ public class ImgUtils {
         }
         Glide.with(activity).load(URL) .transform(new GlideRoundTransform(activity)).into(img);
     }
+
+    public static void  loadDeful(Context context,String url,ImageView img){
+        if(context==null || img==null)
+        {
+            return;
+        }
+        Glide.with(context).load(url).error(R.mipmap.default_pic).placeholder(R.mipmap.default_pic).into(img);
+    }
+    public static void  loadGridDeful(Context context,String url,ImageView img){
+        if(context==null || img==null)
+        {
+            return;
+        }
+
+        LogUtil.E("图片"+url);
+
+        Glide.with(context).load(url+ MyConfig.IMGURLCOMPRESS).error(R.mipmap.default_pic).placeholder(R.mipmap.default_pic).into(img);
+    }
     public static void  loadImgIdforRound(Context activity,int URL,ImageView img){
         if(activity==null || img==null)
         {
@@ -66,7 +87,16 @@ public class ImgUtils {
         {
             return;
         }
-        Glide.with(activity).load(URL) .transform(new GlideCircleTransform(activity)).into(img);
+        Glide.with(activity).load(URL).error(R.mipmap.default_pic) .transform(new GlideCircleTransform(activity)).into(img);
     }
+    public static void  loadImgLogo(Context activity,String URL,ImageView img){
+        if(activity==null || img==null)
+        {
+            return;
+        }
+        Glide.with(activity).load(URL).placeholder(R.mipmap.photo_default).error(R.mipmap.photo_default) .transform(new GlideCircleTransform(activity)).into(img);
+    }
+
+
 
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <EditText
+        android:id="@+id/edit_info"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="分享新鲜事"
+        android:textColorHint="@color/text_hint_color"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/text_color" />
+
+        <View
+         style="@style/style_split_line"/>
+
+
+        <com.chengdai.ehealthproject.weigit.views.GridLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            app:itemWidth="130"
+            app:itemHeight="130"
+            app:numColumns="3"
+             android:id="@+id/grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.chengdai.ehealthproject.weigit.views.GridLayout>
+
+
+        <com.chengdai.ehealthproject.weigit.views.NinePhotoView
+            android:visibility="gone"
+            android:background="@color/addcar_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.chengdai.ehealthproject.weigit.views.NinePhotoView>
+
+
+    </LinearLayout>
+</ScrollView>
+</layout>

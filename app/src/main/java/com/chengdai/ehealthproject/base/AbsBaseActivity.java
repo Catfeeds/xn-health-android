@@ -141,11 +141,25 @@ public abstract class AbsBaseActivity extends BaseActivity {
      * @param subTitle
      * @param listener
      */
-    public void setSubTitleAndClick(String subTitle, View.OnClickListener listener) {
+    public void setSubRightTitleAndClick(String subTitle, View.OnClickListener listener) {
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.fllayout_right);
         TextView tvSubTitle = (TextView) findViewById(R.id.tv_top_right);
         tvSubTitle.setText(subTitle);
         tvSubTitle.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
         tvSubTitle.setOnClickListener(listener);
+    }
+
+    /**
+     * 设置title left 文本点击事件
+     * @param subTitle
+     */
+    public void setSubLeftTitle(String subTitle) {
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.fram_img_back);
+        TextView tvSubTitle = (TextView) findViewById(R.id.tv_back);
+        tvSubTitle.setText(subTitle);
+        tvSubTitle.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
     }
 
     public void setSubTitle(String subTitle) {
@@ -164,7 +178,6 @@ public abstract class AbsBaseActivity extends BaseActivity {
            tvSubTitle.setVisibility(View.GONE);
            frameLayout.setVisibility(View.GONE);
        }
-
     }
 
 

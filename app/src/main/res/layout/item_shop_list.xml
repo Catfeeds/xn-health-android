@@ -55,7 +55,6 @@
             tools:text="天使城dfdfdfddfdfdfdfdfdfdfdfdfd8号楼"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/frameLayout"
             android:layout_alignStart="@+id/tv_slogan" />
 
     <TextView
@@ -70,7 +69,6 @@
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/frameLayout"
             android:layout_alignStart="@+id/tv_slogan" />
 
 <!--    <View

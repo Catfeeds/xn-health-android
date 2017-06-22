@@ -1,5 +1,7 @@
 package com.chengdai.ehealthproject.uitls;
 
+import android.text.TextUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -236,4 +238,15 @@ public class DateUtil {
     public static String getCurrentDate(){
         return format(new Date(), "yyyy-MM-dd");
     }
+
+
+
+    public static String  formatStringData(String s,String format){
+        if(TextUtils.isEmpty(s) || TextUtils.isEmpty(format)){
+            return "";
+        }
+
+       return   DateUtil.format( new Date(s),format);
+    }
+
 }

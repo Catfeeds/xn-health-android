@@ -11,6 +11,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.ActivityShopAllOrderLookBinding;
 import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyLuntanActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopAllOrderLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
@@ -68,6 +69,13 @@ public class MyFragment extends BaseLazyFragment{
 
         mBinding.linSetting.setOnClickListener(v -> {
             SettingActivity.open(mActivity);
+        });
+
+        mBinding.healthcircle.setOnClickListener(v -> {
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
+            MyLuntanActivity.open(mActivity,SPUtilHelpr.getUserId());
         });
 
 
@@ -154,7 +162,7 @@ public class MyFragment extends BaseLazyFragment{
 
                     if(r.getUserExt() == null) return;
 
-                    ImgUtils.loadImgURL(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imtUserLogo);
+                    ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imtUserLogo);
                     if("0".equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(mActivity,R.mipmap.man,mBinding.imgUserSex);
                     }else if ("1".equals(r.getUserExt().getGender())){

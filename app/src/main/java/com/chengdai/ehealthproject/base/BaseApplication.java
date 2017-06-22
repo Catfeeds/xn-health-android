@@ -3,6 +3,8 @@ package com.chengdai.ehealthproject.base;
 import android.app.Application;
 
 import com.chengdai.ehealthproject.BuildConfig;
+import com.chengdai.ehealthproject.uitls.NineGridViewImageLoader;
+import com.lzy.ninegrid.NineGridView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -19,6 +21,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         EventBus.builder().throwSubscriberException(BuildConfig.IS_DEBUG).installDefaultEventBus();
+        NineGridView.setImageLoader(new NineGridViewImageLoader());
         application=this;
     }
 
