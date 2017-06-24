@@ -346,6 +346,28 @@
             android:windowSoftInputMode="adjustPan"
             />
 
+        //健康自测
+      <activity android:name=".model.healthmanager.acitivitys.HealthTestActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+    //健康自测
+      <activity android:name=".model.healthmanager.acitivitys.TestPageDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+    //健康自测 做题
+      <activity android:name=".model.healthmanager.acitivitys.HealthDoTestQuesitionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+   //健康自测 结果查看
+      <activity android:name=".model.healthmanager.acitivitys.HealthTestDoneActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
         <!--评论列表查看-->
 
         <!--图片选择-->

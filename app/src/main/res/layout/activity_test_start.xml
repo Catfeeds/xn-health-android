@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        tools:text="特点特点撒旦发射点"
+         tools:textColor="@color/text_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/pb"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="12dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@drawable/progressbar_horizontal_1"/>
+
+    <TextView
+        android:id="@+id/tv_progress_info"
+        android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+         tools:text="特点特点撒旦发射点"
+         tools:textColor="@color/text_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View style="@style/style_split_line"/>
+
+    <TextView
+        android:id="@+id/tv_title_num"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+         tools:text="特点特点撒旦发射点"
+         tools:textColor="@color/text_gray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
+
+</layout>

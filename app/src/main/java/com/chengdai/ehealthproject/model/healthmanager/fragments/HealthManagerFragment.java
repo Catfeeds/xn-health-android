@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.healthcircle.adapters.LuntanListAdapter;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthAssistantActivity;
+import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthDoTestQuesitionActivity;
+import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthTestActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthinfoActivity;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -54,6 +57,9 @@ public class HealthManagerFragment extends BaseLazyFragment{
     private int mPageStart=1;
     private LuntanListAdapter mAdapter;
 
+    private String mCode;
+    private String mTitle;
+
 
     /**
      * 获得fragment实例
@@ -85,6 +91,10 @@ public class HealthManagerFragment extends BaseLazyFragment{
 
         initViewListener();
 
+        if(SPUtilHelpr.isLogin(mActivity)){
+            getTestPageRequest();
+        }
+
         return mBinding.getRoot();
 
     }
@@ -100,7 +110,21 @@ public class HealthManagerFragment extends BaseLazyFragment{
             HealthAssistantActivity.open(mActivity);
 
         });
+     //健康自测
+        mBinding.layoutMenuHealthTest.setOnClickListener(v -> {
+            HealthTestActivity.open(mActivity,HealthTestActivity.TYPE1);
+        });
+    //健康风险评估
+        mBinding.imgHealthRisk.setOnClickListener(v -> {
+//            HealthTestActivity.open(mActivity,HealthTestActivity.TYPE2);
+            getTestPageRequest();
 
+        });
+
+        //j健康任务评测
+        mBinding.tvStartTest.setOnClickListener(v -> {
+            HealthDoTestQuesitionActivity.open(mActivity,mCode,mTitle);
+        });
     }
 
     private void initSpringView() {
@@ -123,7 +147,7 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 }else{
                     getWeatherData(locationModel.getAreaName());
                 }
-
+                getTestPageRequest();
                 getDataRequest(null);
                 getUserInfoRequest(null);
                 getJifenRequest(null);
@@ -358,6 +382,79 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 },throwable -> {
 
                 }));
+
+    }
+
+
+    /**
+     * 获取测试问卷
+     */
+
+    public void getTestPageRequest(){
+
+        Map<String,String> map=new HashMap<>();
+
+        map.put("type","1");
+        map.put("parentKey","questionare_kind_1");
+        map.put("companyCode", MyConfig.COMPANYCODE);
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().getTestMenu("621906", StringUtils.getJsonToString(map))
+                .compose(RxTransformerListHelper.applySchedulerResult(null))
+                .filter(assistantMenuListModels -> assistantMenuListModels!=null && assistantMenuListModels.size()>0 & assistantMenuListModels.get(0)!=null)
+                .map(assistantMenuListModels -> assistantMenuListModels.get(0).getDkey())
+                .flatMap(type -> {
+                    Map<String,String> map2=new HashMap<>();
+                    map2.put("kind","questionare_kind_1");
+                    map2.put("type",type);
+                    map2.put("start","1");
+                    map2.put("limit","10");
+                    return   RetrofitUtils.getLoaderServer().getTestPageList("621205", StringUtils.getJsonToString(map2))
+                            .compose(RxTransformerHelper.applySchedulerResult(null));
+
+                })
+                .filter(testPageListModel -> testPageListModel!=null && testPageListModel.getList()!=null && testPageListModel.getList().get(0)!=null)
+                .map(testPageListModel -> testPageListModel.getList().get(0))
+
+                .flatMap(code -> {
+                    Map<String,String> map3=new HashMap<>();
+                    map3.put("userId",SPUtilHelpr.getUserId());
+                    map3.put("wjCode",code.getCode());
+
+                    mCode=code.getCode();
+                    mTitle=code.getTitle();
+
+                    return RetrofitUtils.getLoaderServer().getTestScoreData("621248",StringUtils.getJsonToString(map3))
+                            .compose(RxTransformerHelper.applySchedulerResult(null));
+
+                })
+                .filter(testPageListModel -> testPageListModel!=null)
+
+                .subscribe(data -> {
+
+                    if(data.getList() == null && data.getList().size()==0){
+                        mBinding.tvScore.setText("0分");
+                        mBinding.tvStartTest.setText("请测评");
+                        return;
+                    }
+                    mBinding.tvStartTest.setText("重测");
+                    mBinding.tvScore.setText(data.getList().get(0).getScore()+"分");
+
+
+                },Throwable::printStackTrace));
+
+    }
+
+    @Subscribe
+    public void HealthManagerFragmentEvent(EventBusModel eventBusModel){
+
+        if(eventBusModel == null) return;
+
+        if(TextUtils.equals(eventBusModel.getTag(),"HealthManagerFragmentRefhsh")){
+            getTestPageRequest();
+        }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && eventBusModel.isEvBoolean()){
+            getTestPageRequest();
+        }
 
     }
 

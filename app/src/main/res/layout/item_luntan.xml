@@ -163,7 +163,7 @@
         android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <include  layout="@layout/layout_share"/>
+    <include layout="@layout/layout_share" />
 
 
 </LinearLayout>

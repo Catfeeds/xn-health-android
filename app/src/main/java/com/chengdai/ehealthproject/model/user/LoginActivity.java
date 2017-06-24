@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityLoginBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -16,6 +17,8 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
@@ -110,7 +113,12 @@ public class LoginActivity extends AbsBaseActivity {
                             if(isStartMain){
                                 MainActivity.open(this,0);
                             }
-                      
+
+                            EventBusModel eventBusModel=new EventBusModel();
+                            eventBusModel.setTag("LOGINSTATEREFHSH"); //登录状态刷新
+                            eventBusModel.setEvBoolean(true);
+                            EventBus.getDefault().post(eventBusModel);
+
                             finish();
                         }
 

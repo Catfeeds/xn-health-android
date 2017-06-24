@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_marginTop="15dp"
+        tools:text="sdfsdfsdfsdfsf"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/img_title"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_marginTop="15dp"
+        tools:text="sdfsdfsdfsdfsf"
+        android:textColor="@color/txt_gray"
+        android:textSize="16sp"
+        android:maxLines="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_marginTop="10dp"
+        style="@style/style_split_line"/>
+
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/tv_start_test"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="开始测试   》"
+            android:textColor="@color/txt_title_bg"
+            android:textSize="14sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <View style="@style/style_split_vline"/>
+
+      <TextView
+          android:id="@+id/tv_look_deatil"
+          android:layout_weight="1"
+            android:gravity="center"
+            android:text="查看详情"
+            android:textColor="@color/txt_gray"
+            android:textSize="14sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

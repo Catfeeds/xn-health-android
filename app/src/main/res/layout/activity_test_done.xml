@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_color"
+        android:text="恭喜你，测试完成!"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:background="@color/white"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_color"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_try_test"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/txt_title_bg"
+            android:layout_weight="1"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="再测一次"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_i_see"
+            android:layout_marginRight="15dp"
+            android:background="@color/txt_title_bg"
+            android:layout_weight="1"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:text="我知道了"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+</layout>

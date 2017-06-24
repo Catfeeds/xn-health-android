@@ -11,8 +11,12 @@ import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
 import com.chengdai.ehealthproject.model.healthmanager.adapters.FoodHotListData;
 import com.chengdai.ehealthproject.model.healthmanager.model.AssistantMenuListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.DoTestQusetionModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexMenuListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.TestDoneModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.TestPageListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.TestScoreModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherCityModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherModel;
 import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
@@ -480,6 +484,45 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseListModel<SexMenuListModel>> getBeautyMenu(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取健康自测菜单
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<AssistantMenuListModel>> getTestMenu(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取健康自测题目列表
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<TestPageListModel>> getTestPageList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取健康自测题目列表(做题)
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<DoTestQusetionModel>> getDoTestList(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 获取健康自测结果
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<TestDoneModel>> getDoneTestData(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取健康积分结果
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<TestScoreModel>> getTestScoreData(@Field("code") String code, @Field("json") String  json);
 
 
 }
