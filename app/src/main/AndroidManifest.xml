@@ -299,6 +299,52 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+     //健康资讯 列表
+      <activity android:name=".model.healthmanager.acitivitys.HealthinfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //健康资讯 详情
+      <activity android:name=".model.healthmanager.acitivitys.HealthinfoDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //健康资讯 列表 分类
+      <activity android:name=".model.healthmanager.acitivitys.HealthinfoTypeListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+      //健康助手
+      <activity android:name=".model.healthmanager.acitivitys.HealthAssistantActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //健康助手 菜单选择
+      <activity android:name=".model.healthmanager.acitivitys.AssistantMenuActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //食物计算器
+      <activity android:name=".model.healthmanager.acitivitys.FoodCalculateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        //医学美容
+      <activity android:name=".model.healthmanager.acitivitys.BeautyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //医学美容 菜单选择
+      <activity android:name=".model.healthmanager.acitivitys.SexMenuActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //医学美容 资讯列表
+      <activity android:name=".model.healthmanager.acitivitys.HealthSexInfoTypeListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
 
         <!--评论列表查看-->
 

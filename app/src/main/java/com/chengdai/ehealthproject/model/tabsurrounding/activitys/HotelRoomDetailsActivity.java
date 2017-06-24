@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
@@ -141,7 +142,9 @@ public class HotelRoomDetailsActivity extends AbsBaseActivity {
 //        mBinding.tvAddress.setText(storeListModel.getAddress());
 //        mBinding.tvPhoneNumber.setText(storeListModel.getBookMobile());
 
-        RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
+        if(!TextUtils.isEmpty(storeListModel.getDescription())){
+            RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
+        }
 
         mBinding.tvPrice.setText(getString(R.string.price_sing)+StringUtils.showPrice(storeListModel.getPrice()));
 

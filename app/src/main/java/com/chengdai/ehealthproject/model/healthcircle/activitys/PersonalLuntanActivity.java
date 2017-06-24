@@ -68,7 +68,6 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
 
         addMainView(mBinding.getRoot());
 
-        mAdapter=new LuntanListAdapter(this,new ArrayList<>());
 
         if(getIntent()!=null){
             mUserId=getIntent().getStringExtra("userid");

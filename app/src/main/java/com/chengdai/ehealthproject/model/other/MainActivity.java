@@ -64,7 +64,7 @@ public class MainActivity extends BaseLocationActivity {
         SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
 
         EventBus.getDefault().post(aMapLocation);
-
+        LogUtil.E("定位成功 Main"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
     }
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends BaseLocationActivity {
         eventBusModel.setTag("locationFailure");
         EventBus.getDefault().post(eventBusModel);
 
-        LogUtil.E("定位失败"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
+        LogUtil.E("定位失败 Main"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
     }
 
     @Override

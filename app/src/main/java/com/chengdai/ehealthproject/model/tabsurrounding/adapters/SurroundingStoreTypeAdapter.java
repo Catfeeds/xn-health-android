@@ -13,7 +13,7 @@ import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.List;
 
-/**周边商户分类选择左
+/**周边商户分类
  * Created by 李先俊 on 2017/6/10.
  */
 

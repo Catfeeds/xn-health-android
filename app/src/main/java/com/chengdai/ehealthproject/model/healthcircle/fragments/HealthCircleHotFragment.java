@@ -56,12 +56,12 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
 
     private List<ArticleModel.ListBean> mDatas;
 
-    public static final String HOTTYPE="1";//热门
-    public static final String ALLTYPE="2";//全部
+    public static final String HOTTYPE="2";//热门
+    public static final String ALLTYPE="1";//全部
 
     private int mPageStart;
 
-    private String mType;//0普通（全部） 1热门
+    private String mType;
     private EmptyWrapper mEmptyWrapper;
 
 
@@ -147,7 +147,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
         Map<String,String> map=new HashMap<>();
 
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("location",mType);//0普通（全部） 1热门
+        map.put("location",mType);
         map.put("status","BD");//审核通过并发布
         map.put("start",mPageStart+"");
         map.put("limit","10");

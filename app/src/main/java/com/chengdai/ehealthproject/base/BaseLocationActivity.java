@@ -112,6 +112,7 @@ public abstract class BaseLocationActivity extends AbsBaseActivity {
             if(locationClient!=null){
                 locationClient.setLocationOption(getDefaultOption());
                 locationClient.startLocation();
+                LogUtil.E("开始定位 ");
             }
 
         }

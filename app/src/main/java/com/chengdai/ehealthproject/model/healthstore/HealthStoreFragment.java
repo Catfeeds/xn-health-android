@@ -141,6 +141,10 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
         setTvListener(mBinding.layoutSurroundingMenu.linShopping,mActivity.getResources().getString(R.string.txt_sopping));*/
 
+        mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,new ArrayList<>());
+        mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
+
+
         mBinding.lvStoreList.setOnItemClickListener((parent, view, position, id) -> {
             ShopListModel.ListBean model= mStoreTypeAdapter.getItem(position-mBinding.lvStoreList.getHeaderViewsCount());
             ShopDetailsActivity.open(mActivity,model);
@@ -337,8 +341,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
                 .filter(storeTypeModels -> storeTypeModels!=null)
 
                 .subscribe(r -> {
-                    mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,r);
-                    mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
+                   mStoreMenuAdapter.setDatas(r);
 
                 },Throwable::printStackTrace));
 

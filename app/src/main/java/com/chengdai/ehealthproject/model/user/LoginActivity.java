@@ -2,7 +2,6 @@ package com.chengdai.ehealthproject.model.user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DatabaseUtils;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,7 +18,6 @@ import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * Created by 李先俊 on 2017/6/8.

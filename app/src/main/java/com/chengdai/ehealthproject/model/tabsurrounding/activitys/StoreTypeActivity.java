@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreTypeBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
@@ -92,7 +93,11 @@ public class StoreTypeActivity extends AbsBaseActivity {
 
     private void initViews() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.layout_search, null);//得到头部的布局
+        LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.layout_search_no_input, null);//得到头部的布局
+
+        leftHeadView.setOnClickListener(v -> {
+            SearchActivity.open(this,"周边搜索");
+        });
 
         mBinding.lvStoreType.addHeaderView(leftHeadView,null,false);
 

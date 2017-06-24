@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
@@ -175,7 +176,10 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
         mBinding.tvDzsum.setText(storeListModel.getTotalDzNum()+"");
 
-        RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
+        if(!TextUtils.isEmpty(storeListModel.getDescription())){
+            RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
+        }
+
 
         if(storeListModel.isDZ()){
             ImgUtils.loadImgId(this, R.mipmap.good_hand_,mBinding.imgDz);

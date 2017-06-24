@@ -160,6 +160,9 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         setTvListener(mBinding.layoutSurroundingMenu.linShopping,mActivity.getResources().getString(R.string.txt_sopping));*/
 
+        mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,new ArrayList<>());
+        mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
+
         mBinding.lvStoreList.setOnItemClickListener((parent, view, position, id) -> {
             StoreListModel.ListBean model= (StoreListModel.ListBean) mStoreTypeAdapter.getItem(position-mBinding.lvStoreList.getHeaderViewsCount());
 
@@ -373,9 +376,7 @@ public class SurroundingFragment extends BaseLazyFragment{
                 .filter(storeTypeModels -> storeTypeModels!=null)
 
                 .subscribe(r -> {
-                    mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,r);
-                    mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
-
+                    mStoreMenuAdapter.setDatas(r);
                 },Throwable::printStackTrace));
 
     }

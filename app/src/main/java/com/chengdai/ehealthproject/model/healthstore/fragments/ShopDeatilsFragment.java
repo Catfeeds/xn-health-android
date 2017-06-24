@@ -3,6 +3,7 @@ package com.chengdai.ehealthproject.model.healthstore.fragments;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class ShopDeatilsFragment extends BaseFragment {
             mData=getArguments().getParcelable("data");
         }
 
-        if(mData != null){
+        if(mData != null && !TextUtils.isEmpty(mData.getDescription())){
             RichText.from(mData.getDescription()).into(mBinding.tvDetails);
         }
 

@@ -9,6 +9,10 @@ import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
 import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
+import com.chengdai.ehealthproject.model.healthmanager.adapters.FoodHotListData;
+import com.chengdai.ehealthproject.model.healthmanager.model.AssistantMenuListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.SexMenuListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherCityModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherModel;
 import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
@@ -443,6 +447,39 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("http://restapi.amap.com/v3/weather/weatherInfo")
     Observable<WeatherModel> getCityWeather(@Field("city") String city, @Field("key") String  key, @Field("extensions") String  extensions);
+
+    /**
+     * 资讯文章列表
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<HealthInfoListModel>> getHealthInfoList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取食物分类
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<AssistantMenuListModel>> getHealthAssistantMenu(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取食物热量数据
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<FoodHotListData>> getFoodHotData(@Field("code") String code, @Field("json") String  json);
+
+
+    /**
+     * 获取美容菜单
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<SexMenuListModel>> getBeautyMenu(@Field("code") String code, @Field("json") String  json);
 
 
 }
