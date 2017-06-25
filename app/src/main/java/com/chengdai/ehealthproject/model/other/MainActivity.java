@@ -14,7 +14,6 @@ import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthcircle.HealthCircleFragment;
-import com.chengdai.ehealthproject.model.healthcircle.activitys.SendEditInfoActivity;
 import com.chengdai.ehealthproject.model.healthmanager.fragments.HealthManagerFragment;
 import com.chengdai.ehealthproject.model.healthstore.HealthStoreFragment;
 import com.chengdai.ehealthproject.model.tabmy.MyFragment;

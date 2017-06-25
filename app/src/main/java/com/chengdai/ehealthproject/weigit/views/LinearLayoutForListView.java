@@ -31,6 +31,8 @@ public class LinearLayoutForListView extends LinearLayout {
             View v = mAdapter.getView(i,null,null);
             addView(v, layoutParams);
         }
+        requestLayout();
+        invalidate();
     }
     public void setAdapter(Adapter adapter){
         if(this.getChildCount()>0)

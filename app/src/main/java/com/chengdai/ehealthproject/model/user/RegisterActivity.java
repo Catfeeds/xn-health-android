@@ -56,7 +56,7 @@ public class RegisterActivity extends AbsBaseActivity {
 
          initViews();
 
-        initTvReadView();
+//        initTvReadView();
 
     }
 
@@ -104,10 +104,10 @@ public class RegisterActivity extends AbsBaseActivity {
                 return;
             }
 
-            if(!mBinding.checkboxRegi.isChecked()){
+        /*    if(!mBinding.checkboxRegi.isChecked()){
                 showToast("请阅读法律申明和隐私条款");
                 return;
-            }
+            }*/
 
             registerRequest();
 

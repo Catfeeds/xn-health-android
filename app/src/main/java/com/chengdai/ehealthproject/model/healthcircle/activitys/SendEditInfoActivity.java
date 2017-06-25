@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimerTask;
 
 /**发帖
  * Created by 李先俊 on 2017/6/20.
@@ -72,7 +73,16 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         setTopTitle("");
 
         setSubLeftTitle("取消");
+        mBinding.grid.post(new TimerTask() {
+            @Override
+            public void run() {
+               int width=mBinding.grid.getWidth()-2*5/3;
+                mBinding.grid.setItemHeight(width);
+                mBinding.grid.setItemWidth(width);
+                mBinding.grid.invalidate();
 
+            }
+        });
 
         initViews();
     }
@@ -93,15 +103,14 @@ public class SendEditInfoActivity extends AbsBaseActivity{
                 return;
             }
 
+            if(mSelectPhotoUrls .size() == 0 || mSelectPhotoUrls.size()==1){
+                sendArticleInfoRequest();
+                return;
+            }
+
             loadingDialog = new LoadingDialog(this);
             loadingDialog.show();
 
-            if(mSelectPhotoUrls .size() == 0 || mSelectPhotoUrls.size()==1){
-
-                sendArticleInfoRequest();
-
-                return;
-            }
 
             if(mSelectPhotoUrls.size()>0){ //删除最后一个
                 mSelectPhotoUrls.remove(mSelectPhotoUrls.size()-1);
@@ -115,6 +124,7 @@ public class SendEditInfoActivity extends AbsBaseActivity{
                     public void onSuccess(String key, ResponseInfo info, JSONObject res) {
                         mQiniuSelectPhotoUrls.add(key);
                         if(mQiniuSelectPhotoUrls.size() == mSelectPhotoUrls.size()){
+                            loadingDialog.dismiss();
                             sendArticleInfoRequest();
                         }
                     }
@@ -178,9 +188,9 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         }
 
       mSubscription .add( RetrofitUtils.getLoaderServer().SendArticleInfo("621010", StringUtils.getJsonToString(map))
-                .compose(RxTransformerHelper.applySchedulerResult(null))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(codeModel -> {
-                    loadingDialog.dismiss();
+
                     if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode())){
                         showToast("发布成功");
                         finish();
@@ -189,7 +199,7 @@ public class SendEditInfoActivity extends AbsBaseActivity{
                     }
 
                 },throwable -> {
-                    loadingDialog.dismiss();
+
                 }));
     }
 

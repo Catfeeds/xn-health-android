@@ -3,22 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.liaoinstan.springview.widget.SpringView
-        android:id="@+id/springview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    
     <FrameLayout
         android:background="@mipmap/person_bg"
         android:layout_width="match_parent"
@@ -62,17 +46,4 @@
 
     </FrameLayout>
 
-    <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </com.chengdai.ehealthproject.weigit.views.ListViewForScrollView>
-
-
-    </LinearLayout>
-
- </ScrollView>
-</com.liaoinstan.springview.widget.SpringView>
 </layout>

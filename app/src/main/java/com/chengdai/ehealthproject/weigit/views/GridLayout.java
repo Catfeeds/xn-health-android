@@ -89,6 +89,22 @@ public class GridLayout extends ViewGroup {
 
     }
 
+    public int getItemWidth() {
+        return itemWidth;
+    }
+
+    public void setItemWidth(int itemWidth) {
+        this.itemWidth = itemWidth;
+    }
+
+    public int getItemHeight() {
+        return itemHeight;
+    }
+
+    public void setItemHeight(int itemHeight) {
+        this.itemHeight = itemHeight;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int cCount = getChildCount();

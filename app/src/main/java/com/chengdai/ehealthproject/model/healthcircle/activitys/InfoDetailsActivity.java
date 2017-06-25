@@ -141,8 +141,6 @@ public class InfoDetailsActivity extends AbsBaseActivity {
 
         mBinding.listview.setAdapter(mAdapter);
 
-
-
         getPinglunListRequest(this);
 
     }
@@ -256,7 +254,6 @@ public class InfoDetailsActivity extends AbsBaseActivity {
                         mDatas.addAll(s.getList());
                         mAdapter.notifyDataSetChanged();
                     }
-
 
                 },Throwable::printStackTrace));
 

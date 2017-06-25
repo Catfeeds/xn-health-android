@@ -5,13 +5,15 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityPersonalLuntanBinding;
+import com.chengdai.ehealthproject.databinding.FragmentManagerFirstBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.healthcircle.adapters.LuntanListAdapter;
-import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -22,7 +24,6 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -35,7 +36,11 @@ import java.util.Map;
 
 public class PersonalLuntanActivity extends AbsBaseActivity {
 
-    private ActivityPersonalLuntanBinding mBinding;
+
+    private FragmentManagerFirstBinding mBinding;
+
+    private ActivityPersonalLuntanBinding mHeadViewBinding;
+
 
     private LuntanListAdapter mAdapter;
 
@@ -64,10 +69,9 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_personal_luntan, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_manager_first, null, false);
 
         addMainView(mBinding.getRoot());
-
 
         if(getIntent()!=null){
             mUserId=getIntent().getStringExtra("userid");
@@ -87,10 +91,18 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
 
     }
 
+
     private void initListView() {
 
+
+        mHeadViewBinding=  DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_personal_luntan, null, false);
+
+        mBinding.tvTitle.setVisibility(View.GONE);
+
+        mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
+
         mAdapter=new LuntanListAdapter(this,new ArrayList<>());
-        mBinding.listView.setAdapter(mAdapter);
+        mBinding.lvManagerFirst.setAdapter(mAdapter);
     }
 
     private void initSpringView() {
@@ -176,15 +188,15 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
                 .filter(r -> r!=null)
 
                 .subscribe(r -> {
-                    mBinding.tvName.setText(r.getLoginName());
+                    mHeadViewBinding.tvName.setText(r.getLoginName());
 
                     if(r.getUserExt() == null) return;
 
-                    ImgUtils.loadImgLogo(this, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imgLogo);
+                    ImgUtils.loadImgLogo(this, MyConfig.IMGURL+r.getUserExt().getPhoto(),mHeadViewBinding.imgLogo);
                     if("0".equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(this,R.mipmap.man,mBinding.imgSex);
+                        ImgUtils.loadImgId(this,R.mipmap.man,mHeadViewBinding.imgSex);
                     }else if ("1".equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(this,R.mipmap.woman,mBinding.imgSex);
+                        ImgUtils.loadImgId(this,R.mipmap.woman,mHeadViewBinding.imgSex);
                     }
 
                 },Throwable::printStackTrace));

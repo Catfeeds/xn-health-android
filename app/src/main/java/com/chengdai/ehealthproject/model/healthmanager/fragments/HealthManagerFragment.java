@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,9 @@ import android.view.ViewGroup;
 
 import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseLazyFragment;
-import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
+import com.chengdai.ehealthproject.base.BaseFragment;
+import com.chengdai.ehealthproject.databinding.FragmentManagerFirstBinding;
+import com.chengdai.ehealthproject.databinding.FragmentManagerHeadeViewBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.healthcircle.adapters.LuntanListAdapter;
@@ -48,11 +48,11 @@ import io.reactivex.schedulers.Schedulers;
  * Created by 李先俊 on 2017/6/8.
  */
 
-public class HealthManagerFragment extends BaseLazyFragment{
+public class HealthManagerFragment extends BaseFragment{
 
-    private FragmentHealthManagerBinding mBinding;
+    private FragmentManagerFirstBinding mBinding;
 
-    private boolean isCreate;
+    private FragmentManagerHeadeViewBinding mHeadViewBinding;
 
     private int mPageStart=1;
     private LuntanListAdapter mAdapter;
@@ -75,9 +75,8 @@ public class HealthManagerFragment extends BaseLazyFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_health_manager, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_manager_first, null, false);
 
-        isCreate=true;
 
         getDataRequest(mActivity);
 
@@ -102,27 +101,27 @@ public class HealthManagerFragment extends BaseLazyFragment{
     private void initViewListener() {
 
         //健康资讯
-        mBinding.layoutMenuHealthInfo.setOnClickListener(v -> {
+        mHeadViewBinding.layoutMenuHealthInfo.setOnClickListener(v -> {
             HealthinfoActivity.open(mActivity);
         });
         //健康助手
-        mBinding.layoutMenuHealthAssistant.setOnClickListener(v -> {
+        mHeadViewBinding.layoutMenuHealthAssistant.setOnClickListener(v -> {
             HealthAssistantActivity.open(mActivity);
 
         });
-     //健康自测
-        mBinding.layoutMenuHealthTest.setOnClickListener(v -> {
+        //健康自测
+        mHeadViewBinding.layoutMenuHealthTest.setOnClickListener(v -> {
             HealthTestActivity.open(mActivity,HealthTestActivity.TYPE1);
         });
-    //健康风险评估
-        mBinding.imgHealthRisk.setOnClickListener(v -> {
+        //健康风险评估
+        mHeadViewBinding.imgHealthRisk.setOnClickListener(v -> {
 //            HealthTestActivity.open(mActivity,HealthTestActivity.TYPE2);
             getTestPageRequest();
 
         });
 
         //j健康任务评测
-        mBinding.tvStartTest.setOnClickListener(v -> {
+        mHeadViewBinding.tvStartTest.setOnClickListener(v -> {
             HealthDoTestQuesitionActivity.open(mActivity,mCode,mTitle);
         });
     }
@@ -167,26 +166,14 @@ public class HealthManagerFragment extends BaseLazyFragment{
 
     private void initListView() {
 
+        mHeadViewBinding=  DataBindingUtil.inflate(LayoutInflater.from(mActivity), R.layout.fragment_manager_heade_view, null, false);
+
+        mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
+
         mAdapter = new LuntanListAdapter(mActivity,new ArrayList<>());
-        mBinding.lvFooter.setAdapter(mAdapter);
+        mBinding.lvManagerFirst.setAdapter(mAdapter);
     }
 
-
-
-
-    @Override
-    protected void lazyLoad() {
-
-        if (isCreate){
-
-        }
-
-    }
-
-    @Override
-    protected void onInvisible() {
-
-    }
 
     @Subscribe
     public void locationSuccessful(AMapLocation aMapLocation){
@@ -195,17 +182,17 @@ public class HealthManagerFragment extends BaseLazyFragment{
 
         if(aMapLocation == null){
             getWeatherData("");
-            mBinding.weatherlayout.tvCityName.setText("金华");
+            mHeadViewBinding.tvCityName.setText("金华");
             return;
         }
 
-       mBinding.weatherlayout.tvCityName.setText(aMapLocation.getCity());
+        mHeadViewBinding.tvCityName.setText(aMapLocation.getCity());
 
         if(! TextUtils.isEmpty(aMapLocation.getAdCode())){
-           mSubscription.add( getWeatheObservable(aMapLocation.getAdCode()).subscribe(weatherModel -> {
+            mSubscription.add( getWeatheObservable(aMapLocation.getAdCode()).subscribe(weatherModel -> {
                 setWeahterShow(weatherModel);
             },throwable -> {
-               mBinding.weatherlayout.tvCityName.setText("金华");
+                mHeadViewBinding.tvCityName.setText("金华");
                 setWeahterShow(null);
             }));
         }else{
@@ -236,8 +223,8 @@ public class HealthManagerFragment extends BaseLazyFragment{
     private void getWeatherData(String cityname) {
 
         if(TextUtils.isEmpty(cityname)) cityname="金华";
-        mBinding.weatherlayout.tvCityName.setText(cityname);
-    mSubscription.add(    RetrofitUtils.getLoaderServer().getCityCode(cityname,"ad51a85d0046c4e083a9f263ae96868e","0")
+        mHeadViewBinding.tvCityName.setText(cityname);
+        mSubscription.add(    RetrofitUtils.getLoaderServer().getCityCode(cityname,"ad51a85d0046c4e083a9f263ae96868e","0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(data ->{
@@ -256,7 +243,7 @@ public class HealthManagerFragment extends BaseLazyFragment{
                     setWeahterShow(weatherModel);
 
                 },throwable -> {
-                    mBinding.weatherlayout.tvCityName.setText("金华");
+                    mHeadViewBinding.tvCityName.setText("金华");
                     setWeahterShow(null);
                 }));
 
@@ -274,24 +261,24 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 ){
 
 
-            mBinding.weatherlayout.tvDay.setText("今天 ");
-            mBinding.weatherlayout.tvWeather.setText("获取天气信息失败");
+            mHeadViewBinding.tvDay.setText("今天 ");
+            mHeadViewBinding.tvWeather.setText("获取天气信息失败");
 
             return;
         }
-       WeatherModel.ForecastsBean.CastsBean weahter= weatherModel.getForecasts().get(0).getCasts().get(0);
+        WeatherModel.ForecastsBean.CastsBean weahter= weatherModel.getForecasts().get(0).getCasts().get(0);
 
         if(weahter == null){
             return;
         }
 
-        mBinding.weatherlayout.tvDay.setText("今天 "+ weahter.getDate());
-        mBinding.weatherlayout.tvWeather.setText(weahter.getDayweather()+" "+weahter.getNighttemp()+"℃-"+weahter.getDaytemp()+"℃" );
+        mHeadViewBinding.tvDay.setText("今天 "+ weahter.getDate());
+        mHeadViewBinding.tvWeather.setText(weahter.getDayweather()+" "+weahter.getNighttemp()+"℃-"+weahter.getDaytemp()+"℃" );
     }
 
     private Observable<WeatherModel> getWeatheObservable(String code){
 
-      return   RetrofitUtils.getLoaderServer().getCityWeather(code,"ad51a85d0046c4e083a9f263ae96868e","all")
+        return   RetrofitUtils.getLoaderServer().getCityWeather(code,"ad51a85d0046c4e083a9f263ae96868e","all")
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
     }
@@ -311,7 +298,7 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
-                    mBinding.jf.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
+                    mHeadViewBinding.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));
 
@@ -333,15 +320,15 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 .filter(r -> r!=null)
 
                 .subscribe(r -> {
-                    mBinding.jf.txtName.setText(r.getLoginName());
+                    mHeadViewBinding.txtName.setText(r.getLoginName());
 
                     if(r.getUserExt() == null) return;
 
-                    ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.jf.imgUserLogo);
+                    ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mHeadViewBinding.imgUserLogo);
                     if("0".equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(mActivity,R.mipmap.man,mBinding.jf.imgSex);
+                        ImgUtils.loadImgId(mActivity,R.mipmap.man,mHeadViewBinding.imgSex);
                     }else if ("1".equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(mActivity,R.mipmap.woman,mBinding.jf.imgSex);
+                        ImgUtils.loadImgId(mActivity,R.mipmap.woman,mHeadViewBinding.imgSex);
                     }
 
                 },Throwable::printStackTrace));
@@ -368,7 +355,7 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 .subscribe(s -> {
                     if(mPageStart == 1){
                         if(s.getList()!=null){
-                          mAdapter.setData(s.getList());
+                            mAdapter.setData(s.getList());
                         }
 
 
@@ -433,12 +420,12 @@ public class HealthManagerFragment extends BaseLazyFragment{
                 .subscribe(data -> {
 
                     if(data.getList() == null && data.getList().size()==0){
-                        mBinding.tvScore.setText("0分");
-                        mBinding.tvStartTest.setText("请测评");
+                        mHeadViewBinding.tvScore.setText("0分");
+                        mHeadViewBinding.tvStartTest.setText("请测评");
                         return;
                     }
-                    mBinding.tvStartTest.setText("重测");
-                    mBinding.tvScore.setText(data.getList().get(0).getScore()+"分");
+                    mHeadViewBinding.tvStartTest.setText("重测");
+                    mHeadViewBinding.tvScore.setText(data.getList().get(0).getScore()+"分");
 
 
                 },Throwable::printStackTrace));
@@ -457,8 +444,6 @@ public class HealthManagerFragment extends BaseLazyFragment{
         }
 
     }
-
-
 
 
 

@@ -11,11 +11,9 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentHealthCircleBinding;
-import com.chengdai.ehealthproject.databinding.FragmentHealthManagerBinding;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.SendEditInfoActivity;
 import com.chengdai.ehealthproject.model.healthcircle.fragments.HealthCircleHotFragment;
-import com.chengdai.ehealthproject.model.tabmy.MyFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;

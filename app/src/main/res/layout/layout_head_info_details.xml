@@ -192,6 +192,7 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:focusable="false"
             android:layout_marginTop="15dp"
             android:id="@+id/recycler"
             android:layout_width="match_parent"
@@ -201,6 +202,7 @@
 
 
     </LinearLayout>
+
 
     <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
         android:id="@+id/listview"

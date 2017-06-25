@@ -54,7 +54,6 @@ public class RxTransformerHelper {
                     if (errorVerify != null) {
                         errorVerify.call(baseResponse.getErrorCode(), baseResponse.getErrorInfo());
                     }
-
                 }
                 LogUtil.E("网络请求"+isSuccess+responseCode);
                 return isSuccess;
