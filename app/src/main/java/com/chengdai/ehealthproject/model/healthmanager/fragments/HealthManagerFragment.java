@@ -425,8 +425,25 @@ public class HealthManagerFragment extends BaseFragment{
                         return;
                     }
                     mHeadViewBinding.tvStartTest.setText("重测");
-                    mHeadViewBinding.tvScore.setText(data.getList().get(0).getScore()+"分");
 
+                    int score=data.getList().get(0).getScore();
+
+                    mHeadViewBinding.tvScore.setText(score+"分");
+
+                    mHeadViewBinding.imgHereOne.setVisibility(View.INVISIBLE);
+                    mHeadViewBinding.imgHereTwo.setVisibility(View.INVISIBLE);
+                    mHeadViewBinding.imgHereThree.setVisibility(View.INVISIBLE);
+                    mHeadViewBinding.imgHereFour.setVisibility(View.INVISIBLE);
+
+                    if(score<=25){
+                        mHeadViewBinding.imgHereOne.setVisibility(View.VISIBLE);
+                    }else if(score<=50){
+                        mHeadViewBinding.imgHereTwo.setVisibility(View.VISIBLE);
+                    } else if(score<=75){
+                        mHeadViewBinding.imgHereThree.setVisibility(View.VISIBLE);
+                    }else if(score<=100){
+                        mHeadViewBinding.imgHereFour.setVisibility(View.VISIBLE);
+                    }
 
                 },Throwable::printStackTrace));
 

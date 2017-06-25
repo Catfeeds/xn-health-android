@@ -263,7 +263,7 @@
             <FrameLayout
 
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -310,9 +310,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/img_here_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/here" />
+
+                <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -332,6 +344,20 @@
                         android:layout_height="wrap_content" />
 
                 </FrameLayout>
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/img_here_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/here" />
                 <FrameLayout
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
@@ -353,6 +379,22 @@
                         android:layout_height="wrap_content" />
 
                 </FrameLayout>
+               </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/img_here_three"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/here" />
+
                 <FrameLayout
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
@@ -374,6 +416,21 @@
                         android:layout_height="wrap_content" />
 
                 </FrameLayout>
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:visibility="invisible"
+                        android:id="@+id/img_here_four"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/here" />
                 <FrameLayout
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
@@ -394,6 +451,8 @@
                         android:layout_height="wrap_content" />
 
                 </FrameLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
