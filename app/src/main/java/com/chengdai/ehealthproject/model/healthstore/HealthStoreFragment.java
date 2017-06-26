@@ -18,6 +18,7 @@ import com.chengdai.ehealthproject.model.healthstore.acitivtys.SearchShopActivit
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopDetailsActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopJfActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopMenuSeletActivity;
+import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopPayCarSelectActivity;
 import com.chengdai.ehealthproject.model.healthstore.adapters.ShopTypeListAdapter;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
@@ -165,17 +166,27 @@ public class HealthStoreFragment extends BaseLazyFragment{
         mStoreTypeAdapter = new ShopTypeListAdapter(mActivity,new ArrayList<>());
         mBinding.lvStoreList.setAdapter(mStoreTypeAdapter);
 
-
+//搜索
         mBinding.search.linSerchtop.setOnClickListener(v -> {
             SearchShopActivity.open(mActivity,"商店搜索");
         });
 
+        //积分商城
         mBinding.imgJfshopInto.setOnClickListener(v -> {
 
             if(!SPUtilHelpr.isLogin(mActivity)){
                 return;
             }
             ShopJfActivity.open(mActivity);
+        });
+
+        //购物车
+        mBinding.imgPayCar.setOnClickListener(v -> {
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
+
+            ShopPayCarSelectActivity.open(mActivity);
         });
 
     }

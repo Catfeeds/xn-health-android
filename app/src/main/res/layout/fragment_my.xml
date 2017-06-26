@@ -24,6 +24,7 @@
         android:layout_height="@dimen/title_height"/>
 
     <LinearLayout
+        android:id="@+id/lin_my_info"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"
@@ -92,7 +93,7 @@
                     android:textSize="13sp"
                     android:layout_gravity="center"
                     android:textColor="@color/text_color"
-                    android:text="人们币余额:"
+                    android:text="健康币余额:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -181,6 +182,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/lin_health_task"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"

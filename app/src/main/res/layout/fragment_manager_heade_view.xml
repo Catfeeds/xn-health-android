@@ -364,7 +364,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_marginRight="5dp"
+
                         android:layout_gravity="center"
                         android:src="@mipmap/health_manager_2"
                         android:layout_width="wrap_content"
@@ -401,7 +401,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_marginRight="5dp"
+
                         android:layout_gravity="center"
                         android:src="@mipmap/health_manager_3"
                         android:layout_width="wrap_content"
@@ -476,8 +476,111 @@
                 android:layout_marginTop="10dp"
                 style="@style/split_line_10"/>
 
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lin_no_task"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/text_color"
+                android:text="健康任务"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_marginTop="10dp"
+                style="@style/style_split_line"/>
+
+            <TextView
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="14sp"
+                android:textColor="@color/txt_gray"
+                android:text="多锻炼，多健康，快来加入我们吧!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:background="@drawable/bg_line_blue"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tv_add_health_task"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="14sp"
+                android:textColor="@color/txt_title_bg"
+                android:text="添加健康任务"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+     </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lin_have_task"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/text_color"
+                    android:text="今日健康任务"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                   <TextView
+                       android:id="@+id/tv_add_health_task_2"
+                     android:padding="5dp"
+                    android:background="@drawable/bg_line_gray_dashgap"
+                    android:layout_marginRight="15dp"
+                     android:layout_gravity="right|center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_gray"
+                    android:text="+新任务"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                </FrameLayout>
+
+                <View style="@style/style_split_line"/>
+
+                <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+                    android:id="@+id/list_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </com.chengdai.ehealthproject.weigit.views.ListViewForScrollView>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="10dp"
+                style="@style/split_line_10"/>
         </LinearLayout>
+
+
 
 
 </layout>

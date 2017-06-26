@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 李先俊 on 2017/6/9.
@@ -77,15 +78,14 @@ public class StringUtils {
         }
     }
     //int前面补零
-    public static String frontCompWithZoreString(String sourceDate,int formatLength)
+    public static String frontCompWithZoreString(Object sourceDate,int formatLength)
     {
         try {
-            Integer i=Integer.parseInt(sourceDate);
             String newString = String.format("%0" + formatLength + "d", sourceDate);
             return  newString;
         }catch (Exception e)
         {
-            return sourceDate;
+            return sourceDate.toString();
         }
     }
 
@@ -155,5 +155,79 @@ public class StringUtils {
    public static String getShowPriceSign(BigDecimal bigDecimal,int size){
         return "￥"+showPrice(bigDecimal,size);
     }
+
+    /**
+     * list装换为字符串
+     *
+     * @param list
+     * @return
+     */
+    public static String ListToString(List<?> list,String sep1) {
+
+        if (list == null || list.size() == 0) {
+            return "";
+        }
+
+        StringBuffer sb = new StringBuffer();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) == null || list.get(i).equals("")) {
+                    continue;
+                }
+                // 如果值是list类型则调用自己
+                if (list.get(i) instanceof List) {
+                    sb.append(ListToString((List<?>) list.get(i),sep1));
+                    if (i != list.size() - 1) {
+                        sb.append(sep1);
+                    }
+
+                } /*else if (list.get(i) instanceof Map) {
+                    sb.append(MapToString((Map<?, ?>) list.get(i)));
+                    if (i != list.size() - 1) {
+                        sb.append(sep1);
+                    }
+
+                }*/ else {
+                    sb.append(list.get(i));
+                    if (i != list.size() - 1) {
+                        sb.append(sep1);
+                    }
+
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
+    /**
+     * Map转换String
+     *
+     * @param map :需要转换的Map
+     * @return String转换后的字符串
+     */
+/*    public static String MapToString(Map<?, ?> map) {
+        StringBuffer sb = new StringBuffer();
+        // 遍历map
+        for (Object obj : map.keySet()) {
+            if (obj == null) {
+                continue;
+            }
+            Object key = obj;
+            Object value = map.get(key);
+            if (value instanceof List<?>) {
+                sb.append(key.toString() + SEP1 + ListToString((List<?>) value));
+                sb.append(SEP2);
+            } else if (value instanceof Map<?, ?>) {
+                sb.append(key.toString() + SEP1
+                        + MapToString((Map<?, ?>) value));
+                sb.append(SEP2);
+            } else {
+                sb.append(key.toString() + SEP3 + value.toString());
+                sb.append(SEP2);
+            }
+        }
+        return  sb.toString();
+    }*/
 
 }

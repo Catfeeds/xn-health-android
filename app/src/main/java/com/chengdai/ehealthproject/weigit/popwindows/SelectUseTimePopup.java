@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 用车时间弹框
+ * 时间弹框
  * Created by Administrator on 2016-04-04.
  */
 public class SelectUseTimePopup extends BasePopupWindow implements View.OnClickListener {

@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
-import com.chengdai.ehealthproject.databinding.ActivityShopAllOrderLookBinding;
 import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
-import com.chengdai.ehealthproject.model.tabmy.activitys.MyLuntanActivity;
-import com.chengdai.ehealthproject.model.tabmy.activitys.ShopAllOrderLookActivity;
-import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderStateLookActivity;
+import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyHelathTaskListActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyInfoActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyLuntanActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.SettingActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.ShopAllOrderLookActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -36,7 +37,7 @@ public class MyFragment extends BaseLazyFragment{
     private FragmentMyBinding mBinding;
 
     private boolean isCreate;
-
+    private UserInfoModel mUserInfoData;
 
     /**
      * 获得fragment实例
@@ -55,6 +56,7 @@ public class MyFragment extends BaseLazyFragment{
         mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_my, null, false);
 
 
+        //周边
         mBinding.tvSurroundingService.setOnClickListener(v -> {
 
             HotelOrderStateLookActivity.open(mActivity);
@@ -66,11 +68,11 @@ public class MyFragment extends BaseLazyFragment{
 
 
         });
-
+       //设置
         mBinding.linSetting.setOnClickListener(v -> {
             SettingActivity.open(mActivity);
         });
-
+      //健康圈
         mBinding.healthcircle.setOnClickListener(v -> {
             if(!SPUtilHelpr.isLogin(mActivity)){
                 return;
@@ -78,6 +80,16 @@ public class MyFragment extends BaseLazyFragment{
             MyLuntanActivity.open(mActivity,SPUtilHelpr.getUserId());
         });
 
+
+        //健康任务
+        mBinding.linHealthTask.setOnClickListener(v -> {
+            MyHelathTaskListActivity.open(mActivity);
+        });
+
+        //
+        mBinding.linMyInfo.setOnClickListener(v -> {
+            MyInfoActivity.open(mActivity,mUserInfoData);
+        });
 
         isCreate=true;
         return mBinding.getRoot();
@@ -158,7 +170,8 @@ public class MyFragment extends BaseLazyFragment{
                .filter(r -> r!=null)
 
                 .subscribe(r -> {
-                    mBinding.tvUserName.setText(r.getLoginName());
+                    mUserInfoData=r;
+                    mBinding.tvUserName.setText(r.getNickname());
 
                     if(r.getUserExt() == null) return;
 

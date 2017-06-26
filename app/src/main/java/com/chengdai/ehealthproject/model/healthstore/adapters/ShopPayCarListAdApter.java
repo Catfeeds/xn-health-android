@@ -116,7 +116,7 @@ public class ShopPayCarListAdApter extends CommonAdapter<PayCarListModel.ListBea
         layout_delete.setOnClickListener(v -> {
 
             CommonDialog commonDialog = new CommonDialog(mContext).builder()
-                    .setTitle("提示").setContentMsg("是否确认删除该收货地址?")
+                    .setTitle("提示").setContentMsg("是否确认删除该订单?")
                     .setPositiveBtn("确定", view -> {
                         deleteRequest(position,item);
                     })

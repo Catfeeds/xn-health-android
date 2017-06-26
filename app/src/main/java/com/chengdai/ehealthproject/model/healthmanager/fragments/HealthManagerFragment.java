@@ -4,10 +4,12 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
@@ -17,10 +19,13 @@ import com.chengdai.ehealthproject.databinding.FragmentManagerHeadeViewBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.healthcircle.adapters.LuntanListAdapter;
+import com.chengdai.ehealthproject.model.healthmanager.acitivitys.AddHelathTaskLisActivity;
+import com.chengdai.ehealthproject.model.healthmanager.acitivitys.DoHealthTaskActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthAssistantActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthDoTestQuesitionActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthTestActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthinfoActivity;
+import com.chengdai.ehealthproject.model.healthmanager.model.TaskNowModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
@@ -33,6 +38,8 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+import com.zhy.adapter.abslistview.CommonAdapter;
+import com.zhy.adapter.abslistview.ViewHolder;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -92,6 +99,11 @@ public class HealthManagerFragment extends BaseFragment{
 
         if(SPUtilHelpr.isLogin(mActivity)){
             getTestPageRequest();
+
+            getNowHealthTask();
+        }else{
+            mHeadViewBinding.linNoTask.setVisibility(View.VISIBLE);
+            mHeadViewBinding.linHaveTask.setVisibility(View.GONE);
         }
 
         return mBinding.getRoot();
@@ -115,14 +127,28 @@ public class HealthManagerFragment extends BaseFragment{
         });
         //健康风险评估
         mHeadViewBinding.imgHealthRisk.setOnClickListener(v -> {
-//            HealthTestActivity.open(mActivity,HealthTestActivity.TYPE2);
-            getTestPageRequest();
+            HealthTestActivity.open(mActivity,HealthTestActivity.TYPE2);
 
         });
 
         //j健康任务评测
         mHeadViewBinding.tvStartTest.setOnClickListener(v -> {
-            HealthDoTestQuesitionActivity.open(mActivity,mCode,mTitle);
+//            HealthDoTestQuesitionActivity.open(mActivity,mCode,mTitle);
+            getNowHealthTask();
+        });
+        //添加健康任务
+        mHeadViewBinding.tvAddHealthTask.setOnClickListener(v -> {
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
+            AddHelathTaskLisActivity.open(mActivity);
+        });
+        //添加健康任务
+        mHeadViewBinding.tvAddHealthTask2.setOnClickListener(v -> {
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
+            AddHelathTaskLisActivity.open(mActivity);
         });
     }
 
@@ -146,7 +172,12 @@ public class HealthManagerFragment extends BaseFragment{
                 }else{
                     getWeatherData(locationModel.getAreaName());
                 }
-                getTestPageRequest();
+                if(SPUtilHelpr.isLogin(mActivity)){
+                    getTestPageRequest();
+
+                    getNowHealthTask();
+                }
+
                 getDataRequest(null);
                 getUserInfoRequest(null);
                 getJifenRequest(null);
@@ -172,6 +203,9 @@ public class HealthManagerFragment extends BaseFragment{
 
         mAdapter = new LuntanListAdapter(mActivity,new ArrayList<>());
         mBinding.lvManagerFirst.setAdapter(mAdapter);
+
+
+
     }
 
 
@@ -449,15 +483,97 @@ public class HealthManagerFragment extends BaseFragment{
 
     }
 
+
+    public void getNowHealthTask(){
+        Map<String,String> map=new HashMap<>();
+        map.put("userId",SPUtilHelpr.getUserId());
+
+      mSubscription .add( RetrofitUtils.getLoaderServer().getNowHealthTask("621169",StringUtils.getJsonToString(map))
+                .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
+                .subscribe(r -> {
+
+                    if(r==null || r.size()==0){
+                        mHeadViewBinding.linNoTask.setVisibility(View.VISIBLE);
+                        mHeadViewBinding.linHaveTask.setVisibility(View.GONE);
+                        return;
+                    }
+                    mHeadViewBinding.linNoTask.setVisibility(View.GONE);
+                    mHeadViewBinding.linHaveTask.setVisibility(View.VISIBLE);
+                    mHeadViewBinding.listTask.setAdapter(new CommonAdapter<TaskNowModel>(mActivity,R.layout.item_task_now,r) {
+                        @Override
+                        protected void convert(ViewHolder viewHolder, TaskNowModel item, int position) {
+                          if(item == null){
+                              return;
+                          }
+
+                            TextView tvGone=viewHolder.getView(R.id.tv_task_gone);
+
+                          if(TextUtils.equals(item.getIsZX(),"0")){
+                              tvGone.setText("未完成");
+                              tvGone.setBackgroundResource(R.drawable.bg_line_blue);
+
+                              tvGone.setOnClickListener(v ->   DoHealthTaskActivity.open(mContext,item));
+
+
+                          }else{
+
+                              tvGone.setText("已完成");
+                              tvGone.setBackground(null);
+                              tvGone.setTextColor(ContextCompat.getColor(mContext,R.color.txt_gray));
+                              tvGone.setOnClickListener(null);
+                          }
+
+                          if(item.getHealthTask()!=null){
+
+                          viewHolder.setText(R.id.tv_task_name,item.getHealthTask().getName());
+                          viewHolder.setText(R.id.tv_task_info,item.getHealthTask().getSummary());
+                          ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+item.getHealthTask().getLogo(),viewHolder.getView(R.id.img_task_title));
+                          }
+
+                        }
+                    });
+
+
+                },throwable -> {
+                    mHeadViewBinding.linNoTask.setVisibility(View.VISIBLE);
+                    mHeadViewBinding.linHaveTask.setVisibility(View.GONE);
+                }));
+
+    }
+
     @Subscribe
     public void HealthManagerFragmentEvent(EventBusModel eventBusModel){
 
         if(eventBusModel == null) return;
 
-        if(TextUtils.equals(eventBusModel.getTag(),"HealthManagerFragmentRefhsh")){
-            getTestPageRequest();
-        }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && eventBusModel.isEvBoolean()){
-            getTestPageRequest();
+        if(TextUtils.equals(eventBusModel.getTag(),"HealthManagerFragmentRefhsh")){//刷新评测数据
+
+            if(SPUtilHelpr.isLogin(mActivity)){
+                getTestPageRequest();
+            }
+
+
+        }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && eventBusModel.isEvBoolean()){//已登录
+                getTestPageRequest();
+
+                getNowHealthTask();
+
+        }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && !eventBusModel.isEvBoolean()){
+            mHeadViewBinding.tvScore.setText("0分");
+            mHeadViewBinding.tvStartTest.setText("请测评");
+            mHeadViewBinding.imgHereOne.setVisibility(View.INVISIBLE);
+            mHeadViewBinding.imgHereTwo.setVisibility(View.INVISIBLE);
+            mHeadViewBinding.imgHereThree.setVisibility(View.INVISIBLE);
+            mHeadViewBinding.imgHereFour.setVisibility(View.INVISIBLE);
+
+            mHeadViewBinding.linNoTask.setVisibility(View.VISIBLE);
+            mHeadViewBinding.linHaveTask.setVisibility(View.GONE);
+
+        }else  if(TextUtils.equals(eventBusModel.getTag(),"HealthManagerFragmentRefhsh_Task")){//刷新任务数据
+            if(SPUtilHelpr.isLogin(mActivity)){
+                getNowHealthTask();
+            }
+
         }
 
     }

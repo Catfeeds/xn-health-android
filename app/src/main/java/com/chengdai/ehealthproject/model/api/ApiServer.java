@@ -10,10 +10,12 @@ import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
 import com.chengdai.ehealthproject.model.healthmanager.adapters.FoodHotListData;
+import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthTaskListMdoel;
 import com.chengdai.ehealthproject.model.healthmanager.model.AssistantMenuListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.DoTestQusetionModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexMenuListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.TaskNowModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TestDoneModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TestPageListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TestScoreModel;
@@ -26,6 +28,7 @@ import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
+import com.chengdai.ehealthproject.model.tabmy.model.MyTaskListModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
@@ -523,6 +526,62 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<TestScoreModel>> getTestScoreData(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取健康任务
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<HealthTaskListMdoel>> getTaskList(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 添加健康任务
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<CodeModel>> addTask(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 更新健康任务
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> updateHealthTask(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 删除健康任务
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> removeHealthTask(@Field("code") String code, @Field("json") String  json);
+
+
+    /**
+     * 获取今日健康任务
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<TaskNowModel>> getNowHealthTask(@Field("code") String code, @Field("json") String  json);
+
+
+    /**
+     * 确认执行任务
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<CodeModel>> sureDoThealthTask(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取健康积分结果
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<MyTaskListModel>> myTaskList(@Field("code") String code, @Field("json") String  json);
 
 
 }

@@ -1,10 +1,13 @@
 package com.chengdai.ehealthproject.model.common.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by 李先俊 on 2017/6/16.
  */
 
-public class UserInfoModel {
+public class UserInfoModel implements Parcelable {
 
 
     /**
@@ -42,6 +45,25 @@ public class UserInfoModel {
     private String tradepwdFlag;
     private String totalFansNum;
     private String totalFollowNum;
+    private String birthday;
+
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     private userExtBean userExt;
 
@@ -181,7 +203,7 @@ public class UserInfoModel {
         this.totalFollowNum = totalFollowNum;
     }
 
-    public static  class userExtBean{
+    public static  class userExtBean implements Parcelable {
         /*    "userId":  "U2016091911281334310",
         "gender":  "1",
         "birthday":  "1990-01-01",
@@ -243,5 +265,109 @@ public class UserInfoModel {
         public void setIntroduce(String introduce) {
             this.introduce = introduce;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.userId);
+            dest.writeString(this.gender);
+            dest.writeString(this.birthday);
+            dest.writeString(this.photo);
+            dest.writeString(this.email);
+            dest.writeString(this.introduce);
+        }
+
+        public userExtBean() {
+        }
+
+        protected userExtBean(Parcel in) {
+            this.userId = in.readString();
+            this.gender = in.readString();
+            this.birthday = in.readString();
+            this.photo = in.readString();
+            this.email = in.readString();
+            this.introduce = in.readString();
+        }
+
+        public static final Creator<userExtBean> CREATOR = new Creator<userExtBean>() {
+            @Override
+            public userExtBean createFromParcel(Parcel source) {
+                return new userExtBean(source);
+            }
+
+            @Override
+            public userExtBean[] newArray(int size) {
+                return new userExtBean[size];
+            }
+        };
     }
+
+    public UserInfoModel() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.userId);
+        dest.writeString(this.mobile);
+        dest.writeString(this.nickname);
+        dest.writeString(this.loginPwdStrength);
+        dest.writeString(this.userKind);
+        dest.writeString(this.userReferee);
+        dest.writeString(this.idKind);
+        dest.writeString(this.idNo);
+        dest.writeString(this.loginName);
+        dest.writeString(this.tradePwdStrength);
+        dest.writeString(this.createDatetime);
+        dest.writeString(this.status);
+        dest.writeString(this.identityFlag);
+        dest.writeString(this.tradepwdFlag);
+        dest.writeString(this.totalFansNum);
+        dest.writeString(this.totalFollowNum);
+        dest.writeString(this.birthday);
+        dest.writeString(this.email);
+        dest.writeParcelable(this.userExt, flags);
+    }
+
+    protected UserInfoModel(Parcel in) {
+        this.userId = in.readString();
+        this.mobile = in.readString();
+        this.nickname = in.readString();
+        this.loginPwdStrength = in.readString();
+        this.userKind = in.readString();
+        this.userReferee = in.readString();
+        this.idKind = in.readString();
+        this.idNo = in.readString();
+        this.loginName = in.readString();
+        this.tradePwdStrength = in.readString();
+        this.createDatetime = in.readString();
+        this.status = in.readString();
+        this.identityFlag = in.readString();
+        this.tradepwdFlag = in.readString();
+        this.totalFansNum = in.readString();
+        this.totalFollowNum = in.readString();
+        this.birthday = in.readString();
+        this.email = in.readString();
+        this.userExt = in.readParcelable(userExtBean.class.getClassLoader());
+    }
+
+    public static final Creator<UserInfoModel> CREATOR = new Creator<UserInfoModel>() {
+        @Override
+        public UserInfoModel createFromParcel(Parcel source) {
+            return new UserInfoModel(source);
+        }
+
+        @Override
+        public UserInfoModel[] newArray(int size) {
+            return new UserInfoModel[size];
+        }
+    };
 }

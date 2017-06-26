@@ -52,8 +52,12 @@ public class SettingActivity extends AbsBaseActivity{
 
             EventBusModel eventBusModel=new EventBusModel();
             eventBusModel.setTag("AllFINISH");
-
             EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+
+            EventBusModel eventBusModel2=new EventBusModel();
+            eventBusModel2.setTag("LOGINSTATEREFHSH");
+            eventBusModel2.setEvBoolean(false);
+            EventBus.getDefault().post(eventBusModel2); //刷新未登录数据
             LoginActivity.open(this,true);
             finish();
         });
