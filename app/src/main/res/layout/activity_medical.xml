@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_blue_oval"
+        android:layout_width="155dp"
+        android:layout_height="155dp">
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@mipmap/medical"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white"
+                android:text="快速体检"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+        <View
+            style="@style/split_line_10"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <FrameLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/xueyatest"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp" />
+
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:text="血压测试"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <View style="@style/style_split_vline"/>
+
+            <FrameLayout
+                android:id="@+id/fra_xinlv_test"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+
+                    <ImageView
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/health_menu3"
+                        android:layout_width="45dp"
+                        android:layout_height="55dp" />
+
+                    <TextView
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:text="心率测试"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <View style="@style/style_split_line"/>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="65dp">
+
+            <FrameLayout
+                android:id="@+id/fra_fei_test"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+
+                <ImageView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/feitest"
+                    android:layout_width="45dp"
+                    android:layout_height="55dp" />
+
+                <TextView
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:text="肺活量测试"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <View style="@style/style_split_vline"/>
+
+            <FrameLayout
+                android:id="@+id/fra_xueyang_test"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+
+                    <ImageView
+                        android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/xueyangtest"
+                        android:layout_width="45dp"
+                        android:layout_height="55dp" />
+
+                    <TextView
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center"
+                        android:text="血氧测试"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <View style="@style/style_split_line"/>
+
+</LinearLayout>
+</ScrollView>
+
+</layout>

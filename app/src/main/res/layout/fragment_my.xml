@@ -33,9 +33,9 @@
 
         <ImageView
             android:id="@+id/imt_user_logo"
-            android:layout_gravity="center_vertical"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center_vertical" />
 
         <LinearLayout
             android:layout_weight="1"
@@ -56,8 +56,8 @@
                 android:id="@+id/img_user_sex"
                 android:layout_marginLeft="12dp"
                 android:layout_gravity="center_vertical"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_width="15dp"
+                android:layout_height="15dp" />
 
 
         </LinearLayout>
@@ -111,6 +111,7 @@
         <View style="@style/style_split_vline"/>
 
         <FrameLayout
+            android:id="@+id/fra_jf"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
@@ -147,6 +148,7 @@
         style="@style/split_line_5"
        />
     <LinearLayout
+        android:visibility="gone"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"
@@ -218,6 +220,7 @@
 
 
     <LinearLayout
+        android:id="@+id/lin_health_doc"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"
@@ -360,6 +363,7 @@
         style="@style/style_split_line"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"

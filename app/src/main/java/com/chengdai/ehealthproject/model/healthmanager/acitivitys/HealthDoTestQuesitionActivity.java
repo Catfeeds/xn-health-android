@@ -176,14 +176,14 @@ public class HealthDoTestQuesitionActivity extends AbsBaseActivity {
         map.put("companyCode", MyConfig.COMPANYCODE);
         map.put("systemCode", MyConfig.SYSTEMCODE);
 
-        RetrofitUtils.getLoaderServer().getDoTestList("621227",StringUtils.getJsonToString(map))
+       mSubscription.add( RetrofitUtils.getLoaderServer().getDoTestList("621227",StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(this))
                 .filter(s->s!=null)
                 .subscribe(s -> {
                     mQueRequestData=s;
                     mBinding.pb.setMax(mQueRequestData.size());
                     dataStateChange();
-                },Throwable::printStackTrace);
+                },Throwable::printStackTrace));
 
     }
 

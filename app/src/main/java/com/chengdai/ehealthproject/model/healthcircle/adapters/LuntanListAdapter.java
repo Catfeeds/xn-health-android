@@ -9,7 +9,6 @@ import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.InfoDetailsActivity;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.PinglunListActivity;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
-import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -37,8 +36,11 @@ import java.util.Map;
 
 public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
 
-    public LuntanListAdapter(Context context, List<ArticleModel.ListBean> datas) {
+    private boolean isShowDelete;
+
+    public LuntanListAdapter(Context context, List<ArticleModel.ListBean> datas,boolean isShowDelete) {
         super(context, R.layout.item_luntan, datas);
+        this.isShowDelete=isShowDelete;
     }
 
     public void setData(List<ArticleModel.ListBean> datas){
@@ -63,6 +65,16 @@ public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
 
         if(listBean == null){
             return;
+        }
+
+        if(isShowDelete){
+            holder.setVisible(R.id.tv_delete,true);
+            holder.setOnClickListener(R.id.tv_delete,v -> {  //删除帖子
+                deleteRequest(listBean,position);
+            });
+        }else{
+            holder.setVisible(R.id.tv_delete,false);
+            holder.setOnClickListener(R.id.tv_delete,null);
         }
 
         holder.setOnClickListener(R.id.lin_shear,v -> {
@@ -188,6 +200,29 @@ public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
         }else{
             holder.setVisible(R.id.lin_pinlun,false);
         }
+    }
+
+    /**
+     * 删除
+     */
+    public void deleteRequest(ArticleModel.ListBean item,int position){
+
+        Map map=new HashMap();
+
+        List<String> list=new ArrayList<>();
+
+        list.add(item.getCode());
+        map.put("codeList",list);
+        map.put("userId",SPUtilHelpr.getUserId());
+        map.put("type","1");
+
+        RetrofitUtils.getLoaderServer().deleteTiezi("621013",StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(mContext))
+                .filter(isSuccessModes -> isSuccessModes!=null && isSuccessModes.isSuccess())
+                .subscribe(isSuccessModes -> {
+                    mDatas.remove(position);
+                    notifyDataSetChanged();
+                },Throwable::printStackTrace);
     }
 
     /**

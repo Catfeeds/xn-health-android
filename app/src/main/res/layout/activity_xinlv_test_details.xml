@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        tools:text="80"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:background="@color/txt_title_bg"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/lin_xinlv"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+        <View
+            android:layout_weight="1"
+            android:background="#FFFEFE02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="#FF03FF03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+        <TextView
+            android:text="@string/tv_xinlv_40"
+            android:id="@+id/tv_num_info_left"
+            android:gravity="right"
+            android:textColor="@color/text_gray"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:textColor="@color/text_gray"
+            android:text="60-90"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="left"
+            android:textColor="@color/text_gray"
+            android:text=">90"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/lin_xueyang"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+        <View
+            android:layout_weight="1"
+            android:background="#FFFEFE02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="#FF03FF03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+        <TextView
+            android:text="@string/tv_fei_90"
+            android:id="@+id/tv_num_info_left_xueyang"
+            android:gravity="right"
+            android:textColor="@color/text_gray"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center_horizontal"
+            android:textColor="@color/text_gray"
+            android:text="90-93"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="left"
+            android:textColor="@color/text_gray"
+            android:text=">93"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/lin_fei"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:weightSum="4"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+        <View
+            android:layout_weight="1"
+            android:background="#FFFEFE02"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="#FF03FF03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <View
+            android:layout_weight="1"
+            android:background="#FF03FF03"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="4"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+        <TextView
+            android:text="@string/_1500"
+            android:id="@+id/tv_num_info_left_fei"
+            android:gravity="center"
+            android:textColor="@color/text_gray"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/text_gray"
+            android:text="1500-3000 "
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/text_gray"
+            android:text="3000-4500"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:textColor="@color/text_gray"
+            android:text=">4500"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:id="@+id/tv_info"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="16sp"
+        android:textColor="@color/text_gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>
+
+</layout>

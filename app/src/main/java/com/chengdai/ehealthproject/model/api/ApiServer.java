@@ -28,7 +28,9 @@ import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
+import com.chengdai.ehealthproject.model.tabmy.model.JfDetailsListModel;
 import com.chengdai.ehealthproject.model.tabmy.model.MyTaskListModel;
+import com.chengdai.ehealthproject.model.tabmy.model.MyTestHistoryListModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
@@ -582,6 +584,38 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseListModel<MyTaskListModel>> myTaskList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 更新用户头像
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> updateUserLogo(@Field("code") String code, @Field("json") String  json);
+
+
+    /**
+     * 自测历史
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<MyTestHistoryListModel>> getTestHistoryList(@Field("code") String code, @Field("json") String  json);
+  /**
+     * 积分流水
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<JfDetailsListModel>> getJFDetailsList(@Field("code") String code, @Field("json") String  json);
+
+  /**
+     * 删除帖子
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> deleteTiezi(@Field("code") String code, @Field("json") String  json);
 
 
 }

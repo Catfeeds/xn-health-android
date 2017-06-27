@@ -23,6 +23,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_nickname"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -67,6 +68,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_phone"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -111,6 +113,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_authentication"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -155,6 +158,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_payPwd"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -191,6 +195,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_loginPwd"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -229,6 +234,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_bankCard"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -273,6 +279,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_systemMessage"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -309,6 +316,7 @@
                 android:layout_height="0.5dp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_address"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"

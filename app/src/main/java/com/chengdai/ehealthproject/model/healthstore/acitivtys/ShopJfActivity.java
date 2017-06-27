@@ -228,14 +228,14 @@ public class ShopJfActivity extends AbsBaseActivity {
 
                     mBinding.linlayoutHead.setVisibility(View.VISIBLE);
 
-                    mBinding.txtName.setText(r.getLoginName());
+                    mBinding.txtName.setText(r.getNickname());
 
                     if(r.getUserExt() == null) return;
 
                     ImgUtils.loadImgURL(context, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imgUserLogo);
-                    if("0".equals(r.getUserExt().getGender())){
+                    if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(context,R.mipmap.man,mBinding.imgSex);
-                    }else if ("1".equals(r.getUserExt().getGender())){
+                    }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(context,R.mipmap.woman,mBinding.imgSex);
                     }
 

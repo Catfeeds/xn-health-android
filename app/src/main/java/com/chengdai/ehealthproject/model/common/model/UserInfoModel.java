@@ -45,25 +45,7 @@ public class UserInfoModel implements Parcelable {
     private String tradepwdFlag;
     private String totalFansNum;
     private String totalFollowNum;
-    private String birthday;
 
-    private String email;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
 
     private userExtBean userExt;
 
@@ -332,8 +314,6 @@ public class UserInfoModel implements Parcelable {
         dest.writeString(this.tradepwdFlag);
         dest.writeString(this.totalFansNum);
         dest.writeString(this.totalFollowNum);
-        dest.writeString(this.birthday);
-        dest.writeString(this.email);
         dest.writeParcelable(this.userExt, flags);
     }
 
@@ -354,8 +334,6 @@ public class UserInfoModel implements Parcelable {
         this.tradepwdFlag = in.readString();
         this.totalFansNum = in.readString();
         this.totalFollowNum = in.readString();
-        this.birthday = in.readString();
-        this.email = in.readString();
         this.userExt = in.readParcelable(userExtBean.class.getClassLoader());
     }
 

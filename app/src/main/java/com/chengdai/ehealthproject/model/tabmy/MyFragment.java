@@ -3,6 +3,7 @@ package com.chengdai.ehealthproject.model.tabmy;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,14 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyHelathTaskListActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyInfoActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyJFDetailsActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyLuntanActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyTestHistoryActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.SettingActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopAllOrderLookActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -24,6 +28,8 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +44,8 @@ public class MyFragment extends BaseLazyFragment{
 
     private boolean isCreate;
     private UserInfoModel mUserInfoData;
+
+    private String accountNumber;
 
     /**
      * 获得fragment实例
@@ -86,9 +94,18 @@ public class MyFragment extends BaseLazyFragment{
             MyHelathTaskListActivity.open(mActivity);
         });
 
-        //
+        //个人信息
         mBinding.linMyInfo.setOnClickListener(v -> {
             MyInfoActivity.open(mActivity,mUserInfoData);
+        });
+
+        //健康档案
+        mBinding.linHealthDoc.setOnClickListener(v -> {
+            MyTestHistoryActivity.open(mActivity);
+        });
+
+        mBinding.fraJf.setOnClickListener(v -> {
+            MyJFDetailsActivity.open(mActivity,mBinding.tvJf.getText().toString(),accountNumber);
         });
 
         isCreate=true;
@@ -147,6 +164,8 @@ public class MyFragment extends BaseLazyFragment{
                 .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
+
+                    accountNumber=r.get(0).getAccountNumber();
                     mBinding.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));
@@ -165,7 +184,7 @@ public class MyFragment extends BaseLazyFragment{
         map.put("token",SPUtilHelpr.getUserToken());
 
        mSubscription.add( RetrofitUtils.getLoaderServer().GetUserInfo("805056", StringUtils.getJsonToString(map))
-                .compose(RxTransformerHelper.applySchedulerResult(mActivity))
+                .compose(RxTransformerHelper.applySchedulerResult(null))
 
                .filter(r -> r!=null)
 
@@ -176,14 +195,26 @@ public class MyFragment extends BaseLazyFragment{
                     if(r.getUserExt() == null) return;
 
                     ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imtUserLogo);
-                    if("0".equals(r.getUserExt().getGender())){
+                    if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(mActivity,R.mipmap.man,mBinding.imgUserSex);
-                    }else if ("1".equals(r.getUserExt().getGender())){
+                    }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(mActivity,R.mipmap.woman,mBinding.imgUserSex);
                     }
 
                 },Throwable::printStackTrace));
 
+
+    }
+
+    @Subscribe
+    public void refeshEvent(EventBusModel e){
+        if(e==null){
+            return;
+        }
+        if(TextUtils.equals("MyFragmentRefeshUserIfo",e.getTag()))//刷新用户数据
+        {
+            getUserInfoRequest();
+        }
 
     }
 

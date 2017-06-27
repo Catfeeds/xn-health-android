@@ -61,8 +61,8 @@
           android:id="@+id/tv_look_deatil"
           android:layout_weight="1"
             android:gravity="center"
-            android:text="查看详情"
-            android:textColor="@color/txt_gray"
+            android:text="查看详情 》"
+            android:textColor="@color/txt_title_bg"
             android:textSize="14sp"
             android:layout_width="0dp"
             android:layout_height="match_parent" />

@@ -4,6 +4,7 @@ package com.chengdai.ehealthproject.uitls.nets;
 import android.content.Context;
 
 import com.chengdai.ehealthproject.base.BaseActivity;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 
 import java.lang.ref.SoftReference;
 
@@ -21,6 +22,9 @@ public class SimpleErrorVerify implements ErrorVerify {
     @Override
     public void call(String code, String desc) {
         if (mContext!=null && mContext.get()!=null && mContext.get() instanceof BaseActivity) {
+
+            LogUtil.E("错误"+desc);
+
             ((BaseActivity) mContext.get()).showToast(desc);
         }
     }

@@ -366,7 +366,25 @@ public class HealthStoreFragment extends BaseLazyFragment{
      */
     private void getJfPicRequest(Context context) {
 
-        Map<String,String> map=new HashMap();
+        Map map=new HashMap();
+
+        map.put("location","2");//0周边1商城 2
+        map.put("type","2"); //(1 菜单 2 banner 3 模块 4 引流)
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+        map.put("token", SPUtilHelpr.getUserToken());
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().GetBanner("806052", StringUtils.getJsonToString(map))
+                .compose(RxTransformerListHelper.applySchedulerResult(context))
+                .filter(banners -> banners!=null && banners.size()>0 && banners.get(0)!=null)
+                .subscribe(banners -> {
+                    ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+ banners.get(0).getPic(),mBinding.imgJfshopInto);
+
+                },Throwable::printStackTrace));
+
+
+
+
+/*        Map<String, String> map = new HashMap();
 
         map.put("ckey","jfPic");
         map.put("systemCode",MyConfig.SYSTEMCODE);
@@ -381,7 +399,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
                         ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+r.getNote(),mBinding.imgJfshopInto);
                     }
 
-                },Throwable::printStackTrace));
+                },Throwable::printStackTrace));*/
 
     }
 

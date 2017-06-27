@@ -156,12 +156,13 @@ public class RegisterActivity extends AbsBaseActivity {
         hashMap.put("kind","f1");
         hashMap.put("isRegHx","0");
         hashMap.put("systemCode",MyConfig.SYSTEMCODE);
+        hashMap.put("userReferee",mBinding.editTj.getText().toString());
 
 
-        mSubscription.add(RetrofitUtils.getLoaderServer().UserRegister("805041",StringUtils.getJsonToString(hashMap) )
+        mSubscription.add(RetrofitUtils.getLoaderServer().UserRegister("805154",StringUtils.getJsonToString(hashMap) )
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
-                        if(data!=null && !TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
+                        if(data!=null && ( !TextUtils.isEmpty(data.getToken()) || !TextUtils.isEmpty(data.getUserId()))){ //token 和 UserId不为空时
                             showWarnListen("注册成功",view -> {
                                 LoginActivity.open(this,true);
                                 finish();

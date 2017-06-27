@@ -101,7 +101,7 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
 
         mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
 
-        mAdapter=new LuntanListAdapter(this,new ArrayList<>());
+        mAdapter=new LuntanListAdapter(this,new ArrayList<>(),false);
         mBinding.lvManagerFirst.setAdapter(mAdapter);
     }
 
@@ -188,14 +188,14 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
                 .filter(r -> r!=null)
 
                 .subscribe(r -> {
-                    mHeadViewBinding.tvName.setText(r.getLoginName());
+                    mHeadViewBinding.tvName.setText(r.getNickname());
 
                     if(r.getUserExt() == null) return;
 
                     ImgUtils.loadImgLogo(this, MyConfig.IMGURL+r.getUserExt().getPhoto(),mHeadViewBinding.imgLogo);
-                    if("0".equals(r.getUserExt().getGender())){
+                    if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(this,R.mipmap.man,mHeadViewBinding.imgSex);
-                    }else if ("1".equals(r.getUserExt().getGender())){
+                    }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(this,R.mipmap.woman,mHeadViewBinding.imgSex);
                     }
 

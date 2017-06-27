@@ -23,6 +23,10 @@ public class MyConfig {
     public final static String ORDERTYPEERROR="93";
 
 
+    public final static String GENDERMAN="1";
+    public final static String GENDERWOMAN="0";
+
+
     public static final int JFORDER=1;//积分订单
     public static final int PRICEORDER=2;//普通订单
 

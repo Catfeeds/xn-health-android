@@ -38,12 +38,11 @@ public class MyLuntanActivity extends AbsBaseActivity {
 
     private FragmentManagerFirstBinding mBinding;
 
-    private ActivityPersonalLuntanBinding mHeadViewBinding;
+//    private ActivityPersonalLuntanBinding mHeadViewBinding;
 
     private LuntanListAdapter mAdapter;
 
     private String mUserId;
-
 
     private int mPageStart=1;
 
@@ -71,7 +70,6 @@ public class MyLuntanActivity extends AbsBaseActivity {
 
         addMainView(mBinding.getRoot());
 
-        mAdapter=new LuntanListAdapter(this,new ArrayList<>());
 
         if(getIntent()!=null){
             mUserId=getIntent().getStringExtra("userid");
@@ -93,11 +91,12 @@ public class MyLuntanActivity extends AbsBaseActivity {
 
     private void initListView() {
 
-       mHeadViewBinding=  DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_personal_luntan, null, false);
+//       mHeadViewBinding=  DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_personal_luntan, null, false);
+//
+//        mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
         mBinding.tvTitle.setVisibility(View.GONE);
-        mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
-
-        mAdapter=new LuntanListAdapter(this,new ArrayList<>());
+        mAdapter=new LuntanListAdapter(this,new ArrayList<>(),true);
+        mBinding.lvManagerFirst.setEmptyView(DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.empty_view, null, false).getRoot());
         mBinding.lvManagerFirst.setAdapter(mAdapter);
     }
 
@@ -175,6 +174,7 @@ public class MyLuntanActivity extends AbsBaseActivity {
      */
     private  void getUserInfoRequest(){
 
+/*
         Map<String,String> map=new HashMap<>();
 
         map.put("userId",mUserId);
@@ -186,18 +186,19 @@ public class MyLuntanActivity extends AbsBaseActivity {
                 .filter(r -> r!=null)
 
                 .subscribe(r -> {
-                    mHeadViewBinding.tvName.setText(r.getLoginName());
+//                    mHeadViewBinding.tvName.setText(r.getNickname());
 
                     if(r.getUserExt() == null) return;
 
                     ImgUtils.loadImgLogo(this, MyConfig.IMGURL+r.getUserExt().getPhoto(),mHeadViewBinding.imgLogo);
-                    if("0".equals(r.getUserExt().getGender())){
+                    if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(this,R.mipmap.man,mHeadViewBinding.imgSex);
-                    }else if ("1".equals(r.getUserExt().getGender())){
+                    }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(this,R.mipmap.woman,mHeadViewBinding.imgSex);
                     }
 
                 },Throwable::printStackTrace));
+*/
 
 
     }

@@ -156,7 +156,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                 .compose(RxTransformerHelper.applySchedulerResult(context))
                 .subscribe(s -> {
                     if(mPageStart == 1){
-                        if(s.getList()!=null){
+                        if(s==null||s.getList()!=null){
                             mDatas.clear();
                             mDatas.addAll(s.getList());
                             mEmptyWrapper.notifyDataSetChanged();
@@ -167,7 +167,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                         }
 
                     }else if(mPageStart >1){
-                        if(s.getList()==null || s.getList().size()==0){
+                        if(s==null||s.getList()==null || s.getList().size()==0){
                             mPageStart--;
                             return;
                         }

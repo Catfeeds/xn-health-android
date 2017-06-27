@@ -76,25 +76,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * 获取请求参数
-     *
-     * @param args 参数数组 (key,value,key,value...) 一定要为偶数对应的
-     * @return
-     */
-    public Map<String, String> getRequestMap(String... args) {
-        Map<String, String> requestMap = new HashMap<>();
-        if (args.length % 2 == 1) {
-            return requestMap;
-        }
-        for (int i = 0; i < args.length - 1; i++) {
-            if (i % 2 == 0) {
-                requestMap.put(args[i], args[i + 1]);
-            }
-        }
-        return requestMap;
-    }
-
 
     /**
      * 隐藏Dialog

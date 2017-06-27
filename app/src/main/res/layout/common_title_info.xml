@@ -82,8 +82,8 @@
         </FrameLayout>
 
 
-        <View
+        <!--<View
             style="@style/hline"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom" />-->
     </FrameLayout>
 </layout>

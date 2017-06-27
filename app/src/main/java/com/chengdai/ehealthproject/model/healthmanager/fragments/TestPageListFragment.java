@@ -154,7 +154,7 @@ public class TestPageListFragment extends BaseLazyFragment {
         map.put("type",mType);
         map.put("start",mStartPage+"");
         map.put("limit","10");
-
+        map.put("status","1");
        mSubscription.add( RetrofitUtils.getLoaderServer().getTestPageList("621205", StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(context))

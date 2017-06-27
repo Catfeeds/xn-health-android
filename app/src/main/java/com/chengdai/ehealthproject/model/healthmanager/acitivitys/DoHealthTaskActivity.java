@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.databinding.ActivityDoHealthTaskBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TaskNowModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
+import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -66,8 +67,14 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
 
             mBinding.tvIsDo.setText("未完成任务");
 
+            ImgUtils.loadImgId(this,R.mipmap.task_un_do,mBinding.imgDo);
+
         }else{
             mBinding.tvIsDo.setText("已完成任务");
+            ImgUtils.loadImgId(this,R.mipmap.task_do,mBinding.imgDo);
+
+            showWeek(mData.getTxWeek());
+
         }
 
         mBinding.tvDays.setText("已坚持"+mData.getZxNum()+"天");
@@ -75,57 +82,9 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
         mBinding.tvData.setText(DateUtil.format(new Date(),"M月dd日"));
 
 
-        mBinding.tvDo.setOnClickListener(v -> {
+        mBinding.imgDo.setOnClickListener(v -> {
             doTaskRequest();
         });
-
-
-
-/*        switch (mData.getTxWeek()){
-
-            case "2":
-                mBinding.ckWeek1.setChecked(true);
-                break;
-            case "3":
-                mBinding.ckWeek1.setChecked(true);
-                mBinding.ckWeek2.setChecked(true);
-                break;
-            case "4":
-                mBinding.ckWeek1.setChecked(true);
-                mBinding.ckWeek2.setChecked(true);
-                mBinding.ckWeek3.setChecked(true);
-                break;
-            case "5":
-                mBinding.ckWeek1.setChecked(true);
-                mBinding.ckWeek2.setChecked(true);
-                mBinding.ckWeek3.setChecked(true);
-                mBinding.ckWeek4.setChecked(true);
-                break;
-            case "6":
-                mBinding.ckWeek1.setChecked(true);
-                mBinding.ckWeek2.setChecked(true);
-                mBinding.ckWeek3.setChecked(true);
-                mBinding.ckWeek4.setChecked(true);
-                mBinding.ckWeek5.setChecked(true);
-                break;
-            case "7":
-                mBinding.ckWeek1.setChecked(true);
-                mBinding.ckWeek2.setChecked(true);
-                mBinding.ckWeek3.setChecked(true);
-                mBinding.ckWeek4.setChecked(true);
-                mBinding.ckWeek5.setChecked(true);
-                mBinding.ckWeek6.setChecked(true);
-                break;
-            case "1":
-                mBinding.ckWeek1.setChecked(true);
-                mBinding.ckWeek2.setChecked(true);
-                mBinding.ckWeek3.setChecked(true);
-                mBinding.ckWeek4.setChecked(true);
-                mBinding.ckWeek5.setChecked(true);
-                mBinding.ckWeek6.setChecked(true);
-                mBinding.ckWeek7.setChecked(true);
-                break;
-        }*/
 
     }
 
@@ -148,35 +107,40 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
                     EventBus.getDefault().post(model);
 
                 mBinding.tvIsDo.setText("已完成任务");
+               ImgUtils.loadImgId(this,R.mipmap.task_do,mBinding.imgDo);
 
                 mBinding.tvDays.setText("已坚持"+(mData.getZxNum()+1)+"天");
 
-                 switch (mData.getTxWeek()){
-                     case "2":
-                         mBinding.ckWeek1.setChecked(true);
-                         break;
-                     case "3":
-                         mBinding.ckWeek2.setChecked(true);
-                         break;
-                     case "4":
-                         mBinding.ckWeek3.setChecked(true);
-                         break;
-                     case "5":
-                         mBinding.ckWeek4.setChecked(true);
-                         break;
-                     case "6":
-                         mBinding.ckWeek5.setChecked(true);
-                         break;
-                     case "7":
-                         mBinding.ckWeek6.setChecked(true);
-                         break;
-                     case "1":
-                         mBinding.ckWeek7.setChecked(true);
-                         break;
-                 }
+                    showWeek(mData.getTxWeek());
 
                 },Throwable::printStackTrace);
 
+    }
+
+    private void showWeek(String week) {
+        switch (week){
+            case "2":
+                mBinding.ckWeek1.setChecked(true);
+                break;
+            case "3":
+                mBinding.ckWeek2.setChecked(true);
+                break;
+            case "4":
+                mBinding.ckWeek3.setChecked(true);
+                break;
+            case "5":
+                mBinding.ckWeek4.setChecked(true);
+                break;
+            case "6":
+                mBinding.ckWeek5.setChecked(true);
+                break;
+            case "7":
+                mBinding.ckWeek6.setChecked(true);
+                break;
+            case "1":
+                mBinding.ckWeek7.setChecked(true);
+                break;
+        }
     }
 
 
