@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
@@ -96,7 +98,6 @@ public class MyLuntanActivity extends AbsBaseActivity {
 //        mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
         mBinding.tvTitle.setVisibility(View.GONE);
         mAdapter=new LuntanListAdapter(this,new ArrayList<>(),true);
-        mBinding.lvManagerFirst.setEmptyView(DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.empty_view, null, false).getRoot());
         mBinding.lvManagerFirst.setAdapter(mAdapter);
     }
 

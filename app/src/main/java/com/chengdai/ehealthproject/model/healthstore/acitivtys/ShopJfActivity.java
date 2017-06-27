@@ -15,6 +15,7 @@ import com.chengdai.ehealthproject.model.healthstore.adapters.ShopHotJfAdapter;
 import com.chengdai.ehealthproject.model.healthstore.adapters.ShopJfAdapter;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -232,11 +233,11 @@ public class ShopJfActivity extends AbsBaseActivity {
 
                     if(r.getUserExt() == null) return;
 
-                    ImgUtils.loadImgURL(context, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imgUserLogo);
+                    ImgUtils.loadImgLogo(this, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imgUserLogo);
                     if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(context,R.mipmap.man,mBinding.imgSex);
+                        ImgUtils.loadImgId(this,R.mipmap.man,mBinding.imgSex);
                     }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(context,R.mipmap.woman,mBinding.imgSex);
+                        ImgUtils.loadImgId(this,R.mipmap.woman,mBinding.imgSex);
                     }
 
                 },Throwable::printStackTrace));

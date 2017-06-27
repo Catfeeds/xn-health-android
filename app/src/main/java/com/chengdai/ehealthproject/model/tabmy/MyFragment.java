@@ -22,6 +22,7 @@ import com.chengdai.ehealthproject.model.tabmy.activitys.MyTestHistoryActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.SettingActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopAllOrderLookActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -104,6 +105,7 @@ public class MyFragment extends BaseLazyFragment{
             MyTestHistoryActivity.open(mActivity);
         });
 
+        //积分流水
         mBinding.fraJf.setOnClickListener(v -> {
             MyJFDetailsActivity.open(mActivity,mBinding.tvJf.getText().toString(),accountNumber);
         });
@@ -194,7 +196,10 @@ public class MyFragment extends BaseLazyFragment{
 
                     if(r.getUserExt() == null) return;
 
+                    LogUtil.E("积分"+MyConfig.IMGURL+r.getUserExt().getPhoto());
+                    LogUtil.E("积分"+r.getUserExt().getGender());
                     ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imtUserLogo);
+
                     if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(mActivity,R.mipmap.man,mBinding.imgUserSex);
                     }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){

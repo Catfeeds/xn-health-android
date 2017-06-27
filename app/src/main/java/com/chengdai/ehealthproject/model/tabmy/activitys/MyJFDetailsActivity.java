@@ -22,12 +22,18 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.chengdai.ehealthproject.weigit.views.MyDividerItemDecoration;
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
+import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**j积分流水
@@ -39,6 +45,13 @@ public class MyJFDetailsActivity extends AbsBaseActivity{
     private ActivityJfDetailsListBinding mBinding;
 
     private String accountNumber;
+
+    private EmptyWrapper mAdapter;
+
+    private List<JfDetailsListModel.ListBean> mDatas;
+
+    private  int mPageStart=1;
+
 
     /**
      * 打开当前页面
@@ -72,10 +85,51 @@ public class MyJFDetailsActivity extends AbsBaseActivity{
         mBinding.cycler.addItemDecoration(new MyDividerItemDecoration(this,MyDividerItemDecoration.VERTICAL_LIST));
         mBinding.cycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-        getJfDetailsList();
+
+        mBinding.springvew.setType(SpringView.Type.FOLLOW);
+        mBinding.springvew.setGive(SpringView.Give.TOP);
+        mBinding.springvew.setHeader(new DefaultHeader(this));
+        mBinding.springvew.setFooter(new DefaultFooter(this));
+
+        mBinding.springvew.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                mPageStart=1;
+                getJfDetailsList(null);
+                mBinding.springvew.onFinishFreshAndLoad();
+            }
+
+            @Override
+            public void onLoadmore() {
+                mPageStart++;
+                getJfDetailsList(null);
+                mBinding.springvew.onFinishFreshAndLoad();
+            }
+        });
+
+        mDatas=new ArrayList<>();
+
+        mAdapter=new EmptyWrapper(new CommonAdapter<JfDetailsListModel.ListBean>(this,R.layout.item_jf_deails,mDatas) {
+            @Override
+            protected void convert(ViewHolder holder, JfDetailsListModel.ListBean listBean, int position) {
+                if(listBean==null){
+                    return;
+                }
+                holder.setText(R.id.tv_name,listBean.getBizNote());
+                holder.setText(R.id.tv_sum,StringUtils.showPrice(listBean.getTransAmount()));
+                holder.setText(R.id.tv_time, DateUtil.formatStringData(listBean.getCreateDatetime(),DateUtil.DEFAULT_DATE_FMT));
+
+            }
+        });
+
+        mAdapter.setEmptyView(R.layout.empty_view);
+
+        mBinding.cycler.setAdapter(mAdapter);
+
+        getJfDetailsList(this);
     }
 
-    public void getJfDetailsList() {
+    public void getJfDetailsList(Context c) {
 
         Map<String,String> map=new HashMap<>();
         map.put("systemCode", MyConfig.SYSTEMCODE);
@@ -84,25 +138,28 @@ public class MyJFDetailsActivity extends AbsBaseActivity{
         map.put("accountNumber", accountNumber);
         map.put("accountType", "C");
         map.put("currency","JF");
-        map.put("start","1");
+        map.put("start",mPageStart+"");
         map.put("limit","10");
 
        mSubscription.add( RetrofitUtils.getLoaderServer().getJFDetailsList("802520", StringUtils.getJsonToString(map))
-                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .compose(RxTransformerHelper.applySchedulerResult(c))
                 .subscribe(s -> {
 
-                    mBinding.cycler.setAdapter(new CommonAdapter<JfDetailsListModel.ListBean>(this,R.layout.item_jf_deails,s.getList()) {
-                        @Override
-                        protected void convert(ViewHolder holder, JfDetailsListModel.ListBean listBean, int position) {
-                            if(listBean==null){
-                                return;
-                            }
-                            holder.setText(R.id.tv_name,listBean.getBizNote());
-                            holder.setText(R.id.tv_sum,StringUtils.showPrice(listBean.getTransAmount()));
-                            holder.setText(R.id.tv_time, DateUtil.formatStringData(listBean.getCreateDatetime(),DateUtil.DEFAULT_DATE_FMT));
-
+                    if(mPageStart == 1){
+                        if(s==null||s.getList()!=null){
+                            mDatas.clear();
+                            mDatas.addAll(s.getList());
+                            mAdapter.notifyDataSetChanged();
                         }
-                    });
+
+                    }else if(mPageStart >1){
+                        if(s==null||s.getList()==null || s.getList().size()==0){
+                            mPageStart--;
+                            return;
+                        }
+                        mDatas.addAll(s.getList());
+                        mAdapter.notifyDataSetChanged();
+                    }
 
                 },Throwable::printStackTrace));
 

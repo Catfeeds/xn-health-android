@@ -94,7 +94,7 @@ public class StringUtils {
     public static String showPrice(BigDecimal big){
 
         if(big !=null){
-            return (big.doubleValue()/1000)+"";
+            return (big.intValue()/1000)+"";
         }
         return "0";
     }
@@ -109,7 +109,7 @@ public class StringUtils {
 
         if(big !=null){
             BigDecimal bigDecimal=new BigDecimal(size);
-            return (big.multiply(bigDecimal).doubleValue()/1000)+"";
+            return (big.multiply(bigDecimal).intValue()/1000)+"";
         }
 
         return "0";

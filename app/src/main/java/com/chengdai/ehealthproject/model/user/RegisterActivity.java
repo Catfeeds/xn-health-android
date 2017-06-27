@@ -12,6 +12,8 @@ import android.text.TextUtils;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityRegisterBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -19,6 +21,8 @@ import com.chengdai.ehealthproject.uitls.TextReadUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -164,7 +168,12 @@ public class RegisterActivity extends AbsBaseActivity {
                 .subscribe(data -> {
                         if(data!=null && ( !TextUtils.isEmpty(data.getToken()) || !TextUtils.isEmpty(data.getUserId()))){ //token 和 UserId不为空时
                             showWarnListen("注册成功",view -> {
-                                LoginActivity.open(this,true);
+
+                                EventBusModel eventBusModel=new EventBusModel();
+                                eventBusModel.setTag("AllFINISH");
+                                EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+                                MainActivity.open(this,0);
+                                showToast("已自动登录");
                                 finish();
                             });
                         }else{

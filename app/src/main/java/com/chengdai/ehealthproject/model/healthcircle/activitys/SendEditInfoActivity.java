@@ -184,7 +184,7 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
             map.put("address", SPUtilHelpr.getResetLocationInfo().getCityName());
         }else{
-            map.put("address","暂无");
+            map.put("address","");
         }
 
       mSubscription .add( RetrofitUtils.getLoaderServer().SendArticleInfo("621010", StringUtils.getJsonToString(map))
@@ -193,6 +193,9 @@ public class SendEditInfoActivity extends AbsBaseActivity{
 
                     if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode())){
                         showToast("发布成功");
+
+
+
                         finish();
                     }else{
                         showToast("发布失败");

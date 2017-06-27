@@ -17,6 +17,7 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -126,5 +127,11 @@ public class LoginActivity extends AbsBaseActivity {
 
 
     }
-
+    @Override
+    public void onBackPressed() {
+        if (isStartMain) {
+            MainActivity.open(this,0);
+        }
+        finish();
+    }
 }

@@ -219,14 +219,6 @@ public class HealthManagerFragment extends BaseFragment{
     @Subscribe
     public void locationSuccessful(AMapLocation aMapLocation){
 
-        LogUtil.E("定位成功");
-
-        if(aMapLocation == null){
-            getWeatherData("");
-            mHeadViewBinding.tvCityName.setText("金华");
-            return;
-        }
-
         mHeadViewBinding.tvCityName.setText(aMapLocation.getCity());
 
         if(! TextUtils.isEmpty(aMapLocation.getAdCode())){

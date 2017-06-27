@@ -22,6 +22,7 @@ import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +37,7 @@ public class MainActivity extends BaseLocationActivity {
 
     private ActivityMainBinding mainBinding;
 
-    private int mTabIndex=0;//记录用户点击下标 用于未登录时恢复状态
+    private int mTabIndex=1;//记录用户点击下标 用于未登录时恢复状态
 
     private int mShowIndex=0;//显示相应页面
 
@@ -94,6 +95,7 @@ public class MainActivity extends BaseLocationActivity {
 
         if(getIntent()!=null){
             mShowIndex=getIntent().getIntExtra("select",0);
+            mTabIndex=mShowIndex+1;
         }
 
         initViewState();
@@ -154,7 +156,7 @@ public class MainActivity extends BaseLocationActivity {
                          break;
                  }
 
-                 LoginActivity.open(this,true);
+                 LoginActivity.open(this,false);
              }else{
                  mTabIndex=5;
                  mainBinding.pagerMain.setCurrentItem(4,false);
@@ -192,6 +194,24 @@ public class MainActivity extends BaseLocationActivity {
 
           },Throwable::printStackTrace));*/
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isFinishing()) {
+            new CommonDialog(this).builder().setPositiveBtn("确认", (view) -> {
+                logOut();
+            }).setNegativeBtn("取消", null).setTitle("提示").setContentMsg("确认退出健康E购？").show();
+        } else {
+            logOut();
+        }
+    }
+
+    public void logOut(){
+        EventBusModel eventBusModel=new EventBusModel();
+        eventBusModel.setTag("AllFINISH");
+        EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+        finish();
     }
 
     @Override
