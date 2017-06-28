@@ -221,7 +221,7 @@ public class DateUtil {
                 break;
             }
         }
-        lDate.add(endDate);//把结束时间加入集合
+//        lDate.add(endDate);//把结束时间加入集合
         return lDate;
     }
 

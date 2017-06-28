@@ -20,6 +20,7 @@
             android:layout_height="wrap_content" />
 
         <View
+            android:layout_marginTop="10dp"
           style="@style/style_split_line"/>
 
         <TextView

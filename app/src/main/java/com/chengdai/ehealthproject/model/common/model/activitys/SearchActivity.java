@@ -79,6 +79,8 @@ public class SearchActivity extends AbsBaseActivity {
         }
         setSubLeftImgState(true);
 
+        mBinding.search.editSerchView.setHint("请输入您感兴趣的商户");
+
         mStoreTypeAdapter = new StoreTypeListAdapter(this,new ArrayList<>(),true);
         mBinding.listlayout.listview.setAdapter(mStoreTypeAdapter);
 

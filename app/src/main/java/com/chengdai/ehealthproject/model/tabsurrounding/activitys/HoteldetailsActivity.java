@@ -124,6 +124,9 @@ public class HoteldetailsActivity extends AbsBaseActivity {
     }
 
     private void initViews() {
+
+
+
         mBinding.btnPay.setOnClickListener(v -> {
             if(mStoreDetailsModel!=null)
                  PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
@@ -166,6 +169,10 @@ public class HoteldetailsActivity extends AbsBaseActivity {
     }
 
     private void setShowData(StoreDetailsModel storeListModel) {
+
+        mBinding.tvAddress.setText(mStoreDetailsModel.getAddress());
+        mBinding.tvPhoneNumber.setText(mStoreDetailsModel.getBookMobile());
+
         imgs= StringUtils.splitAsList(storeListModel.getPic(),"\\|\\|");
 
         //设置图片集合

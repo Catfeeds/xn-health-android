@@ -9,6 +9,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySettingBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.activitys.IntroductionActivity;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
@@ -45,6 +46,11 @@ public class SettingActivity extends AbsBaseActivity{
         addMainView(mBinding.getRoot());
         setTopTitle(getString(R.string.txt_setting));
         setSubLeftImgState(true);
+
+        //关于我们
+        mBinding.layoutAbout.setOnClickListener(v -> {
+            IntroductionActivity.open(this,"aboutus","关于我们");
+        });
 
         mBinding.txtLogout.setOnClickListener(v -> {
             SPUtilHelpr.saveUserId("");

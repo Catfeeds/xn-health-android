@@ -100,13 +100,13 @@ public class ShopPayJfActivity extends AbsBaseActivity{
     private void setShowData() {
         if(mSelectProductData!=null){
 
-            mBinding.txtPriceSingle.setText("积分："+StringUtils.showPrice(mSelectProductData.getPrice1()));
+            mBinding.txtPriceSingle.setText("积分："+StringUtils.showJF(mSelectProductData.getPrice1()));
 
             mBinding.txtName.setText(mSelectProductData.getName());
 
             mBinding.txtNumber.setText("X"+mBuyNum);
 
-            mBinding.textMoney.setText("积分："+StringUtils.showPrice(mSelectProductData.getPrice1(),mBuyNum));
+            mBinding.textMoney.setText("积分："+StringUtils.showJF(mSelectProductData.getPrice1(),mBuyNum));
         }
 
         ImgUtils.loadImgURL(this,imgUrl,mBinding.imgGood);

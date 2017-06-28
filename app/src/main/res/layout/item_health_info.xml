@@ -12,8 +12,8 @@
         android:id="@+id/img_title"
         android:layout_marginLeft="15dp"
         tools:src="@mipmap/hotel"
-        android:layout_width="80dp"
-        android:layout_height="75dp" />
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
     <TextView
         android:layout_marginRight="10dp"
@@ -50,7 +50,6 @@
         android:layout_marginRight="10dp"
         android:maxLines="1"
         android:layout_below="@+id/tv_content"
-        android:layout_marginTop="15dp"
         android:id="@+id/tv_time"
         android:ellipsize="end"
         android:textSize="12sp"

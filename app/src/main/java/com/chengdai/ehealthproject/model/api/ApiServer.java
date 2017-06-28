@@ -3,6 +3,7 @@ package com.chengdai.ehealthproject.model.api;
 
 import com.chengdai.ehealthproject.model.common.model.AmountModel;
 import com.chengdai.ehealthproject.model.common.model.CodeModel;
+import com.chengdai.ehealthproject.model.common.model.IntroductionInfoModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
@@ -14,6 +15,7 @@ import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthTaskListMd
 import com.chengdai.ehealthproject.model.healthmanager.model.AssistantMenuListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.DoTestQusetionModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.JfGuideListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexMenuListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TaskNowModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TestDoneModel;
@@ -616,6 +618,22 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<IsSuccessModes>> deleteTiezi(@Field("code") String code, @Field("json") String  json);
+
+  /**
+     * 获取积分引导页面数据
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<JfGuideListModel>> getJfGuideList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 根据ckey查询系统参数
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IntroductionInfoModel>> getInfoByKey(@Field("code") String code, @Field("json") String  json);
 
 
 }

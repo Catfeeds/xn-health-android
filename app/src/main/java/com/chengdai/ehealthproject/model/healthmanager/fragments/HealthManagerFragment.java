@@ -26,6 +26,7 @@ import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthDoTestQu
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthMeaicalActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthTestActivity;
 import com.chengdai.ehealthproject.model.healthmanager.acitivitys.HealthinfoActivity;
+import com.chengdai.ehealthproject.model.healthmanager.acitivitys.JfGuideActivity;
 import com.chengdai.ehealthproject.model.healthmanager.model.TaskNowModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.WeatherModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -67,6 +68,8 @@ public class HealthManagerFragment extends BaseFragment{
 
     private String mTestCode;//用于打开测试页
     private String mTestTitle;;//用于打开测试页
+
+    private String mJfaccountNumber;//用于积分页
 
 
     /**
@@ -111,6 +114,18 @@ public class HealthManagerFragment extends BaseFragment{
 
     private void initViewListener() {
 
+        //获取积分
+        mHeadViewBinding.tvStartGetJf.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
+            if(TextUtils.isEmpty(mHeadViewBinding.tvJf.getText().toString()) || TextUtils.isEmpty(mJfaccountNumber)){
+                return;
+            }
+            JfGuideActivity.open(mActivity,mHeadViewBinding.tvJf.getText().toString(),mJfaccountNumber);
+        });
+
         //健康资讯
         mHeadViewBinding.layoutMenuHealthInfo.setOnClickListener(v -> {
             HealthinfoActivity.open(mActivity);
@@ -127,11 +142,15 @@ public class HealthManagerFragment extends BaseFragment{
         //健康风险评估
         mHeadViewBinding.imgHealthRisk.setOnClickListener(v -> {
             HealthTestActivity.open(mActivity,HealthTestActivity.TYPE2);
-
         });
 
         //j健康任务评测
         mHeadViewBinding.tvStartTest.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(mActivity)){
+                return;
+            }
+
             if(TextUtils.isEmpty(mTestCode) || TextUtils.isEmpty(mTestTitle)){
                 return;
             }
@@ -331,7 +350,8 @@ public class HealthManagerFragment extends BaseFragment{
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
-                    mHeadViewBinding.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
+                    mJfaccountNumber=r.get(0).getAccountNumber();
+                    mHeadViewBinding.tvJf.setText(StringUtils.showJF(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));
 

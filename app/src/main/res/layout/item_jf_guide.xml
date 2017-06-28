@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_gravity="center"
+        android:id="@+id/tv_title"
+        android:layout_weight="1"
+        android:textColor="@color/text_color"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        tools:text="sdfsdfsdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_jfnum"
+            android:layout_weight="1"
+            android:textColor="@color/text_color"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            tools:text="sdfsdfsdf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_start_jf"
+            android:text="赚积分"
+            android:layout_marginRight="10dp"
+           android:padding="5dp"
+            android:background="@drawable/bg_line_blue"
+            android:layout_weight="1"
+            android:textColor="@color/txt_title_bg"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -168,7 +168,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
 //搜索
         mBinding.search.linSerchtop.setOnClickListener(v -> {
-            SearchShopActivity.open(mActivity,"商店搜索");
+            SearchShopActivity.open(mActivity,"商品搜索","请输入您感兴趣的商品");
         });
 
         //积分商城
@@ -188,6 +188,8 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
             ShopPayCarSelectActivity.open(mActivity);
         });
+
+        mBinding.search.editSerchView.setHint("请输入您感兴趣的商品");
 
     }
 

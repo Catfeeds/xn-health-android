@@ -52,13 +52,14 @@ public class SearchShopActivity extends AbsBaseActivity {
      * @param context
      * @param title 页面标题
      */
-    public static void open(Context context, String title){
+    public static void open(Context context, String title,String hinttext){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,SearchShopActivity.class);
 
         intent.putExtra("title",title);
+        intent.putExtra("hinttext",hinttext);
 
         context.startActivity(intent);
     }
@@ -74,6 +75,7 @@ public class SearchShopActivity extends AbsBaseActivity {
 
         if(getIntent() != null){
             setTopTitle(getIntent().getStringExtra("title"));
+            mBinding.search.editSerchView.setHint(getIntent().getStringExtra("hinttext"));
         }else{
             setTopTitle(getString(R.string.search));
         }

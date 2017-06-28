@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
@@ -56,11 +57,20 @@ public class HealthAssistantActivity extends AbsBaseActivity{
         mBinding.fraAssistantMenu1.setOnClickListener(v -> {
             AssistantMenuActivity.open(this);
         });
+        //膳食建议
+        mBinding.fraAssistantMenu2.setOnClickListener(v -> {
+            EatCalculateActivity.open(this);
+        });
 
      //医学美容
         mBinding.fraAssistantMenu3.setOnClickListener(v -> {
             BeautyActivity.open(this);
         });
+        //BMI
+        mBinding.fraAssistantMenu4.setOnClickListener(v -> {
+            BMICalculateActivity.open(this);
+        });
+
 
     }
 }

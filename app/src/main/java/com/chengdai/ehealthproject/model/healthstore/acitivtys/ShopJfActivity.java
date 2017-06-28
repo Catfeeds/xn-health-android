@@ -11,6 +11,8 @@ import android.view.View;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityJfShopBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.healthmanager.acitivitys.JfGuideActivity;
 import com.chengdai.ehealthproject.model.healthstore.adapters.ShopHotJfAdapter;
 import com.chengdai.ehealthproject.model.healthstore.adapters.ShopJfAdapter;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
@@ -25,6 +27,8 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +52,8 @@ public class ShopJfActivity extends AbsBaseActivity {
 
     private ShopHotJfAdapter mHotAdapter;
     private ShopJfAdapter mJfAdapter;
+
+    private String mJfaccountNumber;
 
     /**
      * 打开当前页面
@@ -123,6 +129,13 @@ public class ShopJfActivity extends AbsBaseActivity {
             ShopJfDetailsActivity.open(this,mHotAdapter.getItem(position));
         });
 
+        mBinding.tvStartGetJf.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(mJfaccountNumber)){
+                return;
+            }
+            JfGuideActivity.open(this,mBinding.tvJf.getText().toString(),mJfaccountNumber);
+        });
+
     }
 
 
@@ -184,7 +197,10 @@ public class ShopJfActivity extends AbsBaseActivity {
                         mJlistData.add(beanData);
                     }
 
-                },Throwable::printStackTrace));
+                },throwable -> {
+                    mBinding.tvJfchange.setVisibility(View.VISIBLE);
+                    mBinding.tvHotChange.setVisibility(View.VISIBLE);
+                }));
 
     }
 
@@ -203,7 +219,8 @@ public class ShopJfActivity extends AbsBaseActivity {
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
-                    mBinding.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
+                    mJfaccountNumber=r.get(0).getAccountNumber();
+                    mBinding.tvJf.setText(StringUtils.showJF(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));
 
@@ -240,8 +257,23 @@ public class ShopJfActivity extends AbsBaseActivity {
                         ImgUtils.loadImgId(this,R.mipmap.woman,mBinding.imgSex);
                     }
 
-                },Throwable::printStackTrace));
+                },throwable ->{
+                    mBinding.linlayoutHead.setVisibility(View.VISIBLE);
+                } ));
+    }
 
+
+    /**
+     * 1-4设置显示位置
+     * @param eventBus
+     */
+    @Subscribe
+    public void SHopJfActivityEvent(EventBusModel eventBus){
+        if(eventBus==null)return;
+
+        if(TextUtils.equals(eventBus.getTag(),"SHopJfActivityFinish") ){
+              finish();
+        }
 
     }
 

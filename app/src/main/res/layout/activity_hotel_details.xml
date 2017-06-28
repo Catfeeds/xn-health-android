@@ -89,7 +89,6 @@
         style="@style/hline"
        />
     <LinearLayout
-        android:visibility="gone"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
         android:orientation="horizontal"
@@ -102,17 +101,27 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:gravity="left"
-                android:layout_marginRight="10dp"
-                android:id="@+id/tv_address"
-                android:layout_marginTop="5dp"
-                android:textSize="16sp"
-                android:ellipsize="end"
-                android:layout_weight="1"
+            <LinearLayout
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/location" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    tools:text="xffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginTop="15dp"
@@ -124,7 +133,7 @@
                     android:id="@+id/imageView"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:src="@mipmap/bookphone" />
+                    android:src="@mipmap/call" />
 
                 <TextView
                     android:id="@+id/tv_phone_number"
@@ -142,7 +151,7 @@
 
 
         <Button
-
+           android:visibility="gone"
             android:id="@+id/btn_pay"
             android:background="@color/orange"
             android:gravity="center"

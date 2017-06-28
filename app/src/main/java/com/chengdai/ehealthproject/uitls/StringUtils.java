@@ -35,15 +35,15 @@ public class StringUtils {
     }
 
     public static String doubleFormatMoney(double money){
-        DecimalFormat df = new DecimalFormat("#######0.000");
+        DecimalFormat df = new DecimalFormat("#######0.00");
         String showMoney = df.format((money));
-        return showMoney.substring(0,showMoney.length()-1);
+        return showMoney/*.substring(0,showMoney.length()-1)*/;
     }
 
     public static Double doubleFormatMoney2(double money){
-        DecimalFormat df = new DecimalFormat("#######0.000");
+        DecimalFormat df = new DecimalFormat("#######0.00");
         String showMoney = df.format((money));
-        return Double.valueOf(showMoney.substring(0,showMoney.length()-1));
+        return Double.valueOf(showMoney);
     }
 
     public static List<String> splitAsList(String s,String sp){
@@ -94,9 +94,34 @@ public class StringUtils {
     public static String showPrice(BigDecimal big){
 
         if(big !=null){
-            return (big.intValue()/1000)+"";
+            return doubleFormatMoney(((big.doubleValue())/1000));
+        }
+        return "0.00";
+    }
+
+    public static String showJF(BigDecimal big){
+
+        if(big !=null){
+            return ((big.intValue())/1000)+"";
         }
         return "0";
+    }
+
+    /**
+     * 显示积分乘规格
+     * @param big
+     * @param size
+     * @return
+     */
+    public static String showJF(BigDecimal big,int size){
+
+        if(big !=null){
+            BigDecimal bigDecimal=new BigDecimal(size);
+            return (big.multiply(bigDecimal).intValue()/1000)+"";
+        }
+
+        return "0";
+
     }
 
     /**
@@ -109,7 +134,8 @@ public class StringUtils {
 
         if(big !=null){
             BigDecimal bigDecimal=new BigDecimal(size);
-            return (big.multiply(bigDecimal).intValue()/1000)+"";
+
+            return  doubleFormatMoney((big.multiply(bigDecimal).doubleValue()/1000));
         }
 
         return "0";

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+       android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:gravity="center_horizontal"
+        android:text="12334卡"
+        android:textColor="@color/text_color" />
+
+    <TextView
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/tv_bmi_num"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:gravity="left"
+        android:text="以上是指时根据您的标准体重，和您的单位体重所需热量我们为您算出您一天的能量摄入量。"
+        android:textColor="@color/text_gray" />
+
+    <View  android:layout_marginTop="20dp" android:layout_marginBottom="20dp" style="@style/style_split_line"/>
+
+
+    <TextView
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:gravity="left"
+        android:text="我们为您估算出的每日所需能量，作为合理安排您的膳食摄入的科学依据，足以保证您的机体正常代谢和日常的学习工作和生活等活动所需"
+        android:textColor="@color/text_gray" />
+
+
+</LinearLayout>
+
+</layout>

@@ -237,6 +237,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_start_get_jf"
                     android:gravity="center"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"

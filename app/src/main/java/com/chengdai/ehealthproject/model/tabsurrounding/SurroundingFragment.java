@@ -198,6 +198,7 @@ public class SurroundingFragment extends BaseLazyFragment{
             CitySelectActivity.open(mActivity);
         });
 
+        mBinding.search.editSerchView.setHint("请输入您感兴趣的商户");
     }
 
     private void initBanner() {
@@ -321,6 +322,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
+        map.put("level","2");//1 普通商家
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
 

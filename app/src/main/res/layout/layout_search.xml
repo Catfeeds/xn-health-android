@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:hint="请输入您感兴趣的商户"
+            android:hint="请输入搜索内容"
             android:textColorHint="@color/text_hint_color"
             android:paddingLeft="10dp"
             android:paddingRight="12dp"

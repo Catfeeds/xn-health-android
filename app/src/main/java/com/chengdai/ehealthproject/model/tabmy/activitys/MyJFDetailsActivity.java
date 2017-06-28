@@ -116,7 +116,7 @@ public class MyJFDetailsActivity extends AbsBaseActivity{
                     return;
                 }
                 holder.setText(R.id.tv_name,listBean.getBizNote());
-                holder.setText(R.id.tv_sum,StringUtils.showPrice(listBean.getTransAmount()));
+                holder.setText(R.id.tv_sum,StringUtils.showJF(listBean.getTransAmount()));
                 holder.setText(R.id.tv_time, DateUtil.formatStringData(listBean.getCreateDatetime(),DateUtil.DEFAULT_DATE_FMT));
 
             }

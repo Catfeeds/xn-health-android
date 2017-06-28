@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
@@ -25,6 +26,7 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,20 +143,7 @@ public class MainActivity extends BaseLocationActivity {
          mainBinding.layoutMainButtom.radioMainTab5.setOnClickListener(v -> {
              if(!SPUtilHelpr.isLoginNoStart()){
 
-                 switch (mTabIndex){
-                     case 1:
-                         mainBinding.layoutMainButtom.radioMainTab1.setChecked(true);
-                         break;
-                     case 2:
-                         mainBinding.layoutMainButtom.radioMainTab2.setChecked(true);
-                         break;
-                     case 3:
-                         mainBinding.layoutMainButtom.radioMainTab3.setChecked(true);
-                         break;
-                     case 4:
-                         mainBinding.layoutMainButtom.radioMainTab4.setChecked(true);
-                         break;
-                 }
+                 setTabIndex();
 
                  LoginActivity.open(this,false);
              }else{
@@ -196,6 +185,23 @@ public class MainActivity extends BaseLocationActivity {
 
     }
 
+    private void setTabIndex() {
+        switch (mTabIndex){
+            case 1:
+                mainBinding.layoutMainButtom.radioMainTab1.setChecked(true);
+                break;
+            case 2:
+                mainBinding.layoutMainButtom.radioMainTab2.setChecked(true);
+                break;
+            case 3:
+                mainBinding.layoutMainButtom.radioMainTab3.setChecked(true);
+                break;
+            case 4:
+                mainBinding.layoutMainButtom.radioMainTab4.setChecked(true);
+                break;
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (!isFinishing()) {
@@ -212,6 +218,23 @@ public class MainActivity extends BaseLocationActivity {
         eventBusModel.setTag("AllFINISH");
         EventBus.getDefault().post(eventBusModel); //结束掉所有界面
         finish();
+    }
+
+    /**
+     * 1-4设置显示位置
+     * @param eventBus
+     */
+    @Subscribe
+    public void MainActivityEvent(EventBusModel eventBus){
+        if(eventBus==null)return;
+
+        if(TextUtils.equals(eventBus.getTag(),"MainSetIndex") ){
+            mTabIndex=eventBus.getEvInt();
+            mShowIndex=eventBus.getEvInt()-1;
+            mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
+            setTabIndex();
+        }
+
     }
 
     @Override

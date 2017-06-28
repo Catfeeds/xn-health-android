@@ -131,8 +131,8 @@ public class HealthinfoTypeListActivity extends AbsBaseActivity {
 //        map.put("type","1");
 //        map.put("location","1");
         map.put("status","1");
-//        map.put("kind",mType);
-//        map.put("category",mType);
+        map.put("kind",mType);
+        map.put("category",mTypeCode);
 
        mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621107",StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(c))

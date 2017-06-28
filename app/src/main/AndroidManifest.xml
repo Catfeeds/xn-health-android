@@ -428,6 +428,39 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+     //BMI指数计算
+      <activity android:name=".model.healthmanager.acitivitys.BMICalculateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //BMI指数结果
+    <activity android:name=".model.healthmanager.acitivitys.BMICalculateDetalisActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+     //膳食建议
+    <activity android:name=".model.healthmanager.acitivitys.EatCalculateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //B膳食建议结果
+    <activity android:name=".model.healthmanager.acitivitys.EatCalculateDetalisActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        //积分引导
+        <activity android:name=".model.healthmanager.acitivitys.JfGuideActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+       //介绍页
+        <activity android:name=".model.common.model.activitys.IntroductionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
 
         <!--评论列表查看-->
 

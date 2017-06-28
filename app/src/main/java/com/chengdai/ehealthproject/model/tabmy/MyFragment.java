@@ -125,6 +125,16 @@ public class MyFragment extends BaseLazyFragment{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(SPUtilHelpr.isLoginNoStart() && getUserVisibleHint()){
+            getAmountRequest();
+            getJifenRequest();
+            getUserInfoRequest();
+        }
+    }
+
+    @Override
     protected void onInvisible() {
 
     }
@@ -168,7 +178,7 @@ public class MyFragment extends BaseLazyFragment{
                 .subscribe(r -> {
 
                     accountNumber=r.get(0).getAccountNumber();
-                    mBinding.tvJf.setText(StringUtils.showPrice(r.get(0).getAmount()));
+                    mBinding.tvJf.setText(StringUtils.showJF(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));
 
@@ -196,8 +206,6 @@ public class MyFragment extends BaseLazyFragment{
 
                     if(r.getUserExt() == null) return;
 
-                    LogUtil.E("积分"+MyConfig.IMGURL+r.getUserExt().getPhoto());
-                    LogUtil.E("积分"+r.getUserExt().getGender());
                     ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imtUserLogo);
 
                     if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
@@ -218,7 +226,11 @@ public class MyFragment extends BaseLazyFragment{
         }
         if(TextUtils.equals("MyFragmentRefeshUserIfo",e.getTag()))//刷新用户数据
         {
-            getUserInfoRequest();
+//            getUserInfoRequest();
+        }
+       if(TextUtils.equals("MyFragmentRefeshJF",e.getTag()))//刷新用户积分
+        {
+//            getJifenRequest();
         }
 
     }

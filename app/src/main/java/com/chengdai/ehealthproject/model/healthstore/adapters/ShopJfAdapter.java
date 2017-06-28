@@ -58,7 +58,7 @@ public class ShopJfAdapter extends CommonAdapter<ShopListModel.ListBean> {
         tv_slogan_jf.setText(item.getSlogan());
 
         if(item.getProductSpecsList() !=null && item.getProductSpecsList().get(0)!=null){
-            tv_jf_number.setText(StringUtils.showPrice(item.getProductSpecsList().get(0).getPrice1()));
+            tv_jf_number.setText(StringUtils.showJF(item.getProductSpecsList().get(0).getPrice1()));
             tv_price.setText(StringUtils.getShowPriceSign(item.getProductSpecsList().get(0).getOriginalPrice()));
         }
 

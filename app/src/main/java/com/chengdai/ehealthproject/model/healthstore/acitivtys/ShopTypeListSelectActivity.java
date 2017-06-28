@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreTypeBinding;
+import com.chengdai.ehealthproject.databinding.LayoutSearchNoInputBinding;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
 import com.chengdai.ehealthproject.model.healthstore.adapters.ShopTypeListAdapter;
@@ -96,15 +97,18 @@ public class ShopTypeListSelectActivity extends AbsBaseActivity {
     }
 
     private void initViews() {
-        LayoutInflater inflater = LayoutInflater.from(this);
+        /*LayoutInflater inflater = LayoutInflater.from(this);
         LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.layout_search_no_input, null);//得到头部的布局
+*/
 
-        leftHeadView.setOnClickListener(v -> {
-            SearchShopActivity.open(this,"商城搜索");
+        LayoutSearchNoInputBinding mHeadViewBinding=DataBindingUtil.inflate( LayoutInflater.from(this),R.layout.layout_search_no_input,null,false);
+
+        mHeadViewBinding.editSerchView.setHint("请输入您感兴趣的商品");
+        mHeadViewBinding.editSerchView.setOnClickListener(v -> {
+            SearchShopActivity.open(this,"商城搜索","请输入您感兴趣的商品");
         });
 
-
-        mBinding.lvStoreType.addHeaderView(leftHeadView,null,false);
+        mBinding.lvStoreType.addHeaderView(mHeadViewBinding.getRoot(),null,false);
 
         mAdapter = new ShopTypeListAdapter(this,new ArrayList<>());
         mBinding.lvStoreType.setAdapter(mAdapter);

@@ -45,7 +45,7 @@
         <TextView
             android:id="@+id/tv_jf_number"
             android:textColor="@color/txt_title_bg"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:text="sdfsdfsdfsfsfs"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
