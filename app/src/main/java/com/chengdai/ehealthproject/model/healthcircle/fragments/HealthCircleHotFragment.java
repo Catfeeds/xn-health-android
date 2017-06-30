@@ -58,7 +58,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
     private List<ArticleModel.ListBean> mDatas;
 
     public static final String HOTTYPE="2";//热门
-    public static final String ALLTYPE="1";//全部
+    public static final String ALLTYPE="";//全部
 
     private int mPageStart;
 

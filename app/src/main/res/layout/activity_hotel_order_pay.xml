@@ -289,7 +289,7 @@
             android:layout_height="50dp">
 
             <ImageView
-                android:background="@mipmap/zufubao"
+                android:background="@mipmap/weixin"
                 android:layout_marginLeft="15dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />
@@ -329,7 +329,7 @@
             android:layout_height="50dp">
 
             <ImageView
-                android:src="@mipmap/weixin"
+                android:src="@mipmap/zufubao"
                 android:layout_marginLeft="15dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp" />

@@ -4,21 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityHotelOrderPayBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelOrderPayModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +37,7 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
     private int mPayType=1;
 
     private HotelOrderPayModel mPayModel;
-
+    private  static final String CALLPAYTAG="ShopHotelPayConfirmAcitivty";
     /**
      * 打开当前页面
      * @param context
@@ -104,39 +108,70 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
         mBinding.tvPay.setOnClickListener(v -> {
             if(SPUtilHelpr.isLogin(this)){
 
-                if(mPayType != 1){
+           /*     if(mPayType != 1){
                     showToast("暂未开通此支付功能");
                     return;
+                }*/
+
+           if(!SPUtilHelpr.isLogin(this)){
+               return;
+           }
+
+                switch (mPayType){
+                    case 1:
+                        yuePay();//余额支付yu
+                        break;
+                    case 3://支付宝支付
+                        aliPay();
+                        break;
                 }
-
-                Map<String,String> map=new HashMap();
-                map.put("code",mPayModel.getOrderCode());
-                map.put("payType",mPayType+"");
-
-                mSubscription.add(RetrofitUtils.getLoaderServer().HotelOrderPay("808451", StringUtils.getJsonToString(map))
-
-                        .compose(RxTransformerHelper.applySchedulerResult(this))
-
-                        .subscribe(payState -> {
-
-                            if(payState!=null && payState.isSuccess()){
-                                showToast("支付成功");
-                                MainActivity.open(this,3);
-                                finish();
-
-                            }else{
-                                showToast("支付失败");
-                            }
-
-                        },Throwable::printStackTrace));
-
 
             }
         });
 
-
-
     }
+
+private  void  yuePay(){
+
+    Map<String,String> map=new HashMap();
+    map.put("code",mPayModel.getOrderCode());
+    map.put("payType",mPayType+"");
+
+    mSubscription.add(RetrofitUtils.getLoaderServer().HotelOrderPay("808451", StringUtils.getJsonToString(map))
+
+            .compose(RxTransformerHelper.applySchedulerResult(this))
+
+            .subscribe(payState -> {
+
+                if(payState!=null && payState.isSuccess()){
+                 payState();
+
+                }else{
+                    showToast("支付失败");
+                }
+
+            },Throwable::printStackTrace));
+
+}
+
+
+    /**
+     * 支付宝支付
+     */
+    private void aliPay() {
+        Map<String,String> map=new HashMap();
+        map.put("code",mPayModel.getOrderCode());
+        map.put("payType",mPayType+"");
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().ShopOrderAliPay("808451", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .filter(data-> data!=null)
+                .subscribe(data -> {
+                    PayUtil.callAlipay(this,data.getSignOrder(),CALLPAYTAG);
+
+                },Throwable::printStackTrace));
+    }
+
 
 
     /**
@@ -172,5 +207,33 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
     }
 
 
+    /**
+     * 支付成功状态
+     */
+    private void payState() {
+        showToast("支付成功");
+        EventBusModel eventBusModel=new EventBusModel();
+        eventBusModel.setTag("AllFINISH");
+        EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+        MainActivity.open(this,3);//显示周边
+
+        finish();
+    }
+
+
+    /**
+     * 支付回调
+     * @param mo
+     */
+    @Subscribe
+    public void AliPayState(PaySucceedInfo mo){
+        if(mo == null || !TextUtils.equals(mo.getTag(),CALLPAYTAG)){
+            return;
+        }
+
+        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+            payState();
+        }
+    }
 
 }

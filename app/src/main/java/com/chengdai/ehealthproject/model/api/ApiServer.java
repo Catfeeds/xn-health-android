@@ -145,7 +145,7 @@ public interface ApiServer {
      */
     @FormUrlEncoded
     @POST("api")
-    Observable<BaseResponseModel<String>> SurroundingAliPay(@Field("code") String code, @Field("json") String  json);
+    Observable<BaseResponseModel<AliPayRequestMode>> SurroundingAliPay(@Field("code") String code, @Field("json") String  json);
 
     /**
      * 点赞请求

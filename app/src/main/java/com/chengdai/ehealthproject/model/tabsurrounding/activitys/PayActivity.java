@@ -11,13 +11,20 @@ import android.text.TextUtils;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityPayBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
+import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -42,6 +49,8 @@ public class PayActivity extends AbsBaseActivity {
     private Double mDiscountMoney=0.0;
 
     private int mPayType=1;
+
+    private  static final String CALLPAYTAG="SSurroundingPayConfirmAcitivty";
 
     /**
      * 打开当前页面
@@ -151,9 +160,9 @@ public class PayActivity extends AbsBaseActivity {
         RxTextView.textChanges(mBinding.edtPrice).subscribe(charSequence -> {
             if(!TextUtils.isEmpty(charSequence.toString())){
 
-                mDiscountMoney= (Double.valueOf(charSequence.toString())*rate);
+                mDiscountMoney= (Double.valueOf(charSequence.toString()));
 
-                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney(mDiscountMoney)+"");
+                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney(mDiscountMoney*rate)+"");
 
             }else{
                 mDiscountMoney=0.0;
@@ -210,31 +219,56 @@ public class PayActivity extends AbsBaseActivity {
                     if(TextUtils.isEmpty(data)){
                         showToast("支付失败");
                     }else{
-                        showToast("支付成功");
-                        finish();
+                        payState();
                     }
 
                 },Throwable::printStackTrace));
 
     }
     /**
-     * 余额支付
+     * 支付宝支付
      * @param map
      */
     private void aliPay(Map map){
 
         mSubscription.add(RetrofitUtils.getLoaderServer().SurroundingAliPay("808271", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
+                .filter(data-> data!=null)
                 .subscribe(data -> {
-          /*          if(TextUtils.isEmpty(data)){
-                        showToast("支付失败");
-                    }else{
-                        showToast("支付成功");
-                        finish();
-                    }*/
-
+                    PayUtil.callAlipay(this,data.getSignOrder(),CALLPAYTAG);
                 },Throwable::printStackTrace));
 
     }
+
+
+    /**
+     * 支付回调
+     * @param mo
+     */
+    @Subscribe
+    public void AliPayState(PaySucceedInfo mo){
+        if(mo == null || !TextUtils.equals(mo.getTag(),CALLPAYTAG)){
+            return;
+        }
+
+        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+            payState();
+        }
+    }
+
+    /**
+     * 支付成功状态
+     */
+    private void payState() {
+        showToast("支付成功");
+        EventBusModel eventBusModel=new EventBusModel();
+        eventBusModel.setTag("AllFINISH");
+        EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+        MainActivity.open(this,3);//显示周边
+
+        finish();
+    }
+
+
 
 }

@@ -229,9 +229,9 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
             eventBusModel.setTag("AllFINISH");
             EventBus.getDefault().post(eventBusModel); //结束掉所有界面
 
-            EventBusModel event=new EventBusModel();  //刷新商城Fragment数据
+       /*     EventBusModel event=new EventBusModel();  //刷新商城Fragment数据
             event.setTag("HealthStoreFragmentRefresh");
-            EventBus.getDefault().postSticky(event);
+            EventBus.getDefault().postSticky(event);*/
 
             MainActivity.open(this,4);//显示商城
 
