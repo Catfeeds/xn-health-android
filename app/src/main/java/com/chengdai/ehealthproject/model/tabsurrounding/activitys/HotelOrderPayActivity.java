@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityHotelOrderPayBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelOrderPayModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -16,6 +17,8 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -117,8 +120,7 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
                         .subscribe(payState -> {
 
                             if(payState!=null && payState.isSuccess()){
-
-                                MainActivity.open(this,1);
+                                MainActivity.open(this,3);
                                 finish();
 
                             }else{

@@ -238,6 +238,37 @@ public class StringUtils {
     }
 
 
+    public static String getLogisticsCompany(String key){
+
+            if(TextUtils.equals("ZJS",key)){
+                return "宅急送";
+            }
+            if(TextUtils.equals("TTKD",key)){
+                return "天天快递";
+            }
+            if(TextUtils.equals("SF",key)){
+                return "顺丰快递";
+            }
+           if(TextUtils.equals("HTKY",key)){
+                return "汇通快递";
+            }
+            if(TextUtils.equals("YTO",key)){
+                return "圆通快递";
+            }
+            if(TextUtils.equals("ZTO",key)){
+                return "中通快递";
+            }
+            if(TextUtils.equals("STO",key)){
+                return "申通快递";
+            }
+           if(TextUtils.equals("EMS",key)){
+                return "邮政EMS";
+            }
+
+            return "";
+    }
+
+
     /**
      * Map转换String
      *

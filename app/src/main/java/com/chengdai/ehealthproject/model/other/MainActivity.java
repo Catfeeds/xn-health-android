@@ -41,7 +41,7 @@ public class MainActivity extends BaseLocationActivity {
 
     private int mTabIndex=1;//记录用户点击下标 用于未登录时恢复状态
 
-    private int mShowIndex=0;//显示相应页面
+    private int mShowIndex=1;//显示相应页面
 
 
     /**
@@ -96,8 +96,8 @@ public class MainActivity extends BaseLocationActivity {
         hintTitleView();
 
         if(getIntent()!=null){
-            mShowIndex=getIntent().getIntExtra("select",0);
-            mTabIndex=mShowIndex+1;
+            mTabIndex =getIntent().getIntExtra("select",1);
+            mShowIndex=mTabIndex-1;
         }
 
         initViewState();
@@ -151,8 +151,9 @@ public class MainActivity extends BaseLocationActivity {
                  mainBinding.pagerMain.setCurrentItem(4,false);
              }
         });
-
+        setTabIndex();
         mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
+
 
 /*       mSubscription.add( RxRadioGroup.checkedChanges(mainBinding.layoutMainButtom.radiogroup) //点击切换
                .subscribe(integer -> {
@@ -199,6 +200,9 @@ public class MainActivity extends BaseLocationActivity {
             case 4:
                 mainBinding.layoutMainButtom.radioMainTab4.setChecked(true);
                 break;
+            case 5:
+                mainBinding.layoutMainButtom.radioMainTab5.setChecked(true);
+                break;
         }
     }
 
@@ -234,7 +238,6 @@ public class MainActivity extends BaseLocationActivity {
             mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
             setTabIndex();
         }
-
     }
 
     @Override

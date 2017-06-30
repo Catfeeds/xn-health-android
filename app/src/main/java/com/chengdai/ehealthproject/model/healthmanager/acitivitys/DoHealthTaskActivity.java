@@ -55,12 +55,17 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
         addMainView(mBinding.getRoot());
 
 
+
         setSubLeftImgState(true);
 
         setTopTitle("");
 
         if(getIntent()!=null){
             mData=getIntent().getParcelableExtra("data");
+            if(mData!=null && mData.getHealthTask()!=null){
+                setTopTitle(mData.getHealthTask().getName());
+            }
+
         }
 
         if(TextUtils.equals(mData.getIsZX(),"0")){
@@ -111,14 +116,31 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
 
                 mBinding.tvDays.setText("已坚持"+(mData.getZxNum()+1)+"天");
 
-                    showWeek(mData.getTxWeek());
+                showWeek(mData.getTxWeek());
 
                 },Throwable::printStackTrace);
 
     }
 
     private void showWeek(String week) {
-        switch (week){
+
+        if (TextUtils.equals("2",week)){
+            mBinding.ckWeek1.setChecked(true);
+        }else if(TextUtils.equals("3",week)){
+            mBinding.ckWeek2.setChecked(true);
+        }else if(TextUtils.equals("4",week)){
+            mBinding.ckWeek3.setChecked(true);
+        }else if(TextUtils.equals("5",week)){
+            mBinding.ckWeek4.setChecked(true);
+        }else if(TextUtils.equals("6",week)){
+            mBinding.ckWeek5.setChecked(true);
+        }else if(TextUtils.equals("7",week)){
+            mBinding.ckWeek6.setChecked(true);
+        }else if(TextUtils.equals("1",week)){
+            mBinding.ckWeek7.setChecked(true);
+        }
+
+/*        switch (week){
             case "2":
                 mBinding.ckWeek1.setChecked(true);
                 break;
@@ -140,7 +162,7 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
             case "1":
                 mBinding.ckWeek7.setChecked(true);
                 break;
-        }
+        }*/
     }
 
 

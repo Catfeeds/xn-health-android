@@ -29,8 +29,10 @@ import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
+import com.chengdai.ehealthproject.model.tabmy.model.BankModel;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
 import com.chengdai.ehealthproject.model.tabmy.model.JfDetailsListModel;
+import com.chengdai.ehealthproject.model.tabmy.model.MyBankCardListMode;
 import com.chengdai.ehealthproject.model.tabmy.model.MyTaskListModel;
 import com.chengdai.ehealthproject.model.tabmy.model.MyTestHistoryListModel;
 import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
@@ -634,6 +636,52 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<IntroductionInfoModel>> getInfoByKey(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 确认收货
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> confirmGetOrder(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 更换手机号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> updatePhone(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 更换手机号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<MyBankCardListMode>> getCardListData(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取银行卡类型
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<BankModel>> getBackModel(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 绑定银行卡
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<String>> bindBankCard(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 绑定银行卡
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IsSuccessModes>> updateBankCard(@Field("code") String code, @Field("json") String  json);
 
 
 }

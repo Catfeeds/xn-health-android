@@ -17,6 +17,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
 import com.chengdai.ehealthproject.model.common.model.CityModel;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.CitySelectActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
@@ -226,6 +227,12 @@ public class SurroundingFragment extends BaseLazyFragment{
     @Override
     public void onResume() {
         super.onResume();
+
+        if(getUserVisibleHint()){
+            mStoreStart=1;
+            getAllData();
+        }
+
         mBinding.banner.startAutoPlay();
     }
     @Override
@@ -238,29 +245,33 @@ public class SurroundingFragment extends BaseLazyFragment{
     protected void lazyLoad() {
         if (isCreate){
 
-            locationModel = SPUtilHelpr.getLocationInfo();
-
-            storeTypeRequest(mActivity);
-
-            bannerDataRequest(mActivity);
-
-            getStoreListRequest(mActivity,1);
-
-
-            if(locationModel!=null && !TextUtils.isEmpty(locationModel.getCityName())){
-                mBinding.tvLocation.setText(locationModel.getCityName());
-            }else{
-                mBinding.tvLocation.setText(R.string.txt_change_city);
-            }
-
-            if(mBinding!=null && mBinding.banner!=null){
-                mBinding.banner.start();
-                mBinding.banner.startAutoPlay();
-            }
+            getAllData();
             isCreate=false;
 
         }
 
+    }
+//获取所有接口数据
+    private void getAllData() {
+        locationModel = SPUtilHelpr.getLocationInfo();
+
+        storeTypeRequest(mActivity);
+
+        bannerDataRequest(mActivity);
+
+        getStoreListRequest(mActivity,1);
+
+
+        if(locationModel!=null && !TextUtils.isEmpty(locationModel.getCityName())){
+            mBinding.tvLocation.setText(locationModel.getCityName());
+        }else{
+            mBinding.tvLocation.setText(R.string.txt_change_city);
+        }
+
+        if(mBinding!=null && mBinding.banner!=null){
+            mBinding.banner.start();
+            mBinding.banner.startAutoPlay();
+        }
     }
 
     /**
@@ -322,7 +333,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
-        map.put("level","2");//1 普通商家
+        map.put("uiLocation","1");//0普通 1推荐
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
 
@@ -391,6 +402,14 @@ public class SurroundingFragment extends BaseLazyFragment{
     public void dzUpdate(DZUpdateModel dzUpdateModel){
         if(mStoreTypeAdapter!=null){
             mStoreTypeAdapter.setDzInfo(dzUpdateModel);
+        }
+    }
+
+    @Subscribe
+    public void SurroundingFragmentRefresh(EventBusModel eventBusModel){
+        if(eventBusModel == null)return;
+        if(TextUtils.equals(eventBusModel.getTag(),"SurroundingFragmentRefresh")){
+            getAllData();
         }
     }
 

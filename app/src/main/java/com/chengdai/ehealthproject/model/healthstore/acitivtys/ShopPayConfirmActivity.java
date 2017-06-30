@@ -34,7 +34,7 @@ import java.util.Map;
 
 import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney2;
 
-/**
+/**支付确认
  * Created by 李先俊 on 2017/6/12.
  */
 
@@ -228,7 +228,13 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
             EventBusModel eventBusModel=new EventBusModel();
             eventBusModel.setTag("AllFINISH");
             EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-            MainActivity.open(this,2);
+
+            EventBusModel event=new EventBusModel();  //刷新商城Fragment数据
+            event.setTag("HealthStoreFragmentRefresh");
+            EventBus.getDefault().postSticky(event);
+
+            MainActivity.open(this,4);//显示商城
+
         }
 
         finish();

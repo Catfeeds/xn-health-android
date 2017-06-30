@@ -99,9 +99,9 @@ public class TextReadUtils {
         SpannableString spanableInfo = new SpannableString(temp);
         spanableInfo.setSpan(new  SpanTextClickable(1), mStartPos,mEndPos,
                 Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-
+/*
         spanableInfo.setSpan(new  SpanTextClickable(2), mStartPos2,mEndPos2,
-                Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                Spanned.SPAN_INCLUSIVE_INCLUSIVE);*/
         return spanableInfo;
     }
 

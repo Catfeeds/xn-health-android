@@ -66,6 +66,25 @@ public class ShopOrderDetailBean implements Parcelable {
     private String remark;
     private String companyCode;
     private String systemCode;
+    private String logisticsCode;
+    private String logisticsCompany;
+
+    public String getLogisticsCode() {
+        return logisticsCode;
+    }
+
+    public void setLogisticsCode(String logisticsCode) {
+        this.logisticsCode = logisticsCode;
+    }
+
+    public String getLogisticsCompany() {
+        return logisticsCompany;
+    }
+
+    public void setLogisticsCompany(String logisticsCompany) {
+        this.logisticsCompany = logisticsCompany;
+    }
+
     private List<ProductOrderListBean> productOrderList;
 
     public String getCode() {
@@ -502,6 +521,8 @@ public class ShopOrderDetailBean implements Parcelable {
         dest.writeString(this.remark);
         dest.writeString(this.companyCode);
         dest.writeString(this.systemCode);
+        dest.writeString(this.logisticsCode);
+        dest.writeString(this.logisticsCompany);
         dest.writeTypedList(this.productOrderList);
     }
 
@@ -529,6 +550,8 @@ public class ShopOrderDetailBean implements Parcelable {
         this.remark = in.readString();
         this.companyCode = in.readString();
         this.systemCode = in.readString();
+        this.logisticsCode = in.readString();
+        this.logisticsCompany = in.readString();
         this.productOrderList = in.createTypedArrayList(ProductOrderListBean.CREATOR);
     }
 

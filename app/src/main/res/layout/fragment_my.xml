@@ -81,6 +81,7 @@
         android:layout_height="50dp">
 
         <FrameLayout
+            android:id="@+id/fra_amount"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
@@ -429,7 +430,8 @@
             android:layout_height="20dp" />
 
     </LinearLayout>
-
+        <View
+            style="@style/style_split_line"/>
 </LinearLayout>
 
     </ScrollView>

@@ -77,19 +77,32 @@ public class ShopJfActivity extends AbsBaseActivity {
 
         setTopTitle("积分商城");
 
-        initListView();
+        initViews();
 
         setSubLeftImgState(true);
 
-        getUserInfoRequest(null);
-        getJifenRequest(null);
         getStoreListRequest(this);
+        //获取用户信息
+        getUserInfo();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
-    private void initListView() {
+    private void getUserInfo() {
+        if(SPUtilHelpr.isLoginNoStart()){
+            getUserInfoRequest(null);
+            getJifenRequest(null);
+        }else{
+            mBinding.linJfInfo.setVisibility(View.GONE);
+        }
+    }
 
-
+    private void initViews() {
 
         mBinding.springvew.setType(SpringView.Type.FOLLOW);
         mBinding.springvew.setGive(SpringView.Give.TOP);
@@ -100,8 +113,7 @@ public class ShopJfActivity extends AbsBaseActivity {
             @Override
             public void onRefresh() {
                 mStoreStart=1;
-                getUserInfoRequest(null);
-                getJifenRequest(null);
+                getUserInfo();
                 getStoreListRequest(null);
                 mBinding.springvew.onFinishFreshAndLoad();
             }
@@ -121,7 +133,6 @@ public class ShopJfActivity extends AbsBaseActivity {
         mBinding.listJf.setAdapter(mJfAdapter);
 
         mBinding.listJf.setOnItemClickListener((parent, view, position, id) -> {
-
             ShopJfDetailsActivity.open(this, mJfAdapter.getItem(position));
         });
 
@@ -130,12 +141,16 @@ public class ShopJfActivity extends AbsBaseActivity {
         });
 
         mBinding.tvStartGetJf.setOnClickListener(v -> {
+
+            if(!SPUtilHelpr.isLogin(this)){
+                return;
+            }
+
             if(TextUtils.isEmpty(mJfaccountNumber)){
                 return;
             }
             JfGuideActivity.open(this,mBinding.tvJf.getText().toString(),mJfaccountNumber);
         });
-
     }
 
 
@@ -219,11 +234,13 @@ public class ShopJfActivity extends AbsBaseActivity {
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
+                    mBinding.linJfInfo.setVisibility(View.VISIBLE);
                     mJfaccountNumber=r.get(0).getAccountNumber();
                     mBinding.tvJf.setText(StringUtils.showJF(r.get(0).getAmount()));
 
-                },Throwable::printStackTrace));
-
+                },throwable -> {
+//                    mBinding.linJfInfo.setVisibility(View.GONE);
+                }));
     }
 
 
@@ -243,9 +260,6 @@ public class ShopJfActivity extends AbsBaseActivity {
                 .filter(r -> r!=null)
 
                 .subscribe(r -> {
-
-                    mBinding.linlayoutHead.setVisibility(View.VISIBLE);
-
                     mBinding.txtName.setText(r.getNickname());
 
                     if(r.getUserExt() == null) return;
@@ -258,7 +272,7 @@ public class ShopJfActivity extends AbsBaseActivity {
                     }
 
                 },throwable ->{
-                    mBinding.linlayoutHead.setVisibility(View.VISIBLE);
+                    mBinding.txtName.setText(getString(R.string.txt_get_jf_no_login_tips));
                 } ));
     }
 
@@ -273,8 +287,14 @@ public class ShopJfActivity extends AbsBaseActivity {
 
         if(TextUtils.equals(eventBus.getTag(),"SHopJfActivityFinish") ){
               finish();
+        }else if(TextUtils.equals(eventBus.getTag(),"LOGINSTATEREFHSH") && eventBus.isEvBoolean())//登录
+        {
+            getUserInfo();
+        }else if(TextUtils.equals(eventBus.getTag(),"LOGINSTATEREFHSH") && eventBus.isEvBoolean())//未登录
+        {
+            mBinding.linJfInfo.setVisibility(View.GONE);
+            mBinding.txtName.setText(getString(R.string.txt_get_jf_no_login_tips));
         }
-
     }
 
 }

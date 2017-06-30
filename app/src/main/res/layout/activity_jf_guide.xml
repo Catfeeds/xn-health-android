@@ -50,6 +50,7 @@
     </FrameLayout>
 
     <TextView
+        android:layout_marginLeft="15dp"
         android:gravity="center_vertical"
         android:textColor="@color/text_color"
         android:text="今日可赚积分列表"

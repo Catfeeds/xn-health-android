@@ -13,6 +13,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityRegisterBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.activitys.IntroductionActivity;
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -60,19 +61,18 @@ public class RegisterActivity extends AbsBaseActivity {
 
          initViews();
 
-//        initTvReadView();
+        initTvReadView();
 
     }
 
     private void initTvReadView() {
         TextReadUtils t=new TextReadUtils();
+//        t.setPos(9,13).setPos2(14,18).setOnSpanTextClickListener(type -> {
         t.setPos(9,13).setPos2(14,18).setOnSpanTextClickListener(type -> {
-            if(type==1){
-                showToast("法律申明");
-            }else{
-                showToast("隐私条款");
-            }
+            IntroductionActivity.open(this,"reg_protocol","注册协议");
+
         }).setSpanTextColor(ContextCompat.getColor(this, R.color.red))
+
           .setShowData(mBinding.tvIRead,getString(R.string.txt_register_read));
 
     }
@@ -108,10 +108,10 @@ public class RegisterActivity extends AbsBaseActivity {
                 return;
             }
 
-        /*    if(!mBinding.checkboxRegi.isChecked()){
-                showToast("请阅读法律申明和隐私条款");
+            if(!mBinding.checkboxRegi.isChecked()){
+                showToast("请阅读并勾选法律注册协议");
                 return;
-            }*/
+            }
 
             registerRequest();
 
@@ -172,7 +172,7 @@ public class RegisterActivity extends AbsBaseActivity {
                                 EventBusModel eventBusModel=new EventBusModel();
                                 eventBusModel.setTag("AllFINISH");
                                 EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-                                MainActivity.open(this,0);
+                                MainActivity.open(this,1);
                                 showToast("已自动登录");
                                 finish();
                             });

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
@@ -33,11 +34,13 @@ public class FindPassWordActivity extends AbsBaseActivity{
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context,boolean isShowLogo){
         if(context==null){
             return;
         }
-        context.startActivity(new Intent(context,FindPassWordActivity.class));
+        Intent i=new Intent(context,FindPassWordActivity.class);
+        i.putExtra("isShowLogo",isShowLogo);
+        context.startActivity(i);
     }
 
 
@@ -50,6 +53,14 @@ public class FindPassWordActivity extends AbsBaseActivity{
         setTopTitle("找回密码");
 
         setSubLeftImgState(true);
+
+        if(getIntent()!=null){
+            if(getIntent().getBooleanExtra("isShowLogo",true)){
+                mBinding.imgLoginIcon.setVisibility(View.VISIBLE);
+            }else{
+                mBinding.imgLoginIcon.setVisibility(View.GONE);
+            }
+        }
 
         initViews();
 
@@ -119,10 +130,8 @@ public class FindPassWordActivity extends AbsBaseActivity{
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
                     if(data!=null && data.isSuccess()){
-                        showWarnListen("密码重置成功",view -> {
-                            LoginActivity.open(this,true);
-                            finish();
-                        });
+                        showToast("密码修改成功");
+                        finish();
                     }else{
                         showToast("密码重置失败");
                     }

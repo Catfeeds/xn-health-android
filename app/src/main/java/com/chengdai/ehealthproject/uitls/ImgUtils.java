@@ -28,8 +28,27 @@ public class ImgUtils {
 
         Glide.with(context).load(imgid).into(img);
     }
+    public static void  loadBankBg(Context context,int imgid,ImageView img){
+
+        if(context==null || img==null)
+        {
+            return;
+        }
+
+        Glide.with(context).load(imgid).error(R.mipmap.back_default).into(img);
+    }
+
+    public static void  loadBankLogo(Context context,int imgid,ImageView img){
+
+        if(context==null || img==null || imgid==0)
+        {
+            return;
+        }
+
+        Glide.with(context).load(imgid).error(R.mipmap.back_logo_defalut).into(img);
+    }
     public static void  loadImgId(Activity context,int imgid,ImageView img){
-        if(context==null || img==null) {
+        if(context==null || img==null || imgid==0) {
             return;
         }
         Glide.with(context).load(imgid).into(img);
@@ -94,7 +113,8 @@ public class ImgUtils {
         {
             return;
         }
-        Glide.with(activity).load(URL).placeholder(R.mipmap.photo_default).error(R.mipmap.photo_default) .transform(new GlideCircleTransform(activity)).into(img);
+        Glide.with(activity).load(URL).placeholder(R.mipmap.icon).error(R.mipmap.icon) .transform(new GlideCircleTransform(activity)).into(img);
+//        Glide.with(activity).load(URL).placeholder(R.mipmap.icon).error(R.mipmap.photo_default) .transform(new GlideCircleTransform(activity)).into(img);
     }
 
 

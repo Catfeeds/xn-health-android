@@ -14,6 +14,7 @@ import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
+import com.chengdai.ehealthproject.model.tabmy.activitys.MyAmountActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyHelathTaskListActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyInfoActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyJFDetailsActivity;
@@ -46,7 +47,8 @@ public class MyFragment extends BaseLazyFragment{
     private boolean isCreate;
     private UserInfoModel mUserInfoData;
 
-    private String accountNumber;
+    private String accountNumber;//积分流水账号
+    private String mAmountaccountNumber;//余额流水账号
 
     /**
      * 获得fragment实例
@@ -71,6 +73,7 @@ public class MyFragment extends BaseLazyFragment{
             HotelOrderStateLookActivity.open(mActivity);
         });
 
+        //健康商城
         mBinding.linShop.setOnClickListener(v -> {
 
             ShopAllOrderLookActivity.open(mActivity);
@@ -79,7 +82,7 @@ public class MyFragment extends BaseLazyFragment{
         });
        //设置
         mBinding.linSetting.setOnClickListener(v -> {
-            SettingActivity.open(mActivity);
+            SettingActivity.open(mActivity,mUserInfoData);
         });
       //健康圈
         mBinding.healthcircle.setOnClickListener(v -> {
@@ -108,6 +111,10 @@ public class MyFragment extends BaseLazyFragment{
         //积分流水
         mBinding.fraJf.setOnClickListener(v -> {
             MyJFDetailsActivity.open(mActivity,mBinding.tvJf.getText().toString(),accountNumber);
+        });
+        //余额流水
+        mBinding.fraAmount.setOnClickListener(v -> {
+            MyAmountActivity.open(mActivity,mBinding.tvYe.getText().toString(),mAmountaccountNumber);
         });
 
         isCreate=true;
@@ -154,6 +161,9 @@ public class MyFragment extends BaseLazyFragment{
                 .compose(RxTransformerListHelper.applySchedulerResult(null))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
+
+                    mAmountaccountNumber=  r.get(0).getAccountNumber();
+
                     mBinding.tvYe.setText(getString(R.string.price_sing)+StringUtils.showPrice(r.get(0).getAmount()));
 
                 },Throwable::printStackTrace));

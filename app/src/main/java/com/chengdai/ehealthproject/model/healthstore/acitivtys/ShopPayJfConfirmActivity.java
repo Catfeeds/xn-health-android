@@ -4,25 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityJfPayConfirmBinding;
-import com.chengdai.ehealthproject.databinding.ActivityShopPayConfirmBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
-import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.other.MainActivity;
-import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
-import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,17 +131,11 @@ public class ShopPayJfConfirmActivity extends AbsBaseActivity {
      */
     private void payState() {
         showToast("支付成功");
-
-        EventBusModel freshModel=new EventBusModel();
-        freshModel.setTag("getShopOrderDetailsReqeustEvent"); //刷新订单详情页面
-
-        EventBus.getDefault().post(freshModel);
-
         if (isStartMain){
             EventBusModel eventBusModel=new EventBusModel();
             eventBusModel.setTag("AllFINISH");
             EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-            MainActivity.open(this,2);
+            MainActivity.open(this,4);
         }
 
         finish();

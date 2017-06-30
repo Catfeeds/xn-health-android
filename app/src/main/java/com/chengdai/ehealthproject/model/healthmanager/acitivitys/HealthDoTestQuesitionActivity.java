@@ -16,6 +16,7 @@ import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -25,6 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**做测试
  * Created by 李先俊 on 2017/6/15.
@@ -111,14 +116,17 @@ public class HealthDoTestQuesitionActivity extends AbsBaseActivity {
                 checkBox.setChecked(false);
                 checkBox.setText(optionsListBean.getContent());
 
-                checkBox.setOnClickListener(v -> {
+               mSubscription.add( RxView.clicks(checkBox)
+                        .delay(120,TimeUnit.MILLISECONDS)
+                       .subscribeOn(AndroidSchedulers.mainThread())
+                       .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
                     if(mSelectCodeList.size()<mQueRequestData.size()){
                         mSelectCodeList.add(optionsListBean.getCode());
                     }
 
                     dataStateChange();
-                });
-
+                }));
 
             }
         };
@@ -136,7 +144,7 @@ public class HealthDoTestQuesitionActivity extends AbsBaseActivity {
     private void dataStateChange() {
         if(mQueRequestData == null ) return;
 
-        if(mQuesitionIndex<mQueRequestData.size()-1){
+        if(mQuesitionIndex<=mQueRequestData.size()-1){
             model=mQueRequestData.get(mQuesitionIndex);
         }
 

@@ -87,7 +87,7 @@ public class LoginActivity extends AbsBaseActivity {
         });
 
         mBinding.tvFindPwd.setOnClickListener(v -> {
-            FindPassWordActivity.open(this);
+            FindPassWordActivity.open(this,true);
         });
 
     }
@@ -112,7 +112,7 @@ public class LoginActivity extends AbsBaseActivity {
 
                         if(!TextUtils.isEmpty(data.getToken()) && !TextUtils.isEmpty(data.getUserId())){ //token 和 UserId不为空时
                             if(isStartMain){
-                                MainActivity.open(this,0);
+                                MainActivity.open(this,1);
                             }
 
                             EventBusModel eventBusModel=new EventBusModel();
@@ -130,7 +130,7 @@ public class LoginActivity extends AbsBaseActivity {
     @Override
     public void onBackPressed() {
         if (isStartMain) {
-            MainActivity.open(this,0);
+            MainActivity.open(this,1);
         }
         finish();
     }

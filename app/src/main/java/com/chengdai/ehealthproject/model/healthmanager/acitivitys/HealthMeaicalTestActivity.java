@@ -82,12 +82,27 @@ public class HealthMeaicalTestActivity extends AbsBaseActivity{
                 return;
             }
 
+            int  inputNum=Integer.parseInt(mBinding.editNum.getText().toString());
             if(mType == 1){//心率测试
-                HealthMeaicalXinLvInfoActivity.openXinlv(this,Integer.parseInt(mBinding.editNum.getText().toString()));
+
+                if(inputNum<30|| inputNum>220){
+                    showToast("请输入正确的心率值");
+                    return;
+                }
+
+                HealthMeaicalXinLvInfoActivity.openXinlv(this,inputNum);
             }else if(mType == 2){//肺活量测试
-                HealthMeaicalXinLvInfoActivity.openFei(this,Integer.parseInt(mBinding.editNum.getText().toString()));
+                if( inputNum>10000){
+                    showToast("请输入正确的肺活量");
+                    return;
+                }
+                HealthMeaicalXinLvInfoActivity.openFei(this,inputNum);
             }else{//血氧测试
-                HealthMeaicalXinLvInfoActivity.openXueYang(this,Integer.parseInt(mBinding.editNum.getText().toString()));
+                if( inputNum<60){
+                    showToast("请输入正确的血氧饱和度");
+                    return;
+                }
+                HealthMeaicalXinLvInfoActivity.openXueYang(this,inputNum);
             }
         });
     }

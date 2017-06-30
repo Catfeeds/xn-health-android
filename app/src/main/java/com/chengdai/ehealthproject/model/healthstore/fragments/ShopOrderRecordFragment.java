@@ -120,6 +120,7 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
         super.onResume();
 
         if(getUserVisibleHint()){
+            mPageStart=1;
             orderRecordRequest(mActivity);
         }
     }
@@ -128,6 +129,7 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
     protected void lazyLoad() {
 
         if(isCreate){
+            mPageStart=1;
             orderRecordRequest(mActivity);
         }
 

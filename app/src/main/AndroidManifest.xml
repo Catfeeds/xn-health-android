@@ -460,6 +460,44 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+       //确认收货
+        <activity android:name=".model.tabmy.activitys.OrderConfirmGetActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+       //修改手机号
+        <activity android:name=".model.tabmy.activitys.UpdatePhoneActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+     //我的余额
+        <activity android:name=".model.tabmy.activitys.MyAmountActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        //修改设置支付密码
+        <activity android:name=".model.tabmy.activitys.PayPwdModifyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+
+        //银行卡列表
+        <activity android:name=".model.tabmy.activitys.BackCardListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //添加 、删除、修改银行卡
+        <activity android:name=".model.tabmy.activitys.AddBackCardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+     //添加 、删除、修改银行卡
+        <activity android:name=".model.tabmy.activitys.UpdateBackCardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
 
 
         <!--评论列表查看-->

@@ -17,6 +17,7 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
@@ -70,7 +71,16 @@ public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
         if(isShowDelete){
             holder.setVisible(R.id.tv_delete,true);
             holder.setOnClickListener(R.id.tv_delete,v -> {  //删除帖子
-                deleteRequest(listBean,position);
+
+                CommonDialog  commonDialog = new CommonDialog(mContext).builder()
+                        .setTitle("提示").setContentMsg("确认删除这条帖子？")
+                        .setPositiveBtn("确定", view -> {
+                            deleteRequest(listBean,position);
+                        })
+                        .setNegativeBtn("取消", null, false);
+
+                commonDialog.show();
+
             });
         }else{
             holder.setVisible(R.id.tv_delete,false);
@@ -120,12 +130,12 @@ public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
         holder.setText(R.id.tv_content,listBean.getContent());
 
         if(listBean.getSumLike()>999){
-            holder.setText(R.id.tv_dz_sum,listBean.getSumLike()+"+");
+            holder.setText(R.id.tv_dz_sum,"999+");
         }else{
             holder.setText(R.id.tv_dz_sum,listBean.getSumLike()+"");
         }
         if(listBean.getSumComment()>999){
-            holder.setText(R.id.tv_pinlun,listBean.getSumComment()+"+");
+            holder.setText(R.id.tv_pinlun,"999+");
         }else{
             holder.setText(R.id.tv_pinlun,listBean.getSumComment()+"");
         }

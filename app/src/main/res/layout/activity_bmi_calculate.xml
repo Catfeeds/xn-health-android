@@ -13,7 +13,7 @@
         android:layout_marginBottom="25dp"
         android:layout_marginTop="25dp"
         android:gravity="center_horizontal"
-        android:text="每日能量摄取计算"
+        android:text="BMI指数计算"
         android:textColor="@color/txt_title_bg" />
 
     <LinearLayout

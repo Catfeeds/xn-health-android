@@ -60,6 +60,17 @@
                 android:textSize="14sp"
                 tools:text="￥100398.00" />
 
+            <TextView
+                android:paddingLeft="1dp"
+                android:id="@+id/tv_num_info"
+                android:layout_marginTop="5dp"
+                android:text="x 0"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="@color/fontColor_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </LinearLayout>
 

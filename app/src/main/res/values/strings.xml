@@ -15,7 +15,7 @@
     <string name="txt_dabaojian">医疗保健</string>
     <string name="txt_life2">便民生活</string>
     <string name="txt_sopping">周边购物</string>
-    <string name="txt_register_read">我已阅读并同意遵守法律申明和隐私条款</string>
+    <string name="txt_register_read">我已阅读并同意遵守注册协议</string>
     <string name="txt_all">全部</string>
     <string name="txt_pay">支付</string>
     <string name="txt_change_city">选择城市</string>
@@ -69,5 +69,6 @@
     <string name="tv_xinlv_40"><![CDATA[<40]]></string>
     <string name="tv_fei_90"><![CDATA[<90]]></string>
     <string name="_1500"><![CDATA[<=1500]]></string>
+    <string name="txt_get_jf_no_login_tips">这里有10W+的会员等你一起赚积分！</string>
 
 </resources>

@@ -89,11 +89,12 @@ public class ShopPayCarListAdApter extends CommonAdapter<PayCarListModel.ListBea
         TextView txt_subtract=viewHolder.getView(R.id.txt_subtract);
         TextView txt_add=viewHolder.getView(R.id.txt_add);
         TextView txt_number=viewHolder.getView(R.id.txt_number);
+        TextView tv_num_info=viewHolder.getView(R.id.tv_num_info);
         ImageView img_good=viewHolder.getView(R.id.img_good);
         ImageView img_select=viewHolder.getView(R.id.img_select);
         LinearLayout layout_delete=viewHolder.getView(R.id.layout_delete);
 
-        setShowData(item, position, txt_name, txt_price, txt_number, img_good, img_select);
+        setShowData(item, position, txt_name, txt_price, txt_number, img_good, img_select,tv_num_info);
 
 
         txt_subtract.setOnClickListener(v -> {
@@ -196,10 +197,12 @@ public class ShopPayCarListAdApter extends CommonAdapter<PayCarListModel.ListBea
      * @param img_good
      * @param img_select
      */
-    private void setShowData(PayCarListModel.ListBean item, int position, TextView txt_name, TextView txt_price, TextView txt_number, ImageView img_good, ImageView img_select) {
+    private void setShowData(PayCarListModel.ListBean item, int position, TextView txt_name, TextView txt_price, TextView txt_number, ImageView img_good, ImageView img_select,TextView tv_num_info) {
         txt_name.setText(item.getProduct().getName());
 
         txt_number.setText(item.getQuantity()+"");
+
+        tv_num_info.setText("x "+item.getQuantity());
 
         if(mSelectPosition == position){
             ImgUtils.loadImgId(mContext, R.mipmap.pay_select,img_select);
@@ -209,7 +212,7 @@ public class ShopPayCarListAdApter extends CommonAdapter<PayCarListModel.ListBea
 
 
         if(item.getProductSpecs() != null){
-            txt_price.setText(StringUtils.showPrice(item.getProductSpecs().getPrice1()));
+            txt_price.setText(StringUtils.getShowPriceSign(item.getProductSpecs().getPrice1()));
 
         }
         if(item.getProduct() != null){

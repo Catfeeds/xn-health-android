@@ -106,6 +106,7 @@ public class HealthManagerFragment extends BaseFragment{
         }else{
             mHeadViewBinding.linNoTask.setVisibility(View.VISIBLE);
             mHeadViewBinding.linHaveTask.setVisibility(View.GONE);
+            mHeadViewBinding.linJfInfo.setVisibility(View.GONE);
         }
 
         return mBinding.getRoot();
@@ -204,7 +205,6 @@ public class HealthManagerFragment extends BaseFragment{
                     getUserInfoRequest(null);
                     getJifenRequest(null);
                 }
-
                 getDataRequest(null);
 
                 mBinding.springview.onFinishFreshAndLoad();
@@ -350,10 +350,13 @@ public class HealthManagerFragment extends BaseFragment{
                 .compose(RxTransformerListHelper.applySchedulerResult(context))
                 .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
                 .subscribe(r -> {
+                    mHeadViewBinding.linJfInfo.setVisibility(View.VISIBLE);
                     mJfaccountNumber=r.get(0).getAccountNumber();
                     mHeadViewBinding.tvJf.setText(StringUtils.showJF(r.get(0).getAmount()));
 
-                },Throwable::printStackTrace));
+                },throwable -> {
+
+                }));
 
 
     }
@@ -398,7 +401,7 @@ public class HealthManagerFragment extends BaseFragment{
         Map<String,String> map=new HashMap<>();
 
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("location","1");
+        map.put("location","3");//3app首页位置
         map.put("status","BD");//审核通过并发布
         map.put("start",mPageStart+"");
         map.put("limit","10");
@@ -410,7 +413,6 @@ public class HealthManagerFragment extends BaseFragment{
                         if(s.getList()!=null){
                             mAdapter.setData(s.getList());
                         }
-
 
                     }else if(mPageStart >1){
                         if(s.getList()==null || s.getList().size()==0){
@@ -576,9 +578,15 @@ public class HealthManagerFragment extends BaseFragment{
 
                 getNowHealthTask();
 
-        }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && !eventBusModel.isEvBoolean()){
+            mHeadViewBinding.linJfInfo.setVisibility(View.VISIBLE);
+
+            getJifenRequest(null);
+            getUserInfoRequest(null);
+
+        }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && !eventBusModel.isEvBoolean()){  //未登录
             mHeadViewBinding.tvScore.setText("0分");
             mHeadViewBinding.tvStartTest.setText("请测评");
+
             mHeadViewBinding.imgHereOne.setVisibility(View.INVISIBLE);
             mHeadViewBinding.imgHereTwo.setVisibility(View.INVISIBLE);
             mHeadViewBinding.imgHereThree.setVisibility(View.INVISIBLE);
@@ -586,6 +594,11 @@ public class HealthManagerFragment extends BaseFragment{
 
             mHeadViewBinding.linNoTask.setVisibility(View.VISIBLE);
             mHeadViewBinding.linHaveTask.setVisibility(View.GONE);
+            mHeadViewBinding.linJfInfo.setVisibility(View.GONE);
+
+            mTestCode = "";//用于打开测试页
+            mTestTitle="";//用于打开测试页
+           mJfaccountNumber ="";//用于积分页
 
         }else  if(TextUtils.equals(eventBusModel.getTag(),"HealthManagerFragmentRefhsh_Task")){//刷新任务数据
             if(SPUtilHelpr.isLoginNoStart()){

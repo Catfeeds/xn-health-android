@@ -22,6 +22,7 @@ import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.TextMoreUtil;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -238,15 +239,20 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                 holder.setText(R.id.tv_name,listBean.getNickname());
                 holder.setText(R.id.tv_time, DateUtil.formatStringData(listBean.getPublishDatetime(),DateUtil.DEFAULT_DATE_FMT));
 
+               if(!TextUtils.isEmpty(listBean.getContent()) && listBean.getContent().length()>160){
+                   holder.setText(R.id.tv_content,listBean.getContent().substring(0,listBean.getContent().length()/2)+"...");
+               }else{
+                   holder.setText(R.id.tv_content,listBean.getContent());
+               }
                 holder.setText(R.id.tv_content,listBean.getContent());
 
                 if(listBean.getSumLike()>999){
-                    holder.setText(R.id.tv_dz_sum,listBean.getSumLike()+"+");
+                    holder.setText(R.id.tv_dz_sum,"999+");
                 }else{
                     holder.setText(R.id.tv_dz_sum,listBean.getSumLike()+"");
                 }
                if(listBean.getSumComment()>999){
-                    holder.setText(R.id.tv_pinlun,listBean.getSumComment()+"+");
+                    holder.setText(R.id.tv_pinlun,"999+");
                 }else{
                     holder.setText(R.id.tv_pinlun,listBean.getSumComment()+"");
                 }

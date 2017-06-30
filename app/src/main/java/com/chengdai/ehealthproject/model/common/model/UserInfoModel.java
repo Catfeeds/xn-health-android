@@ -24,7 +24,7 @@ public class UserInfoModel implements Parcelable {
      * createDatetime : Sep 29, 2015 3:10:09 PM
      * status : 0
      * identityFlag : 1
-     * tradepwdFlag : 1
+     * tradepwdFlag : 1 //是否设置过支付密码
      * totalFansNum : 0
      * totalFollowNum : 0
      */

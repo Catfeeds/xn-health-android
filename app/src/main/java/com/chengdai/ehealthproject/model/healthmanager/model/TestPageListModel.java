@@ -3,6 +3,8 @@ package com.chengdai.ehealthproject.model.healthmanager.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.chengdai.ehealthproject.uitls.StringUtils;
+
 import java.util.List;
 
 /**
@@ -87,7 +89,15 @@ public class TestPageListModel implements Parcelable {
         public String getAdvPic() {
             return advPic;
         }
+        public String getSplitAdvPic() {
 
+            List<String> s= StringUtils.splitBannerList(advPic);
+            if(s .size()>1)
+            {
+                return s.get(0);
+            }
+            return advPic;
+        }
         public void setAdvPic(String advPic) {
             this.advPic = advPic;
         }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentShopTabBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.SearchShopActivity;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopDetailsActivity;
@@ -27,6 +28,7 @@ import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStor
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -38,6 +40,8 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.youth.banner.BannerConfig;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,13 +149,13 @@ public class HealthStoreFragment extends BaseLazyFragment{
         mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,new ArrayList<>());
         mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
 
-
+        //列表
         mBinding.lvStoreList.setOnItemClickListener((parent, view, position, id) -> {
             ShopListModel.ListBean model= mStoreTypeAdapter.getItem(position-mBinding.lvStoreList.getHeaderViewsCount());
             ShopDetailsActivity.open(mActivity,model);
 
         });
-
+        //菜单
         mBinding.gridStoreType.setOnItemClickListener((parent, view, position, id) -> {
 
             if(mStoreMenuAdapter!=null){
@@ -173,10 +177,6 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
         //积分商城
         mBinding.imgJfshopInto.setOnClickListener(v -> {
-
-            if(!SPUtilHelpr.isLogin(mActivity)){
-                return;
-            }
             ShopJfActivity.open(mActivity);
         });
 
@@ -219,7 +219,12 @@ public class HealthStoreFragment extends BaseLazyFragment{
     @Override
     public void onResume() {
         super.onResume();
-        mBinding.banner.startAutoPlay();
+
+        if(getUserVisibleHint()){
+            mStoreStart=1;
+            getAllData();
+            mBinding.banner.startAutoPlay();
+        }
     }
     @Override
     public void onPause() {
@@ -230,29 +235,47 @@ public class HealthStoreFragment extends BaseLazyFragment{
     @Override
     protected void lazyLoad() {
         if (isCreate){
-
-            getJfPicRequest(null);
-
-            shopMenuRequest(null);
-
-            bannerDataRequest(null);
-
-            getStoreListRequest(mActivity);
-
-            if(mBinding!=null && mBinding.banner!=null){
-                mBinding.banner.start();
-                mBinding.banner.startAutoPlay();
-            }
+            getAllData();
             isCreate=false;
 
         }
 
     }
 
+    //获取所有接口数据
+    private void getAllData() {
+
+        getJfPicRequest(null);
+
+        shopMenuRequest(null);
+
+        bannerDataRequest(null);
+
+        getStoreListRequest(mActivity);
+
+        if(mBinding!=null && mBinding.banner!=null){
+            mBinding.banner.start();
+            mBinding.banner.startAutoPlay();
+        }
+    }
+
+
+    @Subscribe
+    public void HealthStoreFragmentRefresh(EventBusModel eventBusModel){
+        if(eventBusModel == null)return;
+        if(TextUtils.equals(eventBusModel.getTag(),"HealthStoreFragmentRefresh")){
+            mStoreStart=1;
+            getAllData();
+
+        }
+    }
+
+
     /**
      * 获取banner图片
      */
     private void bannerDataRequest(Context context) {
+
         Map map=new HashMap();
 
         map.put("location","1");//0周边1商城
@@ -337,7 +360,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
      * @param context
      */
     private void shopMenuRequest(Context context) {
-
+        LogUtil.E("商城3");
         Map<String,String> map=new HashMap();
 
         map.put("parentCode","0");
@@ -367,7 +390,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
      * @param context
      */
     private void getJfPicRequest(Context context) {
-
+        LogUtil.E("商城2");
         Map map=new HashMap();
 
         map.put("location","2");//0周边1商城 2

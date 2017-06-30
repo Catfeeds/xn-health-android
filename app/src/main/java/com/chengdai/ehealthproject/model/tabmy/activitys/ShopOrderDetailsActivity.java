@@ -38,7 +38,7 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
 
     private ActivityShopOrderDetailsBinding mBinding;
 
-    private  ShopOrderDetailBean data;
+    private  ShopOrderDetailBean mData;
 
     private  int mType;
 
@@ -69,7 +69,7 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
 
         if(getIntent()!=null){
 
-            data= getIntent().getParcelableExtra("data");
+            mData= getIntent().getParcelableExtra("data");
             mType= getIntent().getIntExtra("type",MyConfig.JFORDER);
 
         }
@@ -88,82 +88,106 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
 
     private void setShowDataStae() {
 
-        if(data == null){
+        if(mData == null){
             return;
         }
 
-        mBinding.txtOrderId.setText(data.getCode());
+        mBinding.txtOrderId.setText(mData.getCode());
 
-        mBinding.txtTime.setText(DateUtil.format(new Date(data.getApplyDatetime()),DateUtil.DATE_YYMMddHHmm));
+        mBinding.txtTime.setText(DateUtil.format(new Date(mData.getApplyDatetime()),DateUtil.DATE_YYMMddHHmm));
 
-        mBinding.txtStatus.setText(StringUtils.getOrderState(data.getStatus()));
+        mBinding.txtStatus.setText(StringUtils.getOrderState(mData.getStatus()));
 
 
-        if(data.getProductOrderList() !=null && data.getProductOrderList().size()>0 && data.getProductOrderList().get(0) !=null
-                && data.getProductOrderList().get(0).getProduct()!=null ){
-            ImgUtils.loadImgURL(this, MyConfig.IMGURL+data.getProductOrderList().get(0).getProduct().getAdvPic(),mBinding.imgGood);
+        if(mData.getProductOrderList() !=null && mData.getProductOrderList().size()>0 && mData.getProductOrderList().get(0) !=null
+                && mData.getProductOrderList().get(0).getProduct()!=null ){
+            ImgUtils.loadImgURL(this, MyConfig.IMGURL+mData.getProductOrderList().get(0).getProduct().getAdvPic(),mBinding.imgGood);
 
 
            if(mType == MyConfig.JFORDER){
-               mBinding.txtPrice.setText(StringUtils.showPrice(data.getProductOrderList().get(0).getPrice1())+"  积分");
+               mBinding.txtPrice.setText(StringUtils.showJF(mData.getProductOrderList().get(0).getPrice1())+"  积分");
            }else{
-               mBinding.txtPrice.setText(StringUtils.getShowPriceSign(data.getProductOrderList().get(0).getPrice1()));
+               mBinding.txtPrice.setText(StringUtils.getShowPriceSign(mData.getProductOrderList().get(0).getPrice1()));
            }
 
-            mBinding.txtNumber.setText("X" + data.getProductOrderList().get(0).getQuantity());
+            mBinding.txtNumber.setText("X" + mData.getProductOrderList().get(0).getQuantity());
 
-            mBinding.txtName.setText(data.getProductOrderList().get(0).getProduct().getName());
+            mBinding.txtName.setText(mData.getProductOrderList().get(0).getProduct().getName());
 
-            mBinding.txtPhone.setText(data.getReceiver()+" "+data.getReMobile());
+            mBinding.txtPhone.setText(mData.getReceiver()+" "+mData.getReMobile());
 
-            mBinding.txtAddress.setText(data.getReAddress());
+            mBinding.txtAddress.setText(mData.getReAddress());
 
-            mBinding.txtGuige.setText(data.getProductOrderList().get(0).getProductSpecsName());
+            mBinding.txtGuige.setText(mData.getProductOrderList().get(0).getProductSpecsName());
 
         }
 
-        if(StringUtils.canDoPay(data.getStatus())){
+        if(TextUtils.equals(MyConfig.ORDERTYPEWAITSHOUHUO,mData.getStatus())){//待收货状态
+            mBinding.linLogistics.setVisibility(View.VISIBLE);
+            mBinding.txtBtn.setVisibility(View.VISIBLE);
+            mBinding.txtBtn.setText("确认收货");
+            mBinding.txtLogisticsCode.setText(mData.getLogisticsCode());
+
+            mBinding.txtLogisticsCompany.setText(StringUtils.getLogisticsCompany(mData.getLogisticsCompany()));
+
+            mBinding.txtBtn.setOnClickListener(v -> {
+                if(mData==null) return;
+                OrderConfirmGetActivity.open(this,mData.getCode());
+            });
+
+        }else if(StringUtils.canDoPay(mData.getStatus())){//待支付状态
             mBinding.txtCancel.setVisibility(View.VISIBLE);
             mBinding.txtBtn.setVisibility(View.VISIBLE);
 
             mBinding.txtBtn.setOnClickListener(v -> {
                 ShopListModel.ListBean.ProductSpecsListBean data1=new ShopListModel.ListBean.ProductSpecsListBean();
 
-                if(data.getProductOrderList() !=null && data.getProductOrderList().size()>0 && data.getProductOrderList().get(0) !=null) {
-                    data1.setPrice1(data.getProductOrderList().get(0).getPrice1());
-                    data1.setmBuyNum(data.getProductOrderList().get(0).getQuantity());
-                    ShopPayConfirmActivity.open(this,data1,data.getCode(),false);
+                if(mData.getProductOrderList() !=null && mData.getProductOrderList().size()>0 && mData.getProductOrderList().get(0) !=null) {
+                    data1.setPrice1(mData.getProductOrderList().get(0).getPrice1());
+                    data1.setmBuyNum(mData.getProductOrderList().get(0).getQuantity());
+                    ShopPayConfirmActivity.open(this,data1,mData.getCode(),false);
                 }
-
 
             });
 
            mBinding.txtCancel.setOnClickListener(v -> {
-
                showDoubleWarnListen("确定取消订单？",view -> {
                    cancelOrderRequest();
                });
-
             });
 
+        }else{
+            mBinding.txtCancel.setVisibility(View.GONE);
+            mBinding.txtBtn.setVisibility(View.GONE);
+            mBinding.linLogistics.setVisibility(View.GONE);
         }
 
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+//       getShopOrderDetailsReqeust(null);
+    }
 
     //ShopPayConfirmActivity 支付成功刷新
     @Subscribe
   public void  getShopOrderDetailsReqeustEvent(EventBusModel b){
-        if(b ==null || !"getShopOrderDetailsReqeustEvent" .equals(b.getTag())){
+        if(b ==null){
             return;
         }
 
-        mBinding.txtBtn.setVisibility(View.GONE);
-        mBinding.txtCancel.setVisibility(View.GONE);
-        mBinding.txtStatus.setText("已支付");
-//        getShopOrderDetailsReqeust(null);
+        if("getShopOrderDetailsReqeustEvent" .equals(b.getTag())){//支付状态刷新
+            mBinding.txtBtn.setVisibility(View.GONE);
+            mBinding.txtCancel.setVisibility(View.GONE);
+            mBinding.txtStatus.setText("已支付");
+        }else if("getShopOrderDetailsReqeustEvent_getOrder" .equals(b.getTag())){//收货成功刷新
+            mBinding.txtBtn.setVisibility(View.GONE);
+            mBinding.txtCancel.setVisibility(View.GONE);
+            mBinding.txtStatus.setText("已收货");
+        }
+
     }
 
     /**
@@ -172,13 +196,13 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
      */
     private  void getShopOrderDetailsReqeust(Context c){
 
-        if(data == null){
+        if(mData == null){
             return;
         }
 
         Map object=new HashMap();
 
-        object.put("code", data.getCode());
+        object.put("code", mData.getCode());
         object.put("token", SPUtilHelpr.getUserToken());
 
       mSubscription.add( RetrofitUtils.getLoaderServer().ShopOrderDetails("808066",StringUtils.getJsonToString(object))
@@ -186,7 +210,7 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
                 .subscribe(shopOrderModel -> {
 
                     if(shopOrderModel.getList() != null && shopOrderModel.getList().size()>0){
-                        data=shopOrderModel.getList().get(0);
+                        mData=shopOrderModel.getList().get(0);
 
                         setShowDataStae();
                     }
@@ -199,11 +223,11 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
      * 取消订单
      */
     private void cancelOrderRequest(){
-        if(data == null){
+        if(mData == null){
             return;
         }
         Map object=new HashMap();
-        object.put("code", data.getCode());
+        object.put("code", mData.getCode());
         object.put("userId", SPUtilHelpr.getUserId());
         object.put("remark", "用户取消订单");
         object.put("token", SPUtilHelpr.getUserToken());

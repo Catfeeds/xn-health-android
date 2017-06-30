@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityBmiCalculateBinding;
+import com.chengdai.ehealthproject.databinding.ActivityEatCalculateBinding;
 
 import java.math.BigDecimal;
 
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
 
 public class EatCalculateActivity extends AbsBaseActivity{
 
-    private ActivityBmiCalculateBinding mBinding;
+    private ActivityEatCalculateBinding mBinding;
 
     /**
      * 打开当前页面
@@ -38,7 +39,7 @@ public class EatCalculateActivity extends AbsBaseActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_bmi_calculate, null, false);
+        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_eat_calculate, null, false);
         addMainView(mBinding.getRoot());
         setTopTitle("膳食建议");
         setSubLeftImgState(true);

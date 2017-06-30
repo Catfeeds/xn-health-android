@@ -13,17 +13,29 @@
 
         <TextView
             style="@style/title_top"
-            android:text="商城"
+            android:text="健康商城"
            />
 
-        <ImageView
-            android:id="@+id/img_pay_car"
-            android:layout_marginRight="10dp"
+        <FrameLayout
             android:layout_gravity="right|center_vertical"
-            android:src="@mipmap/pay_car"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-        
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_pay_car"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/pay_car"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <View
+                android:visibility="gone"
+                android:background="@drawable/bg_red_oval"
+                android:layout_width="8dp"
+                android:layout_height="8dp"/>
+
+        </FrameLayout>
+
+
     </FrameLayout>
 
 

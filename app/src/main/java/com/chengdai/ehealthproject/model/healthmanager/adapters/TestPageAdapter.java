@@ -33,7 +33,7 @@ public class TestPageAdapter extends CommonAdapter<TestPageListModel.ListBean> {
 
         holder.setText(R.id.tv_title,testPageListModel.getTitle());
         holder.setText(R.id.tv_content,testPageListModel.getSummary());
-        ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+testPageListModel.getAdvPic(),holder.getView(R.id.img_title));
+        ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+testPageListModel.getSplitAdvPic(),holder.getView(R.id.img_title));
 
         holder.setOnClickListener(R.id.tv_start_test,v ->{
 

@@ -1,6 +1,7 @@
 package com.chengdai.ehealthproject.model.tabmy.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -8,6 +9,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopPayConfirmActivity;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderDetailBean;
+import com.chengdai.ehealthproject.model.tabmy.activitys.OrderConfirmGetActivity;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -75,7 +77,7 @@ public class ShopOrderListAdapter extends CommonAdapter<ShopOrderDetailBean> {
             ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+item.getProductOrderList().get(0).getProduct().getAdvPic(),imgGood);
 
             if(mType == MyConfig.JFORDER){
-                txtPrice.setText(StringUtils.showPrice(item.getProductOrderList().get(0).getPrice1())+"  积分");
+                txtPrice.setText(StringUtils.showJF(item.getProductOrderList().get(0).getPrice1())+"  积分");
             }else{
                 txtPrice.setText(StringUtils.getShowPriceSign(item.getProductOrderList().get(0).getPrice1()));
             }
@@ -88,7 +90,7 @@ public class ShopOrderListAdapter extends CommonAdapter<ShopOrderDetailBean> {
 
         txtBtn.setOnClickListener(v -> {
 
-            if (StringUtils.canDoPay(item.getStatus())){
+            if (StringUtils.canDoPay(item.getStatus())){//待支付状态
                 ShopListModel.ListBean.ProductSpecsListBean data=new ShopListModel.ListBean.ProductSpecsListBean();
 
                 if(item.getProductOrderList() !=null && item.getProductOrderList().size()>0 && item.getProductOrderList().get(0) !=null) {
@@ -97,7 +99,8 @@ public class ShopOrderListAdapter extends CommonAdapter<ShopOrderDetailBean> {
 
                     ShopPayConfirmActivity.open(mContext,data,item.getCode(),false);
                 }
-
+            }else if(TextUtils.equals(MyConfig.ORDERTYPEWAITSHOUHUO,item.getStatus())){  //待收获状态
+                OrderConfirmGetActivity.open(mContext,item.getCode());
             }
         });
 

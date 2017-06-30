@@ -222,7 +222,7 @@
         android:id="@+id/layout_address"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="88dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:background="@color/white"
@@ -235,6 +235,16 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="15sp"
+                    android:textColor="@color/fontColor_gray"
+                    android:text="收货信息"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
 
                 <LinearLayout
                     android:gravity="center"
@@ -301,6 +311,100 @@
 
 
     </RelativeLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/lin_logistics"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:background="@color/intervalColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"/>
+
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/fontColor_gray"
+                        android:text="物流信息"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="物流公司："
+                            android:textColor="@color/fontColor_gray"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            tools:text="sdfsdfsdfsdf"
+                            android:id="@+id/txt_logistics_company"
+                            android:textSize="15sp"
+                            android:textColor="@color/fontColor_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="10sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textSize="15sp"
+                            android:textColor="@color/fontColor_gray"
+                            android:text="物流单号："
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            tools:text="sdfsdfsdfsdf"
+                            android:id="@+id/txt_logistics_code"
+                            android:textSize="15sp"
+                            android:textColor="@color/fontColor_gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="10sp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
 
