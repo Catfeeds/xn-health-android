@@ -122,6 +122,7 @@ public class PinglunListActivity extends AbsBaseActivity {
         map.put("postCode",mCode);
         map.put("start",mStartPage+"");
         map.put("limit","10");
+        map.put("status","BD");
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetPinglunLisData("621062", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(context))

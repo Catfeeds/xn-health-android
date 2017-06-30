@@ -323,6 +323,8 @@ public class HealthStoreFragment extends BaseLazyFragment{
         map.put("limit","10");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
+        map.put("orderDir","asc");
+        map.put("orderColumn","order_no");
 
         mSubscription.add(  RetrofitUtils.getLoaderServer().GetShopList("808025",StringUtils.getJsonToString(map))
 

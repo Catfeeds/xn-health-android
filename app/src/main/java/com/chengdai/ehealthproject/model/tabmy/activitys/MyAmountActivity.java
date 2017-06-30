@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityAmountDetailsListBinding;
 import com.chengdai.ehealthproject.databinding.ActivityJfDetailsListBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.tabmy.model.JfDetailsListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -24,6 +26,8 @@ import com.liaoinstan.springview.widget.SpringView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,16 +51,17 @@ public class MyAmountActivity extends AbsBaseActivity{
     private  int mPageStart=1;
 
 
+
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context,String jfsum,String accountNumber){
+    public static void open(Context context,String amountsum,String accountNumber){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,MyAmountActivity.class);
-        intent.putExtra("jfsum",jfsum);//积分
+        intent.putExtra("amountsum",amountsum);//账户余额
         intent.putExtra("accountNumber",accountNumber);
         context.startActivity(intent);
     }
@@ -72,9 +77,25 @@ public class MyAmountActivity extends AbsBaseActivity{
         setSubLeftImgState(true);
 
         if(getIntent()!=null){
-            mBinding.tvJfnum.setText(getIntent().getStringExtra("jfsum"));
+            mBinding.tvJfnum.setText(getIntent().getStringExtra("amountsum"));
             accountNumber=getIntent().getStringExtra("accountNumber");
         }
+
+        initViews();
+
+        getJfDetailsList(this);
+    }
+
+    private void initViews() {
+
+        //充值
+        mBinding.tvRecharge.setOnClickListener(v -> {
+            RechargeActivity.open(this);
+        });
+        //提现
+        mBinding.tvWithdrawal.setOnClickListener(v -> {
+            WithdrawalActivity.open(this,mBinding.tvJfnum.getText().toString(),accountNumber);
+        });
 
         mBinding.cycler.addItemDecoration(new MyDividerItemDecoration(this,MyDividerItemDecoration.VERTICAL_LIST));
         mBinding.cycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -103,14 +124,14 @@ public class MyAmountActivity extends AbsBaseActivity{
 
         mDatas=new ArrayList<>();
 
-        mAdapter=new EmptyWrapper(new CommonAdapter<JfDetailsListModel.ListBean>(this,R.layout.item_jf_deails,mDatas) {
+        mAdapter=new EmptyWrapper(new CommonAdapter<JfDetailsListModel.ListBean>(this, R.layout.item_jf_deails,mDatas) {
             @Override
             protected void convert(ViewHolder holder, JfDetailsListModel.ListBean listBean, int position) {
                 if(listBean==null){
                     return;
                 }
                 holder.setText(R.id.tv_name,listBean.getBizNote());
-                holder.setText(R.id.tv_sum,StringUtils.showJF(listBean.getTransAmount()));
+                holder.setText(R.id.tv_sum, StringUtils.showJF(listBean.getTransAmount()));
                 holder.setText(R.id.tv_time, DateUtil.formatStringData(listBean.getCreateDatetime(),DateUtil.DEFAULT_DATE_FMT));
 
             }
@@ -119,8 +140,6 @@ public class MyAmountActivity extends AbsBaseActivity{
         mAdapter.setEmptyView(R.layout.empty_view);
 
         mBinding.cycler.setAdapter(mAdapter);
-
-        getJfDetailsList(this);
     }
 
     public void getJfDetailsList(Context c) {
@@ -158,4 +177,15 @@ public class MyAmountActivity extends AbsBaseActivity{
                 },Throwable::printStackTrace));
 
     }
+
+    @Subscribe
+    public void MyAmountActivityEvent(EventBusModel e){
+        if(e==null) return;
+
+        if(TextUtils.equals(e.getTag(),"MyAmountActivityFinish")){//结束当前页
+            finish();
+        }
+
+    }
+
 }

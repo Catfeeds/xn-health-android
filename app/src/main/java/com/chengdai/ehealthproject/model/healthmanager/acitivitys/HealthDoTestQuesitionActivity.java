@@ -142,7 +142,7 @@ public class HealthDoTestQuesitionActivity extends AbsBaseActivity {
      * 数据变化
      */
     private void dataStateChange() {
-        if(mQueRequestData == null ) return;
+        if(mQueRequestData == null || mQueRequestData.size()<=0) return;
 
         if(mQuesitionIndex<=mQueRequestData.size()-1){
             model=mQueRequestData.get(mQuesitionIndex);

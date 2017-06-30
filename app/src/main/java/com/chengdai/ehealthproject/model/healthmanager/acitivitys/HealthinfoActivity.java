@@ -129,6 +129,7 @@ public class HealthinfoActivity extends AbsBaseActivity {
 //        map.put("type","2");
         map.put("location","1");
         map.put("status","1");
+        map.put("kind","1");//健康资讯
 
        mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621107",StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(c))

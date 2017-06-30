@@ -15,7 +15,6 @@ import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
-import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -27,12 +26,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney;
-import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney2;
 
 /**
  * Created by 李先俊 on 2017/6/12.
@@ -153,6 +149,11 @@ public class PayActivity extends AbsBaseActivity {
                     return;
                 }
 
+                if(new BigDecimal(mBinding.edtPrice.getText().toString()).doubleValue()<=0){
+                    showToast("金额必须大于0.01");
+                    return;
+                }
+
                 payRequest(mPayType);
             }
         });
@@ -165,8 +166,8 @@ public class PayActivity extends AbsBaseActivity {
                 mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney(mDiscountMoney*rate)+"");
 
             }else{
-                mDiscountMoney=0.0;
-                mBinding.txtDiscountMoney.setText("0");
+                mDiscountMoney=0.00;
+                mBinding.txtDiscountMoney.setText("0.00");
             }
 
         });
@@ -193,7 +194,7 @@ public class PayActivity extends AbsBaseActivity {
 
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("storeCode", mStoreCode);
-        map.put("amount",new BigDecimal(doubleFormatMoney2(mDiscountMoney)*1000).intValue());
+        map.put("amount",StringUtils.getRequestPrice(mDiscountMoney));
         map.put("payType",PayType);
 
         switch (PayType){

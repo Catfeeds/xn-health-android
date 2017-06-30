@@ -153,6 +153,7 @@ public class HealthManagerFragment extends BaseFragment{
             }
 
             if(TextUtils.isEmpty(mTestCode) || TextUtils.isEmpty(mTestTitle)){
+
                 return;
             }
 
@@ -477,7 +478,7 @@ public class HealthManagerFragment extends BaseFragment{
 
                     if(data.getList() == null || data.getList().size()==0){
                         mHeadViewBinding.tvScore.setText("0分");
-                        mHeadViewBinding.tvStartTest.setText("请测评");
+                        mHeadViewBinding.tvStartTest.setText("请测评 >");
                         return;
                     }
                     mHeadViewBinding.tvStartTest.setText("重测");
@@ -501,7 +502,10 @@ public class HealthManagerFragment extends BaseFragment{
                         mHeadViewBinding.imgHereFour.setVisibility(View.VISIBLE);
                     }
 
-                },Throwable::printStackTrace));
+                },throwable -> {
+                    mHeadViewBinding.tvScore.setText("0分");
+                    mHeadViewBinding.tvStartTest.setText("请测评 >");
+                }));
 
     }
 
@@ -585,7 +589,7 @@ public class HealthManagerFragment extends BaseFragment{
 
         }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && !eventBusModel.isEvBoolean()){  //未登录
             mHeadViewBinding.tvScore.setText("0分");
-            mHeadViewBinding.tvStartTest.setText("请测评");
+            mHeadViewBinding.tvStartTest.setText("请测评 >");
 
             mHeadViewBinding.imgHereOne.setVisibility(View.INVISIBLE);
             mHeadViewBinding.imgHereTwo.setVisibility(View.INVISIBLE);

@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.chengdai.ehealthproject.uitls.StringUtils.doubleFormatMoney2;
 
 /**支付确认
  * Created by 李先俊 on 2017/6/12.

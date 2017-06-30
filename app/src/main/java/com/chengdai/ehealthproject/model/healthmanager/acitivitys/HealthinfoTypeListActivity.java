@@ -38,21 +38,21 @@ public class HealthinfoTypeListActivity extends AbsBaseActivity {
     private int mPageStart=1;
 
     private String mType;
-    private String mTypeCode;
+    private String mCode;
 
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context,String type,String typecode){
+    public static void open(Context context,String type,String code){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,HealthinfoTypeListActivity.class);
 
         intent.putExtra("type",type);
-        intent.putExtra("typecode",typecode);
+        intent.putExtra("code",code);
 
         context.startActivity(intent);
     }
@@ -68,7 +68,7 @@ public class HealthinfoTypeListActivity extends AbsBaseActivity {
 
         if(getIntent() !=null){
             mType=getIntent().getStringExtra("type");
-            mTypeCode=getIntent().getStringExtra("typecode");
+            mCode=getIntent().getStringExtra("code");
         }
 
 
@@ -132,7 +132,7 @@ public class HealthinfoTypeListActivity extends AbsBaseActivity {
 //        map.put("location","1");
         map.put("status","1");
         map.put("kind",mType);
-        map.put("category",mTypeCode);
+        map.put("category",mCode);
 
        mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621107",StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(c))

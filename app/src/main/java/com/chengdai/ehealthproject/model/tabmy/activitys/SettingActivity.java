@@ -58,7 +58,7 @@ public class SettingActivity extends AbsBaseActivity{
         }
 
         mBinding.layoutBankCard.setOnClickListener(v -> {
-            BackCardListActivity.open(this);
+            BackCardListActivity.open(this,false);
         });
 
         //支付密码

@@ -11,12 +11,15 @@ import android.view.View;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySendInfoBinding;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
 import com.chengdai.ehealthproject.uitls.qiniu.QiNiuUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
@@ -26,6 +29,7 @@ import com.yanzhenjie.album.Album;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -73,22 +77,23 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         setTopTitle("");
 
         setSubLeftTitle("取消");
-        mBinding.grid.post(new TimerTask() {
-            @Override
-            public void run() {
-               int width=mBinding.grid.getWidth()-2*5/3;
-                mBinding.grid.setItemHeight(width);
-                mBinding.grid.setItemWidth(width);
-                mBinding.grid.invalidate();
-
-            }
-        });
-
         initViews();
     }
 
 
     private void initViews() {
+
+        //定位
+        mBinding.tvLocation.setOnClickListener(v -> {
+            LocationSelectActivity.open(this);
+        });
+
+        mBinding.imgDelete.setOnClickListener(v -> {
+            mBinding.tvLocation.setText("");
+            mBinding.tvLocation.setHint("显示位置");
+            mBinding.imgDelete.setVisibility(View.GONE);
+        });
+
         mSelectPhotoUrls.add("");//添加默认图片
         setAdapter();
 
@@ -178,6 +183,8 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         map.put("pic",sb.toString());
         map.put("publisher", SPUtilHelpr.getUserId());
 
+        map.put("address",mBinding.tvLocation.getText().toString());
+/*
         LocationModel locationModel =SPUtilHelpr.getLocationInfo();
         if(locationModel !=null){
             map.put("address", locationModel.getProvinceName()+"."+locationModel.getCityName()+"."+locationModel.getAreaName());
@@ -186,17 +193,17 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         }else{
             map.put("address","");
         }
+*/
 
       mSubscription .add( RetrofitUtils.getLoaderServer().SendArticleInfo("621010", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(codeModel -> {
-
-                    if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode())){
+                     String s=";filter:true";//是否包含敏感词汇
+                    if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode()) && -1== codeModel.getCode().indexOf(s,0)){
                         showToast("发布成功");
-
-
-
                         finish();
+                    }else if(-1!= codeModel.getCode().indexOf(s,0)){
+                        showSimpleWran("您的帖子存在敏感字符，我们将进行审核。");
                     }else{
                         showToast("发布失败");
                     }
@@ -294,6 +301,22 @@ public class SendEditInfoActivity extends AbsBaseActivity{
         };
 
         mBinding.grid.bindView(commonAdapter);
+    }
+
+    /**
+     * 支付回调
+     * @param mo
+     */
+    @Subscribe
+    public void SendEditInfoActivity(EventBusModel mo){
+        if(mo == null){
+            return;
+        }
+
+        if(TextUtils.equals("LOCATIONSELECT",mo.getTag())){
+           mBinding.tvLocation.setText(mo.getEvInfo());
+            mBinding.imgDelete.setVisibility(View.VISIBLE);
+        }
     }
 
 

@@ -230,6 +230,7 @@ public class InfoDetailsActivity extends AbsBaseActivity {
         map.put("postCode",mData.getCode());
         map.put("start",mStartPage+"");
         map.put("limit","10");
+        map.put("status","BD");
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetPinglunLisData("621062", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(context))

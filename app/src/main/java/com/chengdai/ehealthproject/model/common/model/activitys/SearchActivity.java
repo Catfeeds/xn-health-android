@@ -171,7 +171,8 @@ public class SearchActivity extends AbsBaseActivity {
         map.put("name",name);
         map.put("companyCode", MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
-
+        map.put("orderDir","asc");
+        map.put("orderColumn","ui_order");
         //点赞和取消点赞
         mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217", StringUtils.getJsonToString(map))
 

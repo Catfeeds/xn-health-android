@@ -49,6 +49,7 @@ public class MyFragment extends BaseLazyFragment{
 
     private String accountNumber;//积分流水账号
     private String mAmountaccountNumber;//余额流水账号
+    private String mAmount;//账户余额
 
     /**
      * 获得fragment实例
@@ -114,7 +115,7 @@ public class MyFragment extends BaseLazyFragment{
         });
         //余额流水
         mBinding.fraAmount.setOnClickListener(v -> {
-            MyAmountActivity.open(mActivity,mBinding.tvYe.getText().toString(),mAmountaccountNumber);
+            MyAmountActivity.open(mActivity,mAmount,mAmountaccountNumber);
         });
 
         isCreate=true;
@@ -163,8 +164,8 @@ public class MyFragment extends BaseLazyFragment{
                 .subscribe(r -> {
 
                     mAmountaccountNumber=  r.get(0).getAccountNumber();
-
-                    mBinding.tvYe.setText(getString(R.string.price_sing)+StringUtils.showPrice(r.get(0).getAmount()));
+                    mAmount=StringUtils.showPrice(r.get(0).getAmount());
+                    mBinding.tvYe.setText(getString(R.string.price_sing)+mAmount);
 
                 },Throwable::printStackTrace));
 

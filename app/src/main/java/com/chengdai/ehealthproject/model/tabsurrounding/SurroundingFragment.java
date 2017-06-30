@@ -336,8 +336,9 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("uiLocation","1");//0普通 1推荐
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
-
-      mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217",StringUtils.getJsonToString(map))
+        map.put("orderDir","asc");
+        map.put("orderColumn","ui_order");
+        mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217",StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(act))
 

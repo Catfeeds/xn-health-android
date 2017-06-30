@@ -100,17 +100,19 @@ public class PinglunInfoSendActivity extends AbsBaseActivity {
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(codeModel -> {
 
-                    if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode())){
+                    String s=";filter:true";//是否包含敏感词汇
+                    if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode()) && -1== codeModel.getCode().indexOf(s,0)){
                         showToast("评论成功");
-
                         EventBusModel model=new EventBusModel();
                         model.setTag("LuntanPinglunRefeshEnent");
                         EventBus.getDefault().post(model);
                         finish();
-
+                    }else if(-1!= codeModel.getCode().indexOf(s,0)){
+                        showSimpleWran("您的评论存在敏感字符，我们将进行审核。");
                     }else{
                         showToast("评论失败");
                     }
+
 
                 },Throwable::printStackTrace));
     }

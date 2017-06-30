@@ -11,8 +11,10 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.CommonListRefreshNodriverBinding;
 import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthInfoListAdapter;
+import com.chengdai.ehealthproject.model.healthmanager.adapters.SexHealthInfoListAdapter;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
@@ -30,7 +32,7 @@ public class HealthSexInfoTypeListActivity extends AbsBaseActivity {
 
     private CommonListRefreshNodriverBinding mBinding;
 
-    private HealthInfoListAdapter mListAdapter;
+    private SexHealthInfoListAdapter mListAdapter;
 
     private int mPageStart=1;
 
@@ -47,7 +49,7 @@ public class HealthSexInfoTypeListActivity extends AbsBaseActivity {
         }
         Intent intent=new Intent(context,HealthSexInfoTypeListActivity.class);
 
-        intent.putExtra("typecode",typecode);
+        intent.putExtra("typecode",typecode);//小类
 
         context.startActivity(intent);
     }
@@ -99,7 +101,7 @@ public class HealthSexInfoTypeListActivity extends AbsBaseActivity {
         });
 
 
-        mListAdapter = new HealthInfoListAdapter(this,new ArrayList<>());
+        mListAdapter = new SexHealthInfoListAdapter(this,new ArrayList<>());
 
 /*            LayoutInflater inflater = LayoutInflater.from(this);
             LinearLayout emptyView = (LinearLayout) inflater.inflate(R.layout.empty_view, null);//得到头部的布局
@@ -109,7 +111,7 @@ public class HealthSexInfoTypeListActivity extends AbsBaseActivity {
 
         mBinding.listview.setOnItemClickListener((parent, view, position, id) -> {
 
-            HealthinfoDetailsActivity.open(this, mListAdapter.getItem(position));
+            SexHealthinfoDetailsActivity.open(this, mListAdapter.getItem(position));
 
         });
 
@@ -118,32 +120,32 @@ public class HealthSexInfoTypeListActivity extends AbsBaseActivity {
 
     private void getListRequest(Context c){
 
-        Map<String,String> map=new HashMap<>();
 
+        Map<String,String> map=new HashMap<>();
         map.put("start",mPageStart+"");
         map.put("limit","10");
-        map.put("type",mTypeCode);
-        map.put("status","1");
         map.put("kind","2");
+        map.put("status","1");
+        map.put("type",mTypeCode);
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621105",StringUtils.getJsonToString(map))
-                .compose(RxTransformerListHelper.applySchedulerResult(c))
+       mSubscription.add( RetrofitUtils.getLoaderServer().getSexHealthInfoList("621105",StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(c))
                 .subscribe(s -> {
-                    if(mPageStart == 1){
-                        if(s==null){
+                    if(mPageStart == 1 ){
+                        if(s==null || s.getList()==null ){
                             return;
                         }
-                        mListAdapter.setData(s);
+                        mListAdapter.setData(s.getList());
 
 
                     }else{
-                        if(s==null || s.size()==0){
+                        if(s==null || s.getList()==null ||  s.getList().size()==0){
                             if(mPageStart>1){
                                 mPageStart--;
                             }
                             return;
                         }
-                        mListAdapter.addData(s);
+                        mListAdapter.addData(s.getList());
                     }
 
                 },Throwable::printStackTrace));

@@ -169,10 +169,10 @@ public class StoreTypeActivity extends AbsBaseActivity {
         map.put("status","2");
         map.put("start",mStoreStart+"");
         map.put("limit","10");
-        map.put("limit","10");
         map.put("companyCode", MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
-
+        map.put("orderDir","asc");
+        map.put("orderColumn","ui_order");
        mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreList("808217", StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(context))

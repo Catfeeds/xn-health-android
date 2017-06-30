@@ -16,6 +16,7 @@ import com.chengdai.ehealthproject.model.healthmanager.model.AssistantMenuListMo
 import com.chengdai.ehealthproject.model.healthmanager.model.DoTestQusetionModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.JfGuideListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.SexHealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexMenuListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TaskNowModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.TestDoneModel;
@@ -468,6 +469,13 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseListModel<HealthInfoListModel>> getHealthInfoList(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 形体资讯文章列表
+     * @return
+             */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<SexHealthInfoListModel>> getSexHealthInfoList(@Field("code") String code, @Field("json") String  json);
 
     /**
      * 获取食物分类
@@ -682,6 +690,21 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<IsSuccessModes>> updateBankCard(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 充值
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<AliPayRequestMode>> rechargeRequest(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 提现
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<String>> withdrawalRequest(@Field("code") String code, @Field("json") String  json);
 
 
 }

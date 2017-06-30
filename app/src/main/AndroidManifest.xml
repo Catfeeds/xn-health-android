@@ -498,6 +498,26 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+     //充值
+        <activity android:name=".model.tabmy.activitys.RechargeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+     //提现
+        <activity android:name=".model.tabmy.activitys.WithdrawalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //位置选择
+        <activity android:name=".model.healthcircle.activitys.LocationSelectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+    //形体资讯
+        <activity android:name=".model.healthmanager.acitivitys.SexHealthinfoDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
 
 
         <!--评论列表查看-->

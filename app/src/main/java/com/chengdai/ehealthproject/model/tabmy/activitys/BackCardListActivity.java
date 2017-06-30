@@ -25,6 +25,8 @@ import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,15 +44,18 @@ public class BackCardListActivity extends AbsBaseActivity{
 
     private List<BankCardModel> mDatas;
 
+    private boolean mIsselect;//用户打开类型是否是选择银行卡
+
     /**
      *
      * @param context
      */
-    public static void open(Context context){
+    public static void open(Context context,boolean isSelect){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,BackCardListActivity.class);
+        intent.putExtra("isSelect",isSelect);
         context.startActivity(intent);
     }
 
@@ -61,6 +66,10 @@ public class BackCardListActivity extends AbsBaseActivity{
 
         mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.common_recycleer, null, false);
         addMainView(mBinding.getRoot());
+
+        if(getIntent()!=null){
+         mIsselect=getIntent().getBooleanExtra("isSelect",true);
+        }
 
         setTopTitle("我的银行卡");
 
@@ -76,7 +85,13 @@ public class BackCardListActivity extends AbsBaseActivity{
                 if(bankCardModel == null) return;
 
                 holder.setOnClickListener(R.id.img_back_bg,v -> {
-                    UpdateBackCardActivity.open(mContext,bankCardModel);
+                    if(mIsselect){//如果是选择银行卡
+                        EventBus.getDefault().post(bankCardModel);
+                        finish();
+                    }else{
+                        UpdateBackCardActivity.open(mContext,bankCardModel);
+                    }
+
                 });
 
                 holder.setText(R.id.txt_name,bankCardModel.getBankName());

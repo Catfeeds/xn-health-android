@@ -43,7 +43,7 @@ public class StringUtils {
     public static Double doubleFormatMoney2(double money){
         DecimalFormat df = new DecimalFormat("#######0.00");
         String showMoney = df.format((money));
-        return Double.valueOf(showMoney);
+        return new BigDecimal(showMoney).doubleValue();
     }
 
     public static List<String> splitAsList(String s,String sp){
@@ -55,8 +55,22 @@ public class StringUtils {
         }
 
         return strings;
-
     }
+    /**
+     *发起请求的金额计算
+     * @return
+     */
+    public static String getRequestPrice(String price){
+     return   new BigDecimal(doubleFormatMoney2(new BigDecimal(price).doubleValue()*1000)).intValue()+"";
+    }
+    /**
+     *发起请求的金额计算
+     * @return
+     */
+    public static String getRequestPrice(double price){
+     return   new BigDecimal(doubleFormatMoney2(new BigDecimal(price).doubleValue()*1000)).intValue()+"";
+    }
+
 
     /**
      * 切割获取广告图片

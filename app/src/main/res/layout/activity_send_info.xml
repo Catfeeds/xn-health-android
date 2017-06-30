@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
   android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -38,16 +50,44 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"></com.chengdai.ehealthproject.weigit.views.GridLayout>
 
-
-        <com.chengdai.ehealthproject.weigit.views.NinePhotoView
-            android:visibility="gone"
-            android:background="@color/addcar_blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.chengdai.ehealthproject.weigit.views.NinePhotoView>
-
+    </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:background="@drawable/bg_line_blue"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@mipmap/location"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:textColorHint="@color/text_color"
+            android:textSize="16sp"
+            android:id="@+id/tv_location"
+            android:layout_marginLeft="5dp"
+            android:hint="显示位置"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/img_delete"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/delete_x"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
 </layout>
