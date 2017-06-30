@@ -138,7 +138,7 @@ public class HoteldetailsActivity extends AbsBaseActivity {
                 return;
             }
 
-            HotelSelectActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getPic(),mStoreDetailsModel.getName());
+            HotelSelectActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getPic(),mStoreDetailsModel.getName(),mStoreDetailsModel.getCode());
         });
 
     }
@@ -192,7 +192,7 @@ public class HoteldetailsActivity extends AbsBaseActivity {
 
         mBinding.tvDzsum.setText(storeListModel.getTotalDzNum()+"");
 
-        if(TextUtils.isEmpty(storeListModel.getDescription())){
+        if(!TextUtils.isEmpty(storeListModel.getDescription())){
 
             RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
         }

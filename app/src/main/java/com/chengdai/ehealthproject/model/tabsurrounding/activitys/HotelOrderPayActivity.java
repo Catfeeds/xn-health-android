@@ -120,13 +120,13 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
                         .subscribe(payState -> {
 
                             if(payState!=null && payState.isSuccess()){
+                                showToast("支付成功");
                                 MainActivity.open(this,3);
                                 finish();
 
                             }else{
                                 showToast("支付失败");
                             }
-
 
                         },Throwable::printStackTrace));
 

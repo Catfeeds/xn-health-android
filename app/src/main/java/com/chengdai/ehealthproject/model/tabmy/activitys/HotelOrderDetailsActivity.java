@@ -119,7 +119,7 @@ public class HotelOrderDetailsActivity extends AbsBaseActivity{
                 mBinding.tvHotelData.setText(
                         "入住:"+DateUtil.format( new Date(mShowData.getStartDate()),"MM月dd日")
                                 +"离开:"+DateUtil.format( new Date(mShowData.getEndDate()),"MM月dd日")
-                                +"  "+DateUtil.getDatesBetweenTwoDate(new Date(mShowData.getStartDate()),new Date(mShowData.getEndDate())).size()+"晚"
+                                +"  "+(DateUtil.getDatesBetweenTwoDate(new Date(mShowData.getStartDate()),new Date(mShowData.getEndDate())).size()-1)+"晚"
                 );
             }
         }

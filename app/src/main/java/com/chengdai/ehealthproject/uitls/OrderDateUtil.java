@@ -86,6 +86,26 @@ public class OrderDateUtil {
         }
     }
 
+        /**
+     * 新增从今年往后推sum年
+     *
+     * @param sum
+     */
+    public   List<String> getMoreYear(int sum) {
+        List<String> years=new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        int currYear = c.get(Calendar.YEAR);
+        int minYear = c.get(Calendar.YEAR)-1;
+        int maxYear = currYear + sum;
+        for (int i = minYear; i <= maxYear; i++) {
+            years.add(String.valueOf(i));
+        }
+        return years;
+    }
+
+
+
+
     private void getYear(List<String> years) {
         Calendar c = Calendar.getInstance();
         int currYear = c.get(Calendar.YEAR);

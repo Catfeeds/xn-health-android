@@ -214,14 +214,14 @@ public class DateUtil {
         while (bContinue) {
             //根据日历的规则，为给定的日历字段添加或减去指定的时间量
             cal.add(Calendar.DAY_OF_MONTH, 1);
-            // 测试此日期是否在指定日期之后
+            // 测试此日期是否在指定日期之后士大夫
             if (endDate.after(cal.getTime())) {
                 lDate.add(cal.getTime());
             } else {
                 break;
             }
         }
-//        lDate.add(endDate);//把结束时间加入集合
+        lDate.add(endDate);//把结束时间加入集合
         return lDate;
     }
 

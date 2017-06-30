@@ -57,14 +57,14 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
     private int mPageStart=1;
 
-
+  private String mStoreCode;
 
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context, String mHotelAddress, String imgs,String name){
+    public static void open(Context context, String mHotelAddress, String imgs,String name,String code){
         if(context==null){
             return;
         }
@@ -73,6 +73,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
         intent.putExtra("mHotelAddress",mHotelAddress);
         intent.putExtra("mImages",imgs);
         intent.putExtra("hotelName",name);
+        intent.putExtra("code",code);
 
         context.startActivity(intent);
     }
@@ -176,8 +177,8 @@ public class HotelSelectActivity extends AbsBaseActivity{
                     DateUtil.getDatesBetweenTwoDate(mStartDate,mEndDate).size()-1
                     ,mHotelAddress,hotelAdapter.getSelectItem());
 
-            hmodel.setStartData(mStartDate.toString());
-            hmodel.setEndDate(mEndDate.toString());
+            hmodel.setStartData(DateUtil.format(mStartDate,DATE_YMD));
+            hmodel.setEndDate(DateUtil.format(mEndDate,DATE_YMD));
 
             hmodel.setHotelName(mHotelName);
 
@@ -259,6 +260,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
         map.put("limit","10");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
+        map.put("storeCode",mStoreCode);
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetHotelList("808415",StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(context))
@@ -294,6 +296,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
 
             mImgs=StringUtils.splitAsList(getIntent().getStringExtra("mImages"),"\\|\\|");
 
+            mStoreCode=getIntent().getStringExtra("code");
 
         }
 

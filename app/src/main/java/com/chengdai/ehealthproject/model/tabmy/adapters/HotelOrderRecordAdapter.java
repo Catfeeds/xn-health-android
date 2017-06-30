@@ -83,7 +83,7 @@ public class HotelOrderRecordAdapter extends CommonAdapter<HotelOrderRecordModel
                 tv_hotel_data.setText(
                         "入住:"+DateUtil.format( new Date(item.getStartDate()),"MM月dd日")
                         +"离开:"+DateUtil.format( new Date(item.getEndDate()),"MM月dd日")
-                        +"  "+DateUtil.getDatesBetweenTwoDate(new Date(item.getStartDate()),new Date(item.getEndDate())).size()+"晚"
+                        +"  "+(DateUtil.getDatesBetweenTwoDate(new Date(item.getStartDate()),new Date(item.getEndDate())).size()-1)+"晚"
                 );
             }
         }

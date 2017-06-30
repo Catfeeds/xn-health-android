@@ -75,7 +75,7 @@
 
     </LinearLayout>
 
-    
+
     <TextView
         android:id="@+id/tv_description"
         android:layout_marginBottom="15dp"
@@ -84,7 +84,7 @@
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    
+
     <View
         style="@style/hline"
        />
@@ -164,7 +164,7 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-  
+
 <View
     android:layout_marginTop="10dp"
     android:background="@color/gray"
@@ -198,7 +198,7 @@
 </LinearLayout>
 
 </ScrollView>
-        
+
         <Button
             android:id="@+id/btn_book_hotel"
             android:textColor="@color/white"
@@ -212,6 +212,6 @@
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="45dp" />
-        
+
 </LinearLayout>
 </layout>

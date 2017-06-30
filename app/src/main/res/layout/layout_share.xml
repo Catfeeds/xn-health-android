@@ -12,12 +12,13 @@
 
     <LinearLayout
     android:gravity="center"
-    android:weightSum="3"
+    android:weightSum="2"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="40dp">
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/lin_shear"
         android:gravity="center"
         android:layout_weight="1"
