@@ -19,6 +19,7 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
             mBinding.tvIsDo.setText("已完成任务");
             ImgUtils.loadImgId(this,R.mipmap.task_do,mBinding.imgDo);
 
-            showWeek(mData.getTxWeek());
+            showWeek(getWeek(new Date()));
 
         }
 
@@ -116,7 +117,7 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
 
                 mBinding.tvDays.setText("已坚持"+(mData.getZxNum()+1)+"天");
 
-                showWeek(mData.getTxWeek());
+                showWeek(getWeek(new Date()));
 
                 },Throwable::printStackTrace);
 
@@ -165,5 +166,15 @@ public class DoHealthTaskActivity extends AbsBaseActivity {
         }*/
     }
 
-
+    //根据日期取得星期几
+    public static String getWeek(Date date) {
+        String[] weeks = {"1", "2", "3", "4", "5", "6", "7"};
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int week_index = cal.get(Calendar.DAY_OF_WEEK)-1;
+        if (week_index < 0) {
+            week_index = 0;
+        }
+        return weeks[week_index];
+    }
 }

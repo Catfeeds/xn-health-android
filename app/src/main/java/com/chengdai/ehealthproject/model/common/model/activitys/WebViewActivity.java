@@ -56,12 +56,12 @@ public class WebViewActivity extends AbsBaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mBinding.webView.getSettings().setJavaScriptEnabled(true);//js
-        mBinding.webView.getSettings().setSupportZoom(true);   //// 支持缩放
-        mBinding.webView.getSettings().setBuiltInZoomControls(true);//// 支持缩放
-        mBinding.webView.getSettings().setDomStorageEnabled(true);//开启DOM
-        mBinding.webView.getSettings().setLoadWithOverviewMode(false);//// 缩放至屏幕的大小
-        mBinding.webView.getSettings().setUseWideViewPort(true);//将图片调整到适合webview的大小
-        mBinding.webView.getSettings().setLoadsImagesAutomatically(true);//支持自动加载图片
+//        mBinding.webView.getSettings().setSupportZoom(true);   //// 支持缩放
+//        mBinding.webView.getSettings().setBuiltInZoomControls(true);//// 支持缩放
+//        mBinding.webView.getSettings().setDomStorageEnabled(true);//开启DOM
+//        mBinding.webView.getSettings().setLoadWithOverviewMode(false);//// 缩放至屏幕的大小
+//        mBinding.webView.getSettings().setUseWideViewPort(true);//将图片调整到适合webview的大小
+//        mBinding.webView.getSettings().setLoadsImagesAutomatically(true);//支持自动加载图片
         mBinding.webView.setWebChromeClient(new MyWebViewClient1());
 //        webView.setWebViewClient(new MyWebViewClient());
         mBinding.webView.setWebViewClient(new WebViewClient() {
@@ -107,12 +107,4 @@ public class WebViewActivity extends AbsBaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mBinding.webView != null) {
-            mBinding.webView.removeAllViews();
-            mBinding.webView.destroy();
-        }
-    }
 }

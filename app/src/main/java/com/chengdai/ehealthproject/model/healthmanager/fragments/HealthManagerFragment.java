@@ -154,6 +154,8 @@ public class HealthManagerFragment extends BaseFragment{
 
             if(TextUtils.isEmpty(mTestCode) || TextUtils.isEmpty(mTestTitle)){
 
+                showSimpleWran("健康评分功能暂未开发");
+
                 return;
             }
 

@@ -74,7 +74,7 @@ public class BMICalculateActivity extends AbsBaseActivity{
                 return;
             }
 
-            BigDecimal h=height.divide(new BigDecimal(100));
+            BigDecimal h=height.divide(new BigDecimal(100),2);
 
             BigDecimal hh=h.multiply(h);
 

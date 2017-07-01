@@ -118,7 +118,7 @@
             <TextView
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="原交易密码"
+                android:text="原支付密码"
                 android:textSize="15sp"
                 android:textColor="@color/fontColor_gray"
                 android:layout_width="127dp"
@@ -134,7 +134,7 @@
                 android:inputType="textPassword"
                 android:textColor="@color/fontColor_gray"
                 android:textColorHint="@color/fontColor_hint"
-                android:hint="请输入原6位交易密码"
+                android:hint="请输入原6位支付密码"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

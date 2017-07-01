@@ -39,12 +39,13 @@ public class PayPwdModifyActivity extends AbsBaseActivity{
      * @param context
      * @param isSetPwd//是否设置过支付密码
      */
-    public static void open(Context context, boolean isSetPwd){
+    public static void open(Context context, boolean isSetPwd,String mobile){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,PayPwdModifyActivity.class);
         intent.putExtra("isSetPwd",isSetPwd);
+        intent.putExtra("mobile",mobile);
         context.startActivity(intent);
     }
 
@@ -60,6 +61,8 @@ public class PayPwdModifyActivity extends AbsBaseActivity{
 
         if(getIntent()!=null){
             mIsSetPwd=getIntent().getBooleanExtra("isSetPwd",false);
+            mBinding.edtPhone.setText(getIntent().getStringExtra("mobile"));
+            mBinding.edtPhone.setSelection(mBinding.edtPhone.getText().length());
         }
 
         if(mIsSetPwd){

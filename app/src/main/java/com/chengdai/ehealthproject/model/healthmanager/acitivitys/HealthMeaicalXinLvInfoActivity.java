@@ -96,7 +96,7 @@ public class HealthMeaicalXinLvInfoActivity extends AbsBaseActivity{
             }else if(mNumber==40 && mNumber<60){
                 mBinding.tvInfo.setText(getString(R.string.txt_xinlv_40_60));
             }
-            else if(mNumber>60 && mNumber<100){
+            else if(mNumber>=60 && mNumber<100){
                 mBinding.tvInfo.setText(getString(R.string.txt_xinlv_60_100));
             }
             else if(mNumber>100 ){
@@ -121,9 +121,9 @@ public class HealthMeaicalXinLvInfoActivity extends AbsBaseActivity{
             mBinding.linXueyang.setVisibility(View.VISIBLE);
             if(mNumber<90  ){
                 mBinding.tvInfo.setText(getString(R.string.txt_xueyang_90));
-            }else if(mNumber==90 && mNumber<=93 ){
+            }else if(mNumber==90 && mNumber<93 ){
                 mBinding.tvInfo.setText(getString(R.string.txt_xueyang_90_93));
-            }else if(mNumber>93 ){
+            }else if(mNumber>=93 ){
                 mBinding.tvInfo.setText(getString(R.string.txt_xueyang_93));
             }
         }

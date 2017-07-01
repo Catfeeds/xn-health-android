@@ -483,6 +483,7 @@
                 style="@style/split_line_10"/>
 
             <LinearLayout
+                android:background="@color/white"
                 android:visibility="gone"
                 android:id="@+id/lin_no_task"
                 android:orientation="vertical"

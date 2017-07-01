@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.NetUtils;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
@@ -289,6 +290,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             this.finish();
         }
     }
+
+
 
     /**
      * 设置状态栏颜色（5.0以上系统）

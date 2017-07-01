@@ -106,6 +106,13 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         initSpringViews();
 
+        locationModel = SPUtilHelpr.getLocationInfo();
+        if(locationModel!=null && !TextUtils.isEmpty(locationModel.getCityName())){
+            mBinding.tvLocation.setText(locationModel.getCityName());
+        }else{
+            mBinding.tvLocation.setText(R.string.txt_change_city);
+        }
+
         return mBinding.getRoot();
 
     }
@@ -227,13 +234,9 @@ public class SurroundingFragment extends BaseLazyFragment{
     @Override
     public void onResume() {
         super.onResume();
-
         if(getUserVisibleHint()){
-            mStoreStart=1;
-            getAllData();
+            mBinding.banner.startAutoPlay();
         }
-
-        mBinding.banner.startAutoPlay();
     }
     @Override
     public void onPause() {
@@ -253,7 +256,6 @@ public class SurroundingFragment extends BaseLazyFragment{
     }
 //获取所有接口数据
     private void getAllData() {
-        locationModel = SPUtilHelpr.getLocationInfo();
 
         storeTypeRequest(mActivity);
 
@@ -262,11 +264,6 @@ public class SurroundingFragment extends BaseLazyFragment{
         getStoreListRequest(mActivity,1);
 
 
-        if(locationModel!=null && !TextUtils.isEmpty(locationModel.getCityName())){
-            mBinding.tvLocation.setText(locationModel.getCityName());
-        }else{
-            mBinding.tvLocation.setText(R.string.txt_change_city);
-        }
 
         if(mBinding!=null && mBinding.banner!=null){
             mBinding.banner.start();

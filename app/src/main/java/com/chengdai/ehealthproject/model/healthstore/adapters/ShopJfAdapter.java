@@ -51,7 +51,7 @@ public class ShopJfAdapter extends CommonAdapter<ShopListModel.ListBean> {
         TextView tv_jf_number=viewHolder.getView(R.id.tv_jf_number);
         TextView tv_price=viewHolder.getView(R.id.tv_price);
 
-        ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+item.getSplitPic(),img_jf_hot);
+        ImgUtils.loadImgURL(mContext, MyConfig.IMGURL+item.getSplitAdvPic(),img_jf_hot);
 
         tv_name_jf.setText(item.getName());
 

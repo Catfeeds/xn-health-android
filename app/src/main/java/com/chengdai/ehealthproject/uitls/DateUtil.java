@@ -192,7 +192,7 @@ public class DateUtil {
 
 
     //根据日期取得星期几
-    public static String getWeek(Date date) {
+    public static String getWeekString(Date date) {
         String[] weeks = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

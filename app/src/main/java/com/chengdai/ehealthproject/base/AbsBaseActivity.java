@@ -1,7 +1,7 @@
 package com.chengdai.ehealthproject.base;
 
-import android.support.annotation.LayoutRes;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -9,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseActivity;
 
 import static com.jakewharton.rxbinding2.view.RxView.clicks;
-import static com.jakewharton.rxbinding2.view.RxView.visibility;
 
 /**
  * 带空页面，错误页面显示的BaseActivity

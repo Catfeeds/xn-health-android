@@ -127,7 +127,7 @@ public class HealthinfoActivity extends AbsBaseActivity {
         map.put("start",mPageStart+"");
         map.put("limit","10");
 //        map.put("type","2");
-        map.put("location","1");
+        map.put("location","2");//1普通 2热门
         map.put("status","1");
         map.put("kind","1");//健康资讯
 

@@ -202,7 +202,7 @@ public class ShopPayCarListAdApter extends CommonAdapter<PayCarListModel.ListBea
 
         txt_number.setText(item.getQuantity()+"");
 
-        tv_num_info.setText("x "+item.getQuantity());
+        tv_num_info.setText(item.getProductSpecs().getName()+" x "+item.getQuantity());
 
         if(mSelectPosition == position){
             ImgUtils.loadImgId(mContext, R.mipmap.pay_select,img_select);

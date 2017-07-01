@@ -265,7 +265,7 @@ public class PayActivity extends AbsBaseActivity {
         EventBusModel eventBusModel=new EventBusModel();
         eventBusModel.setTag("AllFINISH");
         EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-        MainActivity.open(this,3);//显示周边
+//        MainActivity.open(this,3);//显示周边
 
         finish();
     }

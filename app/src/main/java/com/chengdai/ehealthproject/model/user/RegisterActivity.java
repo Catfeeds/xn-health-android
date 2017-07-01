@@ -22,6 +22,7 @@ import com.chengdai.ehealthproject.uitls.TextReadUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -166,16 +167,18 @@ public class RegisterActivity extends AbsBaseActivity {
         mSubscription.add(RetrofitUtils.getLoaderServer().UserRegister("805154",StringUtils.getJsonToString(hashMap) )
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
-                        if(data!=null && ( !TextUtils.isEmpty(data.getToken()) || !TextUtils.isEmpty(data.getUserId()))){ //token 和 UserId不为空时
-                            showWarnListen("注册成功",view -> {
+                        if(data!=null && ( !TextUtils.isEmpty(data.getToken()) || !TextUtils.isEmpty(data.getUserId()))){ //token 和 UsrId不为空时
 
-                                EventBusModel eventBusModel=new EventBusModel();
-                                eventBusModel.setTag("AllFINISH");
-                                EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-                                MainActivity.open(this,1);
-                                showToast("已自动登录");
-                                finish();
-                            });
+                            SPUtilHelpr.saveUserToken(data.getToken());
+                            SPUtilHelpr.saveUserId(data.getUserId());
+
+                            EventBusModel eventBusModel=new EventBusModel();
+                            eventBusModel.setTag("AllFINISH");
+                            EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+                            MainActivity.open(this,1);
+
+                            showToast("注册成功,已自动登录");
+                            finish();
                         }else{
                             showToast("注册失败");
                         }

@@ -19,6 +19,7 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,6 +131,7 @@ public class HotelOrderCreateActivity extends AbsBaseActivity {
                         payModel.setUsePhoee(mBinding.editHotelCheckPhone.getText().toString());
                         payModel.setUsePs(mBinding.editHotelSp.getText().toString());
 
+
                         HotelOrderPayActivity.open(this,payModel);
 
                         return;
@@ -149,7 +151,10 @@ public class HotelOrderCreateActivity extends AbsBaseActivity {
             mBinding.tvHotelSize.setText(mHotelModel.getName());
             mBinding.tvHotelInfo.setText(mHotelModel.getSlogan());
             mBinding.tvHotelNum.setText("1间");
-            mBinding.txtDiscountMoney.setText(StringUtils.showPrice(mHotelModel.getPrice())+"");
+            mBinding.txtDiscountMoney.setText(StringUtils.showPrice(mHotelModel.getPrice().multiply(new BigDecimal(mHotelOrderCreateModel.getDays())))+"");
+
+            mHotelModel.setPrice(mHotelModel.getPrice().multiply(new BigDecimal(mHotelOrderCreateModel.getDays())));
+
         }
 
         if(mHotelOrderCreateModel!=null) {

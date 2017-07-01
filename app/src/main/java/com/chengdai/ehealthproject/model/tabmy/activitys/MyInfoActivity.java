@@ -203,19 +203,19 @@ public class MyInfoActivity extends AbsBaseActivity{
 
     public void updateUserInfoRequest(){
 
-  /*      if(TextUtils.isEmpty(mBinding.tvBirthday.getText().toString())){
+        if(TextUtils.isEmpty(mBinding.tvBirthday.getText().toString())){
             showToast("请选择生日");
             return;
-        }*/
-        if(TextUtils.isEmpty(mBinding.tvEmail.getText().toString())){
-            showToast("请输入邮箱");
-            return;
         }
+
        if(TextUtils.isEmpty(mGender)){
             showToast("请选择性别");
             return;
         }
-
+        if(TextUtils.isEmpty(mBinding.tvEmail.getText().toString())){
+            showToast("请输入邮箱");
+            return;
+        }
         Map<String,String> map=new HashMap<>();
         map.put("userId",SPUtilHelpr.getUserId());
         map.put("token",SPUtilHelpr.getUserToken());

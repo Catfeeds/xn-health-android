@@ -75,7 +75,7 @@ public class JfGuideActivity extends AbsBaseActivity{
             mJfaccountNumber=getIntent().getStringExtra("jfaccountNumber");
         }
 
-        mBinding.tvJfDetails.setOnClickListener(v -> {
+        mBinding.fraJfList.setOnClickListener(v -> {
             MyJFDetailsActivity.open(this,mBinding.tvJfnum.getText().toString(),mJfaccountNumber);
         });
         mBinding.cycler.addItemDecoration(new MyDividerItemDecoration(this,MyDividerItemDecoration.VERTICAL_LIST));

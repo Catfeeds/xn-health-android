@@ -36,15 +36,19 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/tv_jf_details"
-          android:layout_marginRight="20dp"
+        <FrameLayout
+            android:id="@+id/fra_jf_list"
+            android:layout_marginRight="20dp"
             android:layout_gravity="right|center_vertical"
-            android:src="@mipmap/more_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="45dp"
+            android:layout_height="45dp">
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@mipmap/more_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
 
+        </FrameLayout>
 
 
     </FrameLayout>

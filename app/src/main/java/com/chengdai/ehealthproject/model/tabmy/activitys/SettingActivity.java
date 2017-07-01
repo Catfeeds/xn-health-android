@@ -56,19 +56,23 @@ public class SettingActivity extends AbsBaseActivity{
         if(getIntent()!=null){
             mUserInfo=getIntent().getParcelableExtra("userinfo");
         }
-
+       //银行卡
         mBinding.layoutBankCard.setOnClickListener(v -> {
             BackCardListActivity.open(this,false);
         });
+
+        if(mUserInfo!=null){
+            mBinding.txtPhone.setText(mUserInfo.getMobile());
+        }
 
         //支付密码
         mBinding.layoutPayPwd.setOnClickListener(v -> {
 
             if(TextUtils.equals("0",mUserInfo.getTradepwdFlag())) { //未设置支付密码
-                PayPwdModifyActivity.open(this,false);
+                PayPwdModifyActivity.open(this,false,mBinding.txtPhone.getText().toString());
 
             }else if(TextUtils.equals("1",mUserInfo.getTradepwdFlag())){//设置过支付密码
-                PayPwdModifyActivity.open(this,true);
+                PayPwdModifyActivity.open(this,true,mBinding.txtPhone.getText().toString());
             }
 
         });

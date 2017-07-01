@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityAmountDetailsListBinding;
 import com.chengdai.ehealthproject.databinding.ActivityJfDetailsListBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.tabmy.model.JfDetailsListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -50,19 +51,20 @@ public class MyAmountActivity extends AbsBaseActivity{
 
     private  int mPageStart=1;
 
-
+    private UserInfoModel mUserInfo;
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context,String amountsum,String accountNumber){
+    public static void open(Context context,String amountsum,String accountNumber,UserInfoModel userInfoModel){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,MyAmountActivity.class);
         intent.putExtra("amountsum",amountsum);//账户余额
         intent.putExtra("accountNumber",accountNumber);
+        intent.putExtra("userInfoModel",userInfoModel);
         context.startActivity(intent);
     }
 
@@ -79,6 +81,7 @@ public class MyAmountActivity extends AbsBaseActivity{
         if(getIntent()!=null){
             mBinding.tvJfnum.setText(getIntent().getStringExtra("amountsum"));
             accountNumber=getIntent().getStringExtra("accountNumber");
+            mUserInfo=getIntent().getParcelableExtra("userInfoModel");
         }
 
         initViews();
@@ -94,7 +97,16 @@ public class MyAmountActivity extends AbsBaseActivity{
         });
         //提现
         mBinding.tvWithdrawal.setOnClickListener(v -> {
-            WithdrawalActivity.open(this,mBinding.tvJfnum.getText().toString(),accountNumber);
+            if(mUserInfo!=null && TextUtils.equals("0",mUserInfo.getTradepwdFlag())) { //未设置支付密码
+
+                showDoubleWarnListen("您还未设置支付密码,请先设置支付密码",view -> {
+                    PayPwdModifyActivity.open(this,false,mUserInfo.getMobile());
+                });
+
+            }else if(TextUtils.equals("1",mUserInfo.getTradepwdFlag())){//设置过支付密码
+                WithdrawalActivity.open(this,mBinding.tvJfnum.getText().toString(),accountNumber);
+            }
+
         });
 
         mBinding.cycler.addItemDecoration(new MyDividerItemDecoration(this,MyDividerItemDecoration.VERTICAL_LIST));

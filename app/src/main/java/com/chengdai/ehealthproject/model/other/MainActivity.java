@@ -88,12 +88,12 @@ public class MainActivity extends BaseLocationActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mainBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);;
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+//        mainBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);;
+//
+//        addMainView(mainBinding.getRoot());
 
-        addMainView(mainBinding.getRoot());
-
-        hintTitleView();
+//        hintTitleView();
 
         if(getIntent()!=null){
             mTabIndex =getIntent().getIntExtra("select",1);

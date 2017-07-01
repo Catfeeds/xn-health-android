@@ -117,7 +117,7 @@ public class HealthDoTestQuesitionActivity extends AbsBaseActivity {
                 checkBox.setText(optionsListBean.getContent());
 
                mSubscription.add( RxView.clicks(checkBox)
-                        .delay(120,TimeUnit.MILLISECONDS)
+                        .delay(150,TimeUnit.MILLISECONDS)
                        .subscribeOn(AndroidSchedulers.mainThread())
                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
@@ -151,7 +151,7 @@ public class HealthDoTestQuesitionActivity extends AbsBaseActivity {
         mQuesitionData.clear();
         mQuesitionData.addAll(model.getOptionsList());
 
-        mBinding.tvTitleNum.setText(model.getOrderNo()+". "+ model.getContent());
+        mBinding.tvTitleNum.setText(model.getContent());
 
         float i=(int)(getValue(mQuesitionIndex,mQueRequestData.size())*100);
 

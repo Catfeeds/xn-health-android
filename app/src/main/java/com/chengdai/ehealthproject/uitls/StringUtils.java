@@ -115,10 +115,12 @@ public class StringUtils {
 
     public static String showJF(BigDecimal big){
 
-        if(big !=null){
+        return showPrice(big);
+
+    /*    if(big !=null){
             return ((big.intValue())/1000)+"";
         }
-        return "0";
+        return "0";*/
     }
 
     /**
@@ -129,12 +131,14 @@ public class StringUtils {
      */
     public static String showJF(BigDecimal big,int size){
 
-        if(big !=null){
+        return showPrice(big,size);
+
+   /*     if(big !=null){
             BigDecimal bigDecimal=new BigDecimal(size);
             return (big.multiply(bigDecimal).intValue()/1000)+"";
         }
 
-        return "0";
+        return "0";*/
 
     }
 

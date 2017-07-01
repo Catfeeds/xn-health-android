@@ -21,6 +21,7 @@ import com.chengdai.ehealthproject.model.healthcircle.activitys.PinglunListActiv
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.TextMoreUtil;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
@@ -163,10 +164,6 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                             mEmptyWrapper.notifyDataSetChanged();
                         }
 
-                        if(mDatas.size()==0){
-                            mEmptyWrapper.setEmptyView(R.layout.empty_view);
-                        }
-
                     }else if(mPageStart >1){
                         if(s==null||s.getList()==null || s.getList().size()==0){
                             mPageStart--;
@@ -176,7 +173,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                         mEmptyWrapper.notifyDataSetChanged();
                     }
                 },throwable -> {
-                    mEmptyWrapper.setEmptyView(R.layout.empty_view);
+
                 }));
 
     }
@@ -239,13 +236,12 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                 holder.setText(R.id.tv_name,listBean.getNickname());
                 holder.setText(R.id.tv_time, DateUtil.formatStringData(listBean.getPublishDatetime(),DateUtil.DEFAULT_DATE_FMT));
 
-               if(!TextUtils.isEmpty(listBean.getContent()) && listBean.getContent().length()>160){
-                   holder.setText(R.id.tv_content,listBean.getContent().substring(0,listBean.getContent().length()/2)+"...");
+            /*   if(!TextUtils.isEmpty(listBean.getContent()) && listBean.getContent().length()>140){
+                   holder.setText(R.id.tv_content,listBean.getContent().substring(0,140)+"...");
                }else{
                    holder.setText(R.id.tv_content,listBean.getContent());
                }
-                holder.setText(R.id.tv_content,listBean.getContent());
-
+*/             holder.setText(R.id.tv_content,listBean.getContent());
                 if(listBean.getSumLike()>999){
                     holder.setText(R.id.tv_dz_sum,"999+");
                 }else{
@@ -331,7 +327,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
         };
 
         mEmptyWrapper = new EmptyWrapper(mAdapter);
-
+        mEmptyWrapper.setEmptyView(R.layout.empty_view);
         mBinding.cycler.setAdapter(mEmptyWrapper);
 
     }

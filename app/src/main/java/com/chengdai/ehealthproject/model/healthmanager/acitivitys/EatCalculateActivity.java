@@ -44,6 +44,9 @@ public class EatCalculateActivity extends AbsBaseActivity{
         setTopTitle("膳食建议");
         setSubLeftImgState(true);
 
+        mBinding.editWeight.setSelection(mBinding.editWeight.getText().toString().length());
+        mBinding.eidtHeight.setSelection(mBinding.eidtHeight.getText().toString().length());
+
         mBinding.tvStartCalculate.setOnClickListener(v -> {
             if(TextUtils.isEmpty(mBinding.editWeight.getText().toString())){
                 showToast("请输入体重");

@@ -232,7 +232,7 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
             event.setTag("HealthStoreFragmentRefresh");
             EventBus.getDefault().postSticky(event);*/
 
-            MainActivity.open(this,4);//显示商城
+//            MainActivity.open(this,4);//显示商城
 
         }
 

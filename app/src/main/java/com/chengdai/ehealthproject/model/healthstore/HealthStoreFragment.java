@@ -221,8 +221,6 @@ public class HealthStoreFragment extends BaseLazyFragment{
         super.onResume();
 
         if(getUserVisibleHint()){
-            mStoreStart=1;
-            getAllData();
             mBinding.banner.startAutoPlay();
         }
     }
@@ -325,6 +323,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
         map.put("systemCode",MyConfig.SYSTEMCODE);
         map.put("orderDir","asc");
         map.put("orderColumn","order_no");
+        map.put("location","1");  //1推荐 0普通
 
         mSubscription.add(  RetrofitUtils.getLoaderServer().GetShopList("808025",StringUtils.getJsonToString(map))
 

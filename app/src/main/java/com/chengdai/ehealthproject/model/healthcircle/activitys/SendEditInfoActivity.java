@@ -108,8 +108,8 @@ public class SendEditInfoActivity extends AbsBaseActivity{
                 return;
             }
 
-            if(mSelectPhotoUrls .size() == 0 || mSelectPhotoUrls.size()==1){
-                sendArticleInfoRequest();
+            if(mSelectPhotoUrls == null || mSelectPhotoUrls .size() == 0 || mSelectPhotoUrls.size()==1){
+                showToast("请添加图片");
                 return;
             }
 

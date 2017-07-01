@@ -67,7 +67,11 @@ public class WithdrawalActivity extends AbsBaseActivity{
         setTopTitle("提现");
         setSubLeftImgState(true);
         if(getIntent()!=null){
-            mAmount=Double.valueOf(getIntent().getStringExtra("amount"));
+            try {
+                mAmount=Double.valueOf(getIntent().getStringExtra("amount"));
+            }catch (Exception e){
+
+            }
             mAccountNumber=getIntent().getStringExtra("amountnumber");
         }
         mBinding.tvNum.setText(getString(R.string.price_sing)+mAmount);
@@ -104,7 +108,7 @@ public class WithdrawalActivity extends AbsBaseActivity{
             }
 
             if(TextUtils.isEmpty(mBinding.editPayPwd.getText().toString())){
-                showToast("请输入交易密码");
+                showToast("请输入支付密码");
                 return;
             }
 

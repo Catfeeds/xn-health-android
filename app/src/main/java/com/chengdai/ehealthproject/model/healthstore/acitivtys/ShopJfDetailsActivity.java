@@ -133,7 +133,7 @@ public class ShopJfDetailsActivity extends AbsBaseActivity {
         List<Fragment> fragments=new ArrayList<>();
         fragments.add(ShopCommodityFragment.getInstanse(mData, MyConfig.JFORDER));
         fragments.add(ShopDeatilsFragment.getInstanse(mData));
-        fragments.add(ShopEvaluateFragment.getInstanse(mData));
+//        fragments.add(ShopEvaluateFragment.getInstanse(mData));
         mBinding.viewpager.setOffscreenPageLimit(3);
         mBinding.viewpager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
 

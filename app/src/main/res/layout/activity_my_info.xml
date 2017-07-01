@@ -186,6 +186,9 @@
         style="@style/split_line_10"/>
 
     <EditText
+        android:textColor="@color/text_color"
+        android:textSize="13sp"
+        android:padding="10dp"
         android:id="@+id/edit"
         android:textColorHint="@color/text_hint_color"
         android:gravity="top"

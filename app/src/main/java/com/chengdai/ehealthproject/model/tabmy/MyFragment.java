@@ -115,7 +115,7 @@ public class MyFragment extends BaseLazyFragment{
         });
         //余额流水
         mBinding.fraAmount.setOnClickListener(v -> {
-            MyAmountActivity.open(mActivity,mAmount,mAmountaccountNumber);
+            MyAmountActivity.open(mActivity,mAmount,mAmountaccountNumber,mUserInfoData);
         });
 
         isCreate=true;

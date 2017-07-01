@@ -107,6 +107,8 @@ public class UpdateBackCardActivity extends AbsBaseActivity{
                 showToast("请输入正确的卡号");
                 return;
             }
+
+            updateBank("");
             inputPayDialog();
 
         });
@@ -139,12 +141,12 @@ public class UpdateBackCardActivity extends AbsBaseActivity{
         object.put("bankCode", mBankModel.getBankCode());
         object.put("code", mBankModel.getCode());
         object.put("status", "1");
-        object.put("tradePwd", pwd);
+//        object.put("tradePwd", pwd);
         object.put("token", SPUtilHelpr.getUserToken());
         object.put("userId", SPUtilHelpr.getUserId());
         object.put("systemCode",MyConfig.SYSTEMCODE);
-
-       mSubscription.add( RetrofitUtils.getLoaderServer().updateBankCard("802013",StringUtils.getJsonToString(object))
+/*802013*/
+       mSubscription.add( RetrofitUtils.getLoaderServer().updateBankCard("802012",StringUtils.getJsonToString(object))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                .filter(isSuccessModes -> isSuccessModes!=null && isSuccessModes.isSuccess())
                 .subscribe(stringBaseResponseListModel -> {
@@ -200,7 +202,7 @@ public class UpdateBackCardActivity extends AbsBaseActivity{
 
     public void inputPayDialog(){
 
-        if(inputDialog == null){
+ /*       if(inputDialog == null){
             inputDialog = new InputDialog(this).builder().setTitle("支付密码")
                     .setPositiveBtn("确定", (view, inputMsg) -> {
                         if (TextUtils.isEmpty(inputMsg)) {
@@ -217,7 +219,7 @@ public class UpdateBackCardActivity extends AbsBaseActivity{
             inputDialog.getContentView().setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         }
         inputDialog.getContentView().setText("");
-        inputDialog.show();
+        inputDialog.show();*/
     }
 
 
