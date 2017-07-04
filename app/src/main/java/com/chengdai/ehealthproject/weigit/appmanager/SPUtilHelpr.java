@@ -8,8 +8,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chengdai.ehealthproject.base.BaseApplication;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.uitls.OnLoginFailure;
 import com.chengdai.ehealthproject.uitls.SPUtils;
-import com.chengdai.ehealthproject.uitls.nets.OnOkFailure;
 
 /**
  * SPUtils 工具辅助类
@@ -137,7 +137,7 @@ public class SPUtilHelpr {
 	 */
 	public static boolean isLogin(Context context){
 		if(TextUtils.isEmpty(getUserToken())){
-			OnOkFailure.StartDoFailure(context,"请先登录");
+			OnLoginFailure.StartDoFailure(context,"请先登录");
 			return false;
 		}
 

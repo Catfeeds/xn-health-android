@@ -283,7 +283,7 @@ public class StringUtils {
                 return "邮政EMS";
             }
 
-            return "";
+            return "其它";
     }
 
 

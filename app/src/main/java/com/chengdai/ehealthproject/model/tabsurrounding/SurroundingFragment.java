@@ -326,6 +326,8 @@ public class SurroundingFragment extends BaseLazyFragment{
             map.put("latitude", locationModel.getLongitud());
         }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
             map.put("city", SPUtilHelpr.getResetLocationInfo().getCityName());
+        }else{
+            map.put("city", "金华");
         }
         map.put("status","2");
         map.put("start",mStoreStart+"");

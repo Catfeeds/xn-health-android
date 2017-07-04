@@ -68,8 +68,6 @@
         </activity>
 
 
-
-
         //主页
         <activity android:name=".model.other.MainActivity"
             android:screenOrientation="portrait"

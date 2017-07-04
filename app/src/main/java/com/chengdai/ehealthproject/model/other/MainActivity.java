@@ -88,12 +88,15 @@ public class MainActivity extends BaseLocationActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 //        mainBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_main, null, false);;
 //
 //        addMainView(mainBinding.getRoot());
 
 //        hintTitleView();
+
+        EventBus.getDefault().register(this);
 
         if(getIntent()!=null){
             mTabIndex =getIntent().getIntExtra("select",1);
@@ -237,12 +240,18 @@ public class MainActivity extends BaseLocationActivity {
             mShowIndex=eventBus.getEvInt()-1;
             mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
             setTabIndex();
+        }else if(TextUtils.equals(eventBus.getTag(),"MainActivityFinish")){
+              finish();
         }
+
     }
+
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         SPUtilHelpr.saveLocationInfo("");
+        EventBus.getDefault().unregister(this);
     }
 }

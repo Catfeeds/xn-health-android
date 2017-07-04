@@ -195,12 +195,12 @@ public class HealthManagerFragment extends BaseFragment{
 
                 mPageStart=1;
                 LocationModel locationModel=SPUtilHelpr.getLocationInfo();
-                if(locationModel==null ){
-                    getWeatherData("");
-                }else if(TextUtils.isEmpty(locationModel.getAreaName())){
-                    getWeatherData("");
-                }else{
+                if(locationModel!=null && !TextUtils.isEmpty(locationModel.getAreaName())){
                     getWeatherData(locationModel.getAreaName());
+                }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+                    getWeatherData(SPUtilHelpr.getResetLocationInfo().getCityName());
+                }else{
+                    getWeatherData("");
                 }
                 if(SPUtilHelpr.isLoginNoStart()){
                     getTestPageRequest();
@@ -267,6 +267,16 @@ public class HealthManagerFragment extends BaseFragment{
         }else  if( TextUtils.equals(e.getTag(),"LuntanDzRefeshEnent")){
             mPageStart=1;
             getDataRequest(null);
+        }
+    }
+
+
+    @Subscribe
+    public void reSetWeahter(EventBusModel busModel){
+        if(busModel == null) return;
+
+        if(TextUtils.equals(busModel.getTag(),"HealthManagerFragmentRefreshWeahter")){
+            getWeatherData(busModel.getEvInfo());
         }
 
     }

@@ -105,11 +105,16 @@ public class SettingActivity extends AbsBaseActivity{
             eventBusModel.setTag("AllFINISH");
             EventBus.getDefault().post(eventBusModel); //结束掉所有界面
 
-            EventBusModel eventBusModel2=new EventBusModel();
-            eventBusModel2.setTag("LOGINSTATEREFHSH");
-            eventBusModel2.setEvBoolean(false);
-            EventBus.getDefault().post(eventBusModel2); //刷新未登录数据
+            EventBusModel loginEvModel=new EventBusModel();
+            loginEvModel.setTag("LOGINSTATEREFHSH");
+            loginEvModel.setEvBoolean(false);
+            EventBus.getDefault().post(loginEvModel); //刷新未登录数据
             LoginActivity.open(this,true);
+
+            EventBusModel eventBusMode2=new EventBusModel();//结束主页
+            eventBusMode2.setTag("MainActivityFinish");
+            EventBus.getDefault().post(eventBusMode2); //结束掉所有界面
+
             finish();
         });
 

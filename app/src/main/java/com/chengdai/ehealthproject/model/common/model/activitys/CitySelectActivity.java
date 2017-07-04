@@ -10,8 +10,10 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityCitySelectBinding;
 import com.chengdai.ehealthproject.model.common.model.CityModel;
+import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.adapters.CityListAdapter;
 import com.chengdai.ehealthproject.uitls.db.DBManager;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 
@@ -76,7 +78,17 @@ public class CitySelectActivity extends AbsBaseActivity {
               },Throwable::printStackTrace));
 
            mBinding.lvCitySelect.setOnItemClickListener((parent, view, position, id) -> {
+               if(adapter == null || adapter.getItem(position)==null){
+                   return;
+               }
+            SPUtilHelpr.saveLocationInfo("");
+               EventBusModel eventBusModel=new EventBusModel();
+               eventBusModel.setTag("HealthManagerFragmentRefreshWeahter");//刷新定位天气
+               eventBusModel.setEvInfo(adapter.getItem(position).getName());
+               EventBus.getDefault().post(eventBusModel);
+
             EventBus.getDefault().post(adapter.getItem(position));
+
             finish();
         });
 
