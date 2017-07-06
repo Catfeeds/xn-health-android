@@ -18,6 +18,7 @@ import com.chengdai.ehealthproject.model.common.model.activitys.ImageSelectActiv
 import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -148,7 +149,7 @@ public class MyInfoActivity extends AbsBaseActivity{
         }
         if (requestCode == PHOTOFLAG) {
             String path = data.getStringExtra(ImageSelectActivity.staticPath);
-
+            LogUtil.E("图片xxxxxxx"+path);
             new QiNiuUtil(this).getQiniuURL(new QiNiuUtil.QiNiuCallBack() {
                 @Override
                 public void onSuccess(String key, ResponseInfo info, JSONObject res) {
@@ -197,8 +198,11 @@ public class MyInfoActivity extends AbsBaseActivity{
          mBinding.tvEmail.setText(mData.getUserExt().getEmail());
             mBinding.edit.setText(mData.getUserExt().getIntroduce());
         }
-        mBinding.tvTjName.setText(mData.getUserRefereeName());
-        mBinding.tvTjId.setText(mData.getUserId());
+        mBinding.tvTjName.setText(mData.getReferrer().getMobile());
+        mBinding.tvTjId.setText(mData.getReferrer().getUserId());
+
+       mBinding.tvTjType.setText(StringUtils.getTjTypebyCode(this,mData.getReferrer().getKind()));
+
     }
 
 

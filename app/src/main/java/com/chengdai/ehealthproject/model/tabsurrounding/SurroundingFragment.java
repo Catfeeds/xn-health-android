@@ -423,6 +423,7 @@ public class SurroundingFragment extends BaseLazyFragment{
             SPUtilHelpr.saveRestLocationInfo(cityModel.getName());
             SPUtilHelpr.saveLocationInfo("");
             mBinding.tvLocation.setText(cityModel.getName());
+            mStoreStart=1;
             getStoreListRequest(null,1);
         }
     }

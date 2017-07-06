@@ -9,6 +9,7 @@ import android.util.Log;
 import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
@@ -53,7 +54,7 @@ public class QiNiuUtil {
      * @param callBack
      * @param url
      */
-    private void uploadSingle(final QiNiuCallBack callBack , String url){
+    private void uploadSingle(final QiNiuCallBack callBack , String url,String token){
 
         if(url.indexOf(ANDROID) == -1 || url.indexOf(IOS) == -1){
 
@@ -114,62 +115,33 @@ public class QiNiuUtil {
                         return;
                     }
                     token=r.getUploadToken();
-                    Compressor(callBack,data);
+                    Compressor(callBack,data,token);
 
-                },Throwable::printStackTrace);
+                },throwable -> {
+                    callBack.onFal("图片上传失败,请选择正确的图片");
+                });
 
     }
 
 
+    //多张图片上传
     public void updataeImage(List<String> dataList,String mToekn,QiNiuCallBack callBack){
 
         for(int i=0;i<dataList.size();i++) {
             String imgPath = dataList.get(i);
-
-            if (TextUtils.isEmpty(imgPath)) {
+            if(TextUtils.isEmpty(imgPath)){
                 continue;
             }
 
             try {
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Configuration config = new Configuration.Builder().build();
-                        UploadManager uploadManager = new UploadManager(config);
-                        File compressedImageFile = Compressor.getDefault(context).compressToFile(new File(imgPath));
-                        String key = ANDROID + timestamp() + getImageWidthHeight(compressedImageFile.getAbsolutePath()) + ".jpg";
-                        uploadManager.put(compressedImageFile.getAbsolutePath(), key, mToekn,
-                                new UpCompletionHandler() {
-                                    @Override
-                                    public void complete(String key, ResponseInfo info,
-                                                         JSONObject res) {
-
-                                        if(info !=null && info.isOK())
-                                        {
-                                         if(callBack!=null){
-                                            callBack.onSuccess(key, info, res);
-                                         }
-                                        }else{
-
-                                            Log.i("QiNiu", "Upload Fail");
-                                            Log.i("QiNiu", "key="+key);
-                                            Log.i("QiNiu", "res="+res);
-                                            Log.i("QiNiu", "info="+info);
-
-                                            callBack.onSuccess("error", null,null);
-                                        }
-
-                                    }
-                                }, null);
-                    }
-
-                }).start();
+                Compressor(callBack,imgPath,mToekn);
             }catch (Exception e){
                 if(callBack!=null){
-                    callBack.onFal("图片上传失败");
+                    callBack.onFal("图片上传失败,请选择正确的图片");
                 }
             }
+
         }
 
     }
@@ -206,9 +178,9 @@ public class QiNiuUtil {
     }
 
 
-    private void Compressor(QiNiuCallBack callBack,String data){
+    private void Compressor(QiNiuCallBack callBack,String data,String token){
         File compressedImageFile = Compressor.getDefault(context).compressToFile(new File(data));
-        uploadSingle(callBack,compressedImageFile.getAbsolutePath());
+        uploadSingle(callBack,compressedImageFile.getAbsolutePath(),token);
 
     }
 

@@ -1,8 +1,10 @@
 package com.chengdai.ehealthproject.uitls;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
 import java.math.BigDecimal;
@@ -259,31 +261,47 @@ public class StringUtils {
     public static String getLogisticsCompany(String key){
 
             if(TextUtils.equals("ZJS",key)){
+
                 return "宅急送";
-            }
-            if(TextUtils.equals("TTKD",key)){
+
+            }else if(TextUtils.equals("TTKD",key)){
                 return "天天快递";
-            }
-            if(TextUtils.equals("SF",key)){
+            }else if(TextUtils.equals("SF",key)){
                 return "顺丰快递";
-            }
-           if(TextUtils.equals("HTKY",key)){
+            } else  if(TextUtils.equals("HTKY",key)){
                 return "汇通快递";
-            }
-            if(TextUtils.equals("YTO",key)){
+            } else if(TextUtils.equals("YTO",key)){
                 return "圆通快递";
-            }
-            if(TextUtils.equals("ZTO",key)){
+            } else if(TextUtils.equals("ZTO",key)){
                 return "中通快递";
-            }
-            if(TextUtils.equals("STO",key)){
+            } else if(TextUtils.equals("STO",key)){
                 return "申通快递";
-            }
-           if(TextUtils.equals("EMS",key)){
+            } else if(TextUtils.equals("EMS",key)){
                 return "邮政EMS";
             }
 
             return "其它";
+    }
+
+    public static String getTjTypebyCode(Context context,String key){
+
+        String[] tNames=context.getResources().getStringArray(R.array.tjtype);
+        String[] tCodes=context.getResources().getStringArray(R.array.tj_type_code);
+
+        if(tNames.length != tCodes.length){
+            return "暂无";
+        }
+
+        int index=0;
+
+          for(int i=0;i<tCodes.length;i++){
+              if(TextUtils.equals(tCodes[i],key)){
+                  index=i;
+                  break;
+              }
+          }
+
+         return tNames[index];
     }
 
 

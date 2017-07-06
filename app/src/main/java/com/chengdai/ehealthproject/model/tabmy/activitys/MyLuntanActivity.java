@@ -148,7 +148,6 @@ public class MyLuntanActivity extends AbsBaseActivity {
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("start",mPageStart+"");
         map.put("limit","10");
-        showErrorView();
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetArticleLisData("621042", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(context))

@@ -24,12 +24,13 @@
 
 
     <EditText
+        android:layout_marginTop="5dp"
         android:id="@+id/edit_info"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@null"
         android:gravity="top"
-        android:hint="分享新鲜事"
+        android:hint="这一刻的想法"
         android:textColorHint="@color/text_hint_color"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -43,12 +44,13 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            app:itemWidth="0"
-            app:itemHeight="0"
-            app:numColumns="3"
+             app:numColumns="3"
              android:id="@+id/grid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.chengdai.ehealthproject.weigit.views.GridLayout>
+            android:layout_height="match_parent">
+
+        </com.chengdai.ehealthproject.weigit.views.GridLayout>
+
 
     </LinearLayout>
 

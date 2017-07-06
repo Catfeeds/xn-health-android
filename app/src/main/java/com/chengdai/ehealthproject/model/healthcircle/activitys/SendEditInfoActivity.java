@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.chengdai.ehealthproject.R;
@@ -135,8 +136,8 @@ public class SendEditInfoActivity extends AbsBaseActivity{
                     }
                     @Override
                     public void onFal(String info) {
-                        showToast("发布失败");
-                           loadingDialog.dismiss();
+                        showToast(info);
+                        loadingDialog.dismiss();
                     }
                 });
 
@@ -196,7 +197,7 @@ public class SendEditInfoActivity extends AbsBaseActivity{
 */
 
       mSubscription .add( RetrofitUtils.getLoaderServer().SendArticleInfo("621010", StringUtils.getJsonToString(map))
-                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .compose(RxTransformerHelper.applySchedulerResult(null))
                 .subscribe(codeModel -> {
                      String s=";filter:true";//是否包含敏感词汇
                     if(codeModel!=null && !TextUtils.isEmpty(codeModel.getCode()) && -1== codeModel.getCode().indexOf(s,0)){
@@ -229,7 +230,6 @@ public class SendEditInfoActivity extends AbsBaseActivity{
                             mSelectPhotoUrls.add("");
                         }
                     }
-
 
                 setAdapter();
 
@@ -304,7 +304,7 @@ public class SendEditInfoActivity extends AbsBaseActivity{
     }
 
     /**
-     * 支付回调
+     *
      * @param mo
      */
     @Subscribe

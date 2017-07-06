@@ -57,8 +57,7 @@ public class GridLayout extends ViewGroup {
         this(context, attrs, 0);
     }
 
-    public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public GridLayout(Context context, AttributeSet attrs, int defStyleAttr) { super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
@@ -212,7 +211,6 @@ public class GridLayout extends ViewGroup {
             mPainterPosX += width + margins.leftMargin + margins.rightMargin + horizontalSpacing;
         }
     }
-
     /**
      * 绑定View
      *
