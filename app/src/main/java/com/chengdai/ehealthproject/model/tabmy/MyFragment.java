@@ -67,18 +67,14 @@ public class MyFragment extends BaseLazyFragment{
 
         mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_my, null, false);
 
-
         //周边
         mBinding.tvSurroundingService.setOnClickListener(v -> {
-
             HotelOrderStateLookActivity.open(mActivity);
         });
 
         //健康商城
         mBinding.linShop.setOnClickListener(v -> {
-
             ShopAllOrderLookActivity.open(mActivity);
-
 
         });
        //设置
@@ -92,7 +88,6 @@ public class MyFragment extends BaseLazyFragment{
             }
             MyLuntanActivity.open(mActivity,SPUtilHelpr.getUserId());
         });
-
 
         //健康任务
         mBinding.linHealthTask.setOnClickListener(v -> {
@@ -224,6 +219,13 @@ public class MyFragment extends BaseLazyFragment{
                     }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(mActivity,R.mipmap.woman,mBinding.imgUserSex);
                     }
+
+                    if(MyConfig.LEVEL_NOT_VIP.equals(r.getLevel())){
+                        mBinding.imgVip.setVisibility(View.GONE);
+                    }else if (MyConfig.LEVEL_VIP.equals(r.getLevel())){
+                        mBinding.imgVip.setVisibility(View.VISIBLE);
+                    }
+
 
                 },Throwable::printStackTrace));
 

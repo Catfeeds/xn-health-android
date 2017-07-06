@@ -2,6 +2,7 @@
 <layout xmlns:tools="http://schemas.android.com/tools">
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
     android:id="@+id/content_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -55,7 +56,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -96,8 +97,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="0.5dp" />
+
+
     <LinearLayout
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -129,7 +132,41 @@
         android:layout_height="0.5dp" />
 
     <LinearLayout
-        android:layout_marginTop="32dp"
+        android:id="@+id/lin_tj"
+        android:layout_marginTop="28dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/password"
+            android:layout_marginLeft="45dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+
+        <TextView
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/text_hint_color"
+            android:id="@+id/tv_tj_type"
+            android:hint="请选择推荐人类型"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:background="@null"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="58dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/view_tj"
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <LinearLayout
+        android:layout_marginTop="28dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -150,7 +187,52 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-    
+    <View
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+
+    <LinearLayout
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="55dp">
+
+        <ImageView
+            android:layout_marginTop="28dp"
+            android:src="@mipmap/location"
+            android:layout_marginLeft="45dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="28dp"
+        android:id="@+id/txt_address"
+        android:layout_marginRight="15dp"
+        android:hint="请选择地区"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:textColorHint="@color/text_hint_color"
+        android:textColor="#333333"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+    <View
+        android:layout_marginLeft="68dp"
+        android:layout_marginRight="58dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
     <Button
         android:id="@+id/btn_register"
         android:textSize="16sp"
@@ -158,7 +240,7 @@
         android:text="注册"
         android:layout_marginRight="48dp"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="35dp"
         android:layout_width="match_parent"
         android:background="@drawable/selector_login_btn"
         android:layout_height="44dp" />
@@ -187,14 +269,15 @@
 
 
     <TextView
+        android:layout_marginBottom="50dp"
         android:id="@+id/tv_gologin"
-        android:layout_marginTop="24dp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/main_tab_text_select"
-        android:textSize="13sp"
-        android:text="直接登录"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="24dp"
+        android:text="直接登录"
+        android:textColor="@color/main_tab_text_select"
+        android:textSize="13sp" />
 
 </LinearLayout>
 

@@ -1,30 +1,32 @@
 package com.chengdai.ehealthproject.model.healthstore.fragments;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseLazyFragment;
-import com.chengdai.ehealthproject.databinding.CommonListRefreshBinding;
-import com.chengdai.ehealthproject.model.tabmy.activitys.OrderDetailsActivity;
+import com.chengdai.ehealthproject.base.BaseListFragment;
+import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopPayConfirmActivity;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderDetailBean;
+import com.chengdai.ehealthproject.model.tabmy.activitys.OrderConfirmGetActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.adapters.OrderRecordAdapter;
-import com.chengdai.ehealthproject.model.tabmy.adapters.ShopOrderListAdapter;
+import com.chengdai.ehealthproject.uitls.DateUtil;
+import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.liaoinstan.springview.container.DefaultFooter;
-import com.liaoinstan.springview.container.DefaultHeader;
-import com.liaoinstan.springview.widget.SpringView;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,13 +34,7 @@ import java.util.Map;
  * Created by 李先俊 on 2017/6/15.
  */
 
-public class ShopOrderRecordFragment extends BaseLazyFragment {
-
-    private CommonListRefreshBinding mBinding;
-    private boolean isCreate;
-
-    private int mPageStart=1;
-    private ShopOrderListAdapter mAdapter;
+public class ShopOrderRecordFragment extends BaseListFragment<ShopOrderDetailBean> {
 
     private String mState;
 
@@ -58,87 +54,103 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.common_list_refresh, null, false);
-
-        isCreate=true;
 
         if(getArguments()!=null){
             mState=getArguments().getString("state","");
         }
 
-        initListView();
-
-        initSpringView();
-
-
-        return mBinding.getRoot();
+        return super.onCreateView(inflater,container,savedInstanceState);
     }
 
-    private void initListView() {
+    @Override
+    protected void onMInitRefresh(int pageIndex) {
+        orderRecordRequest(mActivity);
+    }
+
+    @Override
+    protected void onMLazyLoad(int pageIndex) {
+        orderRecordRequest(null);
+    }
+
+    @Override
+    protected void onMRefresh(int pageIndex) {
+        orderRecordRequest(null);
+    }
+
+    @Override
+    protected void onMLoadMore(int pageIndex) {
+        orderRecordRequest(null);
+    }
+
+    @Override
+    protected int getItemLayoutId() {
+        return R.layout.item_shop_order;
+    }
+
+    @Override
+    protected void onBind(ViewHolder viewHolder, ShopOrderDetailBean item, int position) {
+
+        TextView txtOrderId=viewHolder.getView(R.id.txt_orderId);
+        TextView txtTime=viewHolder.getView(R.id.txt_time);
+        TextView txtBtn=viewHolder.getView(R.id.txt_btn);
+        TextView txtPrice=viewHolder.getView(R.id.txt_price);
+        ImageView imgGood=viewHolder.getView(R.id.img_good);
+        TextView tvNumber=viewHolder.getView(R.id.txt_number);
+        TextView tvName=viewHolder.getView(R.id.txt_name);
 
 
-        mAdapter = new ShopOrderListAdapter(mActivity,new ArrayList<>(),MyConfig.PRICEORDER);
-        mBinding.listview.setAdapter(mAdapter);
+        txtOrderId.setText(item.getCode());
 
-        mBinding.listview.setOnItemClickListener((parent, view, position, id) -> {
+        txtTime.setText(DateUtil.format(new Date(item.getApplyDatetime()),DateUtil.DATE_YMD));
 
-            if(mAdapter !=null){
-                ShopOrderDetailsActivity.open(mActivity,mAdapter.getItem(position),MyConfig.PRICEORDER);
+        txtBtn.setText(StringUtils.getOrderState(item.getStatus()));
+
+
+
+        if(item.getProductOrderList() !=null && item.getProductOrderList().size()>0 && item.getProductOrderList().get(0) !=null
+                && item.getProductOrderList().get(0).getProduct()!=null ){
+            ImgUtils.loadImgURL(mActivity, MyConfig.IMGURL+item.getProductOrderList().get(0).getProduct().getAdvPic(),imgGood);
+
+            txtPrice.setText(StringUtils.getShowPriceSign(item.getProductOrderList().get(0).getPrice1()));
+
+            tvNumber.setText("X" + item.getProductOrderList().get(0).getQuantity());
+
+            tvName.setText(item.getProductOrderList().get(0).getProduct().getName());
+
+        }
+
+        txtBtn.setOnClickListener(v -> {
+
+            if (StringUtils.canDoPay(item.getStatus())){//待支付状态
+                ShopListModel.ListBean.ProductSpecsListBean data=new ShopListModel.ListBean.ProductSpecsListBean();
+
+                if(item.getProductOrderList() !=null && item.getProductOrderList().size()>0 && item.getProductOrderList().get(0) !=null) {
+                    data.setPrice1(item.getProductOrderList().get(0).getPrice1());
+                    data.setmBuyNum(item.getProductOrderList().get(0).getQuantity());
+
+                    ShopPayConfirmActivity.open(mActivity,data,item.getCode(),false);
+                }
+            }else if(TextUtils.equals(MyConfig.ORDERTYPEWAITSHOUHUO,item.getStatus())){  //待收获状态
+                OrderConfirmGetActivity.open(mActivity,item.getCode());
             }
-
         });
 
     }
 
-    private void initSpringView() {
-        mBinding.springvew.setType(SpringView.Type.FOLLOW);
-        mBinding.springvew.setGive(SpringView.Give.TOP);
-        mBinding.springvew.setHeader(new DefaultHeader(getActivity()));
-        mBinding.springvew.setFooter(new DefaultFooter(getActivity()));
-
-        mBinding.springvew.setListener(new SpringView.OnFreshListener() {
-            @Override
-            public void onRefresh() {
-                mPageStart=1;
-                orderRecordRequest(null);
-                mBinding.springvew.onFinishFreshAndLoad();
-            }
-
-            @Override
-            public void onLoadmore() {
-                mPageStart++;
-                orderRecordRequest(null);
-                mBinding.springvew.onFinishFreshAndLoad();
-            }
-        });
-
+    @Override
+    protected void onItemCilck(ShopOrderDetailBean shopOrderDetailBean, int position) {
+        ShopOrderDetailsActivity.open(mActivity,shopOrderDetailBean,MyConfig.PRICEORDER);
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
 
         if(getUserVisibleHint()){
-            mPageStart=1;
-            orderRecordRequest(mActivity);
+          onMRefresh(mPageIndex);
         }
     }
 
-    @Override
-    protected void lazyLoad() {
-
-        if(isCreate){
-            mPageStart=1;
-            orderRecordRequest(mActivity);
-        }
-
-    }
-
-    @Override
-    protected void onInvisible() {
-
-    }
 
 
     public void orderRecordRequest(Context context){
@@ -146,7 +158,7 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
         Map<String,String> object=new HashMap();
 
         object.put("applyUser", SPUtilHelpr.getUserId());
-        object.put("start", mPageStart+"");
+        object.put("start", mPageIndex+"");
         object.put("limit", "10");
         object.put("status", mState+"");
         object.put("token", SPUtilHelpr.getUserToken());
@@ -156,22 +168,9 @@ public class ShopOrderRecordFragment extends BaseLazyFragment {
 
         mSubscription.add(RetrofitUtils.getLoaderServer().ShopOrderList("808068",StringUtils.getJsonToString(object))
                 .compose(RxTransformerHelper.applySchedulerResult(context))
+                .filter(data->data!=null)
                 .subscribe(r->{
-                    if(mPageStart==1){
-                        if(r==null || r.getList()==null){
-                            return;
-                        }
-                        mAdapter.setData(r.getList());
-                        return;
-                    }
-                    if(mPageStart>1){
-                        if(r==null || r.getList()==null || r.getList().size()==0){
-                            mPageStart--;
-                            return;
-                        }
-                        mAdapter.addData(r.getList());
-                    }
-
+                    setData(r.getList());
                 },Throwable::printStackTrace));
 
 

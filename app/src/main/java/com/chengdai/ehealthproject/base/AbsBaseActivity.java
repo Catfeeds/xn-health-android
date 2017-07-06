@@ -116,6 +116,12 @@ public abstract class AbsBaseActivity extends BaseActivity {
         setErroryText(error);
     }
 
+    public void showErrorView(String error) {
+        hideAll();
+        mErrorView.setVisibility(View.VISIBLE);
+        setErroryText(error);
+    }
+
     public void setTopTitle(int resId) {
         setTopTitle(getString(resId));
     }

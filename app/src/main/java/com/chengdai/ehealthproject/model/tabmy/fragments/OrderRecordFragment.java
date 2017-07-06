@@ -1,27 +1,25 @@
 package com.chengdai.ehealthproject.model.tabmy.fragments;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.text.TextUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseLazyFragment;
-import com.chengdai.ehealthproject.databinding.CommonListRefreshBinding;
+import com.chengdai.ehealthproject.base.BaseListFragment;
 import com.chengdai.ehealthproject.model.tabmy.activitys.OrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.adapters.OrderRecordAdapter;
+import com.chengdai.ehealthproject.model.tabmy.model.OrderRecordModel;
+import com.chengdai.ehealthproject.uitls.DateUtil;
+import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.liaoinstan.springview.container.DefaultFooter;
-import com.liaoinstan.springview.container.DefaultHeader;
-import com.liaoinstan.springview.widget.SpringView;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +27,7 @@ import java.util.Map;
  * Created by 李先俊 on 2017/6/15.
  */
 
-public class OrderRecordFragment extends BaseLazyFragment {
-
-    private CommonListRefreshBinding mBinding;
-    private boolean isCreate;
-
-    private int mPageStart=1;
-    private OrderRecordAdapter mAdapter;
+public class OrderRecordFragment extends BaseListFragment<OrderRecordModel.ListBean> {
 
     /**
      * 获得fragment实例
@@ -48,108 +40,71 @@ public class OrderRecordFragment extends BaseLazyFragment {
         return fragment;
     }
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.common_list_refresh, null, false);
-
-
-        orderRecordRequest(mActivity);
-        isCreate=true;
-
-        initListView();
-
-        initSpringView();
-
-
-
-        return mBinding.getRoot();
+    protected void onMInitRefresh(int pageIndex) {
+        orderRecordRequest(mActivity,pageIndex);
     }
 
-    private void initListView() {
-        mAdapter = new OrderRecordAdapter(mActivity,new ArrayList<>());
-        mBinding.listview.setAdapter(mAdapter);
-
-        mBinding.listview.setOnItemClickListener((parent, view, position, id) -> {
-
-            if(mAdapter !=null){
-                OrderDetailsActivity.open(mActivity,mAdapter.getItem(position));
-            }
-
-        });
-
+    @Override
+    protected void onMLazyLoad(int pageIndex) {
+//        orderRecordRequest(null,pageIndex);
     }
 
-    private void initSpringView() {
-        mBinding.springvew.setType(SpringView.Type.FOLLOW);
-        mBinding.springvew.setGive(SpringView.Give.TOP);
-        mBinding.springvew.setHeader(new DefaultHeader(getActivity()));
-        mBinding.springvew.setFooter(new DefaultFooter(getActivity()));
+    @Override
+    protected void onMRefresh(int pageIndex) {
+        orderRecordRequest(null,pageIndex);
+    }
 
-        mBinding.springvew.setListener(new SpringView.OnFreshListener() {
-            @Override
-            public void onRefresh() {
-                mPageStart=1;
-                orderRecordRequest(null);
-                mBinding.springvew.onFinishFreshAndLoad();
-            }
+    @Override
+    protected void onMLoadMore(int pageIndex) {
+        orderRecordRequest(null,pageIndex);
+    }
 
-            @Override
-            public void onLoadmore() {
-                mPageStart++;
-                orderRecordRequest(null);
-                mBinding.springvew.onFinishFreshAndLoad();
-            }
-        });
-
+    @Override
+    protected int getItemLayoutId() {
+        return R.layout.item_order_list;
     }
 
 
     @Override
-    protected void lazyLoad() {
+    protected void onBind(ViewHolder holder, OrderRecordModel.ListBean item, int position) {
+        TextView tvCode=holder.getView(R.id.tv_code);
+        TextView tvDate=holder.getView(R.id.tv_date);
+        TextView tvName=holder.getView(R.id.tv_name);
+        TextView tvPrice=holder.getView(R.id.tv_price);
+        ImageView imgTitle=holder.getView(R.id.img_title);
 
-        if(isCreate){
+        holder.setOnClickListener(R.id.lin_root,v -> {
+            OrderDetailsActivity.open(mActivity,item);
+        });
 
-            isCreate=false;
+        if(!TextUtils.isEmpty(item.getCreateDatetime())){
+            tvDate.setText(DateUtil.format( new Date(item.getCreateDatetime()), DateUtil.DATE_YMD));
         }
 
+        tvPrice.setText(mActivity.getString(R.string.price_sing)+ StringUtils.showPrice(item.getPrice()));
+
+        tvCode.setText(item.getCode());
+
+        if(item.getStore() !=null ){
+            tvName.setText(item.getStore().getName());
+            ImgUtils.loadImgURL(mActivity, MyConfig.IMGURL+item.getStore().getSplitAdvPic(),imgTitle);
+        }
     }
 
-    @Override
-    protected void onInvisible() {
 
-    }
-
-    public void orderRecordRequest(Context context){
+    public void orderRecordRequest(Context context,int page){
 
         Map<String,String> map=new HashMap();
-
         map.put("userId",SPUtilHelpr.getUserId());
-        map.put("start",mPageStart+"");
+        map.put("start",page+"");
         map.put("limit","10");
         map.put("status","1");
-
         mSubscription.add(RetrofitUtils.getLoaderServer().OrderRecordRequest("808245", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(context))
+                .filter(data->data!=null)
                 .subscribe(r -> {
-                    if(mPageStart==1){
-                       if(r==null || r.getList()==null){
-                         return;
-                         }
-                        mAdapter.setData(r.getList());
-                        return;
-                      }
-                      if(mPageStart>1){
-                          if(r==null || r.getList()==null || r.getList().size()==0){
-                              mPageStart--;
-                              return;
-                          }
-                          mAdapter.addData(r.getList());
-                      }
-
-
-
+                  setData(r.getList());
                 },Throwable::printStackTrace));
 
     }

@@ -400,6 +400,12 @@ public class HealthManagerFragment extends BaseFragment{
                         ImgUtils.loadImgId(mActivity,R.mipmap.woman,mHeadViewBinding.imgSex);
                     }
 
+                    if(MyConfig.LEVEL_NOT_VIP.equals(r.getLevel())){
+                        mHeadViewBinding.imgVip.setVisibility(View.GONE);
+                    }else if (MyConfig.LEVEL_VIP.equals(r.getLevel())){
+                        mHeadViewBinding.imgVip.setVisibility(View.VISIBLE);
+                    }
+
                 },Throwable::printStackTrace));
 
     }

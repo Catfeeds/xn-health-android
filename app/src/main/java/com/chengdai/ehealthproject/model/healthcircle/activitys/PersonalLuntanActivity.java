@@ -198,6 +198,11 @@ public class PersonalLuntanActivity extends AbsBaseActivity {
                     }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(this,R.mipmap.woman,mHeadViewBinding.imgSex);
                     }
+                    if(MyConfig.LEVEL_NOT_VIP.equals(r.getLevel())){
+                        mHeadViewBinding.imgVip.setVisibility(View.GONE);
+                    }else if (MyConfig.LEVEL_VIP.equals(r.getLevel())){
+                        mHeadViewBinding.imgVip.setVisibility(View.VISIBLE);
+                    }
 
                 },Throwable::printStackTrace));
 

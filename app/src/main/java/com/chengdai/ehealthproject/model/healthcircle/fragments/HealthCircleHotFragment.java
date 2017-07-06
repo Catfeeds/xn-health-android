@@ -208,15 +208,15 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                     InfoDetailsActivity.open(mContext,listBean);
                 });
 
-               //点赞
+                //点赞
                 holder.setOnClickListener(R.id.lin_DZ,v -> {
                     DZRequest(listBean,position);
                 });
 
-               //评论列表
+                //评论列表
                 setpinlunlist(holder, listBean);
 
-                 //九宫格
+                //九宫格
                 setNineGridView(holder, listBean);
 
                 if(TextUtils.equals(listBean.getIsDZ(),"1")){//已点赞
@@ -247,14 +247,14 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                 }else{
                     holder.setText(R.id.tv_dz_sum,listBean.getSumLike()+"");
                 }
-               if(listBean.getSumComment()>999){
+                if(listBean.getSumComment()>999){
                     holder.setText(R.id.tv_pinlun,"999+");
                 }else{
                     holder.setText(R.id.tv_pinlun,listBean.getSumComment()+"");
                 }
 
                 if(TextUtils.isEmpty(listBean.getAddress())){
-                   holder.setVisible(R.id.lin_location,false);
+                    holder.setVisible(R.id.lin_location,false);
                 }else{
                     holder.setVisible(R.id.lin_location,true);
                     holder.setText(R.id.tv_location,listBean.getAddress());
@@ -297,7 +297,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                         commentListBeanList.add(bean);
                         i++;
                     }
-                     //设置品论数据
+                    //设置品论数据
                     lv_pinlun.setAdapter(new com.zhy.adapter.abslistview.CommonAdapter<ArticleModel.ListBean.CommentListBean>(mActivity,R.layout.item_pinlun,commentListBeanList) {
                         @Override
                         protected void convert(com.zhy.adapter.abslistview.ViewHolder viewHolder, ArticleModel.ListBean.CommentListBean item, int position) {
@@ -362,8 +362,8 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
 
                     }else{
                         int sum=item.getSumLike();
-                            sum++;
-                            item.setSumLike(sum);
+                        sum++;
+                        item.setSumLike(sum);
                         item.setIsDZ("1");
                     }
                     mEmptyWrapper.notifyItemChanged(position,position);

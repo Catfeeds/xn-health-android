@@ -75,15 +75,17 @@ public class GridLayout extends ViewGroup {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.GridLayout);
         horizontalSpacing = ta.getInt(R.styleable.GridLayout_horizontalSpacing, 5);
         verticalSpacing = ta.getInt(R.styleable.GridLayout_verticalSpacing, 5);
-        itemWidth = ta.getInt(R.styleable.GridLayout_itemWidth, 50);
-        itemHeight = ta.getInt(R.styleable.GridLayout_itemHeight, 50);
+        itemWidth = ta.getInt(R.styleable.GridLayout_itemWidth, 00);
+        itemHeight = ta.getInt(R.styleable.GridLayout_itemHeight, 00);
         numColumns = ta.getInt(R.styleable.GridLayout_numColumns, 1);
 
         horizontalSpacing = dip2px(context, horizontalSpacing);
         verticalSpacing = dip2px(context, verticalSpacing);
 
-        itemWidth = Math.min(dip2px(context, itemWidth), dm.widthPixels);
-        itemHeight = Math.min(dip2px(context, itemHeight), dm.heightPixels);
+        if(itemWidth==0){
+            itemWidth=(dm.widthPixels - 2 * horizontalSpacing) / numColumns -dip2px(context,15);//暂时硬编码 xml控件边距是15dp
+            itemHeight=itemWidth;
+        }
 
         ta.recycle();
 

@@ -86,7 +86,6 @@ public class MyInfoActivity extends AbsBaseActivity{
 
         setListener();
 
-
     }
 
     private void setListener() {
@@ -198,6 +197,8 @@ public class MyInfoActivity extends AbsBaseActivity{
          mBinding.tvEmail.setText(mData.getUserExt().getEmail());
             mBinding.edit.setText(mData.getUserExt().getIntroduce());
         }
+        mBinding.tvTjName.setText(mData.getUserRefereeName());
+        mBinding.tvTjId.setText(mData.getUserId());
     }
 
 

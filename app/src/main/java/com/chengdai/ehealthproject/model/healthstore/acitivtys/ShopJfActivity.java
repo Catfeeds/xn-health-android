@@ -271,6 +271,11 @@ public class ShopJfActivity extends AbsBaseActivity {
                     }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
                         ImgUtils.loadImgId(this,R.mipmap.woman,mBinding.imgSex);
                     }
+                    if(MyConfig.LEVEL_NOT_VIP.equals(r.getLevel())){
+                        mBinding.imgVip.setVisibility(View.GONE);
+                    }else if (MyConfig.LEVEL_VIP.equals(r.getLevel())){
+                        mBinding.imgVip.setVisibility(View.VISIBLE);
+                    }
 
                 },throwable ->{
                     mBinding.txtName.setText(getString(R.string.txt_get_jf_no_login_tips));

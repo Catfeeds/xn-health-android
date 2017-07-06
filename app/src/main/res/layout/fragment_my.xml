@@ -31,11 +31,23 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <ImageView
-            android:id="@+id/imt_user_logo"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center_vertical" />
+        <FrameLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imt_user_logo"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical" />
+            <ImageView
+                android:src="@mipmap/vip"
+                android:id="@+id/img_vip"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right|bottom" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_weight="1"

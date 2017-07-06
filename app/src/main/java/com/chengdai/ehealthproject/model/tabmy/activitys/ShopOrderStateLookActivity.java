@@ -62,6 +62,7 @@ public class ShopOrderStateLookActivity extends AbsBaseActivity {
         tablayoutAdapter.addFrag(ShopOrderRecordFragment.getInstanse(MyConfig.ORDERTYPEWAITPAY), "待付款");
         tablayoutAdapter.addFrag(ShopOrderRecordFragment.getInstanse(MyConfig.ORDERTYPEWAITFAHUO), "待发货");
         tablayoutAdapter.addFrag(ShopOrderRecordFragment.getInstanse(MyConfig.ORDERTYPEWAITSHOUHUO), "待收货");
+        mBinding.viewpagerOrder.setOffscreenPageLimit(tablayoutAdapter.getCount());
         mBinding.viewpagerOrder.setAdapter(tablayoutAdapter);
         mBinding.tablayout.setupWithViewPager(mBinding.viewpagerOrder);        //viewpager和tablayout关联
     }

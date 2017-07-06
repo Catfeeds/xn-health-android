@@ -161,6 +161,10 @@ public class ShopPayCarSelectActivity extends AbsBaseActivity {
                         if(data != null && data.getList() != null){
                             mAdapter.setData(data.getList());
                         }
+                        if(mAdapter.getCount()<=0){
+                            showErrorView("您还没有添加商品");
+                        }
+
                     }else {
                         if(data != null && data.getList() != null && data.getList().size()>0){
                             mAdapter.addData(data.getList());

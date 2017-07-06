@@ -6,13 +6,11 @@ import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.chengdai.ehealthproject.model.api.BaseResponseModel;
 import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
-import com.chengdai.ehealthproject.uitls.nets.SimpleErrorVerify;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.qiniu.android.http.ResponseInfo;
@@ -20,10 +18,7 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.io.File;
 import java.util.HashMap;
@@ -32,10 +27,6 @@ import java.util.Map;
 
 import id.zelory.compressor.Compressor;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by LeiQ on 2016/12/29.

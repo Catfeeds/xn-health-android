@@ -96,6 +96,7 @@ public class MyLuntanActivity extends AbsBaseActivity {
 //       mHeadViewBinding=  DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_personal_luntan, null, false);
 //
 //        mBinding.lvManagerFirst.addHeaderView(mHeadViewBinding.getRoot(),null,false);
+//        mBinding.lvManagerFirst.setEmptyView(mBinding.tvEmpty);
         mBinding.tvTitle.setVisibility(View.GONE);
         mAdapter=new LuntanListAdapter(this,new ArrayList<>(),true);
         mBinding.lvManagerFirst.setAdapter(mAdapter);
@@ -147,6 +148,7 @@ public class MyLuntanActivity extends AbsBaseActivity {
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("start",mPageStart+"");
         map.put("limit","10");
+        showErrorView();
 
         mSubscription.add(RetrofitUtils.getLoaderServer().GetArticleLisData("621042", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(context))
@@ -155,6 +157,9 @@ public class MyLuntanActivity extends AbsBaseActivity {
                         if(s.getList()!=null){
                             mAdapter.setData(s.getList());
                         }
+                    if(mAdapter.getCount()<=0){
+                        showErrorView("暂无数据");
+                    }
 
                     }else if(mPageStart >1){
                         if(s.getList()==null || s.getList().size()==0){

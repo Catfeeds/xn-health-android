@@ -45,7 +45,24 @@ public class UserInfoModel implements Parcelable {
     private String tradepwdFlag;
     private String totalFansNum;
     private String totalFollowNum;
+    private String level;
+    private String userRefereeName;
 
+    public String getUserRefereeName() {
+        return userRefereeName;
+    }
+
+    public void setUserRefereeName(String userRefereeName) {
+        this.userRefereeName = userRefereeName;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     private userExtBean userExt;
 
@@ -314,6 +331,8 @@ public class UserInfoModel implements Parcelable {
         dest.writeString(this.tradepwdFlag);
         dest.writeString(this.totalFansNum);
         dest.writeString(this.totalFollowNum);
+        dest.writeString(this.level);
+        dest.writeString(this.userRefereeName);
         dest.writeParcelable(this.userExt, flags);
     }
 
@@ -334,6 +353,8 @@ public class UserInfoModel implements Parcelable {
         this.tradepwdFlag = in.readString();
         this.totalFansNum = in.readString();
         this.totalFollowNum = in.readString();
+        this.level = in.readString();
+        this.userRefereeName = in.readString();
         this.userExt = in.readParcelable(userExtBean.class.getClassLoader());
     }
 

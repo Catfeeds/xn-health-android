@@ -103,6 +103,7 @@
 
 
     <com.lzy.ninegrid.NineGridView
+
         android:layout_marginLeft="15dp"
         app:ngv_gridSpacing="5dp"
         app:ngv_maxSize="9"

@@ -30,6 +30,8 @@ public class MyConfig {
     public static final int JFORDER=1;//积分订单
     public static final int PRICEORDER=2;//普通订单
 
+    public final static String LEVEL_NOT_VIP="0";//不是
+    public final static String LEVEL_VIP="1";
 
 
 }
