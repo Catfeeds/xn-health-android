@@ -54,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:gravity="center|left"
+            android:background="@drawable/bg_white_gray_line"
             android:maxLength="5"
             android:id="@+id/edit_num"
             android:inputType="number"
@@ -65,7 +67,7 @@
             android:paddingLeft="5dp"
             android:hint="30-220以内的数值"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="45dp" />
 
     </LinearLayout>
 

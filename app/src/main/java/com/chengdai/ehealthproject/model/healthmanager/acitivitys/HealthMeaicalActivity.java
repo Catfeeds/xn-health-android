@@ -58,6 +58,10 @@ public class HealthMeaicalActivity extends AbsBaseActivity{
         mBinding.fraXueyangTest.setOnClickListener(v -> {
             HealthMeaicalTestActivity.openXueYang(this);
         });
+        //血压测试
+        mBinding.fraXueya.setOnClickListener(v -> {
+            XueyaCalculateActivity.open(this);
+        });
 
     }
 }

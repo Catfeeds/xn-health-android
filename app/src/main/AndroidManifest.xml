@@ -429,6 +429,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+        //血压测试计算
+      <activity android:name=".model.healthmanager.acitivitys.XueyaCalculateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        //血压测试计算 详情
+      <activity android:name=".model.healthmanager.acitivitys.XueyaCalculateDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
         //BMI指数结果
     <activity android:name=".model.healthmanager.acitivitys.BMICalculateDetalisActivity"
             android:screenOrientation="portrait"

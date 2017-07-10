@@ -131,7 +131,7 @@ public abstract class AbsBaseActivity extends BaseActivity {
      * @param title
      */
     public void setTopTitle(String title) {
-        TextView tvTitle = (TextView) findViewById(R.id.tv_top_title);
+        TextView tvTitle = (TextView) findViewById(R.id.tv_top_title_abs);
         tvTitle.setText(title);
     }
 
