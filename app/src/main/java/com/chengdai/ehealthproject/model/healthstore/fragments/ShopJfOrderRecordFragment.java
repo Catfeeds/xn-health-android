@@ -1,7 +1,6 @@
 package com.chengdai.ehealthproject.model.healthstore.fragments;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,15 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.base.BaseListFragment;
-import com.chengdai.ehealthproject.databinding.CommonListRefreshBinding;
 import com.chengdai.ehealthproject.model.healthstore.acitivtys.ShopPayConfirmActivity;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderDetailBean;
 import com.chengdai.ehealthproject.model.tabmy.activitys.OrderConfirmGetActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.ShopOrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.adapters.ShopOrderListAdapter;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -28,12 +24,8 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.liaoinstan.springview.container.DefaultFooter;
-import com.liaoinstan.springview.container.DefaultHeader;
-import com.liaoinstan.springview.widget.SpringView;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

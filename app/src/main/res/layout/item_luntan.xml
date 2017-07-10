@@ -9,6 +9,8 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:id="@+id/linlayout_head"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -103,7 +105,8 @@
 
 
     <com.lzy.ninegrid.NineGridView
-
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:layout_marginLeft="15dp"
         app:ngv_gridSpacing="5dp"
         app:ngv_maxSize="9"
@@ -157,6 +160,8 @@
         android:layout_height="wrap_content">
 
     <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:divider="@null"
         android:dividerHeight="0dp"
         android:id="@+id/lv_pinlun"

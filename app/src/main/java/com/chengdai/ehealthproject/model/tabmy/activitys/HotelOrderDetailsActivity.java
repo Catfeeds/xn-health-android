@@ -20,7 +20,7 @@ import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
 import java.util.Date;
 
-/**订单详情查看
+/**民宿订单详情查看 （）
  * Created by 李先俊 on 2017/6/15.
  */
 
@@ -85,8 +85,8 @@ public class HotelOrderDetailsActivity extends AbsBaseActivity{
 
        switch(mShowData.getStatus()){
            case "0":
-               mBinding.pay.linPay.setVisibility(View.VISIBLE);
-               mBinding.btnPay.setVisibility(View.VISIBLE);
+//               mBinding.pay.linPay.setVisibility(View.VISIBLE);
+//               mBinding.btnPay.setVisibility(View.VISIBLE);
                mBinding.tvOrderState.setText("待支付");
                break;
            case "1":

@@ -37,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp">
             <EditText
+                android:paddingLeft="5dp"
                 android:id="@+id/edit_weight"
                 android:background="@null"
                 android:textColor="@color/text_color"
@@ -77,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp">
             <EditText
+                android:paddingLeft="5dp"
                 android:inputType="number"
                 android:id="@+id/eidt_height"
                 android:background="@null"

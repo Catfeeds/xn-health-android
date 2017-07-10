@@ -36,7 +36,7 @@ public class RechargeActivity extends AbsBaseActivity{
 
     private ActivityRechargeBinding mBinding;
 
-    private int mPayType=1;//支付方式
+    private int mPayType;//支付方式
 
     private  static final String CALLPAYTAG="RechargeActivityPay";
 
@@ -90,7 +90,7 @@ public class RechargeActivity extends AbsBaseActivity{
             }
 
             if(new BigDecimal(mBinding.edtPrice.getText().toString()).doubleValue()<=0){
-                showToast("金额必须大于0.01");
+                showToast("金额必须大于0");
                 return;
             }
 
@@ -106,9 +106,9 @@ public class RechargeActivity extends AbsBaseActivity{
         Map<String,String> map=new HashMap<>();
 
         map.put("applyUser", SPUtilHelpr.getUserId());
-        map.put("channelType","30");
-        map.put("amount",StringUtils.getRequestPrice(mBinding.edtPrice.getText().toString())); //36微信app支付 30支付宝支付
-        map.put("token",SPUtilHelpr.getUserToken()); //36微信app支付 30支付宝支付
+        map.put("channelType","30");//36微信app支付 30支付宝支付
+        map.put("amount",StringUtils.getRequestPrice(mBinding.edtPrice.getText().toString()));
+        map.put("token",SPUtilHelpr.getUserToken());
 
         mSubscription.add(RetrofitUtils.getLoaderServer().rechargeRequest("802710",StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
@@ -124,9 +124,10 @@ public class RechargeActivity extends AbsBaseActivity{
      * 初始化支付方式选择状态
      */
     private void initPayTypeSelectState() {
-        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
-        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
 
+        mPayType=2;
 
         mBinding.linWeipay.setOnClickListener(v -> {
             mPayType=1;

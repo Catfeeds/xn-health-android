@@ -103,6 +103,7 @@ public abstract class BaseListFragment<T> extends BaseLazyFragment {
         mEmptyWrapper.setEmptyView(getEmptyLayoutId());
         mBinding.cycler.setAdapter(mEmptyWrapper);
         mIsFristCreate=true;
+        mPageIndex=1;
         onMInitRefresh(mPageIndex);
         return mBinding.getRoot();
     }

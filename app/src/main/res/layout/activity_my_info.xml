@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
     <ScrollView
+        android:background="@color/gray"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
 <LinearLayout
+    android:background="@color/white"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -73,6 +75,7 @@
             android:paddingLeft="15dp"
             android:gravity="center_vertical|right"
             android:hint="请输入昵称"
+            android:textColorHint="@color/text_hint_color"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
@@ -101,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:textColorHint="@color/text_hint_color"
             android:id="@+id/tv_birthday"
             android:textColor="@color/black_2"
             android:textSize="16sp"
@@ -142,6 +146,7 @@
             android:paddingLeft="15dp"
             android:gravity="center_vertical|right"
             android:hint="请选择性别"
+            android:textColorHint="@color/text_hint_color"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
@@ -176,6 +181,7 @@
             android:paddingLeft="15dp"
             android:gravity="center_vertical|right"
             android:hint="请输入邮箱"
+            android:textColorHint="@color/text_hint_color"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
@@ -187,20 +193,6 @@
 
     </LinearLayout>
 
-    <View
-        style="@style/split_line_10"/>
-
-    <EditText
-        android:textColor="@color/text_color"
-        android:textSize="13sp"
-        android:padding="10dp"
-        android:id="@+id/edit"
-        android:textColorHint="@color/text_hint_color"
-        android:gravity="top"
-        android:background="@null"
-        android:hint="个性签名···"
-        android:layout_width="match_parent"
-        android:layout_height="150dp" />
 
     <View
         style="@style/split_line_10"/>
@@ -225,6 +217,7 @@
             android:paddingLeft="15dp"
             android:gravity="center_vertical|right"
             android:hint="暂无"
+            android:textColorHint="@color/text_hint_color"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
@@ -271,25 +264,34 @@
             android:text="推荐人类型"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/tv_tj_type"
-            android:textColor="@color/black_2"
-            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:paddingLeft="15dp"
             android:gravity="center_vertical|right"
             android:hint="暂无"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:textColorHint="@color/text_hint_color"
+            android:paddingLeft="15dp"
+            android:textColor="@color/black_2"
+            android:textSize="16sp" />
 
     </LinearLayout>
     <View
-        style="@style/style_split_line"/>
-    <View
-        android:background="@color/gray"
-        android:layout_weight="1"
+        style="@style/split_line_10"/>
+
+    <EditText
+        android:textColor="@color/text_color"
+        android:textSize="13sp"
+        android:padding="10dp"
+        android:id="@+id/edit"
+        android:textColorHint="@color/text_hint_color"
+        android:gravity="top"
+        android:background="@null"
+        android:hint="个性签名···"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="150dp" />
 
 
 </LinearLayout>

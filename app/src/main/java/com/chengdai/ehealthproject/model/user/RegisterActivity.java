@@ -96,7 +96,7 @@ public class RegisterActivity extends AbsBaseLocationActivity {
         mTypeNames=getResources().getStringArray(R.array.tjtype);
         mTypeCodes=getResources().getStringArray(R.array.tj_type_code);
 
-        ImgUtils.loadImgIdforRound(this,R.mipmap.icon,mBinding.imgLoginIcon);
+        ImgUtils.loadImgId(this,R.mipmap.icon,mBinding.imgLoginIcon);
 
         initViews();
 
@@ -149,17 +149,17 @@ public class RegisterActivity extends AbsBaseLocationActivity {
                 return;
             }
 
-            if(TextUtils.isEmpty(mBinding.editTj.getText().toString()) && !TextUtils.isEmpty(mSelectTypeCode)){
+            if(TextUtils.isEmpty(mBinding.editTj.getText().toString()) && !TextUtils.isEmpty(mSelectTypeCode)){//选择了类型 但是未填写推荐人
                 mSelectTypeCode="";
             }
 
-            if(!TextUtils.isEmpty(mBinding.editTj.getText().toString()) && TextUtils.isEmpty(mSelectTypeCode)){
+            if(!TextUtils.isEmpty(mBinding.editTj.getText().toString()) && TextUtils.isEmpty(mSelectTypeCode)){  //填写了推荐人 但是未选择类型
                showToast("请选择推荐人类型");
                 return;
             }
 
-            if(TextUtils.isEmpty(mProvince) || TextUtils.isEmpty(mCity) || TextUtils.isEmpty(mDistrict)){
-                showToast("请选择地区");
+            if(TextUtils.isEmpty(mProvince) || TextUtils.isEmpty(mCity) || TextUtils.isEmpty(mDistrict) || TextUtils.isEmpty(mBinding.txtAddress.getText().toString())){
+                showToast("请选择正确地区");
                 return;
             }
 
@@ -268,13 +268,17 @@ public class RegisterActivity extends AbsBaseLocationActivity {
 
     private void cityPicker(){
         String province;
-        if(!TextUtils.isEmpty(mProvince)){
+        String city;
+        String district;
+        if(!TextUtils.isEmpty(mProvince) && !TextUtils.isEmpty(mCity) && !TextUtils.isEmpty(mDistrict)){
             province=mProvince;
+            city=mCity;
+            district=mDistrict;
         }else{
             province="北京市";
+            city="北京市";
+            district="昌平区";
         }
-//        String city=mCity;
-//        String district=mDistrict;
 
         CityPicker cityPicker = new CityPicker.Builder(RegisterActivity.this)
                 .textSize(18)
@@ -284,8 +288,8 @@ public class RegisterActivity extends AbsBaseLocationActivity {
                 .confirTextColor("#FE4332")
                 .cancelTextColor("#FE4332")
                 .province(province)
-                .city(mCity)
-                .district(mDistrict)
+                .city(city)
+                .district(district)
                 .textColor(Color.parseColor("#000000"))
                 .provinceCyclic(true)
                 .cityCyclic(false)

@@ -622,6 +622,8 @@ public class HealthManagerFragment extends BaseFragment{
             mTestTitle="";//用于打开测试页
            mJfaccountNumber ="";//用于积分页
 
+            mHeadViewBinding.imgVip.setVisibility(View.GONE);
+
         }else  if(TextUtils.equals(eventBusModel.getTag(),"HealthManagerFragmentRefhsh_Task")){//刷新任务数据
             if(SPUtilHelpr.isLoginNoStart()){
                 getNowHealthTask();

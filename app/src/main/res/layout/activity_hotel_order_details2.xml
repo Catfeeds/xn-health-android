@@ -178,7 +178,7 @@
 
 </LinearLayout>
 
-     <include  android:id="@+id/pay"  layout="@layout/common_pay_item_select"/>
+     <include  android:visibility="gone" android:id="@+id/pay"  layout="@layout/common_pay_item_select"/>
 
         </LinearLayout>
 

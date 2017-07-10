@@ -17,10 +17,7 @@ public class NineGridViewImageLoader implements NineGridView.ImageLoader {
 
     @Override
     public void onDisplayImage(Context context, ImageView imageView, String url) {
-
-
         ImgUtils.loadGridDeful(context,url,imageView);
-
     }
 
     @Override

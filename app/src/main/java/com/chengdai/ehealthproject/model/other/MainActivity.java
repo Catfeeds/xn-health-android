@@ -77,7 +77,6 @@ public class MainActivity extends BaseLocationActivity {
         eventBusModel.setTag("locationFailure");
         EventBus.getDefault().post(eventBusModel);
 
-        LogUtil.E("定位失败 Main"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
     }
 
     @Override
@@ -214,7 +213,7 @@ public class MainActivity extends BaseLocationActivity {
         if (!isFinishing()) {
             new CommonDialog(this).builder().setPositiveBtn("确认", (view) -> {
                 logOut();
-            }).setNegativeBtn("取消", null).setTitle("提示").setContentMsg("确认退出健康E购？").show();
+            }).setNegativeBtn("取消", null).setTitle("提示").setContentMsg("确认退出健康e购？").show();
         } else {
             logOut();
         }
@@ -224,6 +223,11 @@ public class MainActivity extends BaseLocationActivity {
         EventBusModel eventBusModel=new EventBusModel();
         eventBusModel.setTag("AllFINISH");
         EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+
+        EventBusModel eventBusMode2=new EventBusModel();
+        eventBusMode2.setTag("MainActivityFinish");
+        EventBus.getDefault().postSticky(eventBusMode2); //结束掉所有界面
+        EventBus.getDefault().post(eventBusMode2); //结束掉所有界面
         finish();
     }
 

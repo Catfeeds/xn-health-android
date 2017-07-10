@@ -67,8 +67,8 @@ public class RetrofitUtils {
 
         /*api 121.43.101.148:8901*//*开发*/
 
-        return "http://121.43.101.148:8901/forward-service/";//开发
-//        return "http://116.62.114.86:8901/forward-service/";//测试
+//        return "http://121.43.101.148:8901/forward-service/";//开发
+        return "http://116.62.114.86:8901/forward-service/";//测试
     }
 
 }

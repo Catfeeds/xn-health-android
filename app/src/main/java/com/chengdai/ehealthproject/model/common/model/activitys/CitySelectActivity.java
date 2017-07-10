@@ -81,14 +81,12 @@ public class CitySelectActivity extends AbsBaseActivity {
                if(adapter == null || adapter.getItem(position)==null){
                    return;
                }
-            SPUtilHelpr.saveLocationInfo("");
+              SPUtilHelpr.saveLocationInfo("");
+               EventBus.getDefault().post(adapter.getItem(position));
                EventBusModel eventBusModel=new EventBusModel();
                eventBusModel.setTag("HealthManagerFragmentRefreshWeahter");//刷新定位天气
                eventBusModel.setEvInfo(adapter.getItem(position).getName());
                EventBus.getDefault().post(eventBusModel);
-
-            EventBus.getDefault().post(adapter.getItem(position));
-
             finish();
         });
 

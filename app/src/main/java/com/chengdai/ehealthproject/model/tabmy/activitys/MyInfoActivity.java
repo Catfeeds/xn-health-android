@@ -198,10 +198,12 @@ public class MyInfoActivity extends AbsBaseActivity{
          mBinding.tvEmail.setText(mData.getUserExt().getEmail());
             mBinding.edit.setText(mData.getUserExt().getIntroduce());
         }
-        mBinding.tvTjName.setText(mData.getReferrer().getMobile());
-        mBinding.tvTjId.setText(mData.getReferrer().getUserId());
+        if(mData.getReferrer()!=null){
+            mBinding.tvTjName.setText(mData.getReferrer().getMobile());
+            mBinding.tvTjId.setText(mData.getReferrer().getUserId());
 
-       mBinding.tvTjType.setText(StringUtils.getTjTypebyCode(this,mData.getReferrer().getKind()));
+            mBinding.tvTjType.setText(StringUtils.getTjTypebyCode(this,mData.getReferrer().getKind()));
+        }
 
     }
 

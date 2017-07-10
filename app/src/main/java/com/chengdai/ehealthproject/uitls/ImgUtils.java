@@ -58,7 +58,7 @@ public class ImgUtils {
         {
             return;
         }
-        Glide.with(context).load(URL).into(img);
+        Glide.with(context).load(URL).error(R.mipmap.default_pic).into(img);
     }
 
     public static void  loadImgURL(Activity activity,String URL,ImageView img){
@@ -66,14 +66,14 @@ public class ImgUtils {
         {
             return;
         }
-        Glide.with(activity).load(URL).into(img);
+        Glide.with(activity).load(URL).error(R.mipmap.default_pic).into(img);
     }
     public static void  loadImgIdforRound(Context activity,String URL,ImageView img){
         if(activity==null || img==null)
         {
             return;
         }
-        Glide.with(activity).load(URL) .transform(new GlideRoundTransform(activity)).into(img);
+        Glide.with(activity).load(URL).error(R.mipmap.default_pic).placeholder(R.mipmap.default_pic) .transform(new GlideRoundTransform(activity)).into(img);
     }
 
     public static void  loadDeful(Context context,String url,ImageView img){
@@ -88,17 +88,7 @@ public class ImgUtils {
         {
             return;
         }
-
-        LogUtil.E("图片"+url);
-
         Glide.with(context).load(url+ MyConfig.IMGURLCOMPRESS).error(R.mipmap.default_pic).placeholder(R.mipmap.default_pic).into(img);
-    }
-    public static void  loadImgIdforRound(Context activity,int URL,ImageView img){
-        if(activity==null || img==null)
-        {
-            return;
-        }
-        Glide.with(activity).load(URL) .transform(new GlideRoundTransform(activity)).into(img);
     }
 
     public static void  loadImgIdforCircle(Context activity,String URL,ImageView img){
@@ -108,12 +98,13 @@ public class ImgUtils {
         }
         Glide.with(activity).load(URL).error(R.mipmap.default_pic) .transform(new GlideCircleTransform(activity)).into(img);
     }
+
     public static void  loadImgLogo(Context activity,String URL,ImageView img){
         if(activity==null || img==null)
         {
             return;
         }
-        Glide.with(activity).load(URL).placeholder(R.mipmap.icon).error(R.mipmap.icon) .transform(new GlideCircleTransform(activity)).into(img);
+        Glide.with(activity).load(URL).error(R.mipmap.icon) .transform(new GlideCircleTransform(activity)).into(img);
 //        Glide.with(activity).load(URL).placeholder(R.mipmap.icon).error(R.mipmap.photo_default) .transform(new GlideCircleTransform(activity)).into(img);
     }
 

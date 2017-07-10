@@ -1,23 +1,14 @@
 package com.chengdai.ehealthproject.model.tabmy.fragments;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
-import com.chengdai.ehealthproject.base.BaseFragment;
 import com.chengdai.ehealthproject.base.BaseListFragment;
-import com.chengdai.ehealthproject.databinding.CommonListRefreshBinding;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.activitys.OrderDetailsActivity;
-import com.chengdai.ehealthproject.model.tabmy.adapters.HotelOrderRecordAdapter;
 import com.chengdai.ehealthproject.model.tabmy.model.HotelOrderRecordModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -26,12 +17,8 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.liaoinstan.springview.container.DefaultFooter;
-import com.liaoinstan.springview.container.DefaultHeader;
-import com.liaoinstan.springview.widget.SpringView;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,12 +89,12 @@ public class HotelOrderRecordFragment extends BaseListFragment<HotelOrderRecordM
         }
 
 
-        if("0".equals(item.getStatus())){
+   /*     if("0".equals(item.getStatus())){
             tv_sure_pay.setVisibility(View.VISIBLE);
         }else{
             tv_sure_pay.setVisibility(View.GONE);
         }
-
+*/
         if(item.getProduct() !=null){
             tv_hotel_size.setText(item.getProduct().getName());
             tv_hotel_info.setText(item.getProduct().getSlogan());

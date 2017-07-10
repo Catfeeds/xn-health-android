@@ -12,13 +12,12 @@
 
     <TextView
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:id="@+id/tv_content"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="match_parent" />
     </ScrollView>
     <TextView
         android:id="@+id/tv_satrt_test"

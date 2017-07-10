@@ -182,6 +182,7 @@
                         android:src="@mipmap/icon"
                         />
                     <ImageView
+                        android:visibility="gone"
                         android:src="@mipmap/vip"
                         android:id="@+id/img_vip"
                         android:layout_width="22dp"
@@ -479,6 +480,8 @@
 
 
             <ImageView
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:id="@+id/img_health_risk"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -583,6 +586,8 @@
                 <View style="@style/style_split_line"/>
 
                 <com.chengdai.ehealthproject.weigit.views.ListViewForScrollView
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:id="@+id/list_task"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
