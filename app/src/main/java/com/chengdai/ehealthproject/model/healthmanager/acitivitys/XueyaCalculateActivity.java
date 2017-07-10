@@ -32,7 +32,6 @@ public class XueyaCalculateActivity extends AbsBaseActivity{
         context.startActivity(intent);
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
