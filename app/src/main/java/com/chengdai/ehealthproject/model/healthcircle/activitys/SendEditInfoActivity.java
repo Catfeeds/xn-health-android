@@ -179,7 +179,7 @@ public class SendEditInfoActivity extends AbsBaseActivity{
             }
         }
 
-        map.put("title","健康圈");
+        map.put("title","健康友圈");
         map.put("content",mBinding.editInfo.getText().toString());
         map.put("pic",sb.toString());
         map.put("publisher", SPUtilHelpr.getUserId());

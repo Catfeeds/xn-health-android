@@ -41,6 +41,10 @@ public class EatCalculateDetalisActivity extends AbsBaseActivity{
         setTopTitle("膳食建议");
         setSubLeftImgState(true);
 
+        if(getIntent()!=null){
+            mBinding.tvNum.setText(getIntent().getStringExtra("bimnum")+"卡");
+        }
+
     }
 
 }

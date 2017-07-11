@@ -40,7 +40,7 @@
 
         <TextView
             style="@style/title_top"
-            android:text="周边"
+            android:text="@string/txt_surrounding"
            />
 
         <ImageView

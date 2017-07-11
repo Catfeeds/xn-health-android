@@ -131,22 +131,22 @@ public class HealthinfoActivity extends AbsBaseActivity {
         map.put("status","1");
         map.put("kind","1");//健康资讯
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621107",StringUtils.getJsonToString(map))
-                .compose(RxTransformerListHelper.applySchedulerResult(c))
+       mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621105",StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(c))
                 .subscribe(s -> {
                     if(mPageStart == 1){
-                        if(s==null){
+                        if(s==null || s.getList()==null){
                             return;
                         }
-                        mListAdapter.setData(s);
+                        mListAdapter.setData(s.getList());
                     }else{
-                        if(s==null || s.size()==0){
+                        if(s==null || s.getList()==null|| s.getList().size()==0){
                             if(mPageStart>1){
                                 mPageStart--;
                             }
                             return;
                         }
-                        mListAdapter.addData(s);
+                        mListAdapter.addData(s.getList());
                     }
 
                 },Throwable::printStackTrace));

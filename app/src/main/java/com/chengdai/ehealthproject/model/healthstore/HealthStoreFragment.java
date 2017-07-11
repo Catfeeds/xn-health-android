@@ -5,10 +5,18 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
@@ -27,6 +35,7 @@ import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsAc
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
+import com.chengdai.ehealthproject.uitls.DensityUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -40,6 +49,8 @@ import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.youth.banner.BannerConfig;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -92,9 +103,52 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
         initSpringViews();
 
+        initTablayout();
+
         return mBinding.getRoot();
 
     }
+
+
+    private void initTablayout() {
+        mBinding.tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mActivity,LinearLayoutManager.HORIZONTAL,false);
+
+        mBinding.recyclerGoodsType.setLayoutManager(linearLayoutManager);
+
+        mBinding.tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) { //点击第一次的tab选项回调
+                switch (tab.getPosition()){
+
+                    case 0:
+                        getStoreListTypeRequest("2"); //今日特价
+                        break;
+                    case 1:
+                        getStoreListTypeRequest("3");//人气推荐
+                        break;
+                    case 2:
+                        getStoreListTypeRequest("4");//超值热卖
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {  //上一次的tab回调
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) { // 再次点击同一个tab的回调
+
+            }
+        });
+
+
+    }
+
 
     private void initSpringViews() {
 
@@ -112,6 +166,8 @@ public class HealthStoreFragment extends BaseLazyFragment{
                 bannerDataRequest(null);
                 getStoreListRequest(null);
                 getJfPicRequest(null);
+                getStoreListTypeRequest("2");
+                mBinding.tablayout.getTabAt(0).select();
 
                 mBinding.springviewSurrounding.onFinishFreshAndLoad();
             }
@@ -128,23 +184,6 @@ public class HealthStoreFragment extends BaseLazyFragment{
      * 设置view
      */
     private void initViews() {
-
-        //健康美食
-      /*  setTvListener(mBinding.layoutSurroundingMenu.linFood,mActivity.getResources().getString(R.string.txt_food));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linMovement,mActivity.getResources().getString(R.string.txt_movement));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linWomenhome,mActivity.getResources().getString(R.string.txt_women_home));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linLife,mActivity.getResources().getString(R.string.txt_life));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linHotel,mActivity.getResources().getString(R.string.txt_hotel));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linDabaojian,mActivity.getResources().getString(R.string.txt_dabaojian));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linLife2,mActivity.getResources().getString(R.string.txt_life2));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linShopping,mActivity.getResources().getString(R.string.txt_sopping));*/
 
         mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,new ArrayList<>());
         mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
@@ -249,6 +288,10 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
         bannerDataRequest(null);
 
+        getStoreListTypeRequest("2");
+
+        mBinding.tablayout.getTabAt(0).select();
+
         getStoreListRequest(mActivity);
 
         if(mBinding!=null && mBinding.banner!=null){
@@ -307,6 +350,67 @@ public class HealthStoreFragment extends BaseLazyFragment{
                 },Throwable::printStackTrace));
     }
 
+
+
+    /**
+     * 获取列表 （今日特价 人气推荐 超值热卖）
+     * @param location
+     */
+    public void getStoreListTypeRequest(String location){
+        Map map=new HashMap();
+
+        map.put("kind","1"); //1 标准商城 2 积分商城
+
+        map.put("status","3");//已上架
+        map.put("start","1");
+        map.put("limit","10");
+        map.put("companyCode",MyConfig.COMPANYCODE);
+        map.put("systemCode",MyConfig.SYSTEMCODE);
+        map.put("orderDir","asc");
+        map.put("orderColumn","order_no");
+        map.put("location",location);  //1推荐 0普通 2 今日特价  3人气推荐 4超值热卖
+
+        mSubscription.add(  RetrofitUtils.getLoaderServer().GetShopList("808025",StringUtils.getJsonToString(map))
+
+                .compose(RxTransformerHelper.applySchedulerResult(null))
+
+                .filter(storeListModel -> storeListModel!=null)
+
+                .subscribe(storeListModel -> {
+
+                    mBinding.recyclerGoodsType.setAdapter(new CommonAdapter<ShopListModel.ListBean>(mActivity,R.layout.item_shop_tab_goods_type,storeListModel.getList()) {
+                        @Override
+                        protected void convert(ViewHolder holder, ShopListModel.ListBean bean, int position) {
+
+                            if(bean== null) return;
+                            ImageView img=holder.getView(R.id.img_goods);
+                            //设置imageView的宽高为屏幕的宽高1/3
+                            DisplayMetrics dm = getResources().getDisplayMetrics();
+                            FrameLayout.LayoutParams layoutParams= new FrameLayout.LayoutParams(dm.widthPixels/3- DensityUtil.dip2px(mContext,15),dm.widthPixels/3- DensityUtil.dip2px(mContext,15));
+
+                            img.setLayoutParams(layoutParams);
+
+                            ImgUtils.loadImgURL(mContext,MyConfig.IMGURL+bean.getSplitAdvPic(),img);
+
+                            img.setOnClickListener(v -> {
+                                ShopDetailsActivity.open(mActivity,bean);
+                            });
+
+                            if(bean.getProductSpecsList()!=null && bean.getProductSpecsList().size()>0){
+                                holder.setText(R.id.tv_price,mContext.getString(R.string.price_sing)+StringUtils.showPrice(bean.getProductSpecsList().get(0).getPrice1()));
+                            }
+                        }
+
+                    });
+
+
+
+                },Throwable::printStackTrace));
+
+    }
+
+
+
     /**
      * 获取商城列表
      * @param act
@@ -352,7 +456,6 @@ public class HealthStoreFragment extends BaseLazyFragment{
 
                 },Throwable::printStackTrace));
 
-
     }
 
 
@@ -391,7 +494,6 @@ public class HealthStoreFragment extends BaseLazyFragment{
      * @param context
      */
     private void getJfPicRequest(Context context) {
-        LogUtil.E("商城2");
         Map map=new HashMap();
 
         map.put("location","2");//0周边1商城 2
@@ -406,26 +508,6 @@ public class HealthStoreFragment extends BaseLazyFragment{
                     ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+ banners.get(0).getPic(),mBinding.imgJfshopInto);
 
                 },Throwable::printStackTrace));
-
-
-
-
-/*        Map<String, String> map = new HashMap();
-
-        map.put("ckey","jfPic");
-        map.put("systemCode",MyConfig.SYSTEMCODE);
-        map.put("token",SPUtilHelpr.getUserToken());
-
-
-        mSubscription.add( RetrofitUtils.getLoaderServer().GetJfPic("807717", StringUtils.getJsonToString(map))
-
-                .compose(RxTransformerHelper.applySchedulerResult(context))
-                .subscribe(r -> {
-                    if(r !=null ){
-                        ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+r.getNote(),mBinding.imgJfshopInto);
-                    }
-
-                },Throwable::printStackTrace));*/
 
     }
 

@@ -14,6 +14,7 @@ import com.chengdai.ehealthproject.databinding.ActivityBmiCalculateBinding;
 import com.chengdai.ehealthproject.databinding.ActivityJfGuideBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.IntroductionActivity;
+import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
 import com.chengdai.ehealthproject.model.healthmanager.model.JfGuideListModel;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyHelathTaskListActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyJFDetailsActivity;
@@ -67,6 +68,7 @@ public class JfGuideActivity extends AbsBaseActivity{
         setTopTitle("我的积分");
         setSubLeftImgState(true);
         setSubRightTitleAndClick("积分规则",v -> {
+
             IntroductionActivity.open(this,"integralRule","积分规则");
         });
 

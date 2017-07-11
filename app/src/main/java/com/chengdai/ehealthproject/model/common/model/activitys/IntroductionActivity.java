@@ -66,8 +66,6 @@ public class IntroductionActivity extends AbsBaseActivity{
 
         getDataReqeust();
 
-
-
     }
 
     public void getDataReqeust() {
@@ -80,7 +78,9 @@ public class IntroductionActivity extends AbsBaseActivity{
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                .filter(s-> s!=null && !TextUtils.isEmpty(s.getNote()))
                 .subscribe(s -> {
-                    RichText.from(s.getNote()).into(mBinding.tvInfo);
+                    mBinding.webView.getSettings().setDefaultTextEncodingName("UTF-8") ;
+                    mBinding.webView.loadData(s.getNote(),"text/html;charset=UTF-8", "UTF-8");
+//                    RichText.fromHtml(s.getNote()).into(mBinding.tvInfo);
                 },Throwable::printStackTrace));
     }
 }

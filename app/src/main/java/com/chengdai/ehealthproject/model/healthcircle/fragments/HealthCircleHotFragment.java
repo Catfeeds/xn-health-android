@@ -311,14 +311,11 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                         }
 
                     });
-                    if(listBean.getCommentList().size()==1){      //只有一条评论时隐藏查看所有
-                        holder.setVisible(R.id.lin_pinlun,false);
-                    }else{
-                        holder.setVisible(R.id.lin_pinlun,true);
-                        holder.setOnClickListener(R.id.tv_look_all,v -> {
-                            PinglunListActivity.open(mActivity,listBean.getCode());
-                        });
-                    }
+
+                    holder.setVisible(R.id.lin_pinlun,true);
+                    holder.setOnClickListener(R.id.tv_look_all,v -> {
+                        PinglunListActivity.open(mActivity,listBean.getCode());
+                    });
 
                 }else{
                     holder.setVisible(R.id.lin_pinlun,false);

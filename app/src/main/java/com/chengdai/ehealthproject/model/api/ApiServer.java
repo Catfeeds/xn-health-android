@@ -15,6 +15,7 @@ import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthTaskListMd
 import com.chengdai.ehealthproject.model.healthmanager.model.AssistantMenuListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.DoTestQusetionModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.JfGuideListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexHealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexMenuListModel;
@@ -468,7 +469,7 @@ public interface ApiServer {
              */
     @FormUrlEncoded
     @POST("api")
-    Observable<BaseResponseListModel<HealthInfoListModel>> getHealthInfoList(@Field("code") String code, @Field("json") String  json);
+    Observable<BaseResponseModel<HealthInfoModel>> getHealthInfoList(@Field("code") String code, @Field("json") String  json);
     /**
      * 形体资讯文章列表
      * @return

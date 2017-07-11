@@ -15,6 +15,7 @@ import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthInfoListAd
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.liaoinstan.springview.container.DefaultFooter;
@@ -134,24 +135,22 @@ public class HealthinfoTypeListActivity extends AbsBaseActivity {
         map.put("kind",mType);
         map.put("category",mCode);
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621107",StringUtils.getJsonToString(map))
-                .compose(RxTransformerListHelper.applySchedulerResult(c))
+       mSubscription.add( RetrofitUtils.getLoaderServer().getHealthInfoList("621105",StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(c))
                 .subscribe(s -> {
                     if(mPageStart == 1){
-                        if(s==null){
+                        if(s==null || s.getList()==null){
                             return;
                         }
-                        mListAdapter.setData(s);
-
-
+                        mListAdapter.setData(s.getList());
                     }else{
-                        if(s==null || s.size()==0){
+                        if(s==null || s.getList()==null|| s.getList().size()==0){
                             if(mPageStart>1){
                                 mPageStart--;
                             }
                             return;
                         }
-                        mListAdapter.addData(s);
+                        mListAdapter.addData(s.getList());
                     }
 
                 },Throwable::printStackTrace));

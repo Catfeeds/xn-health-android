@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.databinding.ActivityBmiCalculateBinding;
 import com.chengdai.ehealthproject.databinding.ActivitySettingBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
+import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 
@@ -26,6 +27,8 @@ import java.math.BigDecimal;
 public class BMICalculateActivity extends AbsBaseActivity{
 
     private ActivityBmiCalculateBinding mBinding;
+
+    private boolean boyType=true;
 
     /**
      * 打开当前页面
@@ -49,6 +52,18 @@ public class BMICalculateActivity extends AbsBaseActivity{
         addMainView(mBinding.getRoot());
         setTopTitle("BMI指数");
         setSubLeftImgState(true);
+        mBinding.editWeight.setSelection(mBinding.editWeight.getText().toString().length());
+        mBinding.eidtHeight.setSelection(mBinding.eidtHeight.getText().toString().length());
+        mBinding.imgBoy.setOnClickListener(v -> {
+
+            if(boyType){
+                mBinding.imgBoy.setImageResource(R.mipmap.life_girl);
+
+            }else{
+                mBinding.imgBoy.setImageResource(R.mipmap.life_boy);
+            }
+            boyType=!boyType;
+        });
 
         mBinding.tvStartCalculate.setOnClickListener(v -> {
             if(TextUtils.isEmpty(mBinding.editWeight.getText().toString())){
@@ -74,12 +89,9 @@ public class BMICalculateActivity extends AbsBaseActivity{
                 return;
             }
 
-            BigDecimal h=height.divide(new BigDecimal(100),2);
-
+            BigDecimal h=height.divide(new BigDecimal(100),2,BigDecimal.ROUND_UNNECESSARY);
             BigDecimal hh=h.multiply(h);
-
-            BigDecimal bmi=weight.divide(hh,2);
-
+            BigDecimal bmi=weight.divide(hh,2,BigDecimal.ROUND_HALF_UP);
             BMICalculateDetalisActivity.open(this,bmi.doubleValue()+"");
 
 

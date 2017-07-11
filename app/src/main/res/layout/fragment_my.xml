@@ -288,7 +288,7 @@
             android:layout_weight="1"
             android:paddingLeft="15dp"
             android:gravity="center_vertical"
-            android:text="健康圈"
+            android:text="@string/txt_health_circle"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 
@@ -325,7 +325,7 @@
             android:layout_weight="1"
             android:paddingLeft="15dp"
             android:gravity="center_vertical"
-            android:text="健康商城"
+            android:text="@string/txt_health_store"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
 

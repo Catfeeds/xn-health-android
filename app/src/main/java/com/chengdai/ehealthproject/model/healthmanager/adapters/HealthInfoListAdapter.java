@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -18,22 +19,22 @@ import java.util.List;
  * Created by 李先俊 on 2017/6/23.
  */
 
-public class HealthInfoListAdapter extends CommonAdapter<HealthInfoListModel> {
+public class HealthInfoListAdapter extends CommonAdapter<HealthInfoModel.ListBean> {
 
-    public HealthInfoListAdapter(Context context, List<HealthInfoListModel> datas) {
+    public HealthInfoListAdapter(Context context, List<HealthInfoModel.ListBean> datas) {
         super(context, R.layout.item_health_info, datas);
     }
 
 
 
-    public void setData(List<HealthInfoListModel> datas){
+    public void setData(List<HealthInfoModel.ListBean> datas){
         if(datas!=null){
             this.mDatas=datas;
             notifyDataSetChanged();
         }
     }
 
-    public void addData(List<HealthInfoListModel> datas){
+    public void addData(List<HealthInfoModel.ListBean> datas){
         if(datas!=null){
             this.mDatas.addAll(datas);
             notifyDataSetChanged();
@@ -41,7 +42,7 @@ public class HealthInfoListAdapter extends CommonAdapter<HealthInfoListModel> {
     }
 
     @Override
-    protected void convert(ViewHolder viewHolder, HealthInfoListModel item, int position) {
+    protected void convert(ViewHolder viewHolder, HealthInfoModel.ListBean item, int position) {
         if(item == null){
             return;
         }

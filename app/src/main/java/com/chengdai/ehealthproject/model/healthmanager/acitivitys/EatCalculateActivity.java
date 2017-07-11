@@ -21,6 +21,7 @@ public class EatCalculateActivity extends AbsBaseActivity{
 
     private ActivityEatCalculateBinding mBinding;
 
+    private boolean boyType=true;
     /**
      * 打开当前页面
      * @param context
@@ -47,6 +48,16 @@ public class EatCalculateActivity extends AbsBaseActivity{
         mBinding.editWeight.setSelection(mBinding.editWeight.getText().toString().length());
         mBinding.eidtHeight.setSelection(mBinding.eidtHeight.getText().toString().length());
 
+        mBinding.imgBoy.setOnClickListener(v -> {
+
+            if(boyType){
+                mBinding.imgBoy.setImageResource(R.mipmap.life_girl);
+            }else{
+                mBinding.imgBoy.setImageResource(R.mipmap.life_boy);
+            }
+            boyType=!boyType;
+        });
+
         mBinding.tvStartCalculate.setOnClickListener(v -> {
             if(TextUtils.isEmpty(mBinding.editWeight.getText().toString())){
                 showToast("请输入体重");
@@ -70,15 +81,15 @@ public class EatCalculateActivity extends AbsBaseActivity{
                 showToast("请输入正确的体重");
                 return;
             }
+/*女性REE = (10 × 体重) ＋ (6.25 × 身高) - (5 × 年龄) - 161
+男性REE = (10 × 体重) ＋ (6.25 × 身高) - (5 × 年龄) ＋ 5*/
 
-            BigDecimal h=height.divide(new BigDecimal(100));
 
-            BigDecimal hh=h.multiply(h);
-
-            BigDecimal bmi=weight.divide(hh,2);
-
-            EatCalculateDetalisActivity.open(this,"");
-
+               if(!boyType){
+                   EatCalculateDetalisActivity.open(this,(10*weight.intValue()+6.25*height.intValue()-5*25-161)+"");
+               }else{
+                   EatCalculateDetalisActivity.open(this,(10*weight.intValue()+6.25*height.intValue()-5*25+5)+"");
+               }
 
         });
 

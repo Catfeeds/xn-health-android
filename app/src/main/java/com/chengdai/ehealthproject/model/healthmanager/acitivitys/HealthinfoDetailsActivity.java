@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.databinding.ActivityHealthInfoBinding;
 import com.chengdai.ehealthproject.databinding.ActivityHealthinfoDetailsBinding;
 import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthInfoListAdapter;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
+import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -33,14 +34,14 @@ public class HealthinfoDetailsActivity extends AbsBaseActivity {
 
     private SurroundingStoreTypeAdapter mMenuAdapter;
 
-    private HealthInfoListModel mData;
+    private HealthInfoModel.ListBean mData;
 
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context, HealthInfoListModel data){
+    public static void open(Context context, HealthInfoModel.ListBean data){
         if(context==null){
             return;
         }

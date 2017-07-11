@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentHealthCircleBinding;
+import com.chengdai.ehealthproject.model.common.model.activitys.IntroductionActivity;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
+import com.chengdai.ehealthproject.model.healthcircle.activitys.InfoDetailsActivity;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.SendEditInfoActivity;
 import com.chengdai.ehealthproject.model.healthcircle.fragments.HealthCircleHotFragment;
 
@@ -55,6 +57,9 @@ public class HealthCircleFragment extends BaseLazyFragment{
             SendEditInfoActivity.open(mActivity);
         });
 
+        managerBinding.fraCantFatie.setOnClickListener(v -> {
+            IntroductionActivity.open(mActivity,"postban","健康友圈发帖禁令");
+        });
 
         return managerBinding.getRoot();
 
