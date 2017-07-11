@@ -67,7 +67,6 @@ public class XueyaCalculateActivity extends AbsBaseActivity{
 
          XueyaCalculateDetailsActivity.open(this,height,low);
 
-
      });
 
     }
