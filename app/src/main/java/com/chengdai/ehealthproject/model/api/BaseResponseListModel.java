@@ -5,7 +5,6 @@ import java.util.List;
 /**
  * Created by 李先俊 on 2017/6/8.
  */
-
 public class BaseResponseListModel<T>{
     private String errorCode;//状态码
     private String errorInfo;//状态描述
