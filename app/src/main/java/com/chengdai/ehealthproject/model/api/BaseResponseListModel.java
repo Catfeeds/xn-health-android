@@ -7,7 +7,6 @@ import java.util.List;
  */
 
 public class BaseResponseListModel<T>{
-
     private String errorCode;//状态码
     private String errorInfo;//状态描述
     private List<T> data;          //数据
