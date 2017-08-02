@@ -30,7 +30,6 @@ import java.util.Map;
 /**酒店订单支付
  * Created by 李先俊 on 2017/6/14.
  */
-
 public class HotelOrderPayActivity extends AbsBaseActivity {
 
     private ActivityHotelOrderPayBinding mBinding;
@@ -121,6 +120,11 @@ public class HotelOrderPayActivity extends AbsBaseActivity {
                     case 1:
                         yuePay();//余额支付yu
                         break;
+                    case 2:
+
+                        weiXinPay();//微信支付
+
+                        break;
                     case 3://支付宝支付
                         aliPay();
                         break;
@@ -150,6 +154,23 @@ private  void  yuePay(){
                     showToast("支付失败");
                 }
 
+            },Throwable::printStackTrace));
+
+}
+
+    /**
+     * 微信支付
+     */
+    private  void  weiXinPay(){
+
+    Map<String,String> map=new HashMap();
+    map.put("code",mPayModel.getOrderCode());
+    map.put("payType",mPayType+"");
+
+    mSubscription.add(RetrofitUtils.getLoaderServer().wxPayRequest("808451", StringUtils.getJsonToString(map))
+            .compose(RxTransformerHelper.applySchedulerResult(this))
+            .subscribe(payState -> {
+                PayUtil.callWXPay(this,payState,CALLPAYTAG);
             },Throwable::printStackTrace));
 
 }
@@ -226,12 +247,14 @@ private  void  yuePay(){
      * @param mo
      */
     @Subscribe
-    public void AliPayState(PaySucceedInfo mo){
+    public void PayState(PaySucceedInfo mo){
         if(mo == null || !TextUtils.equals(mo.getTag(),CALLPAYTAG)){
             return;
         }
 
-        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){ //支付宝支付成功
+            payState();
+        }else if(mo.getCallType() == PayUtil.WEIXINPAY && mo.isPaySucceed()){//微信支付成功
             payState();
         }
     }

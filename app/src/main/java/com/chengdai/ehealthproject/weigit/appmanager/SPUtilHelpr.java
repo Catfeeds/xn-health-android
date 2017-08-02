@@ -72,6 +72,21 @@ public class SPUtilHelpr {
 	{
 		SPUtils.put(BaseApplication.getInstance(),USERID,s);
 	}
+	/**
+	 * 设置用户手机号码
+	 * @param s
+	 */
+	public static void saveUserPhoneNum(String s)
+	{
+		SPUtils.put(BaseApplication.getInstance(),"user_phone",s);
+	}
+	/**
+	 * 获取用户手机号
+	 */
+	public static String getUserPhoneNum()
+	{
+	return 	SPUtils.getString(BaseApplication.getInstance(),"user_phone","");
+	}
 
 
 	/**

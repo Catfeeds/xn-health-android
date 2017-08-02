@@ -1,18 +1,22 @@
 package com.chengdai.ehealthproject.model.tabsurrounding;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentSurroundingBinding;
@@ -22,18 +26,16 @@ import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.common.model.activitys.CitySelectActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
-import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HotelSelectActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.SurroundingMenuSeletActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.StoreTypeListAdapter;
-import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingMenuLeftAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.BannerModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreTypeModel;
-import com.chengdai.ehealthproject.uitls.LogUtil;
+import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -42,23 +44,20 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.youth.banner.BannerConfig;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
-
 
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.reactivex.Observable;
 
 import static com.chengdai.ehealthproject.weigit.appmanager.MyConfig.HOTELTYPE;
 
@@ -79,6 +78,9 @@ public class SurroundingFragment extends BaseLazyFragment{
     private LocationModel locationModel;
 
     private List<String> bannerLinks=new ArrayList<>();
+
+    private static final int PERMISSION_FLAG=100;//申请权限
+    private static final int CAPTURE_FLAG=102;//打开扫描二维码
 
 
     /**
@@ -106,12 +108,6 @@ public class SurroundingFragment extends BaseLazyFragment{
 
         initSpringViews();
 
-        locationModel = SPUtilHelpr.getLocationInfo();
-        if(locationModel!=null && !TextUtils.isEmpty(locationModel.getCityName())){
-            mBinding.tvLocation.setText(locationModel.getCityName());
-        }else{
-            mBinding.tvLocation.setText(R.string.txt_change_city);
-        }
 
         return mBinding.getRoot();
 
@@ -150,23 +146,6 @@ public class SurroundingFragment extends BaseLazyFragment{
      * 设置view
      */
     private void initViews() {
-
-        //健康美食
-      /*  setTvListener(mBinding.layoutSurroundingMenu.linFood,mActivity.getResources().getString(R.string.txt_food));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linMovement,mActivity.getResources().getString(R.string.txt_movement));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linWomenhome,mActivity.getResources().getString(R.string.txt_women_home));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linLife,mActivity.getResources().getString(R.string.txt_life));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linHotel,mActivity.getResources().getString(R.string.txt_hotel));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linDabaojian,mActivity.getResources().getString(R.string.txt_dabaojian));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linLife2,mActivity.getResources().getString(R.string.txt_life2));
-
-        setTvListener(mBinding.layoutSurroundingMenu.linShopping,mActivity.getResources().getString(R.string.txt_sopping));*/
 
         mStoreMenuAdapter = new SurroundingStoreTypeAdapter(mActivity,new ArrayList<>());
         mBinding.gridStoreType.setAdapter(mStoreMenuAdapter);
@@ -207,6 +186,11 @@ public class SurroundingFragment extends BaseLazyFragment{
         });
 
         mBinding.search.editSerchView.setHint("请输入您感兴趣的商户");
+
+        mBinding.imgSwipt.setOnClickListener(v -> {
+            PermissionCheck(PERMISSION_FLAG);
+
+        });
     }
 
     private void initBanner() {
@@ -247,12 +231,17 @@ public class SurroundingFragment extends BaseLazyFragment{
     @Override
     protected void lazyLoad() {
         if (isCreate){
-
+            locationModel = SPUtilHelpr.getLocationInfo();
+            if(locationModel!=null){
+                mBinding.tvLocation.setText(SPUtilHelpr.getLocationInfo().getCityName());
+            }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+                mBinding.tvLocation.setText(SPUtilHelpr.getResetLocationInfo().getCityName());
+            }else{
+                mBinding.tvLocation.setText("金华");
+            }
             getAllData();
             isCreate=false;
-
         }
-
     }
 //获取所有接口数据
     private void getAllData() {
@@ -262,7 +251,6 @@ public class SurroundingFragment extends BaseLazyFragment{
         bannerDataRequest(mActivity);
 
         getStoreListRequest(mActivity,1);
-
 
 
         if(mBinding!=null && mBinding.banner!=null){
@@ -321,7 +309,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
-            map.put("area", locationModel.getAreaName());
+//            map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
         }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
@@ -428,10 +416,134 @@ public class SurroundingFragment extends BaseLazyFragment{
         }
     }
 
+    /**
+     * @param
+     */
+    @Subscribe
+    public void locationFailure(AMapLocation cityModel){
+        if(cityModel!=null && isCreate){
+            mBinding.tvLocation.setText(cityModel.getCity());
+            mStoreStart=1;
+            getStoreListRequest(null,1);
+        }
+    }
+
+
+
+
     @Override
     protected void onInvisible() {
-        if(isCreate && mBinding!=null && mBinding.banner!=null){
+        if( mBinding!=null && mBinding.banner!=null){
             mBinding.banner.stopAutoPlay();
+        }
+
+    }
+
+    /**
+     * 检测权限打开相机
+     * @param requestcode
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    private void PermissionCheck(int requestcode) {
+        if (AppUtils.getAndroidVersion(Build.VERSION_CODES.M))  //如果运行环境是6.0
+        {
+            //判断是否有相机权限
+            if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(mActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                    ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) //没有权限
+            {
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestcode);  //申请相机权限
+
+                return;
+            }
+        }
+
+        Intent intent = new Intent(mActivity, CaptureActivity.class);
+        startActivityForResult(intent, CAPTURE_FLAG);
+
+    }
+
+
+    //权限申请回调函数
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        boolean isgetPermissions = true;
+
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                isgetPermissions = false;
+                break;
+            }
+        }
+
+        if (!isgetPermissions) {
+            if (mActivity.isFinishing()) {
+                return;
+            }
+            new CommonDialog(mActivity).builder()
+                    .setTitle("系统提示").setContentMsg("未取得您的相机、存储空间使用权限，此功能无法使用。请前往应用权限设置打开权限。")
+
+                    .setPositiveBtn("去打开", new CommonDialog.OnPositiveListener() {
+                        @Override
+                        public void onPositive(View view) {
+                            // 根据包名跳转到系统自带的应用程序信息界面
+                            AppUtils.startDetailsSetting(mActivity);
+                        }
+                    })
+                    .setNegativeBtn("取消", new CommonDialog.OnNegativeListener() {
+                        @Override
+                        public void onNegative(View view) {
+
+                        }
+                    }, false).show();
+
+        } else {
+            Intent intent = new Intent(mActivity, CaptureActivity.class);
+            startActivityForResult(intent, CAPTURE_FLAG);
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == CAPTURE_FLAG) {
+            //处理扫描结果
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+
+                    //1:普通 2:酒店
+
+                    String s[]=result.split(":");
+
+                    if(s==null || s.length<2){
+                        ToastUtil.show(mActivity,"暂无商家信息");
+                        return;
+                    }
+
+                    if("1".equals(s[0])){
+                        StoredetailsActivity.open(mActivity,s[1]); //打开商家详情
+                    }else if("2".equals(s[0])){
+                        HoteldetailsActivity.open(mActivity,s[1]);
+                    }else{
+                        ToastUtil.show(mActivity,"暂无商家信息");
+                    }
+
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    ToastUtil.show(mActivity,"二维码解析失败");
+                }
+            }
         }
 
     }

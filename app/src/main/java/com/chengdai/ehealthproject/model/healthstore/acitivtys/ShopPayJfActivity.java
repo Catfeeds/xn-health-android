@@ -156,7 +156,6 @@ public class ShopPayJfActivity extends AbsBaseActivity{
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(codeModel -> {
                    if(!TextUtils.isEmpty(codeModel)){
-                       showToast("兑换成功");
                        mSelectProductData.setmBuyNum(mBuyNum);
                        ShopPayJfConfirmActivity.open(this,mSelectProductData,codeModel,true);
                    }

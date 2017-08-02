@@ -419,9 +419,12 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
         {
             //判断是否有相机权限
             if (ContextCompat.checkSelfPermission(ImageSelectActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                    ContextCompat.checkSelfPermission(ImageSelectActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) //没有权限
+                    ContextCompat.checkSelfPermission(ImageSelectActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED||
+                    ContextCompat.checkSelfPermission(ImageSelectActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+
+                    ) //没有权限
             {
-                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, requestcode);  //申请相机权限
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestcode);  //申请相机权限
 
                 return;
             }

@@ -19,6 +19,7 @@ import com.chengdai.ehealthproject.model.healthmanager.fragments.HealthManagerFr
 import com.chengdai.ehealthproject.model.healthstore.HealthStoreFragment;
 import com.chengdai.ehealthproject.model.tabmy.MyFragment;
 import com.chengdai.ehealthproject.model.tabsurrounding.SurroundingFragment;
+import com.chengdai.ehealthproject.model.tabtourism.TourismFragment;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
@@ -64,6 +65,7 @@ public class MainActivity extends BaseLocationActivity {
         LocationModel locationModel  = new LocationModel(aMapLocation.getCountry(),
                 aMapLocation.getProvince(),aMapLocation.getCity(),aMapLocation.getDistrict(),aMapLocation.getLatitude()+"",aMapLocation.getLongitude()+"");
         SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
+        SPUtilHelpr.saveRestLocationInfo("");
 
         EventBus.getDefault().post(aMapLocation);
         LogUtil.E("定位成功 Main"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
@@ -117,6 +119,7 @@ public class MainActivity extends BaseLocationActivity {
 
         fragments.add(new HealthManagerFragment());
         fragments.add(new HealthCircleFragment());
+        fragments.add(new TourismFragment());
         fragments.add(new SurroundingFragment());
         fragments.add(new HealthStoreFragment());
         fragments.add(new MyFragment());
@@ -125,32 +128,42 @@ public class MainActivity extends BaseLocationActivity {
 
         mainBinding.pagerMain.setOffscreenPageLimit(fragments.size());
 
-        mainBinding.layoutMainButtom.radioMainTab1.setOnClickListener(v -> {
+        mainBinding.layoutMainButtom.radioMainTabManager.setOnClickListener(v -> {
             mainBinding.pagerMain.setCurrentItem(0,false);
             mTabIndex=1;
         });
-        mainBinding.layoutMainButtom.radioMainTab2.setOnClickListener(v -> {
+        mainBinding.layoutMainButtom.radioMainTabFriend.setOnClickListener(v -> {
 
             mainBinding.pagerMain.setCurrentItem(1,false);
             mTabIndex=2;
         });
-        mainBinding.layoutMainButtom.radioMainTab3.setOnClickListener(v -> {
+
+
+        mainBinding.layoutMainButtom.radioMainTabTourism.setOnClickListener(v -> {
             mainBinding.pagerMain.setCurrentItem(2,false);
             mTabIndex=3;
         });
-        mainBinding.layoutMainButtom.radioMainTab4.setOnClickListener(v -> {
+
+        mainBinding.layoutMainButtom.radioMainTabSurrounding.setOnClickListener(v -> {
             mainBinding.pagerMain.setCurrentItem(3,false);
             mTabIndex=4;
         });
-         mainBinding.layoutMainButtom.radioMainTab5.setOnClickListener(v -> {
+        mainBinding.layoutMainButtom.radioMainTabShop.setOnClickListener(v -> {
+            mainBinding.pagerMain.setCurrentItem(4,false);
+            mTabIndex=5;
+        });
+
+
+
+         mainBinding.layoutMainButtom.radioMainTabMy.setOnClickListener(v -> {
              if(!SPUtilHelpr.isLoginNoStart()){
 
                  setTabIndex();
 
                  LoginActivity.open(this,false);
              }else{
-                 mTabIndex=5;
-                 mainBinding.pagerMain.setCurrentItem(4,false);
+                 mTabIndex=6;
+                 mainBinding.pagerMain.setCurrentItem(6,false);
              }
         });
         setTabIndex();
@@ -191,19 +204,22 @@ public class MainActivity extends BaseLocationActivity {
     private void setTabIndex() {
         switch (mTabIndex){
             case 1:
-                mainBinding.layoutMainButtom.radioMainTab1.setChecked(true);
+                mainBinding.layoutMainButtom.radioMainTabManager.setChecked(true);
                 break;
             case 2:
-                mainBinding.layoutMainButtom.radioMainTab2.setChecked(true);
+                mainBinding.layoutMainButtom.radioMainTabFriend.setChecked(true);
                 break;
             case 3:
-                mainBinding.layoutMainButtom.radioMainTab3.setChecked(true);
+                mainBinding.layoutMainButtom.radioMainTabTourism.setChecked(true);
                 break;
             case 4:
-                mainBinding.layoutMainButtom.radioMainTab4.setChecked(true);
+                mainBinding.layoutMainButtom.radioMainTabSurrounding.setChecked(true);
                 break;
             case 5:
-                mainBinding.layoutMainButtom.radioMainTab5.setChecked(true);
+                mainBinding.layoutMainButtom.radioMainTabShop.setChecked(true);
+                break;
+            case 6:
+                mainBinding.layoutMainButtom.radioMainTabMy.setChecked(true);
                 break;
         }
     }
@@ -226,7 +242,6 @@ public class MainActivity extends BaseLocationActivity {
 
         EventBusModel eventBusMode2=new EventBusModel();
         eventBusMode2.setTag("MainActivityFinish");
-        EventBus.getDefault().postSticky(eventBusMode2); //结束掉所有界面
         EventBus.getDefault().post(eventBusMode2); //结束掉所有界面
         finish();
     }

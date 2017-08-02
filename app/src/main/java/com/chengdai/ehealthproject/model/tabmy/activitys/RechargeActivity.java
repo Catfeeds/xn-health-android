@@ -94,17 +94,37 @@ public class RechargeActivity extends AbsBaseActivity{
                 return;
             }
 
-            if(mPayType==2){
-                rechargeRequest();
+            if(mPayType==PayUtil.ALIPAY){  //支付宝充值
+                rechargeAliRequest();
+            }else{
+                rechargeWXRequest();//微信充值
             }
         });
     }
 
-    //充值请求
-    private void rechargeRequest() {
-
+    /**
+     * 微信充值请求
+     */
+    private void rechargeWXRequest() {
         Map<String,String> map=new HashMap<>();
+        map.put("applyUser", SPUtilHelpr.getUserId());
+        map.put("channelType","36");//36微信app支付 30支付宝支付
+        map.put("amount",StringUtils.getRequestPrice(mBinding.edtPrice.getText().toString()));
+        map.put("token",SPUtilHelpr.getUserToken());
 
+        mSubscription.add(RetrofitUtils.getLoaderServer().wxPayRequest("802710",StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(model -> {
+                    PayUtil.callWXPay(this,model,CALLPAYTAG);
+                },Throwable::printStackTrace));
+
+    }
+
+    /**
+     * 支付宝   充值请求
+     */
+    private void rechargeAliRequest() {
+        Map<String,String> map=new HashMap<>();
         map.put("applyUser", SPUtilHelpr.getUserId());
         map.put("channelType","30");//36微信app支付 30支付宝支付
         map.put("amount",StringUtils.getRequestPrice(mBinding.edtPrice.getText().toString()));
@@ -117,26 +137,25 @@ public class RechargeActivity extends AbsBaseActivity{
 
                 },Throwable::printStackTrace));
 
-
     }
 
     /**
      * 初始化支付方式选择状态
      */
     private void initPayTypeSelectState() {
-        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
+        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
+        ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
 
-        mPayType=2;
+        mPayType=PayUtil.WEIXINPAY;
 
         mBinding.linWeipay.setOnClickListener(v -> {
-            mPayType=1;
+            mPayType=PayUtil.WEIXINPAY;
             ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
             ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
         });
 
         mBinding.linZhifubao.setOnClickListener(v -> {
-            mPayType=2;
+            mPayType=PayUtil.ALIPAY;
             ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
             ImgUtils.loadImgId(RechargeActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
         });
@@ -148,12 +167,21 @@ public class RechargeActivity extends AbsBaseActivity{
      * @param mo
      */
     @Subscribe
-    public void AliPayState(PaySucceedInfo mo){
+    public void PayStateEvent(PaySucceedInfo mo){
         if(mo == null || !TextUtils.equals(mo.getTag(),CALLPAYTAG)){
             return;
         }
 
-        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){   //支付宝支付
+            showToast("充值成功");
+
+            EventBusModel e=new EventBusModel();
+            e.setTag("MyAmountActivityFinish");//结束上一页
+            EventBus.getDefault().post(e);
+
+            finish();
+        }else if(mo.getCallType() == PayUtil.WEIXINPAY && mo.isPaySucceed()){//微信支付
+
             showToast("充值成功");
 
             EventBusModel e=new EventBusModel();

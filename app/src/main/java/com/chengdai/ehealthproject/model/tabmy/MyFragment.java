@@ -13,6 +13,7 @@ import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentMyBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
+import com.chengdai.ehealthproject.model.tabmy.activitys.CallFriendsActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.HotelOrderStateLookActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyAmountActivity;
 import com.chengdai.ehealthproject.model.tabmy.activitys.MyHelathTaskListActivity;
@@ -112,6 +113,10 @@ public class MyFragment extends BaseLazyFragment{
         mBinding.fraAmount.setOnClickListener(v -> {
             MyAmountActivity.open(mActivity,mAmount,mAmountaccountNumber,mUserInfoData);
         });
+        //邀请好友
+        mBinding.layoutCallFriend.setOnClickListener(v -> {
+            CallFriendsActivity.open(mActivity,mUserInfoData);
+        });
 
         isCreate=true;
         return mBinding.getRoot();
@@ -208,6 +213,9 @@ public class MyFragment extends BaseLazyFragment{
 
                 .subscribe(r -> {
                     mUserInfoData=r;
+
+                    SPUtilHelpr.saveUserPhoneNum(mUserInfoData.getMobile());
+
                     mBinding.tvUserName.setText(r.getNickname());
 
                     if(r.getUserExt() == null) return;

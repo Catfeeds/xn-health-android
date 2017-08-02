@@ -8,26 +8,15 @@ import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
-import com.chengdai.ehealthproject.databinding.ActivityHotelDetailsBinding;
-import com.chengdai.ehealthproject.databinding.ActivityHotelSelectBinding;
 import com.chengdai.ehealthproject.databinding.ActivityHotelroomDetailsBinding;
-import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
-import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
-import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
-import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
-import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
-import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zzhoujay.richtext.RichText;
-import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**商户详情
  * Created by 李先俊 on 2017/6/12.
@@ -88,7 +77,7 @@ public class HotelRoomDetailsActivity extends AbsBaseActivity {
     private void initViews() {
         mBinding.btnPay.setOnClickListener(v -> {
             if(mStoreDetailsModel!=null)
-                PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
+                SurroundingPayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
         });
 
     }

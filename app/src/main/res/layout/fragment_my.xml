@@ -162,7 +162,7 @@
         style="@style/split_line_5"
        />
     <LinearLayout
-        android:visibility="gone"
+        android:id="@+id/layout_call_friend"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:orientation="horizontal"

@@ -11,14 +11,14 @@
         android:id="@+id/radiogroup"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:weightSum="5"
+        android:weightSum="6"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RadioButton
             android:clickable="false"
-            android:id="@+id/radio_main_tab_1"
+            android:id="@+id/radio_main_tab_manager"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
 
         <RadioButton
             android:clickable="false"
-            android:id="@+id/radio_main_tab_2"
+            android:id="@+id/radio_main_tab_friend"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,7 +48,22 @@
 
         <RadioButton
             android:clickable="false"
-            android:id="@+id/radio_main_tab_3"
+            android:id="@+id/radio_main_tab_tourism"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_tourism"
+            android:button="@null"
+            android:drawableTop="@drawable/main_buttom_tab_6"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:textColor="@drawable/tab_txtcolor"
+            android:textSize="12sp"
+            android:checked="false" />
+
+        <RadioButton
+            android:clickable="false"
+            android:id="@+id/radio_main_tab_surrounding"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,9 +76,10 @@
             android:textSize="12sp"
             android:checked="false" />
 
+
         <RadioButton
             android:clickable="false"
-            android:id="@+id/radio_main_tab_4"
+            android:id="@+id/radio_main_tab_shop"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -78,7 +94,7 @@
 
         <RadioButton
             android:clickable="false"
-            android:id="@+id/radio_main_tab_5"
+            android:id="@+id/radio_main_tab_my"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

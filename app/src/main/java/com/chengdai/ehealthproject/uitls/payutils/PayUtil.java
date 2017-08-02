@@ -1,14 +1,22 @@
 package com.chengdai.ehealthproject.uitls.payutils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
 import com.chengdai.ehealthproject.model.common.model.pay.PayResult;
 import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
+import com.chengdai.ehealthproject.model.common.model.pay.WxPayRequestModel;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,14 +32,13 @@ public class PayUtil {
     //支付工具类型
     public static final int ALIPAY = 1;         //支付宝
     public static final int WEIXINPAY = 2;      //微信支付
-    //支付类型
 
-    public static int WXPAYTYPE = -1; //调用微信支付类型
+    public static String  CALLWXPAYTAG = "";      //调用微信支付类型
 
     /**
      * 调用微信支付
      */
-/*    public static void callWXPay(Context mContext, WXPayInfoModel model, int PayType) {
+    public static void callWXPay(Context mContext, WxPayRequestModel model, String paytag) {
 
         if (mContext == null || model==null) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()
@@ -42,9 +49,9 @@ public class PayUtil {
             return;
         }
 
-        NewPayUtil.WXPAYTYPE = PayType;
+        WXUtils.SpId=model.getAppId();
 
-        WXUtils.SpId=model.getAppid();
+        CALLWXPAYTAG = paytag;
 
         IWXAPI api = WXAPIFactory.createWXAPI(mContext, null);
 
@@ -56,7 +63,9 @@ public class PayUtil {
             commonDialog.show();
             return;
 
-        } else if (!api.isWXAppSupportAPI()) {
+        }
+
+        if (!api.isWXAppSupportAPI()) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()
                     .setTitle("提示").setContentMsg("亲，您的微信版本过低，请先更新微信！")
                     .setNegativeBtn("确定", null);
@@ -66,34 +75,36 @@ public class PayUtil {
         }
 
         // 将该app注册到微信
-        api.registerApp(model.getAppid());
+        api.registerApp(model.getAppId());
 
         PayReq request = new PayReq();
 
         Map<String, String> map = new HashMap<>();
 
-        request.appId = model.getAppid();  //应用ID
+        request.appId = model.getAppId();  //应用ID
 
         request.partnerId = model.getPartnerid();  //商户号
 
-        request.prepayId = model.getPrepayid();     //预支付ID
+        request.prepayId = model.getPrepayId();     //预支付ID
 
-        request.packageValue = model.getPackage_(); //扩展字段
+        request.packageValue = model.getWechatPackage(); //扩展字段
 
-        request.nonceStr = model.getNoncestr();      //随机字符串
+        request.nonceStr = model.getNonceStr();      //随机字符串
 
-        request.timeStamp = model.getTimestamp();    //签名
+        request.timeStamp = model.getTimeStamp();    //签名
 
-        map.put("appid", model.getAppid());
+/*        map.put("appid", model.getAppId());
         map.put("partnerid",model.getPartnerid() );
-        map.put("prepayid",model.getPrepayid() );
-        map.put("package", model.getPackage_());
-        map.put("noncestr",model.getNoncestr() );
-        map.put("timestamp", model.getTimestamp());
+        map.put("prepayid",model.getPrepayId() );
+        map.put("package", model.getWechatPackage());
+        map.put("noncestr",model.getNonceStr() );
+        map.put("timestamp", model.getTimeStamp());*/
 
-        request.sign = WXUtils.getSing(WXUtils.formatQueryParaMap(map, false));
+//        request.sign = WXUtils.getSing(WXUtils.formatQueryParaMap(map, false));
+        request.sign = model.getSign();
+
         api.sendReq(request);
-    }*/
+    }
 
  //支付宝支付
     public  static void callAlipay(final Activity mContext,String payInfo,String callTag) {

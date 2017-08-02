@@ -21,6 +21,7 @@ public class OnLoginFailure {
 
         SPUtilHelpr.saveUserId("");
         SPUtilHelpr.saveUserToken("");
+        SPUtilHelpr.saveUserPhoneNum("");
 
         if (context == null) {
             Intent intent = new Intent(BaseApplication.getInstance(), LoginActivity.class);

@@ -100,6 +100,7 @@ public class SettingActivity extends AbsBaseActivity{
         mBinding.txtLogout.setOnClickListener(v -> {
             SPUtilHelpr.saveUserId("");
             SPUtilHelpr.saveUserToken("");
+            SPUtilHelpr.saveUserPhoneNum("");
 
             EventBusModel eventBusModel=new EventBusModel();
             eventBusModel.setTag("AllFINISH");
@@ -128,6 +129,12 @@ public class SettingActivity extends AbsBaseActivity{
            if(mUserInfo!=null){
                mUserInfo.setTradepwdFlag("1");
            }
+        }
+      if(TextUtils.equals(eventBusModel.getTag(),"SettingActivityUpdate_Phone")){
+           if(mUserInfo!=null){
+               mUserInfo.setMobile(eventBusModel.getEvInfo());
+           }
+           mBinding.txtPhone.setText(mUserInfo.getMobile());
         }
 
     }

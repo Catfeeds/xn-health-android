@@ -97,7 +97,12 @@ public class MyAmountActivity extends AbsBaseActivity{
         });
         //提现
         mBinding.tvWithdrawal.setOnClickListener(v -> {
-            if(mUserInfo!=null && TextUtils.equals("0",mUserInfo.getTradepwdFlag())) { //未设置支付密码
+
+            if(mUserInfo==null){
+                return;
+            }
+
+            if( TextUtils.equals("0",mUserInfo.getTradepwdFlag())) { //未设置支付密码
 
                 showDoubleWarnListen("您还未设置支付密码,请先设置支付密码",view -> {
                     PayPwdModifyActivity.open(this,false,mUserInfo.getMobile());

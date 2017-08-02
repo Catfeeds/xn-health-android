@@ -9,8 +9,6 @@ import android.text.TextUtils;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityHotelDetailsBinding;
-import com.chengdai.ehealthproject.databinding.ActivityHotelSelectBinding;
-import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -129,7 +127,7 @@ public class HoteldetailsActivity extends AbsBaseActivity {
 
         mBinding.btnPay.setOnClickListener(v -> {
             if(mStoreDetailsModel!=null)
-                 PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
+                 SurroundingPayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
         });
 
         mBinding.btnBookHotel.setOnClickListener(v -> {
@@ -164,6 +162,12 @@ public class HoteldetailsActivity extends AbsBaseActivity {
                     mStoreDetailsModel=storeListModel;
 
                     setShowData(storeListModel);
+
+                    if(!"2".equals(mStoreDetailsModel.getStatus())){
+                        showWarnListen("店铺不处于上架状态，请联系商家",view -> {
+                            finish();
+                        });
+                    }
 
                 },Throwable::printStackTrace));
     }

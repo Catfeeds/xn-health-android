@@ -23,6 +23,9 @@ public class SimpleErrorVerify implements ErrorVerify {
 
     @Override
     public void call(String code, String desc) {
+
+        LogUtil.E("请求错误 "+desc);
+
         ToastUtil.show(BaseApplication.getInstance(),desc);
     }
 

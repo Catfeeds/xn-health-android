@@ -1,27 +1,21 @@
-/*
 package com.chengdai.ehealthproject.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.yitu8.client.application.R;
-import com.yitu8.client.application.activities.common.BaseActivity;
-import com.yitu8.client.application.modles.pay.PaySucceedInfo;
-import com.yitu8.client.application.others.NewPayUtil;
-import com.yitu8.client.application.utils.LogUtil;
-import com.yitu8.client.application.utils.RxBus;
-import com.yitu8.client.application.utils.WXUtils;
+import com.chengdai.ehealthproject.R;
+import com.chengdai.ehealthproject.base.BaseActivity;
+import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
+import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
+import com.chengdai.ehealthproject.uitls.payutils.WXUtils;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
 
-*/
-/**
- * Created by Administrator on 2016-06-01.
- *//*
 
 public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
@@ -40,13 +34,6 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //防止内存泄漏
-        WXUtils.SpId=null;
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
@@ -54,42 +41,46 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     }
     @Override
     public void onReq(BaseReq baseReq) {
-        LogUtil.E("支付回调onReq___");
     }
 
+    /*
+  0  展示成功页面
+  -1 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。
+  -2 用户取消
+*/
     @Override
     public void onResp(BaseResp resp) {
 
-        */
-/*
-0  展示成功页面
--1 可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等。
--2 用户取消
-*//*
-
 
         int code=resp.errCode;
+
         PaySucceedInfo paySucceedInfo=new PaySucceedInfo();
 
-        paySucceedInfo.setCallType(NewPayUtil.WEIXINPAY);
-
-        paySucceedInfo.setPayType(NewPayUtil.WXPAYTYPE);
+        paySucceedInfo.setPayType(PayUtil.WEIXINPAY);
 
         if(code==0)
         {   paySucceedInfo.setPaySucceed(true);
-            RxBus.getDefault().post(paySucceedInfo);
+
         }else if(code==-1)
         {
             paySucceedInfo.setPaySucceed(false);
-            RxBus.getDefault().post(paySucceedInfo);
         }
 
+        paySucceedInfo.setCallType(PayUtil.WEIXINPAY);
+        paySucceedInfo.setTag(PayUtil.CALLWXPAYTAG);
+        EventBus.getDefault().post(paySucceedInfo);
+
         finish();
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //防止内存泄漏
+        WXUtils.SpId=null;
+        PayUtil.CALLWXPAYTAG=null;
     }
 
 
 
 }
-*/

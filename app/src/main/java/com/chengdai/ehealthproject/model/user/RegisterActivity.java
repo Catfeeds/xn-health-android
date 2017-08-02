@@ -96,8 +96,6 @@ public class RegisterActivity extends AbsBaseLocationActivity {
         mTypeNames=getResources().getStringArray(R.array.tjtype);
         mTypeCodes=getResources().getStringArray(R.array.tj_type_code);
 
-        ImgUtils.loadImgId(this,R.mipmap.icon,mBinding.imgLoginIcon);
-
         initViews();
 
         initTvReadView();
@@ -149,12 +147,13 @@ public class RegisterActivity extends AbsBaseLocationActivity {
                 return;
             }
 
-            if(TextUtils.isEmpty(mBinding.editTj.getText().toString()) && !TextUtils.isEmpty(mSelectTypeCode)){//选择了类型 但是未填写推荐人
-                mSelectTypeCode="";
+            if(TextUtils.isEmpty(mBinding.tvTjType.getText().toString())){
+                showToast("请选择推荐人类型");
+                return;
             }
 
-            if(!TextUtils.isEmpty(mBinding.editTj.getText().toString()) && TextUtils.isEmpty(mSelectTypeCode)){  //填写了推荐人 但是未选择类型
-               showToast("请选择推荐人类型");
+            if(TextUtils.isEmpty(mBinding.editTj.getText().toString()) ){
+                showToast("请输入推荐人");
                 return;
             }
 

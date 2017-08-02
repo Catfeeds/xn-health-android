@@ -5,6 +5,7 @@ import android.app.Application;
 import com.chengdai.ehealthproject.BuildConfig;
 import com.chengdai.ehealthproject.uitls.NineGridViewImageLoader;
 import com.lzy.ninegrid.NineGridView;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -22,9 +23,8 @@ public class BaseApplication extends Application {
         super.onCreate();
         EventBus.builder().throwSubscriberException(BuildConfig.IS_DEBUG).installDefaultEventBus();
         NineGridView.setImageLoader(new NineGridViewImageLoader());
-//        TwinklingRefreshLayout.setDefaultHeader(SinaRefreshView.class.getName());
-//        TwinklingRefreshLayout.setDefaultFooter(LoadingView.class.getName());
         application=this;
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     public static BaseApplication getInstance(){

@@ -94,7 +94,7 @@ public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
 
         //帖子详情
         holder.setOnClickListener(R.id.line_detail,v -> {
-            InfoDetailsActivity.open(mContext,listBean);
+            InfoDetailsActivity.open(mContext,listBean.getCode());
         });
 
         //点赞

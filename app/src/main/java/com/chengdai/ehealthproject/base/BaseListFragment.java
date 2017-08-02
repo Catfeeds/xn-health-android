@@ -149,13 +149,11 @@ public abstract class BaseListFragment<T> extends BaseLazyFragment {
 
         }else if(mPageIndex>1){
             if(datas == null || datas.size()<=0){
-                if(mPageIndex >1){
-                    mPageIndex--;
-                    return;
-                }
-                mDataList.addAll(datas);
-                mEmptyWrapper.notifyDataSetChanged();
+                mPageIndex--;
+                return;
             }
+            mDataList.addAll(datas);
+            mEmptyWrapper.notifyDataSetChanged();
         }
     }
 

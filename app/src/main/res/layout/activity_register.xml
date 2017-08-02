@@ -177,7 +177,7 @@
         <EditText
             android:textColorHint="@color/text_hint_color"
             android:id="@+id/edit_tj"
-            android:hint="推荐人 选填"
+            android:hint="推荐人"
             android:textSize="16sp"
             android:maxLines="1"
             android:background="@null"

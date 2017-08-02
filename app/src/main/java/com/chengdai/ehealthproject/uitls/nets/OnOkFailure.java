@@ -25,6 +25,7 @@ public class OnOkFailure {
 
         SPUtilHelpr.saveUserId("");
         SPUtilHelpr.saveUserToken("");
+        SPUtilHelpr.saveUserPhoneNum("");
 
 
         EventBusModel eventBusMode2=new EventBusModel();//结束主页

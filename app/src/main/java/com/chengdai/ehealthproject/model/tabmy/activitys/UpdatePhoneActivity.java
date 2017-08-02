@@ -127,6 +127,10 @@ public class UpdatePhoneActivity extends AbsBaseActivity{
                 .filter(data-> data!=null && data.isSuccess())
                 .subscribe(data -> {
                      showToast("手机号修改成功");
+
+                    EventBusModel eventBus=new EventBusModel();
+                    eventBus.setTag("SettingActivityUpdate_Phone");
+                    eventBus.setEvInfo(mBinding.edtPhoneNew.getText().toString());
                      finish();
                 },Throwable::printStackTrace));
     }

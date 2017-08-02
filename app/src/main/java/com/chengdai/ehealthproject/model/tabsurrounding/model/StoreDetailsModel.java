@@ -68,7 +68,7 @@ public class StoreDetailsModel {
     private String owner;
     private String legalPersonName;
     private String userReferee;
-    private float rate1;
+    private Double rate1;
     private float rate2;
     private int totalJfNum;
     private int totalDzNum;
@@ -278,17 +278,18 @@ public class StoreDetailsModel {
         this.userReferee = userReferee;
     }
 
-    public float getRate1() {
+    public Double getRate1() {
         return rate1;
+    }
+
+    public void setRate1(Double rate1) {
+        this.rate1 = rate1;
     }
 
     public float getRate2() {
         return rate2;
     }
 
-    public void setRate1(float rate1) {
-        this.rate1 = rate1;
-    }
 
     public void setRate2(float rate2) {
         this.rate2 = rate2;

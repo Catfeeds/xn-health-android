@@ -12,19 +12,16 @@ import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
-import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
-import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.zzhoujay.richtext.RichText;
 
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +78,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
                 return;
             }
             if(mStoreDetailsModel!=null){
-                PayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
+                SurroundingPayActivity.open(this,mStoreDetailsModel.getRate1(),mStoreDetailsModel.getCode());
             }
         });
 
@@ -152,6 +149,13 @@ public class StoredetailsActivity extends AbsBaseActivity {
                     mStoreDetailsModel=storeListModel;
 
                     setShowData(storeListModel);
+
+                    if(!"2".equals(mStoreDetailsModel.getStatus())){
+                        showWarnListen("店铺不处于上架状态，请联系商家",view -> {
+                            finish();
+                        });
+                    }
+
 
                 },Throwable::printStackTrace));
     }

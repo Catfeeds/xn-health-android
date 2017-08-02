@@ -258,7 +258,7 @@ public class AddAddressActivity extends AbsBaseActivity{
 
     public void getLocationInfo() {
 
-        LocationModel mLocationModel=  SPUtilHelpr.getLocationInfo();
+/*        LocationModel mLocationModel=  SPUtilHelpr.getLocationInfo();
 
         if(mLocationModel != null){
             mProvince =mLocationModel.getProvinceName();
@@ -266,17 +266,16 @@ public class AddAddressActivity extends AbsBaseActivity{
             mCity =mLocationModel.getCityName();
 
             mDistrict =mLocationModel.getAreaName();
+        }*/
+
+        if(!TextUtils.isEmpty(mProvince) && !TextUtils.isEmpty(mCity) && !TextUtils.isEmpty(mDistrict)){
+
+        }else{
+            mProvince="北京市";
+            mCity="北京市";
+            mDistrict="昌平区";
         }
 
-        if(TextUtils.isEmpty(mProvince)){
-            mProvince="北京市";
-        }
-           if(TextUtils.isEmpty(mCity)){
-               mCity="北京市";
-        }
-           if(TextUtils.isEmpty(mDistrict)){
-               mDistrict="昌平区";
-        }
 
     }
 }

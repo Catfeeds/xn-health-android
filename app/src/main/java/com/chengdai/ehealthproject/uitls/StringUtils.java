@@ -8,6 +8,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,13 @@ public class StringUtils {
 
     public static String doubleFormatMoney(double money){
         DecimalFormat df = new DecimalFormat("#######0.00");
+        String showMoney = df.format((money));
+        return showMoney/*.substring(0,showMoney.length()-1)*/;
+    }
+
+    public static String doubleFormatMoney3(double money){
+        DecimalFormat df = new DecimalFormat("#######0.00");
+        df.setRoundingMode(RoundingMode.CEILING);
         String showMoney = df.format((money));
         return showMoney/*.substring(0,showMoney.length()-1)*/;
     }

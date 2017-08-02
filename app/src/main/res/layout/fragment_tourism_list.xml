@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/activity_title_bg"
+            android:gravity="center"
+            android:text="@string/txt_tourism"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.liaoinstan.springview.widget.SpringView
+                android:id="@+id/springvew"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/lv_store_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </ListView>
+
+
+            </com.liaoinstan.springview.widget.SpringView>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="165dp"
+                android:gravity="center"
+                android:text="附近暂无旅游名宿"
+                android:textSize="16sp" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+</layout>

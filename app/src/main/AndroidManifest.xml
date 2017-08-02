@@ -26,6 +26,10 @@
     <!--用于申请获取蓝牙信息进行室内定位-->
     <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
 
     <application
@@ -102,7 +106,7 @@
             android:windowSoftInputMode="adjustPan"
             />
     //支付
-        <activity android:name=".model.tabsurrounding.activitys.PayActivity"
+        <activity android:name=".model.tabsurrounding.activitys.SurroundingPayActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
@@ -524,6 +528,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
             />
+    //邀请好又
+        <activity android:name=".model.tabmy.activitys.CallFriendsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
 
 
         <!--评论列表查看-->
@@ -531,6 +540,12 @@
         <!--图片选择-->
         <activity
             android:name=".model.common.model.activitys.ImageSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:windowSoftInputMode="adjustPan" />
+        <!--分享-->
+        <activity
+            android:name=".model.common.model.activitys.ShareActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityDialogStyleBottom"
             android:windowSoftInputMode="adjustPan" />
@@ -542,6 +557,24 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
+
+
+        <!-- 微信支付entry -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+           />
+
     </application>
 
 </manifest>

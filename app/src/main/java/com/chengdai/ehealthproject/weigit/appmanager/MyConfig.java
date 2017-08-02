@@ -11,7 +11,8 @@ public class MyConfig {
     public final static String IMGURL="http://or4e1nykg.bkt.clouddn.com/";
     // 无损压缩
     public static String IMGURLCOMPRESS = "?imageslim";
-    public final static String HOTELTYPE="FL2017061219492431865712";
+//    public final static String HOTELTYPE="FL2017061219492431865712";
+    public final static String HOTELTYPE="mingsu";
 
     /*1待支付 2 已支付待发货 3 已发货待收货 4 已收货 91用户取消 92 商户取消 93 快递异常*/
     public final static String ORDERTYPEWAITPAY="1";

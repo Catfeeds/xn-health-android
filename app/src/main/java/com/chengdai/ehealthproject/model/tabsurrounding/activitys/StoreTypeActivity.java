@@ -159,7 +159,7 @@ public class StoreTypeActivity extends AbsBaseActivity {
         if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
-            map.put("area", locationModel.getAreaName());
+//            map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
         }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){

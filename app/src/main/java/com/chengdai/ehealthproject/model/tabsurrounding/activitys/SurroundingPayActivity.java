@@ -13,8 +13,8 @@ import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityPayBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
-import com.chengdai.ehealthproject.model.other.MainActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -30,15 +30,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**
+/**周边支付
  * Created by 李先俊 on 2017/6/12.
  */
 
-public class PayActivity extends AbsBaseActivity {
+public class SurroundingPayActivity extends AbsBaseActivity {
 
     private ActivityPayBinding mBinding;
 
-    private float rate;//折扣
+    private Double rate;//折扣
 
     private String  mStoreCode;
 
@@ -46,17 +46,17 @@ public class PayActivity extends AbsBaseActivity {
 
     private int mPayType=1;
 
-    private  static final String CALLPAYTAG="SSurroundingPayConfirmAcitivty";
+    private  static final String CALLPAYTAG="SurroundingPayConfirmAcitivty";
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context,float rate,String storeCode){
+    public static void open(Context context,Double rate,String storeCode){
         if(context==null){
             return;
         }
-        Intent intent=new Intent(context,PayActivity.class);
+        Intent intent=new Intent(context,SurroundingPayActivity.class);
         intent.putExtra("rate",rate);
         intent.putExtra("storeCode",storeCode);
         context.startActivity(intent);
@@ -77,7 +77,7 @@ public class PayActivity extends AbsBaseActivity {
 
         if(getIntent()!=null){
             mStoreCode=getIntent().getStringExtra("storeCode");
-            rate= getIntent().getFloatExtra("rate",0);
+            rate= getIntent().getDoubleExtra("rate",0);
         }
 
         initViews();
@@ -91,28 +91,28 @@ public class PayActivity extends AbsBaseActivity {
      */
     private void initPayTypeSelectState() {
 
-        ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
-        ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-        ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+        ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
+        ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+        ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
 
         mBinding.linBalace.setOnClickListener(v -> {
             mPayType=1;
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
         });
      mBinding.linWeipay.setOnClickListener(v -> {
             mPayType=2;
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
         });
 
      mBinding.linZhifubao.setOnClickListener(v -> {
            mPayType=3;
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(PayActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
+            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
         });
 
 
@@ -163,7 +163,7 @@ public class PayActivity extends AbsBaseActivity {
 
                 mDiscountMoney= (Double.valueOf(charSequence.toString()));
 
-                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney(mDiscountMoney*rate)+"");
+                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney3(mDiscountMoney*rate)+"");
 
             }else{
                 mDiscountMoney=0.00;
@@ -201,10 +201,22 @@ public class PayActivity extends AbsBaseActivity {
             case 1:
                 yuPay(map);//余额支付
                 break;
+            case 2:
+                wxPay(map);//微信APP支付
+                break;
             case 3://支付宝支付
                 aliPay(map);
                 break;
         }
+
+    }
+
+    private void wxPay(Map map) {
+        mSubscription.add(RetrofitUtils.getLoaderServer().wxPayRequest("808271", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(data -> {
+                PayUtil.callWXPay(SurroundingPayActivity.this,data,CALLPAYTAG);
+                },Throwable::printStackTrace));
 
     }
 
@@ -253,6 +265,8 @@ public class PayActivity extends AbsBaseActivity {
         }
 
         if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+            payState();
+        }else if(mo.getCallType() == PayUtil.WEIXINPAY && mo.isPaySucceed()){
             payState();
         }
     }

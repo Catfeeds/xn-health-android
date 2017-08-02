@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**支付确认
+/**商城支付确认
  * Created by 李先俊 on 2017/6/12.
  */
 
@@ -173,12 +173,23 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
             case 1:
                 yuPay(object);//余额支付
                 break;
+            case 2:
+                wxPay(object);//微信支付
+                break;
             case 3://支付宝支付
                 aliPay(object);
                 break;
         }
 
 
+    }
+    //微信支付
+    private void wxPay(Map object) {
+        mSubscription.add(RetrofitUtils.getLoaderServer().wxPayRequest("808052", StringUtils.getJsonToString(object))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(data -> {
+                    PayUtil.callWXPay(ShopPayConfirmActivity.this,data,CALLPAYTAG);
+                },Throwable::printStackTrace));
     }
 
     /**
@@ -251,6 +262,8 @@ public class ShopPayConfirmActivity extends AbsBaseActivity {
         }
 
         if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+            payState();
+        } else if(mo.getCallType() == PayUtil.WEIXINPAY && mo.isPaySucceed()){
             payState();
         }
     }

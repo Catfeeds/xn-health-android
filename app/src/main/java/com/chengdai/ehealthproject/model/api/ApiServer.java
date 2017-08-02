@@ -7,7 +7,9 @@ import com.chengdai.ehealthproject.model.common.model.IntroductionInfoModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
+import com.chengdai.ehealthproject.model.common.model.pay.WxPayRequestModel;
 import com.chengdai.ehealthproject.model.common.model.qiniu.QiniuGetTokenModel;
+import com.chengdai.ehealthproject.model.healthcircle.models.ArticleDetailsModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
 import com.chengdai.ehealthproject.model.healthmanager.adapters.FoodHotListData;
@@ -29,6 +31,7 @@ import com.chengdai.ehealthproject.model.healthstore.models.JfPicModel;
 import com.chengdai.ehealthproject.model.healthstore.models.PayCarListModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopEvaluateModel;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
+import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel2;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopOrderModel;
 import com.chengdai.ehealthproject.model.healthstore.models.getOrderAddressModel;
 import com.chengdai.ehealthproject.model.tabmy.model.BankModel;
@@ -239,7 +242,7 @@ public interface ApiServer {
     Observable<BaseResponseModel<IsSuccessModes>> FindPassWord(@Field("code") String code, @Field("json") String  json);
 
 /**
-     * 获取商城列表
+     * 获取商城列表 (分页)
      * @param code
      * @param json
      * @return
@@ -247,6 +250,16 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<ShopListModel>> GetShopList(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 获取商城列表 （不分页）
+     * @param code
+     * @param json
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseListModel<ShopListModel2>> GetShopList2(@Field("code") String code, @Field("json") String  json);
 
 
 /**
@@ -693,12 +706,20 @@ public interface ApiServer {
     Observable<BaseResponseModel<IsSuccessModes>> updateBankCard(@Field("code") String code, @Field("json") String  json);
 
     /**
-     * 充值
+     * 充值（支付宝）
      * @return
      */
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<AliPayRequestMode>> rechargeRequest(@Field("code") String code, @Field("json") String  json);
+
+    /**
+     * 微信支付
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<WxPayRequestModel>> wxPayRequest(@Field("code") String code, @Field("json") String  json);
     /**
      * 提现
      * @return
@@ -706,6 +727,13 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<String>> withdrawalRequest(@Field("code") String code, @Field("json") String  json);
+    /**
+     * 获取帖子数据详情
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<ArticleDetailsModel>> getTieziDetails(@Field("code") String code, @Field("json") String  json);
 
 
 }

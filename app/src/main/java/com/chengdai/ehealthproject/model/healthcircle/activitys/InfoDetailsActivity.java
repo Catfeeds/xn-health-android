@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.LayoutHeadInfoDetailsBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.healthcircle.models.ArticleDetailsModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
@@ -20,6 +21,7 @@ import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.chengdai.ehealthproject.weigit.views.MyDividerItemDecoration;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
@@ -49,19 +51,22 @@ public class InfoDetailsActivity extends AbsBaseActivity {
 
     private LayoutHeadInfoDetailsBinding mBinding;//头布局
 
-    private ArticleModel.ListBean mData;
+    private ArticleDetailsModel mData2;
+
     private CommonAdapter mAdapter;
+
+    private String mCode;
 
     /**
      * 打开当前页面
      * @param context
      */
-    public static void open(Context context, ArticleModel.ListBean data){
+    public static void open(Context context, String code){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,InfoDetailsActivity.class);
-        intent.putExtra("data",data);
+        intent.putExtra("code",code);
         context.startActivity(intent);
     }
 
@@ -73,7 +78,7 @@ public class InfoDetailsActivity extends AbsBaseActivity {
         mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_head_info_details, null, false);
 
         if(getIntent()!=null){
-            mData=getIntent().getParcelableExtra("data");
+            mCode=getIntent().getStringExtra("code");
         }
 
         addMainView(mBinding.getRoot());
@@ -85,13 +90,33 @@ public class InfoDetailsActivity extends AbsBaseActivity {
         initViews();
 
         mBinding.linPinlun.setOnClickListener(v -> {
-            if(mData==null){
-                return;
-            }
-            PinglunInfoSendActivity.open(this,mData.getCode());
+            PinglunInfoSendActivity.open(this,mCode);
         });
 
+        getTieziDetails(mCode);
+
     }
+
+
+    public void getTieziDetails(String code){
+        Map<String,String> map=new HashMap<>();
+        map.put("code",code);
+        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("commStatus", "BD");
+
+       mSubscription.add( RetrofitUtils.getLoaderServer().getTieziDetails("621041",StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(data -> {
+
+                    mData2=data;
+                    mBinding.tvDzinfo.setVisibility(View.VISIBLE);
+                    setHeadView();
+                },throwable -> {
+                    mBinding.tvDzinfo.setVisibility(View.VISIBLE);
+                }));
+
+    }
+
 
     private void initViews() {
         mBinding.springview.setType(SpringView.Type.FOLLOW);
@@ -133,12 +158,6 @@ public class InfoDetailsActivity extends AbsBaseActivity {
 
         };
 
-//        mHeadBinding=   DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.layout_head_info_details, null, false);//得到头部的布局
-
-        setHeadView();
-
-//        mBinding.listview.addHeaderView(mHeadBinding.getRoot());
-
         mBinding.listview.setAdapter(mAdapter);
 
         getPinglunListRequest(this);
@@ -149,43 +168,43 @@ public class InfoDetailsActivity extends AbsBaseActivity {
      * 设置头部View布局数据
      */
     private void setHeadView() {
-        if(mData == null){
+
+        if(mData2==null){
             return;
         }
-
-        mBinding.tvContent.setText(mData.getContent());
-        mBinding.tvName.setText(mData.getNickname());
-        mBinding.tvTime.setText(DateUtil.formatStringData(mData.getPublishDatetime(),DateUtil.DEFAULT_DATE_FMT));
-        ImgUtils.loadImgLogo(this, MyConfig.IMGURL+mData.getPhoto(),mBinding.imgUserLogo);
+        mBinding.tvContent.setText(mData2.getContent());
+        mBinding.tvName.setText(mData2.getNickname());
+        mBinding.tvTime.setText(DateUtil.formatStringData(mData2.getPublishDatetime(),DateUtil.DEFAULT_DATE_FMT));
+        ImgUtils.loadImgLogo(this, MyConfig.IMGURL+mData2.getPhoto(),mBinding.imgUserLogo);
         setNineGridView();
 
-        if(TextUtils.isEmpty(mData.getAddress())){
+        if(TextUtils.isEmpty(mData2.getAddress())){
             mBinding.linLocation.setVisibility(View.GONE);
         }else{
             mBinding.linLocation.setVisibility(View.VISIBLE);
-            mBinding.tvLocation.setText(mData.getAddress());
+            mBinding.tvLocation.setText(mData2.getAddress());
         }
 
-        if(mData.getSumLike()>999){
-            mBinding.tvDzNum.setText(mData.getSumLike()+"+)");
+        if(mData2.getSumLike()>999){
+            mBinding.tvDzNum.setText(mData2.getSumLike()+"+)");
         }else{
-            mBinding.tvDzNum.setText("("+mData.getSumLike()+")");
+            mBinding.tvDzNum.setText("("+mData2.getSumLike()+")");
         }
 
         mBinding.recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
 
-        mBinding.recycler.setAdapter(new com.zhy.adapter.recyclerview.CommonAdapter<ArticleModel.ListBean.LikeListBean>(this,R.layout.item_img,mData.getLikeList()) {
+        mBinding.recycler.setAdapter(new com.zhy.adapter.recyclerview.CommonAdapter<ArticleDetailsModel.LikeListBean>(this,R.layout.item_img,mData2.getLikeList()) {
             @Override
-            protected void convert(ViewHolder holder, ArticleModel.ListBean.LikeListBean likeListBean, int position) {
-
+            protected void convert(ViewHolder holder, ArticleDetailsModel.LikeListBean likeListBean, int position) {
                 if(likeListBean == null){
                     return;
                 }
 
-                 ImgUtils.loadImgLogo(InfoDetailsActivity.this,MyConfig.IMGURL+likeListBean.getPhoto(),holder.getView(R.id.img));
+                ImgUtils.loadImgLogo(InfoDetailsActivity.this,MyConfig.IMGURL+likeListBean.getPhoto(),holder.getView(R.id.img));
 
             }
+
         });
 
     }
@@ -193,14 +212,14 @@ public class InfoDetailsActivity extends AbsBaseActivity {
 
     private void setNineGridView() {
 
-        if(mData==null){
+        if(mData2==null){
             return;
         }
 
         ArrayList<ImageInfo> imageInfo = new ArrayList<>();
 
         List<String> pic=new ArrayList<String>();
-        pic= StringUtils.splitAsList(mData.getPic(),"\\|\\|");
+        pic= StringUtils.splitAsList(mData2.getPic(),"\\|\\|");
 
         if (pic != null) {
             for (String imageDetail : pic) {
@@ -221,13 +240,12 @@ public class InfoDetailsActivity extends AbsBaseActivity {
      * @param context
      */
     private  void getPinglunListRequest(Context context){
-
         Map<String,String> map=new HashMap<>();
 
-        if(mData == null){
+        if(TextUtils.isEmpty(mCode)){
             return;
         }
-        map.put("postCode",mData.getCode());
+        map.put("postCode",mCode);
         map.put("start",mStartPage+"");
         map.put("limit","10");
         map.put("status","BD");

@@ -47,11 +47,30 @@ public class UserInfoModel implements Parcelable {
     private String updater;
     private String updateDatetime;
     private String companyCode;
+
+    public String getInviteCode() {
+        return inviteCode;
+    }
+
+    public void setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
+    }
+
+    public int getReferrerNum() {
+        return referrerNum;
+    }
+
+    public void setReferrerNum(int referrerNum) {
+        this.referrerNum = referrerNum;
+    }
+
     private UserExtBean userExt;
     private String identityFlag;
     private String tradepwdFlag;
     private String totalFollowNum;
     private String totalFansNum;
+    private String inviteCode;
+    private int referrerNum=0;
     private ReferrerBean referrer;
 
     public String getUserId() {
@@ -779,6 +798,9 @@ public class UserInfoModel implements Parcelable {
         };
     }
 
+    public UserInfoModel() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -805,10 +827,9 @@ public class UserInfoModel implements Parcelable {
         dest.writeString(this.tradepwdFlag);
         dest.writeString(this.totalFollowNum);
         dest.writeString(this.totalFansNum);
+        dest.writeString(this.inviteCode);
+        dest.writeInt(this.referrerNum);
         dest.writeParcelable(this.referrer, flags);
-    }
-
-    public UserInfoModel() {
     }
 
     protected UserInfoModel(Parcel in) {
@@ -831,6 +852,8 @@ public class UserInfoModel implements Parcelable {
         this.tradepwdFlag = in.readString();
         this.totalFollowNum = in.readString();
         this.totalFansNum = in.readString();
+        this.inviteCode = in.readString();
+        this.referrerNum = in.readInt();
         this.referrer = in.readParcelable(ReferrerBean.class.getClassLoader());
     }
 

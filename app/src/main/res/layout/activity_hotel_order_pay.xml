@@ -281,7 +281,6 @@
             android:layout_height="0.5dp"/>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/lin_weipay"
             android:background="@color/white"
             android:gravity="center_vertical"

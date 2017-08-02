@@ -28,7 +28,7 @@ public class OkHttpUtils {
 
 
     private static File httpCacheDirectory = new File(BaseApplication.getInstance().getCacheDir(), "netCache");
-    private static Cache cache = new Cache(httpCacheDirectory, cacheSize);
+//    private static Cache cache = new Cache(httpCacheDirectory, cacheSize);
 
 
     public OkHttpUtils() {}
@@ -71,7 +71,7 @@ public class OkHttpUtils {
                     .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                     .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-            .cache(cache)
+//                    .cache(cache)
                     .retryOnConnectionFailure(true)//允许失败重试
                     .cookieJar(new CookiesManager())  //cookie 管理
                     .addInterceptor(getInterceptor(LogUtil.isLog))    //网络日志

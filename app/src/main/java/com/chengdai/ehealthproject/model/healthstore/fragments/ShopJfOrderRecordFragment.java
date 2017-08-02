@@ -98,15 +98,13 @@ public class ShopJfOrderRecordFragment extends BaseListFragment<ShopOrderDetailB
 
         txtOrderId.setText(item.getCode());
 
-        txtTime.setText(DateUtil.format(new Date(item.getApplyDatetime()),DateUtil.DATE_YMD));
+        txtTime.setText(DateUtil.formatStringData(item.getApplyDatetime(),DateUtil.DATE_YMD));
 
         txtBtn.setText(StringUtils.getOrderState(item.getStatus()));
 
-
-
         if(item.getProductOrderList() !=null && item.getProductOrderList().size()>0 && item.getProductOrderList().get(0) !=null
                 && item.getProductOrderList().get(0).getProduct()!=null ){
-            ImgUtils.loadImgURL(mActivity, MyConfig.IMGURL+item.getProductOrderList().get(0).getProduct().getAdvPic(),imgGood);
+            ImgUtils.loadImgURL(mActivity, MyConfig.IMGURL+item.getProductOrderList().get(0).getProduct().getSplitAdvPic(),imgGood);
 
             txtPrice.setText(StringUtils.showJF(item.getProductOrderList().get(0).getPrice1())+"  积分");
             tvNumber.setText("X" + item.getProductOrderList().get(0).getQuantity());

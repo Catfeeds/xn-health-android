@@ -360,17 +360,16 @@ public class HealthStoreFragment extends BaseLazyFragment{
         Map map=new HashMap();
 
         map.put("kind","1"); //1 标准商城 2 积分商城
-
         map.put("status","3");//已上架
         map.put("start","1");
-        map.put("limit","10");
+        map.put("limit","20");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode",MyConfig.SYSTEMCODE);
         map.put("orderDir","asc");
         map.put("orderColumn","order_no");
         map.put("location",location);  //1推荐 0普通 2 今日特价  3人气推荐 4超值热卖
 
-        mSubscription.add(  RetrofitUtils.getLoaderServer().GetShopList("808025",StringUtils.getJsonToString(map))
+        mSubscription.add(RetrofitUtils.getLoaderServer().GetShopList("808025",StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(null))
 
@@ -434,6 +433,7 @@ public class HealthStoreFragment extends BaseLazyFragment{
                 .compose(RxTransformerHelper.applySchedulerResult(act))
 
                 .filter(storeListModel -> storeListModel!=null)
+
 
                 .subscribe(storeListModel -> {
                     if(mStoreStart==1){

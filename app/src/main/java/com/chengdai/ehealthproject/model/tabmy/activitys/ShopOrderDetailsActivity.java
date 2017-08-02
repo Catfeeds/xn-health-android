@@ -147,7 +147,6 @@ public class ShopOrderDetailsActivity extends AbsBaseActivity{
                     data1.setmBuyNum(mData.getProductOrderList().get(0).getQuantity());
                     ShopPayConfirmActivity.open(this,data1,mData.getCode(),false);
                 }
-
             });
 
            mBinding.txtCancel.setOnClickListener(v -> {
