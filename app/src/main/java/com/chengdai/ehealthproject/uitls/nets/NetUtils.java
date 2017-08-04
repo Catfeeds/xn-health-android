@@ -11,16 +11,21 @@ public class NetUtils {
 
 	// 判断网络连接状态
 	public static boolean isNetworkConnected() {
-		Context context= BaseApplication.getInstance();
-		if (context != null) {
-			ConnectivityManager mConnectivityManager = (ConnectivityManager) context
-					.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo mNetworkInfo = mConnectivityManager
-					.getActiveNetworkInfo();
-			if (mNetworkInfo != null) {
-				return mNetworkInfo.isAvailable();
+		try {
+			Context context= BaseApplication.getInstance();
+			if (context != null) {
+				ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+						.getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo mNetworkInfo = mConnectivityManager
+						.getActiveNetworkInfo();
+				if (mNetworkInfo != null) {
+					return mNetworkInfo.isAvailable();
+				}
 			}
+		}catch (Exception e){
+			return true;
 		}
+
 		return false;
 	}
 

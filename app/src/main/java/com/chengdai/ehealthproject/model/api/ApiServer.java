@@ -5,6 +5,7 @@ import com.chengdai.ehealthproject.model.common.model.AmountModel;
 import com.chengdai.ehealthproject.model.common.model.CodeModel;
 import com.chengdai.ehealthproject.model.common.model.IntroductionInfoModel;
 import com.chengdai.ehealthproject.model.common.model.IsSuccessModes;
+import com.chengdai.ehealthproject.model.common.model.UpdateModel;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
 import com.chengdai.ehealthproject.model.common.model.pay.AliPayRequestMode;
 import com.chengdai.ehealthproject.model.common.model.pay.WxPayRequestModel;
@@ -658,6 +659,15 @@ public interface ApiServer {
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<IntroductionInfoModel>> getInfoByKey(@Field("code") String code, @Field("json") String  json);
+
+
+    /**
+     * 根据ckey查询系统参数
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<UpdateModel>> getInfoByUpdate(@Field("code") String code, @Field("json") String  json);
 
     /**
      * 确认收货

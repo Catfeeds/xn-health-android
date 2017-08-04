@@ -30,7 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/**周边支付
+/**
+ * 周边支付
  * Created by 李先俊 on 2017/6/12.
  */
 
@@ -40,25 +41,26 @@ public class SurroundingPayActivity extends AbsBaseActivity {
 
     private Double rate;//折扣
 
-    private String  mStoreCode;
+    private String mStoreCode;
 
-    private Double mDiscountMoney=0.0;
+    private Double mDiscountMoney = 0.0;
 
-    private int mPayType=1;
+    private int mPayType = 1;
 
-    private  static final String CALLPAYTAG="SurroundingPayConfirmAcitivty";
+    private static final String CALLPAYTAG = "SurroundingPayConfirmAcitivty";
 
     /**
      * 打开当前页面
+     *
      * @param context
      */
-    public static void open(Context context,Double rate,String storeCode){
-        if(context==null){
+    public static void open(Context context, Double rate, String storeCode) {
+        if (context == null) {
             return;
         }
-        Intent intent=new Intent(context,SurroundingPayActivity.class);
-        intent.putExtra("rate",rate);
-        intent.putExtra("storeCode",storeCode);
+        Intent intent = new Intent(context, SurroundingPayActivity.class);
+        intent.putExtra("rate", rate);
+        intent.putExtra("storeCode", storeCode);
         context.startActivity(intent);
     }
 
@@ -67,7 +69,7 @@ public class SurroundingPayActivity extends AbsBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_pay, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.activity_pay, null, false);
 
         addMainView(mBinding.getRoot());
 
@@ -75,9 +77,9 @@ public class SurroundingPayActivity extends AbsBaseActivity {
 
         setSubLeftImgState(true);
 
-        if(getIntent()!=null){
-            mStoreCode=getIntent().getStringExtra("storeCode");
-            rate= getIntent().getDoubleExtra("rate",0);
+        if (getIntent() != null) {
+            mStoreCode = getIntent().getStringExtra("storeCode");
+            rate = getIntent().getDoubleExtra("rate", 0);
         }
 
         initViews();
@@ -91,33 +93,32 @@ public class SurroundingPayActivity extends AbsBaseActivity {
      */
     private void initPayTypeSelectState() {
 
-        ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
-        ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-        ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+        ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.pay_select, mBinding.imgBalace);
+        ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgWeixin);
+        ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgZhifubao);
 
         mBinding.linBalace.setOnClickListener(v -> {
-            mPayType=1;
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+            mPayType = 1;
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.pay_select, mBinding.imgBalace);
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgWeixin);
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgZhifubao);
         });
-     mBinding.linWeipay.setOnClickListener(v -> {
-            mPayType=2;
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgZhifubao);
+        mBinding.linWeipay.setOnClickListener(v -> {
+            mPayType = 2;
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgBalace);
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.pay_select, mBinding.imgWeixin);
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgZhifubao);
         });
 
-     mBinding.linZhifubao.setOnClickListener(v -> {
-           mPayType=3;
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgBalace);
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.un_select,mBinding.imgWeixin);
-            ImgUtils.loadImgId(SurroundingPayActivity.this,R.mipmap.pay_select,mBinding.imgZhifubao);
+        mBinding.linZhifubao.setOnClickListener(v -> {
+            mPayType = 3;
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgBalace);
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.un_select, mBinding.imgWeixin);
+            ImgUtils.loadImgId(SurroundingPayActivity.this, R.mipmap.pay_select, mBinding.imgZhifubao);
         });
 
 
     }
-
 
 
     private void initViews() {
@@ -139,17 +140,17 @@ public class SurroundingPayActivity extends AbsBaseActivity {
             }
         }});
 
-        mBinding.tvRate.setText((int)(rate*10)+"折");
+        mBinding.tvRate.setText((int) (rate * 10) + "折");
 
         mBinding.txtPay.setOnClickListener(v -> {
-            if(SPUtilHelpr.isLogin(this)){
+            if (SPUtilHelpr.isLogin(this)) {
 
-                if(TextUtils.isEmpty(mBinding.edtPrice.getText().toString())){
+                if (TextUtils.isEmpty(mBinding.edtPrice.getText().toString())) {
                     showToast("请输入消费金额");
                     return;
                 }
 
-                if(new BigDecimal(mBinding.edtPrice.getText().toString()).doubleValue()<=0){
+                if (new BigDecimal(mBinding.edtPrice.getText().toString()).doubleValue() <= 0) {
                     showToast("金额必须大于0.01");
                     return;
                 }
@@ -159,14 +160,14 @@ public class SurroundingPayActivity extends AbsBaseActivity {
         });
 
         RxTextView.textChanges(mBinding.edtPrice).subscribe(charSequence -> {
-            if(!TextUtils.isEmpty(charSequence.toString())){
+            if (!TextUtils.isEmpty(charSequence.toString())) {
 
-                mDiscountMoney= (Double.valueOf(charSequence.toString()));
+                mDiscountMoney = (Double.valueOf(charSequence.toString()));
 
-                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney3(mDiscountMoney*rate)+"");
+                mBinding.txtDiscountMoney.setText(StringUtils.doubleFormatMoney3(mDiscountMoney * rate) + "");
 
-            }else{
-                mDiscountMoney=0.00;
+            } else {
+                mDiscountMoney = 0.00;
                 mBinding.txtDiscountMoney.setText("0.00");
             }
 
@@ -186,18 +187,18 @@ public class SurroundingPayActivity extends AbsBaseActivity {
     // 支付类型（必填） 1-余额支付  2-微信APP支付 3-支付宝APP支付
     private String payType;*/
 
-  if(!SPUtilHelpr.isLogin(this)){
-    return;
-  }
+        if (!SPUtilHelpr.isLogin(this)) {
+            return;
+        }
 
-        Map map=new HashMap();
+        Map map = new HashMap();
 
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("storeCode", mStoreCode);
-        map.put("amount",StringUtils.getRequestPrice(mDiscountMoney));
-        map.put("payType",PayType);
+        map.put("amount", StringUtils.getRequestPrice(mDiscountMoney));
+        map.put("payType", PayType);
 
-        switch (PayType){
+        switch (PayType) {
             case 1:
                 yuPay(map);//余额支付
                 break;
@@ -215,58 +216,62 @@ public class SurroundingPayActivity extends AbsBaseActivity {
         mSubscription.add(RetrofitUtils.getLoaderServer().wxPayRequest("808271", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
-                PayUtil.callWXPay(SurroundingPayActivity.this,data,CALLPAYTAG);
-                },Throwable::printStackTrace));
+                    PayUtil.callWXPay(SurroundingPayActivity.this, data, CALLPAYTAG);
+                }, Throwable::printStackTrace));
 
     }
 
     /**
      * 余额支付
+     *
      * @param map
      */
-    private void yuPay(Map map){
+    private void yuPay(Map map) {
 
         mSubscription.add(RetrofitUtils.getLoaderServer().SurroundingPay("808271", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
-                    if(TextUtils.isEmpty(data)){
+                    if (TextUtils.isEmpty(data)) {
                         showToast("支付失败");
-                    }else{
+                    } else {
                         payState();
                     }
 
-                },Throwable::printStackTrace));
+                }, Throwable::printStackTrace));
 
     }
+
     /**
      * 支付宝支付
+     *
      * @param map
      */
-    private void aliPay(Map map){
+    private void aliPay(Map map) {
 
         mSubscription.add(RetrofitUtils.getLoaderServer().SurroundingAliPay("808271", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
-                .filter(data-> data!=null)
+                .filter(data -> data != null)
                 .subscribe(data -> {
-                    PayUtil.callAlipay(this,data.getSignOrder(),CALLPAYTAG);
-                },Throwable::printStackTrace));
+                    PayUtil.callAlipay(this, data.getSignOrder(), CALLPAYTAG);
+                }, Throwable::printStackTrace));
 
     }
 
 
     /**
      * 支付回调
+     *
      * @param mo
      */
     @Subscribe
-    public void AliPayState(PaySucceedInfo mo){
-        if(mo == null || !TextUtils.equals(mo.getTag(),CALLPAYTAG)){
+    public void AliPayState(PaySucceedInfo mo) {
+        if (mo == null || !TextUtils.equals(mo.getTag(), CALLPAYTAG)) {
             return;
         }
 
-        if(mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()){
+        if (mo.getCallType() == PayUtil.ALIPAY && mo.isPaySucceed()) {
             payState();
-        }else if(mo.getCallType() == PayUtil.WEIXINPAY && mo.isPaySucceed()){
+        } else if (mo.getCallType() == PayUtil.WEIXINPAY && mo.isPaySucceed()) {
             payState();
         }
     }
@@ -276,14 +281,13 @@ public class SurroundingPayActivity extends AbsBaseActivity {
      */
     private void payState() {
         showToast("支付成功");
-        EventBusModel eventBusModel=new EventBusModel();
+        EventBusModel eventBusModel = new EventBusModel();
         eventBusModel.setTag("AllFINISH");
         EventBus.getDefault().post(eventBusModel); //结束掉所有界面
 //        MainActivity.open(this,3);//显示周边
 
         finish();
     }
-
 
 
 }

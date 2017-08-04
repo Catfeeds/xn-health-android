@@ -13,24 +13,28 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="55dp"
         android:layout_marginRight="55dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="@color/dialog_tips_title_txt"
         android:textSize="@dimen/dimens_16_font" />
+    <View
+        android:layout_marginTop="5dp"
+        style="@style/style_split_line"
+        />
     <TextView
         android:id="@+id/dialog_tips_content_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="55dp"
         android:layout_marginRight="55dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:gravity="left"
         android:textColor="@color/dialog_tips_content_txt"
         android:textSize="@dimen/dimens_14_font" />
 
     <View
        style="@style/style_split_line"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         />
 
     <LinearLayout

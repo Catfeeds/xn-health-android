@@ -12,6 +12,7 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLocationActivity;
 import com.chengdai.ehealthproject.databinding.ActivityMainBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.IntroductionInfoModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
 import com.chengdai.ehealthproject.model.dataadapters.ViewPagerAdapter;
 import com.chengdai.ehealthproject.model.healthcircle.HealthCircleFragment;
@@ -21,8 +22,13 @@ import com.chengdai.ehealthproject.model.tabmy.MyFragment;
 import com.chengdai.ehealthproject.model.tabsurrounding.SurroundingFragment;
 import com.chengdai.ehealthproject.model.tabtourism.TourismFragment;
 import com.chengdai.ehealthproject.model.user.LoginActivity;
+import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
+import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 
@@ -30,7 +36,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 主页面
@@ -40,42 +48,44 @@ public class MainActivity extends BaseLocationActivity {
 
     private ActivityMainBinding mainBinding;
 
-    private int mTabIndex=1;//记录用户点击下标 用于未登录时恢复状态
+    private int mTabIndex = 1;//记录用户点击下标 用于未登录时恢复状态
 
-    private int mShowIndex=1;//显示相应页面
+    private int mShowIndex = 1;//显示相应页面
+    private CommonDialog commonDialog;
 
 
     /**
      * 打开当前页面
+     *
      * @param context
      */
-    public static void open(Context context,int select){
-        if(context==null){
+    public static void open(Context context, int select) {
+        if (context == null) {
             return;
         }
-        Intent intent= new Intent(context,MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
 
-        intent.putExtra("select",select);
+        intent.putExtra("select", select);
 
         context.startActivity(intent);
     }
 
     @Override
     protected void locationSuccessful(AMapLocation aMapLocation) {
-        LocationModel locationModel  = new LocationModel(aMapLocation.getCountry(),
-                aMapLocation.getProvince(),aMapLocation.getCity(),aMapLocation.getDistrict(),aMapLocation.getLatitude()+"",aMapLocation.getLongitude()+"");
+        LocationModel locationModel = new LocationModel(aMapLocation.getCountry(),
+                aMapLocation.getProvince(), aMapLocation.getCity(), aMapLocation.getDistrict(), aMapLocation.getLatitude() + "", aMapLocation.getLongitude() + "");
         SPUtilHelpr.saveLocationInfo(StringUtils.getJsonToString(locationModel));
         SPUtilHelpr.saveRestLocationInfo("");
 
         EventBus.getDefault().post(aMapLocation);
-        LogUtil.E("定位成功 Main"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
+        LogUtil.E("定位成功 Main" + aMapLocation.getErrorCode() + aMapLocation.getErrorInfo());
     }
 
     @Override
     protected void locationFailure(AMapLocation aMapLocation) {
         SPUtilHelpr.saveLocationInfo("");
 
-        EventBusModel eventBusModel=new EventBusModel();
+        EventBusModel eventBusModel = new EventBusModel();
         eventBusModel.setTag("locationFailure");
         EventBus.getDefault().post(eventBusModel);
 
@@ -99,14 +109,17 @@ public class MainActivity extends BaseLocationActivity {
 
         EventBus.getDefault().register(this);
 
-        if(getIntent()!=null){
-            mTabIndex =getIntent().getIntExtra("select",1);
-            mShowIndex=mTabIndex-1;
+        if (getIntent() != null) {
+            mTabIndex = getIntent().getIntExtra("select", 1);
+            mShowIndex = mTabIndex - 1;
         }
 
         initViewState();
 
-         startLocation();
+        startLocation();
+
+        getUpdateReqeust();
+
     }
 
     /**
@@ -115,7 +128,7 @@ public class MainActivity extends BaseLocationActivity {
     private void initViewState() {
         mainBinding.pagerMain.setPagingEnabled(false);//禁止左右切换
 
-        List<Fragment> fragments=new ArrayList<>(); //设置fragment数据
+        List<Fragment> fragments = new ArrayList<>(); //设置fragment数据
 
         fragments.add(new HealthManagerFragment());
         fragments.add(new HealthCircleFragment());
@@ -124,50 +137,49 @@ public class MainActivity extends BaseLocationActivity {
         fragments.add(new HealthStoreFragment());
         fragments.add(new MyFragment());
 
-        mainBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
+        mainBinding.pagerMain.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragments));
 
         mainBinding.pagerMain.setOffscreenPageLimit(fragments.size());
 
         mainBinding.layoutMainButtom.radioMainTabManager.setOnClickListener(v -> {
-            mainBinding.pagerMain.setCurrentItem(0,false);
-            mTabIndex=1;
+            mainBinding.pagerMain.setCurrentItem(0, false);
+            mTabIndex = 1;
         });
         mainBinding.layoutMainButtom.radioMainTabFriend.setOnClickListener(v -> {
 
-            mainBinding.pagerMain.setCurrentItem(1,false);
-            mTabIndex=2;
+            mainBinding.pagerMain.setCurrentItem(1, false);
+            mTabIndex = 2;
         });
 
 
         mainBinding.layoutMainButtom.radioMainTabTourism.setOnClickListener(v -> {
-            mainBinding.pagerMain.setCurrentItem(2,false);
-            mTabIndex=3;
+            mainBinding.pagerMain.setCurrentItem(2, false);
+            mTabIndex = 3;
         });
 
         mainBinding.layoutMainButtom.radioMainTabSurrounding.setOnClickListener(v -> {
-            mainBinding.pagerMain.setCurrentItem(3,false);
-            mTabIndex=4;
+            mainBinding.pagerMain.setCurrentItem(3, false);
+            mTabIndex = 4;
         });
         mainBinding.layoutMainButtom.radioMainTabShop.setOnClickListener(v -> {
-            mainBinding.pagerMain.setCurrentItem(4,false);
-            mTabIndex=5;
+            mainBinding.pagerMain.setCurrentItem(4, false);
+            mTabIndex = 5;
         });
 
 
+        mainBinding.layoutMainButtom.radioMainTabMy.setOnClickListener(v -> {
+            if (!SPUtilHelpr.isLoginNoStart()) {
 
-         mainBinding.layoutMainButtom.radioMainTabMy.setOnClickListener(v -> {
-             if(!SPUtilHelpr.isLoginNoStart()){
+                setTabIndex();
 
-                 setTabIndex();
-
-                 LoginActivity.open(this,false);
-             }else{
-                 mTabIndex=6;
-                 mainBinding.pagerMain.setCurrentItem(6,false);
-             }
+                LoginActivity.open(this, false);
+            } else {
+                mTabIndex = 6;
+                mainBinding.pagerMain.setCurrentItem(6, false);
+            }
         });
         setTabIndex();
-        mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
+        mainBinding.pagerMain.setCurrentItem(mShowIndex, false);
 
 
 /*       mSubscription.add( RxRadioGroup.checkedChanges(mainBinding.layoutMainButtom.radiogroup) //点击切换
@@ -202,7 +214,7 @@ public class MainActivity extends BaseLocationActivity {
     }
 
     private void setTabIndex() {
-        switch (mTabIndex){
+        switch (mTabIndex) {
             case 1:
                 mainBinding.layoutMainButtom.radioMainTabManager.setChecked(true);
                 break;
@@ -235,12 +247,12 @@ public class MainActivity extends BaseLocationActivity {
         }
     }
 
-    public void logOut(){
-        EventBusModel eventBusModel=new EventBusModel();
+    public void logOut() {
+        EventBusModel eventBusModel = new EventBusModel();
         eventBusModel.setTag("AllFINISH");
         EventBus.getDefault().post(eventBusModel); //结束掉所有界面
 
-        EventBusModel eventBusMode2=new EventBusModel();
+        EventBusModel eventBusMode2 = new EventBusModel();
         eventBusMode2.setTag("MainActivityFinish");
         EventBus.getDefault().post(eventBusMode2); //结束掉所有界面
         finish();
@@ -248,23 +260,106 @@ public class MainActivity extends BaseLocationActivity {
 
     /**
      * 1-4设置显示位置
+     *
      * @param eventBus
      */
     @Subscribe
-    public void MainActivityEvent(EventBusModel eventBus){
-        if(eventBus==null)return;
+    public void MainActivityEvent(EventBusModel eventBus) {
+        if (eventBus == null) return;
 
-        if(TextUtils.equals(eventBus.getTag(),"MainSetIndex") ){
-            mTabIndex=eventBus.getEvInt();
-            mShowIndex=eventBus.getEvInt()-1;
-            mainBinding.pagerMain.setCurrentItem(mShowIndex,false);
+        if (TextUtils.equals(eventBus.getTag(), "MainSetIndex")) {
+            mTabIndex = eventBus.getEvInt();
+            mShowIndex = eventBus.getEvInt() - 1;
+            mainBinding.pagerMain.setCurrentItem(mShowIndex, false);
             setTabIndex();
-        }else if(TextUtils.equals(eventBus.getTag(),"MainActivityFinish")){
-              finish();
+        } else if (TextUtils.equals(eventBus.getTag(), "MainActivityFinish")) {
+            finish();
+        }
+    }
+
+    protected void showUpdateDialog(String str, Boolean isFouceUpdate, CommonDialog.OnPositiveListener onPositiveListener) {
+
+        if (isFinishing()) {
+            return;
+        }
+        if (isFouceUpdate) {
+            commonDialog = new CommonDialog(this).builder()
+                    .setTitle("更新提醒").setContentMsg(str)
+                    .setPositiveBtn("立刻升级", onPositiveListener);
+
+            commonDialog.show();
+            return;
+        }
+        commonDialog = new CommonDialog(this).builder()
+                .setTitle("更新提醒").setContentMsg(str)
+                .setPositiveBtn("立刻升级", onPositiveListener)
+                .setNegativeBtn("稍后提醒", null, false);
+
+        commonDialog.show();
+    }
+
+
+    public void getUpdateReqeust() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("type", "3");
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+        map.put("companyCode", MyConfig.COMPANYCODE);
+        map.put("start", "1");
+        map.put("limit", "10");
+
+        RetrofitUtils.getLoaderServer().getInfoByUpdate("807715", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .filter(introductionInfoModels -> introductionInfoModels != null &&
+                        introductionInfoModels.getList() != null && introductionInfoModels.getList().size() > 0)
+                .subscribe(s -> {
+                    showUpdateState(s.getList());
+                }, Throwable::printStackTrace);
+    }
+
+    /**
+     * 根据参数判断是否需要更新
+     */
+    private void showUpdateState(List<IntroductionInfoModel> datas) {
+        String loadURL = "";
+        String loademark = "";
+        Boolean isLoad = false;
+        Boolean isforceUpdate = false;
+
+        for (IntroductionInfoModel model : datas) {
+            if (model == null) continue;
+
+            if (TextUtils.equals(model.getCkey(), "androidDownload")) {//获取下载连接
+
+                loadURL = model.getCvalue();
+
+            } else if (TextUtils.equals(model.getCkey(), "note")) {//获取更新说明
+
+                loademark = model.getCvalue();
+
+            } else if (TextUtils.equals(model.getCkey(), "forceUpdate")) {//是否强制更新
+
+                isforceUpdate = TextUtils.equals(model.getCvalue(), "1");
+
+            } else if (TextUtils.equals(model.getCkey(), "version")) {//是否更新
+
+                isLoad = !TextUtils.equals(model.getCvalue(), AppUtils.getAppVersionName(MainActivity.this));
+                
+            }
+        }
+
+        if (isLoad) {
+            String finalLoadURL = loadURL;
+            Boolean finalIsforceUpdate = isforceUpdate;
+            showUpdateDialog(loademark, isforceUpdate, view -> {
+                AppUtils.startWeb(this, finalLoadURL);
+                if (finalIsforceUpdate) {
+                    finish();
+                }
+            });
         }
 
     }
-
 
 
     @Override
@@ -272,5 +367,9 @@ public class MainActivity extends BaseLocationActivity {
         super.onDestroy();
         SPUtilHelpr.saveLocationInfo("");
         EventBus.getDefault().unregister(this);
+        if (commonDialog != null) {
+            commonDialog.closeDialog();
+            commonDialog = null;
+        }
     }
 }

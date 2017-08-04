@@ -184,22 +184,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         commonDialog.show();
     }
 
-    /**
-     * 判断是否有网络
-     *
-     * @return
-     */
-    protected boolean isNetworkConnected() {
-        return NetUtils.isNetworkConnected();
-    }
-
-    protected boolean isNoNetwork() {
-        if (!isNetworkConnected()) {
-            showSimpleWran("暂无网络");
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
