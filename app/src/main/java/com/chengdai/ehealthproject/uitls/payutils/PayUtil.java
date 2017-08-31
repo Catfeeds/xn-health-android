@@ -112,7 +112,6 @@ public class PayUtil {
 
     //支付宝支付
     public static void callAlipay(final Activity mContext, String payInfo, String callTag) {
-        ToastUtil.show(mContext, "支付宝暂未开放,请联系客服");
 
         if (mContext == null || TextUtils.isEmpty(payInfo)) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()

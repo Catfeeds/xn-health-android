@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.chengdai.ehealthproject.R;
 
-import static com.jakewharton.rxbinding2.view.RxView.clicks;
 
 /**
  * 带空页面，错误页面显示的BaseActivity
@@ -27,11 +26,11 @@ public abstract class AbsBaseActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_abs_base);
-        mSubscription.add(clicks(findViewById(R.id.fram_img_back)).subscribe(v -> {
+        findViewById(R.id.fram_img_back).setOnClickListener(v -> {
             if(canFinish()){
                 this.finish();
             }
-        }));
+        });
         mErrorView = (ViewGroup) findViewById(R.id.error_view);
         afterCreate(savedInstanceState);
     }
