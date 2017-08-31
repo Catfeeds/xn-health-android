@@ -61,14 +61,9 @@ public class RetrofitUtils {
         if (BuildConfig.IS_DEBUG){
 
         }
-        /*121.40.48.48:5301*//*正式*/
 
-        //116.62.114.86 :8901//测试
-
-        /*api 121.43.101.148:8901*//*开发*/
-
-//        return "http://121.43.101.148:8901/forward-service/";//开发
-        return "http://116.62.114.86:8901/forward-service/";//测试
+        return "http://121.43.101.148:3401/forward-service/";//开发
+//        return "http://116.62.114.86:8901/forward-service/";//测试
     }
 
 }

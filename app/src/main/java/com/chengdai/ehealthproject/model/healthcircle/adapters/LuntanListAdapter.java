@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.adapters.NineGridViewClickAdapter2;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.InfoDetailsActivity;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.PinglunListActivity;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
@@ -20,7 +21,6 @@ import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -166,7 +166,7 @@ public class LuntanListAdapter extends CommonAdapter<ArticleModel.ListBean> {
                 imageInfo.add(info);
             }
         }
-        b.setAdapter(new NineGridViewClickAdapter(mContext, imageInfo));
+        b.setAdapter(new NineGridViewClickAdapter2(mContext, imageInfo));
     }
 
     private void setpinlunlist(ViewHolder holder, ArticleModel.ListBean listBean) {

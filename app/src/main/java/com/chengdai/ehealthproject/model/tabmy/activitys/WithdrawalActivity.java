@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
@@ -97,11 +99,17 @@ public class WithdrawalActivity extends AbsBaseActivity{
                 return;
             }
 
-            Double price=Double.valueOf(mBinding.editPrice.getText().toString().trim());
-            if(price<=0 ){
+            Integer price=Integer.valueOf(mBinding.editPrice.getText().toString().trim());
+
+            if(price<0 ){
                 showToast("提现金额不能小于0");
                 return;
             }
+//            if(!TextUtils.equals("0",StringUtils.subStringEnd(mBinding.editPrice.getText().toString()))){
+//                showToast("提现金额必须是10的整数倍");
+//                return;
+//            }
+
             if(price>mAmount){
                 showToast("可提现金额不足");
                 return;

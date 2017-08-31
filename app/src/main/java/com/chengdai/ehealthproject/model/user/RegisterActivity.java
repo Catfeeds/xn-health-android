@@ -112,7 +112,7 @@ public class RegisterActivity extends AbsBaseLocationActivity {
 
         }).setSpanTextColor(ContextCompat.getColor(this, R.color.red))
 
-          .setShowData(mBinding.tvIRead,getString(R.string.txt_register_read));
+                .setShowData(mBinding.tvIRead,getString(R.string.txt_register_read));
 
     }
 
@@ -142,7 +142,7 @@ public class RegisterActivity extends AbsBaseLocationActivity {
                 return;
             }
 
-          if(TextUtils.isEmpty(mBinding.editPassword.getText().toString())){
+            if(TextUtils.isEmpty(mBinding.editPassword.getText().toString())){
                 showToast("请输入密码");
                 return;
             }
@@ -181,15 +181,15 @@ public class RegisterActivity extends AbsBaseLocationActivity {
         });
 
         mSubscription.add(RxTextView.textChanges(mBinding.editTj).subscribe(charSequence -> {
-           if(TextUtils.isEmpty(charSequence.toString())){
+            if(TextUtils.isEmpty(charSequence.toString())){
 //                mBinding.linTj.setVisibility(View.GONE);
 //                mBinding.viewTj.setVisibility(View.GONE);
                 mSelectTypeCode="";
                 mBinding.tvTjType.setText("");
-           }else{
+            }else{
 //               mBinding.linTj.setVisibility(View.VISIBLE);
 //               mBinding.viewTj.setVisibility(View.VISIBLE);
-           }
+            }
         }));
 
         mBinding.linTj.setOnClickListener(v -> {
@@ -209,15 +209,15 @@ public class RegisterActivity extends AbsBaseLocationActivity {
         hashMap.put("kind","f1");
 
         mSubscription.add(RetrofitUtils.getLoaderServer().PhoneCodeSend("805904", StringUtils.getJsonToString(hashMap))                 //发送验证码
-                  .compose(RxTransformerHelper.applySchedulerResult(this))
-                  .subscribe(data -> {
-                      if (data !=null && data.isSuccess()){
-                          showToast("验证码已经发送请注意查收");
-                          mSubscription.add(AppUtils.startCodeDown(60,mBinding.btnSendCode));//启动倒计时
-                      }else{
-                          showToast("验证码发送失败");
-                      }
-                   },Throwable::printStackTrace));
+                .compose(RxTransformerHelper.applySchedulerResult(this))
+                .subscribe(data -> {
+                    if (data !=null && data.isSuccess()){
+                        showToast("验证码已经发送请注意查收");
+                        mSubscription.add(AppUtils.startCodeDown(60,mBinding.btnSendCode));//启动倒计时
+                    }else{
+                        showToast("验证码发送失败");
+                    }
+                },Throwable::printStackTrace));
     }
 
     /**
@@ -247,21 +247,21 @@ public class RegisterActivity extends AbsBaseLocationActivity {
         mSubscription.add(RetrofitUtils.getLoaderServer().UserRegister("805154",StringUtils.getJsonToString(hashMap) )
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .subscribe(data -> {
-                        if(data!=null && ( !TextUtils.isEmpty(data.getToken()) || !TextUtils.isEmpty(data.getUserId()))){ //token 和 UsrId不为空时
+                    if(data!=null && ( !TextUtils.isEmpty(data.getToken()) || !TextUtils.isEmpty(data.getUserId()))){ //token 和 UsrId不为空时
 
-                            SPUtilHelpr.saveUserToken(data.getToken());
-                            SPUtilHelpr.saveUserId(data.getUserId());
+                        SPUtilHelpr.saveUserToken(data.getToken());
+                        SPUtilHelpr.saveUserId(data.getUserId());
 
-                            EventBusModel eventBusModel=new EventBusModel();
-                            eventBusModel.setTag("AllFINISH");
-                            EventBus.getDefault().post(eventBusModel); //结束掉所有界面
-                            MainActivity.open(this,1);
+                        EventBusModel eventBusModel=new EventBusModel();
+                        eventBusModel.setTag("AllFINISH");
+                        EventBus.getDefault().post(eventBusModel); //结束掉所有界面
+                        MainActivity.open(this,1);
 
-                            showToast("注册成功,已自动登录");
-                            finish();
-                        }else{
-                            showToast("注册失败");
-                        }
+                        showToast("注册成功,已自动登录");
+                        finish();
+                    }else{
+                        showToast("注册失败");
+                    }
                 },Throwable::printStackTrace));
     }
 

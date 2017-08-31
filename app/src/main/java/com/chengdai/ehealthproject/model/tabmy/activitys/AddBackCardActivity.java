@@ -25,6 +25,10 @@ import com.chengdai.ehealthproject.weigit.dialog.InputDialog;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 /**添加 、删除、修改银行卡
  * Created by 李先俊 on 2017/6/29.
  */
@@ -39,6 +43,7 @@ public class AddBackCardActivity extends AbsBaseActivity{
     private String mSelectCardId;//选择的银行卡ID
 
     private InputDialog inputDialog;
+
 
     /**
      *
@@ -100,6 +105,7 @@ public class AddBackCardActivity extends AbsBaseActivity{
     public void bindCard(){
 
         Map<String,String> object=new HashMap<>();
+
 
         object.put("realName", mBinding.editName.getText().toString().trim());
         object.put("bankcardNumber", mBinding.edtCardId.getText().toString().trim());

@@ -12,7 +12,7 @@ import com.chengdai.ehealthproject.databinding.ActivityHealthinfoDetailsBinding;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.SexHealthInfoListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
-import com.zzhoujay.richtext.RichText;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 
 /**形体健康资讯详情
  * Created by 李先俊 on 2017/6/23.
@@ -71,7 +71,7 @@ public class SexHealthinfoDetailsActivity extends AbsBaseActivity {
         mBinding.tvTitle.setText(mData.getTitle());
 
         if(!TextUtils.isEmpty(mData.getContent())){
-            RichText.from(mData.getContent()).into(mBinding.tvContent);
+            AppOhterManager.showRichText(this,mBinding.tvContent,mData.getContent());
         }
 
     }

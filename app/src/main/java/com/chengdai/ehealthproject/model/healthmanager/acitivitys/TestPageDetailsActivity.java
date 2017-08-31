@@ -10,8 +10,8 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityTestPageDetailsBinding;
 import com.chengdai.ehealthproject.model.healthmanager.model.TestPageListModel;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.zzhoujay.richtext.RichText;
 
 /**健康自测页面详情
  * Created by 李先俊 on 2017/6/24.
@@ -53,7 +53,7 @@ public class TestPageDetailsActivity extends AbsBaseActivity {
         }
 
         if(mData!=null && !TextUtils.isEmpty(mData.getContent())){
-            RichText.from(mData.getContent()).into(mBinding.tvContent);
+            AppOhterManager.showRichText(this,mBinding.tvContent,mData.getContent());
             mBinding.tvSatrtTest.setOnClickListener(v -> {
                         if (!SPUtilHelpr.isLogin(this)) {
                             return;

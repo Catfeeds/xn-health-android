@@ -8,21 +8,14 @@ import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
-import com.chengdai.ehealthproject.databinding.ActivityHealthInfoBinding;
+import com.chengdai.ehealthproject.base.ImagePrviewActivity2;
 import com.chengdai.ehealthproject.databinding.ActivityHealthinfoDetailsBinding;
-import com.chengdai.ehealthproject.model.healthmanager.adapters.HealthInfoListAdapter;
-import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoListModel;
 import com.chengdai.ehealthproject.model.healthmanager.model.HealthInfoModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.adapters.SurroundingStoreTypeAdapter;
-import com.chengdai.ehealthproject.uitls.StringUtils;
-import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
-import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
-import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
-import com.zzhoujay.richtext.RichText;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**健康资讯详情
  * Created by 李先俊 on 2017/6/23.
@@ -70,6 +63,7 @@ public class HealthinfoDetailsActivity extends AbsBaseActivity {
 
         setShowData();
 
+
     }
 
     private void setShowData() {
@@ -81,7 +75,7 @@ public class HealthinfoDetailsActivity extends AbsBaseActivity {
         mBinding.tvTitle.setText(mData.getTitle());
 
         if(!TextUtils.isEmpty(mData.getContent())){
-            RichText.from(mData.getContent()).into(mBinding.tvContent);
+            AppOhterManager.showRichText(this,mBinding.tvContent,mData.getContent());
         }
 
     }

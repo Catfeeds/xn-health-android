@@ -48,7 +48,7 @@ public class ImageSelectActivity extends Activity implements View.OnClickListene
     public  static String staticPath="Ehealth_PIC";
     private boolean isSplit = false;//是否裁剪
 
-    private static final String CACHDIR = "eHealthPicimgcach";
+    public static final String CACHDIR = "eHealthPicimgcach";
     //private final static int RUNTIME_PERMISSION_REQUEST_CODE = 0x1;
 
     private CapturePhotoHelper mCapturePhotoHelper;

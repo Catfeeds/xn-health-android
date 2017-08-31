@@ -60,8 +60,8 @@ public class HotelOrderStateLookActivity extends AbsBaseActivity {
 
     private void initViewPager() {
         tablayoutAdapter=new TablayoutAdapter(getSupportFragmentManager());
-        tablayoutAdapter.addFrag(OrderRecordFragment.getInstanse(), "普通");
-        tablayoutAdapter.addFrag(HotelOrderRecordFragment.getInstanse(), "酒店住宿");
+        tablayoutAdapter.addFrag(OrderRecordFragment.getInstanse(), "周边商家");
+        tablayoutAdapter.addFrag(HotelOrderRecordFragment.getInstanse(), "智慧民宿");
         mBinding.viewpagerOrder.setAdapter(tablayoutAdapter);
         mBinding.tablayout.setupWithViewPager(mBinding.viewpagerOrder);        //viewpager和tablayout关联
         mBinding.viewpagerOrder.setOffscreenPageLimit(tablayoutAdapter.getCount());

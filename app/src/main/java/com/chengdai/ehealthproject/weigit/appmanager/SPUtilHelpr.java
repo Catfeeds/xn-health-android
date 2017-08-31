@@ -144,6 +144,22 @@ public class SPUtilHelpr {
 	{
 		SPUtils.put(BaseApplication.getInstance(),"LOCATIONINFRESET",s);
 	}
+	/**
+	 * 保存流水账户信息
+	 * @param s
+	 */
+	public static void saveAmountaccountNumber(String s)
+	{
+		SPUtils.put(BaseApplication.getInstance(),"mAmountaccountNumber",s);
+	}
+	/**
+	 * 保存流水账户信息
+	 * @param
+	 */
+	public static String getAmountaccountNumber()
+	{
+		return  SPUtils.getString(BaseApplication.getInstance(),"mAmountaccountNumber","");
+	}
 
 
 	/**

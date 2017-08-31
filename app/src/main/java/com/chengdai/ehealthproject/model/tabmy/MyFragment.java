@@ -37,11 +37,12 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.HashMap;
 import java.util.Map;
 
-/**我的
+/**
+ * 我的
  * Created by 李先俊 on 2017/6/8.
  */
 
-public class MyFragment extends BaseLazyFragment{
+public class MyFragment extends BaseLazyFragment {
 
     private FragmentMyBinding mBinding;
 
@@ -54,10 +55,11 @@ public class MyFragment extends BaseLazyFragment{
 
     /**
      * 获得fragment实例
+     *
      * @return
      */
-    public static MyFragment getInstanse(){
-        MyFragment fragment=new MyFragment();
+    public static MyFragment getInstanse() {
+        MyFragment fragment = new MyFragment();
         return fragment;
     }
 
@@ -66,7 +68,7 @@ public class MyFragment extends BaseLazyFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_my, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_my, null, false);
 
         //周边
         mBinding.tvSurroundingService.setOnClickListener(v -> {
@@ -78,16 +80,16 @@ public class MyFragment extends BaseLazyFragment{
             ShopAllOrderLookActivity.open(mActivity);
 
         });
-       //设置
+        //设置
         mBinding.linSetting.setOnClickListener(v -> {
-            SettingActivity.open(mActivity,mUserInfoData);
+            SettingActivity.open(mActivity, mUserInfoData);
         });
-      //健康圈
+        //健康圈
         mBinding.healthcircle.setOnClickListener(v -> {
-            if(!SPUtilHelpr.isLogin(mActivity)){
+            if (!SPUtilHelpr.isLogin(mActivity)) {
                 return;
             }
-            MyLuntanActivity.open(mActivity,SPUtilHelpr.getUserId());
+            MyLuntanActivity.open(mActivity, SPUtilHelpr.getUserId());
         });
 
         //健康任务
@@ -97,7 +99,7 @@ public class MyFragment extends BaseLazyFragment{
 
         //个人信息
         mBinding.linMyInfo.setOnClickListener(v -> {
-            MyInfoActivity.open(mActivity,mUserInfoData);
+            MyInfoActivity.open(mActivity, mUserInfoData);
         });
 
         //健康档案
@@ -107,24 +109,25 @@ public class MyFragment extends BaseLazyFragment{
 
         //积分流水
         mBinding.fraJf.setOnClickListener(v -> {
-            MyJFDetailsActivity.open(mActivity,mBinding.tvJf.getText().toString(),accountNumber);
+            MyJFDetailsActivity.open(mActivity, mBinding.tvJf.getText().toString(), accountNumber);
         });
         //余额流水
         mBinding.fraAmount.setOnClickListener(v -> {
-            MyAmountActivity.open(mActivity,mAmount,mAmountaccountNumber,mUserInfoData);
+            MyAmountActivity.open(mActivity, mAmount, mAmountaccountNumber, mUserInfoData);
         });
         //邀请好友
         mBinding.layoutCallFriend.setOnClickListener(v -> {
-            CallFriendsActivity.open(mActivity,mUserInfoData);
+            CallFriendsActivity.open(mActivity, mUserInfoData);
         });
 
-        isCreate=true;
+        isCreate = true;
+
         return mBinding.getRoot();
     }
 
     @Override
     protected void lazyLoad() {
-        if (isCreate){
+        if (isCreate) {
             getAmountRequest();
             getJifenRequest();
             getUserInfoRequest();
@@ -135,7 +138,7 @@ public class MyFragment extends BaseLazyFragment{
     @Override
     public void onResume() {
         super.onResume();
-        if(SPUtilHelpr.isLoginNoStart() && getUserVisibleHint()){
+        if (SPUtilHelpr.isLoginNoStart() && getUserVisibleHint()) {
             getAmountRequest();
             getJifenRequest();
             getUserInfoRequest();
@@ -150,48 +153,48 @@ public class MyFragment extends BaseLazyFragment{
     /**
      * 获取余额请求
      */
-    private  void getAmountRequest(){
+    private void getAmountRequest() {
 
-        Map<String,String> map=new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("currency","CNY");
-        map.put("token",SPUtilHelpr.getUserToken());
+        map.put("currency", "CNY");
+        map.put("token", SPUtilHelpr.getUserToken());
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().getAmount("802503", StringUtils.getJsonToString(map))
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().getAmount("802503", StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(null))
-                .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
+                .filter(r -> r != null && r.size() > 0 && r.get(0) != null)
                 .subscribe(r -> {
+                    mAmountaccountNumber = r.get(0).getAccountNumber();
+                    SPUtilHelpr.saveAmountaccountNumber(mAmountaccountNumber);
+                    mAmount = StringUtils.showPrice(r.get(0).getAmount());
+                    mBinding.tvYe.setText(getString(R.string.price_sing) + mAmount);
 
-                    mAmountaccountNumber=  r.get(0).getAccountNumber();
-                    mAmount=StringUtils.showPrice(r.get(0).getAmount());
-                    mBinding.tvYe.setText(getString(R.string.price_sing)+mAmount);
-
-                },Throwable::printStackTrace));
-
+                }, Throwable::printStackTrace));
 
     }
 
     /**
      * 获取积分请求
      */
-    private  void getJifenRequest(){
+    private void getJifenRequest() {
 
-        Map<String,String> map=new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("currency","JF");
-        map.put("token",SPUtilHelpr.getUserToken());
+        map.put("currency", "JF");
+        map.put("token", SPUtilHelpr.getUserToken());
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().getAmount("802503", StringUtils.getJsonToString(map))
+        mSubscription.add(RetrofitUtils.getLoaderServer().getAmount("802503", StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
-                .filter(r -> r !=null && r.size() >0  && r.get(0)!=null)
+                .filter(r -> r != null && r.size() > 0 && r.get(0) != null)
                 .subscribe(r -> {
 
-                    accountNumber=r.get(0).getAccountNumber();
+                    accountNumber = r.get(0).getAccountNumber();
                     mBinding.tvJf.setText(StringUtils.showJF(r.get(0).getAmount()));
 
-                },Throwable::printStackTrace));
+                }, Throwable::printStackTrace));
 
 
     }
@@ -199,57 +202,57 @@ public class MyFragment extends BaseLazyFragment{
     /**
      * 获取用户信息请求
      */
-    private  void getUserInfoRequest(){
+    private void getUserInfoRequest() {
 
-        Map<String,String> map=new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
         map.put("userId", SPUtilHelpr.getUserId());
-        map.put("token",SPUtilHelpr.getUserToken());
+        map.put("token", SPUtilHelpr.getUserToken());
 
-       mSubscription.add( RetrofitUtils.getLoaderServer().GetUserInfo("805056", StringUtils.getJsonToString(map))
+        mSubscription.add(RetrofitUtils.getLoaderServer().GetUserInfo("805056", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(null))
 
-               .filter(r -> r!=null)
+                .filter(r -> r != null)
 
                 .subscribe(r -> {
-                    mUserInfoData=r;
+                    mUserInfoData = r;
 
                     SPUtilHelpr.saveUserPhoneNum(mUserInfoData.getMobile());
 
                     mBinding.tvUserName.setText(r.getNickname());
 
-                    if(r.getUserExt() == null) return;
+                    if (r.getUserExt() == null) return;
 
-                    ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL+r.getUserExt().getPhoto(),mBinding.imtUserLogo);
+                    ImgUtils.loadImgLogo(mActivity, MyConfig.IMGURL + r.getUserExt().getPhoto(), mBinding.imtUserLogo);
 
-                    if(MyConfig.GENDERMAN.equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(mActivity,R.mipmap.man,mBinding.imgUserSex);
-                    }else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())){
-                        ImgUtils.loadImgId(mActivity,R.mipmap.woman,mBinding.imgUserSex);
+                    if (MyConfig.GENDERMAN.equals(r.getUserExt().getGender())) {
+                        ImgUtils.loadImgId(mActivity, R.mipmap.man, mBinding.imgUserSex);
+                    } else if (MyConfig.GENDERWOMAN.equals(r.getUserExt().getGender())) {
+                        ImgUtils.loadImgId(mActivity, R.mipmap.woman, mBinding.imgUserSex);
                     }
 
-                    if(MyConfig.LEVEL_NOT_VIP.equals(r.getLevel())){
+                    if (MyConfig.LEVEL_NOT_VIP.equals(r.getLevel())) {
                         mBinding.imgVip.setVisibility(View.GONE);
-                    }else if (MyConfig.LEVEL_VIP.equals(r.getLevel())){
+                    } else if (MyConfig.LEVEL_VIP.equals(r.getLevel())) {
                         mBinding.imgVip.setVisibility(View.VISIBLE);
                     }
 
 
-                },Throwable::printStackTrace));
+                }, Throwable::printStackTrace));
 
 
     }
 
     @Subscribe
-    public void refeshEvent(EventBusModel e){
-        if(e==null){
+    public void refeshEvent(EventBusModel e) {
+        if (e == null) {
             return;
         }
-        if(TextUtils.equals("MyFragmentRefeshUserIfo",e.getTag()))//刷新用户数据
+        if (TextUtils.equals("MyFragmentRefeshUserIfo", e.getTag()))//刷新用户数据
         {
 //            getUserInfoRequest();
         }
-       if(TextUtils.equals("MyFragmentRefeshJF",e.getTag()))//刷新用户积分
+        if (TextUtils.equals("MyFragmentRefeshJF", e.getTag()))//刷新用户积分
         {
 //            getJifenRequest();
         }

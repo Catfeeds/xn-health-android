@@ -23,6 +23,10 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
 
+    public static boolean isInteger(String input){
+        Matcher mer = Pattern.compile("^[0-9]+$").matcher(input);
+        return mer.find();
+    }
 
     public static String getJsonToString(Object object){
 
@@ -103,6 +107,14 @@ public class StringUtils {
             return "";
         }
     }
+
+    public static String subStringEnd(String s) {
+        if(TextUtils.isEmpty(s) || s.length()<=1){
+            return s;
+        }
+        return subString(s,s.length()-1,s.length());
+    }
+
     //int前面补零
     public static String frontCompWithZoreString(Object sourceDate,int formatLength)
     {

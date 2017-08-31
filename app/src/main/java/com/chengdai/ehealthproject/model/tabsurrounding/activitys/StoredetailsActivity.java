@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
+import com.chengdai.ehealthproject.base.MapActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
@@ -16,8 +17,8 @@ import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.zzhoujay.richtext.RichText;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -126,6 +127,11 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
         });
 
+        mBinding.tvAddress.setOnClickListener(v -> {
+            if(mStoreDetailsModel==null) return;
+            MapActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getLatitude(),mStoreDetailsModel.getLongitude());
+        });
+
     }
 
 
@@ -181,7 +187,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
         mBinding.tvDzsum.setText(storeListModel.getTotalDzNum()+"");
 
         if(!TextUtils.isEmpty(storeListModel.getDescription())){
-            RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
+            AppOhterManager.showRichText(this,mBinding.tvTxtdescription,storeListModel.getDescription());
         }
 
 

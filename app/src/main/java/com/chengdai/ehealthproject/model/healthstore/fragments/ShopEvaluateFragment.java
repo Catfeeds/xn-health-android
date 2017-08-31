@@ -16,7 +16,6 @@ import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
-import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.HashMap;

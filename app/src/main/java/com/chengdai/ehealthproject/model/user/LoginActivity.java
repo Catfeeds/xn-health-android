@@ -99,6 +99,7 @@ public class LoginActivity extends AbsBaseActivity {
         hashMap.put("loginPwd",mBinding.editUserpass.getText().toString());
         hashMap.put("kind","f1");
         hashMap.put("systemCode",MyConfig.SYSTEMCODE);
+
         mSubscription.add(RetrofitUtils.getLoaderServer().UserLogin("805043", StringUtils.getJsonToString(hashMap) )
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .filter( data -> data!=null)

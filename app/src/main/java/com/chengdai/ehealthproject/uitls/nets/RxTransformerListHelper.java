@@ -140,8 +140,8 @@ public class RxTransformerListHelper {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread()) //指定 doOnSubscribe工作线程
                 .filter(verifyNotEmpty())
-                .filter(verifyBusiness(errorVerify))
                 .filter(verifyResultCode(context))
+                .filter(verifyBusiness(errorVerify))
                 .onErrorReturn(doError(context,errorVerify))
                 .doFinally(() -> {
                     if (context instanceof BaseActivity)

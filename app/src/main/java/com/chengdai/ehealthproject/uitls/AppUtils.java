@@ -14,11 +14,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 
+import com.chengdai.ehealthproject.model.common.model.activitys.ImageSelectActivity;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -27,6 +29,7 @@ import org.reactivestreams.Subscription;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
@@ -40,6 +43,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
+import static com.chengdai.ehealthproject.model.common.model.activitys.ImageSelectActivity.getDirectory;
+
 /**
  * Created by 李先俊 on 2017/6/8.
  */
@@ -48,6 +53,7 @@ public class AppUtils {
 
     static final Charset US_ASCII = Charset.forName("US-ASCII");
     static final Charset UTF_8 = Charset.forName("UTF-8");
+    private static FileOutputStream fos;
 
     static String readFully(Reader reader) throws IOException {
         try {
@@ -116,10 +122,13 @@ public class AppUtils {
      * @param activity
      */
     public static void startDetailsSetting(Activity activity) {
-        Uri packageURI = Uri.parse("package:" + getPackgeName(activity));
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
-        activity.startActivity(intent);
-        activity.finish();
+        try {
+            Uri packageURI = Uri.parse("package:" + getPackgeName(activity));
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageURI);
+            activity.startActivity(intent);
+        }catch (Exception e){
+
+        }
     }
 
     public static Boolean getAndroidVersion(int version) {
@@ -255,6 +264,63 @@ public class AppUtils {
         BitmapDrawable bd = new BitmapDrawable(bm);
         bd.setTargetDensity(bm.getDensity());
         return new BitmapDrawable(bm);
+    }
+
+
+    public static   String saveFile(Bitmap bitmap, String imageName) {
+        File file1 = new File(getDirectory());
+        if (!file1.exists()) {
+            file1.mkdirs();
+        }
+        String imagename = System.currentTimeMillis() + imageName + ".jpg";
+        File file = new File(file1, imagename);
+        try {
+            if (file.exists()) {
+                file.delete();
+                file.createNewFile();
+            } else {
+                file.createNewFile();
+            }
+            fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return file.getPath();
+    }
+
+
+    /**
+     * 获得缓存目录
+     **/
+    public static String getDirectory() {
+        String dir = getSDPath() + "/" + ImageSelectActivity.CACHDIR;
+        return dir;
+    }
+
+    /**
+     * 取SD卡路径
+     **/
+    private static String getSDPath() {
+        File sdDir = null;
+        boolean sdCardExist = Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
+        if (sdCardExist) {
+            sdDir = Environment.getExternalStorageDirectory(); // 获取根目录
+        }
+        if (sdDir != null) {
+            return sdDir.toString();
+        } else {
+            return "";
+        }
     }
 
 

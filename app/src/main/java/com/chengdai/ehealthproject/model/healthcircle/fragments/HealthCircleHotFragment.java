@@ -15,15 +15,14 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.CommonRecycleerBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.adapters.NineGridViewClickAdapter2;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.InfoDetailsActivity;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.PersonalLuntanActivity;
 import com.chengdai.ehealthproject.model.healthcircle.activitys.PinglunListActivity;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
-import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
-import com.chengdai.ehealthproject.uitls.TextMoreUtil;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
@@ -34,7 +33,6 @@ import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import com.zhy.adapter.recyclerview.wrapper.EmptyWrapper;
@@ -279,7 +277,7 @@ public class HealthCircleHotFragment extends BaseLazyFragment{
                         imageInfo.add(info);
                     }
                 }
-                b.setAdapter(new NineGridViewClickAdapter(mContext, imageInfo));
+                b.setAdapter(new NineGridViewClickAdapter2(mContext, imageInfo));
             }
 
             private void setpinlunlist(ViewHolder holder, ArticleModel.ListBean listBean) {

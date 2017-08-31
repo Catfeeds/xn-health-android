@@ -13,7 +13,7 @@ import com.chengdai.ehealthproject.model.tabsurrounding.model.HotelListModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
-import com.zzhoujay.richtext.RichText;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 
 
 import java.util.List;
@@ -132,7 +132,7 @@ public class HotelRoomDetailsActivity extends AbsBaseActivity {
 //        mBinding.tvPhoneNumber.setText(storeListModel.getBookMobile());
 
         if(!TextUtils.isEmpty(storeListModel.getDescription())){
-            RichText.from(storeListModel.getDescription()).into(mBinding.tvTxtdescription);
+            AppOhterManager.showRichText(this,mBinding.tvTxtdescription,storeListModel.getDescription());
         }
 
         mBinding.tvPrice.setText(getString(R.string.price_sing)+StringUtils.showPrice(storeListModel.getPrice()));

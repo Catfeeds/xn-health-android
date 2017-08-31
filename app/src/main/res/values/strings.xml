@@ -73,7 +73,7 @@
     <string name="txt_no_data">暂无数据</string>
     <string name="txt_health_circle">健康友圈</string>
     <string name="txt_surrounding">周边商家</string>
-    <string name="txt_health_store">健康商家</string>
-    <string name="txt_tourism">旅游民宿</string>
+    <string name="txt_health_store">健康商城</string>
+    <string name="txt_tourism">智慧民宿</string>
 
 </resources>

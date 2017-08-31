@@ -26,10 +26,9 @@
     <!--用于申请获取蓝牙信息进行室内定位-->
     <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
-
 
 
     <application
@@ -37,7 +36,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".model.other.WelcomeAcitivity">
@@ -50,7 +48,9 @@
 
         //高德定位
         <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="d53ba5ce2f5c93d5d1a574a15eb0bf08">//开发者申请的key
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="6da7bb6b70f866d347ec9c5f62e5ffd4">//开发者申请的key
 
         </meta-data>
 
@@ -60,478 +60,496 @@
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind"></activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind"></activity>
 
 
         //主页
-        <activity android:name=".model.other.MainActivity"
+        <activity
+            android:name=".model.other.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
+        //选择地图
+        <activity
+            android:name=".base.SelectMapActivity"
+            android:theme="@style/ActivityDialogStyleBottom"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        //地图
+        <activity
+            android:name=".base.MapActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         //注册
-        <activity android:name=".model.user.RegisterActivity"
+        <activity
+            android:name=".model.user.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //找回密码
-        <activity android:name=".model.user.FindPassWordActivity"
+        <activity
+            android:name=".model.user.FindPassWordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //登录
-        <activity android:name=".model.user.LoginActivity"
+        <activity
+            android:name=".model.user.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-       //周边商户选择
-        <activity android:name=".model.tabsurrounding.activitys.SurroundingMenuSeletActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //周边商户选择
+        <activity
+            android:name=".model.tabsurrounding.activitys.SurroundingMenuSeletActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商户详情
-        <activity android:name=".model.tabsurrounding.activitys.StoredetailsActivity"
+        <activity
+            android:name=".model.tabsurrounding.activitys.StoredetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商户分类列表
-        <activity android:name=".model.tabsurrounding.activitys.StoreTypeActivity"
+        <activity
+            android:name=".model.tabsurrounding.activitys.StoreTypeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-    //支付
-        <activity android:name=".model.tabsurrounding.activitys.SurroundingPayActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //支付
+        <activity
+            android:name=".model.tabsurrounding.activitys.SurroundingPayActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-     //房间选择
-        <activity android:name=".model.tabsurrounding.activitys.HotelSelectActivity"
+        //房间选择
+        <activity
+            android:name=".model.tabsurrounding.activitys.HotelSelectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-    //酒店详情
-        <activity android:name=".model.tabsurrounding.activitys.HoteldetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //酒店详情
+        <activity
+            android:name=".model.tabsurrounding.activitys.HoteldetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-   //酒店订单创建
-        <activity android:name=".model.tabsurrounding.activitys.HotelOrderCreateActivity"
+        //酒店订单创建
+        <activity
+            android:name=".model.tabsurrounding.activitys.HotelOrderCreateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-   //酒店订单支付
-        <activity android:name=".model.tabsurrounding.activitys.HotelOrderPayActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //酒店订单支付
+        <activity
+            android:name=".model.tabsurrounding.activitys.HotelOrderPayActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-   //酒店房间详情
-        <activity android:name=".model.tabsurrounding.activitys.HotelRoomDetailsActivity"
+        //酒店房间详情
+        <activity
+            android:name=".model.tabsurrounding.activitys.HotelRoomDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-     //酒店订单查看
-        <activity android:name=".model.tabmy.activitys.HotelOrderStateLookActivity"
+        //酒店订单查看
+        <activity
+            android:name=".model.tabmy.activitys.HotelOrderStateLookActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //酒店订单详情查看
-        <activity android:name=".model.tabmy.activitys.OrderDetailsActivity"
+        <activity
+            android:name=".model.tabmy.activitys.OrderDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-       //酒店订单详情查看
-        <activity android:name=".model.tabmy.activitys.HotelOrderDetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //酒店订单详情查看
+        <activity
+            android:name=".model.tabmy.activitys.HotelOrderDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //周边搜索
-        <activity android:name=".model.common.model.activitys.SearchActivity"
+        <activity
+            android:name=".model.common.model.activitys.SearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //Web
-        <activity android:name=".model.common.model.activitys.WebViewActivity"
+        <activity
+            android:name=".model.common.model.activitys.WebViewActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //设置界面
-        <activity android:name=".model.tabmy.activitys.SettingActivity"
+        <activity
+            android:name=".model.tabmy.activitys.SettingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //城市选择
-        <activity android:name=".model.common.model.activitys.CitySelectActivity"
+        <activity
+            android:name=".model.common.model.activitys.CitySelectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城分类
-        <activity android:name=".model.healthstore.acitivtys.ShopMenuSeletActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopMenuSeletActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城分类列表
-        <activity android:name=".model.healthstore.acitivtys.ShopTypeListSelectActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopTypeListSelectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城搜索
-        <activity android:name=".model.healthstore.acitivtys.SearchShopActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.SearchShopActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //商城详情
-        <activity android:name=".model.healthstore.acitivtys.ShopDetailsActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //商城支付
-        <activity android:name=".model.healthstore.acitivtys.ShopPayActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopPayActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //添加收货地址
-        <activity android:name=".model.common.model.activitys.AddAddressActivity"
+        <activity
+            android:name=".model.common.model.activitys.AddAddressActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //收获地址选择
-        <activity android:name=".model.common.model.activitys.AddressSelectActivity"
+        <activity
+            android:name=".model.common.model.activitys.AddressSelectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城订单支付
-        <activity android:name=".model.healthstore.acitivtys.ShopPayConfirmActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopPayConfirmActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城订单查看
-        <activity android:name=".model.tabmy.activitys.ShopOrderStateLookActivity"
+        <activity
+            android:name=".model.tabmy.activitys.ShopOrderStateLookActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城订单支付
-        <activity android:name=".model.tabmy.activitys.ShopOrderDetailsActivity"
+        <activity
+            android:name=".model.tabmy.activitys.ShopOrderDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城购物车
-        <activity android:name=".model.healthstore.acitivtys.ShopPayCarSelectActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopPayCarSelectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城购物车订单生成
-        <activity android:name=".model.healthstore.acitivtys.ShopCarPayActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopCarPayActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //积分商城
-        <activity android:name=".model.healthstore.acitivtys.ShopJfActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopJfActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //积分商城详情
-        <activity android:name=".model.healthstore.acitivtys.ShopJfDetailsActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopJfDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //积分商城订单创建
-        <activity android:name=".model.healthstore.acitivtys.ShopPayJfActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopPayJfActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //积分商城订单支付
-        <activity android:name=".model.healthstore.acitivtys.ShopPayJfConfirmActivity"
+        <activity
+            android:name=".model.healthstore.acitivtys.ShopPayJfConfirmActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城订单查看
-        <activity android:name=".model.tabmy.activitys.ShopAllOrderLookActivity"
+        <activity
+            android:name=".model.tabmy.activitys.ShopAllOrderLookActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //商城积分订单列表
-        <activity android:name=".model.tabmy.activitys.ShopJfOrderStateLookActivity"
+        <activity
+            android:name=".model.tabmy.activitys.ShopJfOrderStateLookActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //发帖
-        <activity android:name=".model.healthcircle.activitys.SendEditInfoActivity"
+        <activity
+            android:name=".model.healthcircle.activitys.SendEditInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //评论列表查看
-     <activity android:name=".model.healthcircle.activitys.PinglunListActivity"
+        <activity
+            android:name=".model.healthcircle.activitys.PinglunListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //帖子详情查看
-      <activity android:name=".model.healthcircle.activitys.InfoDetailsActivity"
+        <activity
+            android:name=".model.healthcircle.activitys.InfoDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //帖子评论
-      <activity android:name=".model.healthcircle.activitys.PinglunInfoSendActivity"
+        <activity
+            android:name=".model.healthcircle.activitys.PinglunInfoSendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-     //个人帖子详情
-      <activity android:name=".model.healthcircle.activitys.PersonalLuntanActivity"
+        //个人帖子详情
+        <activity
+            android:name=".model.healthcircle.activitys.PersonalLuntanActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //我的帖子详情
-      <activity android:name=".model.tabmy.activitys.MyLuntanActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //我的帖子详情
+        <activity
+            android:name=".model.tabmy.activitys.MyLuntanActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //健康资讯 列表
-      <activity android:name=".model.healthmanager.acitivitys.HealthinfoActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //健康资讯 列表
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthinfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //健康资讯 详情
-      <activity android:name=".model.healthmanager.acitivitys.HealthinfoDetailsActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthinfoDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //健康资讯 列表 分类
-      <activity android:name=".model.healthmanager.acitivitys.HealthinfoTypeListActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthinfoTypeListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-      //健康助手
-      <activity android:name=".model.healthmanager.acitivitys.HealthAssistantActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //健康助手
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthAssistantActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //健康助手 菜单选择
-      <activity android:name=".model.healthmanager.acitivitys.AssistantMenuActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.AssistantMenuActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //食物计算器
-      <activity android:name=".model.healthmanager.acitivitys.FoodCalculateActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.FoodCalculateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //医学美容
-      <activity android:name=".model.healthmanager.acitivitys.BeautyActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.BeautyActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //医学美容 菜单选择
-      <activity android:name=".model.healthmanager.acitivitys.SexMenuActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.SexMenuActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //医学美容 资讯列表
-      <activity android:name=".model.healthmanager.acitivitys.HealthSexInfoTypeListActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthSexInfoTypeListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //健康自测
-      <activity android:name=".model.healthmanager.acitivitys.HealthTestActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthTestActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-    //健康自测
-      <activity android:name=".model.healthmanager.acitivitys.TestPageDetailsActivity"
+        //健康自测
+        <activity
+            android:name=".model.healthmanager.acitivitys.TestPageDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-    //健康自测 做题
-      <activity android:name=".model.healthmanager.acitivitys.HealthDoTestQuesitionActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //健康自测 做题
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthDoTestQuesitionActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-   //健康自测 结果查看
-      <activity android:name=".model.healthmanager.acitivitys.HealthTestDoneActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //健康自测 结果查看
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthTestDoneActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-  //健康任务列表
-      <activity android:name=".model.healthmanager.acitivitys.AddHelathTaskLisActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //健康任务列表
+        <activity
+            android:name=".model.healthmanager.acitivitys.AddHelathTaskLisActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-    //健康任务添加
-      <activity android:name=".model.healthmanager.acitivitys.AddHelathTaskActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //健康任务添加
+        <activity
+            android:name=".model.healthmanager.acitivitys.AddHelathTaskActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-     / /我的健康任务
-      <activity android:name=".model.tabmy.activitys.MyHelathTaskListActivity"
+        / /我的健康任务
+        <activity
+            android:name=".model.tabmy.activitys.MyHelathTaskListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-   / /我的健康任务修改
-      <activity android:name=".model.tabmy.activitys.UpdateMyHelathTaskActivity"
+            android:windowSoftInputMode="adjustPan" />
+        / /我的健康任务修改
+        <activity
+            android:name=".model.tabmy.activitys.UpdateMyHelathTaskActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //我的健康任务执行
-      <activity android:name=".model.healthmanager.acitivitys.DoHealthTaskActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //我的健康任务执行
+        <activity
+            android:name=".model.healthmanager.acitivitys.DoHealthTaskActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //我的信息
-      <activity android:name=".model.tabmy.activitys.MyInfoActivity"
+        <activity
+            android:name=".model.tabmy.activitys.MyInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-      //我的信息
-      <activity android:name=".model.tabmy.activitys.UserInfoInputUpdateActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //我的信息
-      <activity android:name=".model.tabmy.activitys.MyTestHistoryActivity"
+        <activity
+            android:name=".model.tabmy.activitys.UserInfoInputUpdateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
+        //我的信息
+        <activity
+            android:name=".model.tabmy.activitys.MyTestHistoryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         //健康体检
-      <activity android:name=".model.healthmanager.acitivitys.HealthMeaicalActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthMeaicalActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-          //心率测试 肺活量测试 血氧测试
-      <activity android:name=".model.healthmanager.acitivitys.HealthMeaicalTestActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //心率测试 肺活量测试 血氧测试
-      <activity android:name=".model.healthmanager.acitivitys.HealthMeaicalXinLvInfoActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthMeaicalTestActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //我的积分流水
-      <activity android:name=".model.tabmy.activitys.MyJFDetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //心率测试 肺活量测试 血氧测试
+        <activity
+            android:name=".model.healthmanager.acitivitys.HealthMeaicalXinLvInfoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //BMI指数计算
-      <activity android:name=".model.healthmanager.acitivitys.BMICalculateActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //我的积分流水
+        <activity
+            android:name=".model.tabmy.activitys.MyJFDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
+        //BMI指数计算
+        <activity
+            android:name=".model.healthmanager.acitivitys.BMICalculateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         //血压测试计算
-      <activity android:name=".model.healthmanager.acitivitys.XueyaCalculateActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.XueyaCalculateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //血压测试计算 详情
-      <activity android:name=".model.healthmanager.acitivitys.XueyaCalculateDetailsActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.XueyaCalculateDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //BMI指数结果
-    <activity android:name=".model.healthmanager.acitivitys.BMICalculateDetalisActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.BMICalculateDetalisActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //膳食建议
-    <activity android:name=".model.healthmanager.acitivitys.EatCalculateActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //膳食建议
+        <activity
+            android:name=".model.healthmanager.acitivitys.EatCalculateActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //B膳食建议结果
-    <activity android:name=".model.healthmanager.acitivitys.EatCalculateDetalisActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.EatCalculateDetalisActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //积分引导
-        <activity android:name=".model.healthmanager.acitivitys.JfGuideActivity"
+        <activity
+            android:name=".model.healthmanager.acitivitys.JfGuideActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
-       //介绍页
-        <activity android:name=".model.common.model.activitys.IntroductionActivity"
+        //介绍页
+        <activity
+            android:name=".model.common.model.activitys.IntroductionActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-       //确认收货
-        <activity android:name=".model.tabmy.activitys.OrderConfirmGetActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //确认收货
+        <activity
+            android:name=".model.tabmy.activitys.OrderConfirmGetActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-       //修改手机号
-        <activity android:name=".model.tabmy.activitys.UpdatePhoneActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //修改手机号
+        <activity
+            android:name=".model.tabmy.activitys.UpdatePhoneActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //我的余额
-        <activity android:name=".model.tabmy.activitys.MyAmountActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //我的余额
+        <activity
+            android:name=".model.tabmy.activitys.MyAmountActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         //修改设置支付密码
-        <activity android:name=".model.tabmy.activitys.PayPwdModifyActivity"
+        <activity
+            android:name=".model.tabmy.activitys.PayPwdModifyActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
 
         //银行卡列表
-        <activity android:name=".model.tabmy.activitys.BackCardListActivity"
+        <activity
+            android:name=".model.tabmy.activitys.BackCardListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         //添加 、删除、修改银行卡
-        <activity android:name=".model.tabmy.activitys.AddBackCardActivity"
+        <activity
+            android:name=".model.tabmy.activitys.AddBackCardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //添加 、删除、修改银行卡
-        <activity android:name=".model.tabmy.activitys.UpdateBackCardActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //添加 、删除、修改银行卡
+        <activity
+            android:name=".model.tabmy.activitys.UpdateBackCardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //充值
-        <activity android:name=".model.tabmy.activitys.RechargeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //充值
+        <activity
+            android:name=".model.tabmy.activitys.RechargeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-     //提现
-        <activity android:name=".model.tabmy.activitys.WithdrawalActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //充值 tab切换
+        <activity
+            android:name=".model.tabmy.activitys.RechargeTabActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
+        //提现
+        <activity
+            android:name=".model.tabmy.activitys.WithdrawalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         //位置选择
-        <activity android:name=".model.healthcircle.activitys.LocationSelectActivity"
+        <activity
+            android:name=".model.healthcircle.activitys.LocationSelectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-    //形体资讯
-        <activity android:name=".model.healthmanager.acitivitys.SexHealthinfoDetailsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //形体资讯
+        <activity
+            android:name=".model.healthmanager.acitivitys.SexHealthinfoDetailsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
-    //邀请好又
-        <activity android:name=".model.tabmy.activitys.CallFriendsActivity"
+            android:windowSoftInputMode="adjustPan" />
+        //邀请好又
+        <activity
+            android:name=".model.tabmy.activitys.CallFriendsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustPan" />
+        // 图片放大预览
+        <activity android:name=".base.ImagePrviewActivity2"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             />
 
 
@@ -572,8 +590,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-           />
+            android:screenOrientation="portrait" />
 
     </application>
 

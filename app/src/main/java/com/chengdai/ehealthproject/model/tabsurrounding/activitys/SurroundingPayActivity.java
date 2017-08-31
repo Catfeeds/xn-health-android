@@ -18,6 +18,7 @@ import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.uitls.nets.RxTransformerListHelper;
 import com.chengdai.ehealthproject.uitls.payutils.PayUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -83,7 +84,7 @@ public class SurroundingPayActivity extends AbsBaseActivity {
         }
 
         initViews();
-
+        getAmountRequest();
         initPayTypeSelectState();
 
     }
@@ -210,6 +211,25 @@ public class SurroundingPayActivity extends AbsBaseActivity {
                 break;
         }
 
+    }
+
+    /**
+     * 获取余额请求
+     */
+    private void getAmountRequest() {
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("userId", SPUtilHelpr.getUserId());
+        map.put("currency", "CNY");
+        map.put("token", SPUtilHelpr.getUserToken());
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().getAmount("802503", StringUtils.getJsonToString(map))
+                .compose(RxTransformerListHelper.applySchedulerResult(null))
+                .filter(r -> r != null && r.size() > 0 && r.get(0) != null)
+                .subscribe(r -> {
+                    mBinding.txtBalaceEnd.setText("(余额：" + getString(R.string.price_sing) + StringUtils.showPrice(r.get(0).getAmount()) + ")");
+                }, Throwable::printStackTrace));
     }
 
     private void wxPay(Map map) {

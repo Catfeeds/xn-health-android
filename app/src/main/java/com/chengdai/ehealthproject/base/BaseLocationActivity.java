@@ -89,7 +89,11 @@ public abstract class BaseLocationActivity extends AppCompatActivity {
 
             if (null != aMapLocation && aMapLocation.getErrorCode() == 0) {  //定位成功
                 locationSuccessful(aMapLocation);
-            }else{                                        //定位失败
+            }else{
+                //定位失败
+                if(aMapLocation!=null){
+                    LogUtil.E("定位"+aMapLocation.getErrorCode()+aMapLocation.getErrorInfo());
+                }
                 locationFailure(aMapLocation);
             }
             //停止定位
@@ -215,7 +219,7 @@ public abstract class BaseLocationActivity extends AppCompatActivity {
                 .setPositiveBtn("去打开", view -> {
                     // 根据包名跳转到系统自带的应用程序信息界面
                     startAppSettings();
-                    finish();
+
                 })
                 .setNegativeBtn("取消", view -> onNegativeButton()).show();
     }
@@ -241,11 +245,15 @@ public abstract class BaseLocationActivity extends AppCompatActivity {
      * 启动应用详情的设置
      */
     private void startAppSettings() {
-        Intent intent = new Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, APPLICATION_DETAIL_REQUESTCODE);
+        try{
+            Intent intent = new Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, APPLICATION_DETAIL_REQUESTCODE);
+            finish();
+        }catch (Exception e){
 
+        }
     }
 
 

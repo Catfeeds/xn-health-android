@@ -15,8 +15,8 @@ import com.chengdai.ehealthproject.databinding.FragmentShopTabDetailsBinding;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 import com.youth.banner.BannerConfig;
-import com.zzhoujay.richtext.RichText;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class ShopDeatilsFragment extends BaseFragment {
         }
 
         if(mData != null && !TextUtils.isEmpty(mData.getDescription())){
-            RichText.from(mData.getDescription()).into(mBinding.tvDetails);
+            AppOhterManager.showRichText(mActivity,mBinding.tvDetails,mData.getDescription());
         }
 
         return mBinding.getRoot();

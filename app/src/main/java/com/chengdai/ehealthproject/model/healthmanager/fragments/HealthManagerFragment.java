@@ -532,7 +532,7 @@ public class HealthManagerFragment extends BaseFragment{
         Map<String,String> map=new HashMap<>();
         map.put("userId",SPUtilHelpr.getUserId());
 
-      mSubscription .add( RetrofitUtils.getLoaderServer().getNowHealthTask("621169",StringUtils.getJsonToString(map))
+        mSubscription .add( RetrofitUtils.getLoaderServer().getNowHealthTask("621169",StringUtils.getJsonToString(map))
                 .compose(RxTransformerListHelper.applySchedulerResult(mActivity))
                 .subscribe(r -> {
 
@@ -546,31 +546,31 @@ public class HealthManagerFragment extends BaseFragment{
                     mHeadViewBinding.listTask.setAdapter(new CommonAdapter<TaskNowModel>(mActivity,R.layout.item_task_now,r) {
                         @Override
                         protected void convert(ViewHolder viewHolder, TaskNowModel item, int position) {
-                          if(item == null){
-                              return;
-                          }
+                            if(item == null){
+                                return;
+                            }
 
                             TextView tvGone=viewHolder.getView(R.id.tv_task_gone);
 
-                          if(TextUtils.equals(item.getIsZX(),"0")){
-                              tvGone.setText("未完成");
-                              tvGone.setBackgroundResource(R.drawable.bg_line_blue);
+                            if(TextUtils.equals(item.getIsZX(),"0")){
+                                tvGone.setText("未完成");
+                                tvGone.setBackgroundResource(R.drawable.bg_line_blue);
 
 
-                          }else{
-                              tvGone.setText("已完成");
-                              tvGone.setBackground(null);
-                              tvGone.setTextColor(ContextCompat.getColor(mContext,R.color.txt_gray));
-                          }
+                            }else{
+                                tvGone.setText("已完成");
+                                tvGone.setBackground(null);
+                                tvGone.setTextColor(ContextCompat.getColor(mContext,R.color.txt_gray));
+                            }
 
                             tvGone.setOnClickListener(v ->   DoHealthTaskActivity.open(mContext,item));
 
-                          if(item.getHealthTask()!=null){
+                            if(item.getHealthTask()!=null){
 
-                          viewHolder.setText(R.id.tv_task_name,item.getHealthTask().getName());
-                          viewHolder.setText(R.id.tv_task_info,item.getHealthTask().getSummary());
-                          ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+item.getHealthTask().getLogo(),viewHolder.getView(R.id.img_task_title));
-                          }
+                                viewHolder.setText(R.id.tv_task_name,item.getHealthTask().getName());
+                                viewHolder.setText(R.id.tv_task_info,item.getHealthTask().getSummary());
+                                ImgUtils.loadImgURL(mActivity,MyConfig.IMGURL+item.getHealthTask().getLogo(),viewHolder.getView(R.id.img_task_title));
+                            }
 
                         }
                     });
@@ -596,9 +596,9 @@ public class HealthManagerFragment extends BaseFragment{
 
 
         }else if(TextUtils.equals(eventBusModel.getTag(),"LOGINSTATEREFHSH") && eventBusModel.isEvBoolean()){//已登录
-                getTestPageRequest();
+            getTestPageRequest();
 
-                getNowHealthTask();
+            getNowHealthTask();
 
             mHeadViewBinding.linJfInfo.setVisibility(View.VISIBLE);
 
@@ -620,7 +620,7 @@ public class HealthManagerFragment extends BaseFragment{
 
             mTestCode = "";//用于打开测试页
             mTestTitle="";//用于打开测试页
-           mJfaccountNumber ="";//用于积分页
+            mJfaccountNumber ="";//用于积分页
 
             mHeadViewBinding.imgVip.setVisibility(View.GONE);
 

@@ -305,7 +305,7 @@ public class SurroundingFragment extends BaseLazyFragment{
        Map map=new HashMap();
 
         map.put("userId",SPUtilHelpr.getUserId());
-
+        locationModel = SPUtilHelpr.getLocationInfo();
         if(locationModel !=null){
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
@@ -401,20 +401,6 @@ public class SurroundingFragment extends BaseLazyFragment{
         }
     }
 
-    /**
-     * 城市选择
-     * @param
-     */
-    @Subscribe
-    public void citySelect(CityModel cityModel){
-        if(cityModel!=null){
-            SPUtilHelpr.saveRestLocationInfo(cityModel.getName());
-            SPUtilHelpr.saveLocationInfo("");
-            mBinding.tvLocation.setText(cityModel.getName());
-            mStoreStart=1;
-            getStoreListRequest(null,1);
-        }
-    }
 
     /**
      * @param
@@ -423,6 +409,20 @@ public class SurroundingFragment extends BaseLazyFragment{
     public void locationFailure(AMapLocation cityModel){
         if(cityModel!=null && isCreate){
             mBinding.tvLocation.setText(cityModel.getCity());
+            mStoreStart=1;
+            getStoreListRequest(null,1);
+        }
+    }
+
+    /**
+     * 城市选择
+     * @param
+     */
+    @Subscribe
+    public void citySelect(CityModel cityModel){
+        if(cityModel!=null){
+
+            mBinding.tvLocation.setText(cityModel.getName());
             mStoreStart=1;
             getStoreListRequest(null,1);
         }

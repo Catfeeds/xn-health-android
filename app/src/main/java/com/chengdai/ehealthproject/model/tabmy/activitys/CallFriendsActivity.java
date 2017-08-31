@@ -14,14 +14,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivityCallFriendBinding;
-import com.chengdai.ehealthproject.databinding.ActivitySettingBinding;
-import com.chengdai.ehealthproject.model.common.model.EventBusModel;
 import com.chengdai.ehealthproject.model.common.model.UserInfoModel;
-import com.chengdai.ehealthproject.model.common.model.activitys.AddressSelectActivity;
-import com.chengdai.ehealthproject.model.common.model.activitys.IntroductionActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.ShareActivity;
-import com.chengdai.ehealthproject.model.user.FindPassWordActivity;
-import com.chengdai.ehealthproject.model.user.LoginActivity;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
@@ -29,9 +23,6 @@ import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -144,7 +135,7 @@ public class CallFriendsActivity extends AbsBaseActivity {
                     return s.getCvalue();
                 })
 
-                .map(s-> CodeUtils.createImage(s+ "?kind=f1&mobile="+ SPUtilHelpr.getUserPhoneNum(),400, 400, null))
+                .map(s-> CodeUtils.createImage(s+ "?kind=f1&mobile="+ SPUtilHelpr.getUserPhoneNum(),300, 300, null))
 
                 .filter(bitmap -> bitmap!=null)
 

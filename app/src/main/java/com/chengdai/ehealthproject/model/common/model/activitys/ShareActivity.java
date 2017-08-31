@@ -9,8 +9,6 @@ import android.support.annotation.Nullable;
 
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.databinding.ActivityShareBinding;
-import com.chengdai.ehealthproject.uitls.WxUtil;
-
 /**
  * Created by 李先俊 on 2017/8/1.
  */
@@ -57,15 +55,15 @@ public class ShareActivity extends Activity {
         });
 
         mbinding.imgPyq.setOnClickListener(v -> {
-            WxUtil.shareToPYQ(ShareActivity.this, mShareUrl,
-                    "加入健康e购大平台","邀请好友送积分。");
-            finish();
+//            WxUtil.shareToPYQ(ShareActivity.this, mShareUrl,
+//                    "加入九州大平台","邀请好友送积分。");
+//            finish();
         });
 
         mbinding.imgWx.setOnClickListener(v -> {
-            WxUtil.shareToWX(ShareActivity.this, mShareUrl,
-                    "加入健康e购大平台","邀请好友送积分。");
-            finish();
+//            WxUtil.shareToWX(ShareActivity.this, mShareUrl,
+//                    "加入九州大平台","邀请好友送积分。");
+//            finish();
         });
 
     }

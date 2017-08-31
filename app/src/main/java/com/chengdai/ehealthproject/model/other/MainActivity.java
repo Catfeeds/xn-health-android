@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
+import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.base.BaseLocationActivity;
 import com.chengdai.ehealthproject.databinding.ActivityMainBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
@@ -70,6 +72,7 @@ public class MainActivity extends BaseLocationActivity {
         context.startActivity(intent);
     }
 
+
     @Override
     protected void locationSuccessful(AMapLocation aMapLocation) {
         LocationModel locationModel = new LocationModel(aMapLocation.getCountry(),
@@ -118,7 +121,7 @@ public class MainActivity extends BaseLocationActivity {
 
         startLocation();
 
-        getUpdateReqeust();
+//        getUpdateReqeust();
 
     }
 

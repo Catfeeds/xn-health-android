@@ -8,6 +8,7 @@ import com.alipay.sdk.app.PayTask;
 import com.chengdai.ehealthproject.model.common.model.pay.PayResult;
 import com.chengdai.ehealthproject.model.common.model.pay.PaySucceedInfo;
 import com.chengdai.ehealthproject.model.common.model.pay.WxPayRequestModel;
+import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -33,12 +34,15 @@ public class PayUtil {
     public static final int ALIPAY = 1;         //支付宝
     public static final int WEIXINPAY = 2;      //微信支付
 
-    public static String  CALLWXPAYTAG = "";      //调用微信支付类型
+    public static String CALLWXPAYTAG = "";      //调用微信支付类型
 
     /**
      * 调用微信支付
      */
     public static void callWXPay(Context mContext, WxPayRequestModel model, String paytag) {
+
+        ToastUtil.show(mContext, "微信支付暂未开放,请联系客服");
+
 
         if (mContext == null || model==null) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()
@@ -106,8 +110,9 @@ public class PayUtil {
         api.sendReq(request);
     }
 
- //支付宝支付
-    public  static void callAlipay(final Activity mContext,String payInfo,String callTag) {
+    //支付宝支付
+    public static void callAlipay(final Activity mContext, String payInfo, String callTag) {
+        ToastUtil.show(mContext, "支付宝暂未开放,请联系客服");
 
         if (mContext == null || TextUtils.isEmpty(payInfo)) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()

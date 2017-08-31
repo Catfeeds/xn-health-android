@@ -93,7 +93,8 @@ public class MyAmountActivity extends AbsBaseActivity{
 
         //充值
         mBinding.tvRecharge.setOnClickListener(v -> {
-            RechargeActivity.open(this);
+//            RechargeActivity.open(this);
+            RechargeTabActivity.open(this);
         });
         //提现
         mBinding.tvWithdrawal.setOnClickListener(v -> {
@@ -201,8 +202,11 @@ public class MyAmountActivity extends AbsBaseActivity{
 
         if(TextUtils.equals(e.getTag(),"MyAmountActivityFinish")){//结束当前页
             finish();
+        }else if(TextUtils.equals(e.getTag(),"SettingActivityUpdate_IsSetPwd")){
+            if(mUserInfo!=null){
+                mUserInfo.setTradepwdFlag("1");
+            }
         }
-
     }
 
 }

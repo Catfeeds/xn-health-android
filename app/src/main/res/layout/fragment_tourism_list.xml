@@ -2,19 +2,47 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/title_height"
+       >
+        <FrameLayout
             android:background="@color/activity_title_bg"
-            android:gravity="center"
-            android:text="@string/txt_tourism"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height">
 
+            <LinearLayout
+                android:id="@+id/lin_location"
+                android:gravity="center_vertical"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:text="金华"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_marginLeft="9dp"
+                    android:src="@mipmap/into_down"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/title_top"
+                android:text="@string/txt_tourism"
+                />
+
+
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

@@ -101,6 +101,7 @@ public class SettingActivity extends AbsBaseActivity{
             SPUtilHelpr.saveUserId("");
             SPUtilHelpr.saveUserToken("");
             SPUtilHelpr.saveUserPhoneNum("");
+            SPUtilHelpr.saveAmountaccountNumber("");
 
             EventBusModel eventBusModel=new EventBusModel();
             eventBusModel.setTag("AllFINISH");

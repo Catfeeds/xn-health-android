@@ -46,6 +46,7 @@
     <color name="state_color_blue">#3DA3FF</color>
     <color name="state_color_white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="black_50">#6a0e0e0e</color>
     <color name="black_2">#303030</color>
     <color name="lineColor_gray">#dedede</color>
     <color name="fontColor_gray">#7f7e7e</color>

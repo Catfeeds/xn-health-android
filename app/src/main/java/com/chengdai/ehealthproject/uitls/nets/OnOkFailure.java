@@ -26,7 +26,7 @@ public class OnOkFailure {
         SPUtilHelpr.saveUserId("");
         SPUtilHelpr.saveUserToken("");
         SPUtilHelpr.saveUserPhoneNum("");
-
+        SPUtilHelpr.saveAmountaccountNumber("");
 
         EventBusModel eventBusMode2=new EventBusModel();//结束主页
         eventBusMode2.setTag("MainActivityFinish");

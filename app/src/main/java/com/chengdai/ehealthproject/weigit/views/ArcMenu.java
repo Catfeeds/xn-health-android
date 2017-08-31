@@ -23,7 +23,6 @@ import com.chengdai.ehealthproject.R;
  */
 public class ArcMenu extends ViewGroup implements OnClickListener
 {
-
     private static final String TAG = "ArcMenu";
     /**
      * 菜单的显示位置
@@ -93,7 +92,6 @@ public class ArcMenu extends ViewGroup implements OnClickListener
      */
     public ArcMenu(Context context, AttributeSet attrs, int defStyle)
     {
-
         super(context, attrs, defStyle);
         // dp convert to px
         mRadius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,

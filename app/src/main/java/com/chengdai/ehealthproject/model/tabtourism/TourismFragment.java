@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.amap.api.location.AMapLocation;
 import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.BaseLazyFragment;
 import com.chengdai.ehealthproject.databinding.FragmentTourismListBinding;
+import com.chengdai.ehealthproject.model.common.model.CityModel;
 import com.chengdai.ehealthproject.model.common.model.LocationModel;
+import com.chengdai.ehealthproject.model.common.model.activitys.CitySelectActivity;
 import com.chengdai.ehealthproject.model.common.model.activitys.SearchActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.HoteldetailsActivity;
 import com.chengdai.ehealthproject.model.tabsurrounding.activitys.StoredetailsActivity;
@@ -70,6 +73,11 @@ public class TourismFragment extends BaseLazyFragment {
     private void initViews() {
 
 
+        mBinding.linLocation.setOnClickListener(v -> {
+            CitySelectActivity.open(mActivity);
+        });
+
+
         mAdapter = new StoreTypeListAdapter(mActivity,new ArrayList<>(),true);
         mBinding.lvStoreType.setAdapter(mAdapter);
 
@@ -85,7 +93,6 @@ public class TourismFragment extends BaseLazyFragment {
             }else{
                 StoredetailsActivity.open(mActivity,model.getCode());
             }
-
 
         });
 
@@ -186,10 +193,43 @@ public class TourismFragment extends BaseLazyFragment {
 
     }
 
+    /**
+     * 城市选择
+     * @param
+     */
+    @Subscribe
+    public void citySelect(CityModel cityModel){
+        if(cityModel!=null){
+            mBinding.tvLocation.setText(cityModel.getName());
+            mStoreStart=1;
+            getStoreListRequest(null,1);
+        }
+    }
+
+
+    /**
+     * @param
+     */
+    @Subscribe
+    public void locationFailure(AMapLocation cityModel){
+        if(cityModel!=null && isCreate){
+            mBinding.tvLocation.setText(cityModel.getCity());
+            mStoreStart=1;
+            getStoreListRequest(null,1);
+        }
+    }
 
     @Override
     protected void lazyLoad() {
         if (isCreate){
+            LocationModel locationModel = SPUtilHelpr.getLocationInfo();
+            if(locationModel!=null){
+                mBinding.tvLocation.setText(SPUtilHelpr.getLocationInfo().getCityName());
+            }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+                mBinding.tvLocation.setText(SPUtilHelpr.getResetLocationInfo().getCityName());
+            }else{
+                mBinding.tvLocation.setText("金华");
+            }
             getStoreListRequest(mActivity,1);
 
             isCreate=false;

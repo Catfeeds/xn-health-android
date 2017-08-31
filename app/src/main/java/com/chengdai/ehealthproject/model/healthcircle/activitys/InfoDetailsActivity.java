@@ -12,8 +12,8 @@ import com.chengdai.ehealthproject.R;
 import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.LayoutHeadInfoDetailsBinding;
 import com.chengdai.ehealthproject.model.common.model.EventBusModel;
+import com.chengdai.ehealthproject.model.common.model.adapters.NineGridViewClickAdapter2;
 import com.chengdai.ehealthproject.model.healthcircle.models.ArticleDetailsModel;
-import com.chengdai.ehealthproject.model.healthcircle.models.ArticleModel;
 import com.chengdai.ehealthproject.model.healthcircle.models.PinglunListModel;
 import com.chengdai.ehealthproject.uitls.DateUtil;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
@@ -22,12 +22,10 @@ import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
-import com.chengdai.ehealthproject.weigit.views.MyDividerItemDecoration;
 import com.liaoinstan.springview.container.DefaultFooter;
 import com.liaoinstan.springview.container.DefaultHeader;
 import com.liaoinstan.springview.widget.SpringView;
 import com.lzy.ninegrid.ImageInfo;
-import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -232,7 +230,7 @@ public class InfoDetailsActivity extends AbsBaseActivity {
                 imageInfo.add(info);
             }
         }
-        mBinding.nineGrid.setAdapter(new NineGridViewClickAdapter(this, imageInfo));
+        mBinding.nineGrid.setAdapter(new NineGridViewClickAdapter2(this, imageInfo));
     }
 
     /**
