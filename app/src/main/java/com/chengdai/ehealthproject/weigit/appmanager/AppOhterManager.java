@@ -9,6 +9,8 @@ import com.chengdai.ehealthproject.model.healthmanager.acitivitys.TestPageDetail
 import com.chengdai.ehealthproject.uitls.qiniu.QiNiuUtil;
 import com.zzhoujay.richtext.RichText;
 
+import static com.zzhoujay.richtext.ImageHolder.ScaleType.FIT_AUTO;
+
 /**第三方管理
  * Created by 李先俊 on 2017/6/20.
  */

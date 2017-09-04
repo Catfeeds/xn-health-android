@@ -106,7 +106,6 @@ public class RegisterActivity extends AbsBaseLocationActivity {
 
     private void initTvReadView() {
         TextReadUtils t=new TextReadUtils();
-//        t.setPos(9,13).setPos2(14,18).setOnSpanTextClickListener(type -> {
         t.setPos(9,13).setPos2(14,18).setOnSpanTextClickListener(type -> {
             IntroductionActivity.open(this,"reg_protocol","注册协议");
 

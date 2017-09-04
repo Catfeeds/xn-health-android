@@ -18,8 +18,10 @@ import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
+import com.chengdai.ehealthproject.weigit.appmanager.AppOhterManager;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
 import com.chengdai.ehealthproject.weigit.appmanager.SPUtilHelpr;
+import com.zzhoujay.richtext.RichText;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,7 +44,6 @@ public class RechargeInLineFragment extends BaseFragment {
         getDataReqeust();
 
         initViews();
-
         return mBinding.getRoot();
     }
 
@@ -123,7 +124,7 @@ public class RechargeInLineFragment extends BaseFragment {
                 .compose(RxTransformerHelper.applySchedulerResult(null))
                 .filter(s -> s != null && !TextUtils.isEmpty(s.getNote()))
                 .subscribe(s -> {
-                    mBinding.tvTips.setText(s.getNote());
+                    AppOhterManager.showRichText(mActivity,mBinding.tvTips,s.getNote());
                 }, Throwable::printStackTrace));
     }
 

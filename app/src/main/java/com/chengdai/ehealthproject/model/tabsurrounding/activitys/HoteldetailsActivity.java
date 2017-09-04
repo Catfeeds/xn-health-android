@@ -1,9 +1,11 @@
 package com.chengdai.ehealthproject.model.tabsurrounding.activitys;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
@@ -12,8 +14,11 @@ import com.chengdai.ehealthproject.base.MapActivity;
 import com.chengdai.ehealthproject.databinding.ActivityHotelDetailsBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
+import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.PermissionHelper;
 import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
@@ -40,6 +45,7 @@ public class HoteldetailsActivity extends AbsBaseActivity {
     private StoreDetailsModel mStoreDetailsModel;
 
     private List<String> imgs;
+    private PermissionHelper permissionHelper;
 
     /**
      * 打开当前页面
@@ -73,7 +79,7 @@ public class HoteldetailsActivity extends AbsBaseActivity {
         setSubLeftImgState(true);
 
         getStoreDetailsRequest(storeCode);
-
+        permissionHelper = new PermissionHelper(this);
         initViews();
 
 
@@ -124,8 +130,23 @@ public class HoteldetailsActivity extends AbsBaseActivity {
 
     private void initViews() {
 
+        mBinding.layoutCallPhone.setOnClickListener(v -> {
 
-        mBinding.tvAddress.setOnClickListener(v -> {
+            permissionHelper.requestPermissions(new PermissionHelper.PermissionListener() {
+                @Override
+                public void doAfterGrand(String... permission) {
+                    AppUtils.callPhone(HoteldetailsActivity.this,mBinding.tvPhoneNumber.getText().toString());
+                }
+
+                @Override
+                public void doAfterDenied(String... permission) {
+                    ToastUtil.show(HoteldetailsActivity.this,"请授予拨打手机号权限");
+                }
+            }, Manifest.permission.CALL_PHONE);
+
+        });
+
+        mBinding.layoutAddress.setOnClickListener(v -> {
             if(mStoreDetailsModel==null) return;
 
             MapActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getLatitude(),mStoreDetailsModel.getLongitude());
@@ -146,6 +167,12 @@ public class HoteldetailsActivity extends AbsBaseActivity {
             HotelSelectActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getPic(),mStoreDetailsModel.getName(),mStoreDetailsModel.getCode());
         });
 
+    }
+
+    //权限处理
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionHelper.handleRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

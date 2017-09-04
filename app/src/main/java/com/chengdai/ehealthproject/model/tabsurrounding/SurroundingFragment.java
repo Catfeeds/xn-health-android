@@ -178,7 +178,7 @@ public class SurroundingFragment extends BaseLazyFragment{
 
 
         mBinding.search.linSerchtop.setOnClickListener(v -> {
-            SearchActivity.open(mActivity,"周边搜索");
+            SearchActivity.open(mActivity,"周边搜索",SearchActivity.type2);
         });
 
         mBinding.linLocation.setOnClickListener(v -> {
@@ -325,6 +325,7 @@ public class SurroundingFragment extends BaseLazyFragment{
         map.put("systemCode",MyConfig.SYSTEMCODE);
         map.put("orderDir","asc");
         map.put("orderColumn","ui_order");
+        map.put("level","1");
         mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217",StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(act))

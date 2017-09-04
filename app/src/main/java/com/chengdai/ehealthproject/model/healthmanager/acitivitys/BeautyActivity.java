@@ -10,8 +10,6 @@ import com.chengdai.ehealthproject.base.AbsBaseActivity;
 import com.chengdai.ehealthproject.databinding.ActivitySurroundingOrderStateBinding;
 import com.chengdai.ehealthproject.model.dataadapters.TablayoutAdapter;
 import com.chengdai.ehealthproject.model.healthmanager.fragments.BeautySexFragment;
-import com.chengdai.ehealthproject.model.tabmy.fragments.HotelOrderRecordFragment;
-import com.chengdai.ehealthproject.model.tabmy.fragments.OrderRecordFragment;
 
 /**医学美容
  * Created by 李先俊 on 2017/6/15.

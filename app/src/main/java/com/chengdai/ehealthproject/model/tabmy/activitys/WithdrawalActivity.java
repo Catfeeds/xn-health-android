@@ -38,7 +38,7 @@ public class WithdrawalActivity extends AbsBaseActivity{
 
     private  BankCardModel mBankCardModel;//选择的银行卡数据
 
-    private Double mAmount;//余额
+    private String mAmount;//余额
 
     private String mAccountNumber;
 
@@ -69,15 +69,12 @@ public class WithdrawalActivity extends AbsBaseActivity{
         setTopTitle("提现");
         setSubLeftImgState(true);
         if(getIntent()!=null){
-            try {
-                mAmount=Double.valueOf(getIntent().getStringExtra("amount"));
-            }catch (Exception e){
-
-            }
+            mAmount=getIntent().getStringExtra("amount");
             mAccountNumber=getIntent().getStringExtra("amountnumber");
         }
         mBinding.tvNum.setText(getString(R.string.price_sing)+mAmount);
         initViews();
+        getRechargeNum();
     }
 
     private void initViews() {
@@ -101,17 +98,8 @@ public class WithdrawalActivity extends AbsBaseActivity{
 
             Integer price=Integer.valueOf(mBinding.editPrice.getText().toString().trim());
 
-            if(price<0 ){
+            if(price<=0 ){
                 showToast("提现金额不能小于0");
-                return;
-            }
-//            if(!TextUtils.equals("0",StringUtils.subStringEnd(mBinding.editPrice.getText().toString()))){
-//                showToast("提现金额必须是10的整数倍");
-//                return;
-//            }
-
-            if(price>mAmount){
-                showToast("可提现金额不足");
                 return;
             }
 
@@ -126,6 +114,28 @@ public class WithdrawalActivity extends AbsBaseActivity{
         });
 
     }
+
+    /**
+     *
+     */
+    private void getRechargeNum() {
+
+        Map<String, String> map = new HashMap<>();
+
+        map.put("key","CUSERQXBS");
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+        map.put("companyCode", MyConfig.COMPANYCODE);
+
+        mSubscription.add(RetrofitUtils.getLoaderServer().getRechargeNum("802027", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(null))
+                .subscribe(s -> {
+                    if (!TextUtils.isEmpty(s.getCvalue())) {
+                        mBinding.editPrice.setHint("提现金额必须是"+s.getCvalue()+"的整数倍");
+                    }
+                }, Throwable::printStackTrace));
+
+    }
+
 
     //提现请求
     private void withdrawalRequest() {

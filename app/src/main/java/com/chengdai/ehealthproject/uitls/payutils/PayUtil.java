@@ -40,10 +40,6 @@ public class PayUtil {
      * 调用微信支付
      */
     public static void callWXPay(Context mContext, WxPayRequestModel model, String paytag) {
-
-        ToastUtil.show(mContext, "微信支付暂未开放,请联系客服");
-
-
         if (mContext == null || model==null) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()
                     .setTitle("提示").setContentMsg("微信支付出现未知错误")
@@ -115,7 +111,7 @@ public class PayUtil {
 
         if (mContext == null || TextUtils.isEmpty(payInfo)) {
             CommonDialog commonDialog = new CommonDialog(mContext).builder()
-                    .setTitle("提示").setContentMsg("支付宝调用失败")
+                    .setTitle("提示").setContentMsg("无法调用支付宝")
                     .setNegativeBtn("确定",null);
 
             commonDialog.show();

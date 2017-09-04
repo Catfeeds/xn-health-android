@@ -119,7 +119,7 @@ public class HotelOrderRecordFragment extends BaseListFragment<HotelOrderRecordM
         map.put("applyUser",SPUtilHelpr.getUserId());
         map.put("start",page+"");
         map.put("limit","10");
-        map.put("status","1");
+//        map.put("status","1");
         map.put("companyCode",MyConfig.COMPANYCODE);
         map.put("systemCode", MyConfig.SYSTEMCODE);
 

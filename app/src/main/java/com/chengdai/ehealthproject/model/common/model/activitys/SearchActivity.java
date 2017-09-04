@@ -46,19 +46,24 @@ public class SearchActivity extends AbsBaseActivity {
     private StoreTypeListAdapter mStoreTypeAdapter;
 
     private int mStoreStart=1;
+    private int mType;
+
+    public static int type =2;//民宿搜索
+    public static int type2 =1;//周边搜索;
 
     /**
      * 打开当前页面
      * @param context
      * @param title 页面标题
      */
-    public static void open(Context context, String title){
+    public static void open(Context context, String title,int type){
         if(context==null){
             return;
         }
         Intent intent=new Intent(context,SearchActivity.class);
 
         intent.putExtra("title",title);
+        intent.putExtra("type",type);
 
         context.startActivity(intent);
     }
@@ -74,12 +79,13 @@ public class SearchActivity extends AbsBaseActivity {
 
         if(getIntent() != null){
             setTopTitle(getIntent().getStringExtra("title"));
+            mType=getIntent().getIntExtra("type",2);
         }else{
             setTopTitle(getString(R.string.search));
         }
         setSubLeftImgState(true);
 
-        mBinding.search.editSerchView.setHint("请输入您感兴趣的商户");
+//        mBinding.search.editSerchView.setHint("请输入您感兴趣的商户");
 
         mStoreTypeAdapter = new StoreTypeListAdapter(this,new ArrayList<>(),true);
         mBinding.listlayout.listview.setAdapter(mStoreTypeAdapter);
@@ -141,9 +147,7 @@ public class SearchActivity extends AbsBaseActivity {
             }else{
                 StoredetailsActivity.open(this,model.getCode());
             }
-
         });
-
 
     }
 
@@ -173,6 +177,8 @@ public class SearchActivity extends AbsBaseActivity {
         map.put("systemCode",MyConfig.SYSTEMCODE);
         map.put("orderDir","asc");
         map.put("orderColumn","ui_order");
+        map.put("level",mType+""); //1 店铺 2民宿
+
         //点赞和取消点赞
         mSubscription.add(  RetrofitUtils.getLoaderServer().GetStoreList("808217", StringUtils.getJsonToString(map))
 

@@ -171,7 +171,7 @@ public class JfGuideActivity extends AbsBaseActivity{
                                         EventBus.getDefault().post(eventBusMode4);
 
                                         EventBusModel eventBusModel5=new EventBusModel();//设置main显示
-                                        eventBusModel5.setEvInt(4);
+                                        eventBusModel5.setEvInt(5);
                                         eventBusModel5.setTag("MainSetIndex");
                                         EventBus.getDefault().post(eventBusModel5);
 

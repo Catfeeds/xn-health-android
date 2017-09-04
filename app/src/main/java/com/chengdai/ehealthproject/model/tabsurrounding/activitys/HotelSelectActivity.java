@@ -58,6 +58,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
     private int mPageStart=1;
 
   private String mStoreCode;
+    private Banner bannerView;
 
 
     /**
@@ -237,7 +238,7 @@ public class HotelSelectActivity extends AbsBaseActivity{
         });
 
 
-        Banner bannerView= (Banner) mHeadView.findViewById(R.id.banner);
+        bannerView = (Banner) mHeadView.findViewById(R.id.banner);
         //设置图片集合
         bannerView.setImages(mImgs);
         bannerView.setImageLoader(new GlideImageLoader());
@@ -245,6 +246,15 @@ public class HotelSelectActivity extends AbsBaseActivity{
         bannerView.start();
         bannerView.startAutoPlay();
         return mHeadView;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        if(bannerView!=null){
+            bannerView.stopAutoPlay();
+        }
+        super.onDestroy();
     }
 
     /**

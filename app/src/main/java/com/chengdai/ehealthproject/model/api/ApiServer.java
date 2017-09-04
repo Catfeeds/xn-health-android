@@ -746,12 +746,23 @@ public interface ApiServer {
     Observable<BaseResponseModel<ArticleDetailsModel>> getTieziDetails(@Field("code") String code, @Field("json") String  json);
 
    /**
-     * 先下充值
+     * 线下充值
      * @return
      */
     @FormUrlEncoded
     @POST("api")
     Observable<BaseResponseModel<CodeModel>> rechargeIn(@Field("code") String code, @Field("json") String  json);
+
+
+    /**
+     * 获取线下充值提醒
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("api")
+    Observable<BaseResponseModel<IntroductionInfoModel>> getRechargeNum(@Field("code") String code, @Field("json") String  json);
+
+
 
 
 }

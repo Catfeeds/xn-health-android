@@ -41,7 +41,8 @@ import java.util.Map;
 
 import static com.chengdai.ehealthproject.weigit.appmanager.MyConfig.HOTELTYPE;
 
-/**旅游民宿
+/**
+ * 旅游民宿
  * Created by 李先俊 on 2017/7/31.
  */
 
@@ -51,20 +52,27 @@ public class TourismFragment extends BaseLazyFragment {
     private FragmentTourismListBinding mBinding;
     private StoreTypeListAdapter mAdapter;
 
-    private int mStoreStart=1;
+    private int mStoreStart = 1;
 
-    private String mType="mingsu";//接口查询小类
+    private String mType = "mingsu";//接口查询小类
 
-    private boolean isCreate=false;
+    private boolean isCreate = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mBinding= DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_tourism_list, null, false);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(savedInstanceState), R.layout.fragment_tourism_list, null, false);
 
         initViews();
-        isCreate=true;
+        isCreate = true;
+
+        mBinding.search.editSerchView.setHint("请输入您感兴趣的民宿");
+
+        mBinding.search.linSerchtop.setOnClickListener(v -> {
+            SearchActivity.open(mActivity, "民宿搜索",SearchActivity.type);
+        });
+
         return mBinding.getRoot();
 
     }
@@ -78,20 +86,20 @@ public class TourismFragment extends BaseLazyFragment {
         });
 
 
-        mAdapter = new StoreTypeListAdapter(mActivity,new ArrayList<>(),true);
+        mAdapter = new StoreTypeListAdapter(mActivity, new ArrayList<>(), true);
         mBinding.lvStoreType.setAdapter(mAdapter);
 
         mBinding.lvStoreType.setOnItemClickListener((parent, view, position, id) -> {
 
-            StoreListModel.ListBean model= (StoreListModel.ListBean) mAdapter.getItem(position-mBinding.lvStoreType.getHeaderViewsCount());
+            StoreListModel.ListBean model = (StoreListModel.ListBean) mAdapter.getItem(position - mBinding.lvStoreType.getHeaderViewsCount());
 
-            LogUtil.E("type"+model.getType());
+            LogUtil.E("type" + model.getType());
 
 
-            if(HOTELTYPE.equals(model.getType())){  //酒店类型
-                HoteldetailsActivity.open(mActivity,model.getCode());
-            }else{
-                StoredetailsActivity.open(mActivity,model.getCode());
+            if (HOTELTYPE.equals(model.getType())) {  //酒店类型
+                HoteldetailsActivity.open(mActivity, model.getCode());
+            } else {
+                StoredetailsActivity.open(mActivity, model.getCode());
             }
 
         });
@@ -106,15 +114,15 @@ public class TourismFragment extends BaseLazyFragment {
         mBinding.springvew.setListener(new SpringView.OnFreshListener() {
             @Override
             public void onRefresh() {
-                mStoreStart=1;
-                getStoreListRequest(null,1);
+                mStoreStart = 1;
+                getStoreListRequest(null, 1);
                 mBinding.springvew.onFinishFreshAndLoad();
             }
 
             @Override
             public void onLoadmore() {
                 mStoreStart++;
-                getStoreListRequest(null,2);
+                getStoreListRequest(null, 2);
                 mBinding.springvew.onFinishFreshAndLoad();
             }
         });
@@ -125,44 +133,45 @@ public class TourismFragment extends BaseLazyFragment {
     /**
      * 获取商户列表
      */
-    public void getStoreListRequest(Context context,int loadType){
+    public void getStoreListRequest(Context context, int loadType) {
         LocationModel locationModel = SPUtilHelpr.getLocationInfo();
-        Map map=new HashMap();
+        Map map = new HashMap();
         map.put("userId", SPUtilHelpr.getUserId());
         map.put("type", mType);
-        if(locationModel !=null){
+        if (locationModel != null) {
             map.put("province", locationModel.getProvinceName());
             map.put("city", locationModel.getCityName());
 //            map.put("area", locationModel.getAreaName());
             map.put("longitude", locationModel.getLatitude());
             map.put("latitude", locationModel.getLongitud());
-        }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+        } else if (!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())) {
             map.put("city", SPUtilHelpr.getResetLocationInfo().getCityName());
-        }else{
-            map.put("city","金华");
+        } else {
+            map.put("city", "金华");
         }
-        map.put("start",mStoreStart+"");
-        map.put("limit","10");
+        map.put("start", mStoreStart + "");
+        map.put("limit", "10");
         map.put("companyCode", MyConfig.COMPANYCODE);
-        map.put("systemCode",MyConfig.SYSTEMCODE);
-        map.put("orderDir","asc");
-        map.put("orderColumn","ui_order");
-        mSubscription.add( RetrofitUtils.getLoaderServer().GetStoreList("808217", StringUtils.getJsonToString(map))
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+        map.put("orderDir", "asc");
+        map.put("orderColumn", "ui_order");
+        map.put("level","2");
+        mSubscription.add(RetrofitUtils.getLoaderServer().GetStoreList("808217", StringUtils.getJsonToString(map))
 
                 .compose(RxTransformerHelper.applySchedulerResult(context))
 
-                .filter(storeListModel -> storeListModel!=null)
+                .filter(storeListModel -> storeListModel != null)
 
                 .subscribe(storeListModel -> {
 
-                    if(loadType==1){
-                        if(storeListModel.getList()!=null ){ //分页
+                    if (loadType == 1) {
+                        if (storeListModel.getList() != null) { //分页
                             mAdapter.setData(storeListModel.getList());
                         }
 
-                    }else{
-                        if(storeListModel.getList()==null || storeListModel.getList().size()==0 ){ //分页
-                            if(mStoreStart>1){
+                    } else {
+                        if (storeListModel.getList() == null || storeListModel.getList().size() == 0) { //分页
+                            if (mStoreStart > 1) {
                                 mStoreStart--;
                             }
                             return;
@@ -171,23 +180,24 @@ public class TourismFragment extends BaseLazyFragment {
                         mAdapter.addData(storeListModel.getList());
                     }
 
-                    if(mAdapter.getCount()==0){
+                    if (mAdapter.getCount() == 0) {
                         mBinding.tvEmpty.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         mBinding.tvEmpty.setVisibility(View.GONE);
                     }
 
-                },Throwable::printStackTrace));
+                }, Throwable::printStackTrace));
 
     }
 
     /**
      * 点赞效果刷新
+     *
      * @param
      */
     @Subscribe
-    public void dzUpdate(DZUpdateModel dzUpdateModel){
-        if(mAdapter!=null){
+    public void dzUpdate(DZUpdateModel dzUpdateModel) {
+        if (mAdapter != null) {
             mAdapter.setDzInfo(dzUpdateModel);
         }
 
@@ -195,14 +205,15 @@ public class TourismFragment extends BaseLazyFragment {
 
     /**
      * 城市选择
+     *
      * @param
      */
     @Subscribe
-    public void citySelect(CityModel cityModel){
-        if(cityModel!=null){
+    public void citySelect(CityModel cityModel) {
+        if (cityModel != null) {
             mBinding.tvLocation.setText(cityModel.getName());
-            mStoreStart=1;
-            getStoreListRequest(null,1);
+            mStoreStart = 1;
+            getStoreListRequest(null, 1);
         }
     }
 
@@ -211,28 +222,28 @@ public class TourismFragment extends BaseLazyFragment {
      * @param
      */
     @Subscribe
-    public void locationFailure(AMapLocation cityModel){
-        if(cityModel!=null && isCreate){
+    public void locationFailure(AMapLocation cityModel) {
+        if (cityModel != null && isCreate) {
             mBinding.tvLocation.setText(cityModel.getCity());
-            mStoreStart=1;
-            getStoreListRequest(null,1);
+            mStoreStart = 1;
+            getStoreListRequest(null, 1);
         }
     }
 
     @Override
     protected void lazyLoad() {
-        if (isCreate){
+        if (isCreate) {
             LocationModel locationModel = SPUtilHelpr.getLocationInfo();
-            if(locationModel!=null){
+            if (locationModel != null) {
                 mBinding.tvLocation.setText(SPUtilHelpr.getLocationInfo().getCityName());
-            }else if(!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())){
+            } else if (!TextUtils.isEmpty(SPUtilHelpr.getResetLocationInfo().getCityName())) {
                 mBinding.tvLocation.setText(SPUtilHelpr.getResetLocationInfo().getCityName());
-            }else{
+            } else {
                 mBinding.tvLocation.setText("金华");
             }
-            getStoreListRequest(mActivity,1);
+            getStoreListRequest(mActivity, 1);
 
-            isCreate=false;
+            isCreate = false;
 
         }
 

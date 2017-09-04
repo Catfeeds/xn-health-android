@@ -96,7 +96,7 @@ public class StoreTypeActivity extends AbsBaseActivity {
         LinearLayout leftHeadView = (LinearLayout) inflater.inflate(R.layout.layout_search_no_input, null);//得到头部的布局
 
         leftHeadView.setOnClickListener(v -> {
-            SearchActivity.open(this,"周边搜索");
+            SearchActivity.open(this,"周边搜索",SearchActivity.type2);
         });
 
         mBinding.lvStoreType.addHeaderView(leftHeadView,null,false);

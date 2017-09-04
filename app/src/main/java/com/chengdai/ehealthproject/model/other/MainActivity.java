@@ -121,7 +121,7 @@ public class MainActivity extends BaseLocationActivity {
 
         startLocation();
 
-//        getUpdateReqeust();
+        getUpdateReqeust();
 
     }
 
@@ -258,6 +258,10 @@ public class MainActivity extends BaseLocationActivity {
         EventBusModel eventBusMode2 = new EventBusModel();
         eventBusMode2.setTag("MainActivityFinish");
         EventBus.getDefault().post(eventBusMode2); //结束掉所有界面
+
+        SPUtilHelpr.saveLocationInfo("");             //重置定位数据
+        SPUtilHelpr.saveRestLocationInfo("");
+
         finish();
     }
 
@@ -309,7 +313,7 @@ public class MainActivity extends BaseLocationActivity {
         map.put("systemCode", MyConfig.SYSTEMCODE);
         map.put("companyCode", MyConfig.COMPANYCODE);
         map.put("start", "1");
-        map.put("limit", "10");
+        map.put("limit", "30");
 
         RetrofitUtils.getLoaderServer().getInfoByUpdate("807715", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
@@ -336,18 +340,18 @@ public class MainActivity extends BaseLocationActivity {
 
                 loadURL = model.getCvalue();
 
-            } else if (TextUtils.equals(model.getCkey(), "note")) {//获取更新说明
+            } else if (TextUtils.equals(model.getCkey(), "androidNote")) {//获取更新说明
 
                 loademark = model.getCvalue();
 
-            } else if (TextUtils.equals(model.getCkey(), "forceUpdate")) {//是否强制更新
+            } else if (TextUtils.equals(model.getCkey(), "androidForceUpdate")) {//是否强制更新
 
                 isforceUpdate = TextUtils.equals(model.getCvalue(), "1");
 
-            } else if (TextUtils.equals(model.getCkey(), "version")) {//是否更新
+            } else if (TextUtils.equals(model.getCkey(), "androidVersion")) {//是否更新
 
                 isLoad = !TextUtils.equals(model.getCvalue(), AppUtils.getAppVersionName(MainActivity.this));
-                
+
             }
         }
 

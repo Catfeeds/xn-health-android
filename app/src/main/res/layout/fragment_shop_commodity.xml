@@ -72,6 +72,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <TextView
+                    tools:text="市场参考价"
+                    android:id="@+id/txt_shichang"
+                    android:textColor="@color/fontColor_support"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <LinearLayout
                     android:gravity="bottom"
                     android:layout_marginTop="11dp"

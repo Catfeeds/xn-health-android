@@ -81,7 +81,7 @@ public class HotelOrderDetailsActivity extends AbsBaseActivity{
             return;
         }
 
-        /*0 待支付 1 支付成功 2 支付失败 3 已取消 */
+        /*0 待支付 1 支付成功 2 已完成 3 已取消 */
 
        switch(mShowData.getStatus()){
            case "0":
@@ -90,10 +90,10 @@ public class HotelOrderDetailsActivity extends AbsBaseActivity{
                mBinding.tvOrderState.setText("待支付");
                break;
            case "1":
-               mBinding.tvOrderState.setText("支付成功");
+               mBinding.tvOrderState.setText("已支付");
                break;
            case "2":
-               mBinding.tvOrderState.setText("支付失败");
+               mBinding.tvOrderState.setText("已完成");
                break;
            case "3":
                mBinding.tvOrderState.setText("已取消");

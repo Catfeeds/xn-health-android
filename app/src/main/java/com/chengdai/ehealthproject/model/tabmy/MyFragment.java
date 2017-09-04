@@ -131,6 +131,8 @@ public class MyFragment extends BaseLazyFragment {
             getAmountRequest();
             getJifenRequest();
             getUserInfoRequest();
+            getPhoneReqeust();
+            getTimeReqeust();
         }
 
     }
@@ -142,6 +144,8 @@ public class MyFragment extends BaseLazyFragment {
             getAmountRequest();
             getJifenRequest();
             getUserInfoRequest();
+            getPhoneReqeust();
+            getTimeReqeust();
         }
     }
 
@@ -169,7 +173,7 @@ public class MyFragment extends BaseLazyFragment {
                     mAmountaccountNumber = r.get(0).getAccountNumber();
                     SPUtilHelpr.saveAmountaccountNumber(mAmountaccountNumber);
                     mAmount = StringUtils.showPrice(r.get(0).getAmount());
-                    mBinding.tvYe.setText(getString(R.string.price_sing) + mAmount);
+                    mBinding.tvYe.setText(mAmount);
 
                 }, Throwable::printStackTrace));
 
@@ -239,9 +243,43 @@ public class MyFragment extends BaseLazyFragment {
 
 
                 }, Throwable::printStackTrace));
-
-
     }
+
+    /**
+     *获取服务时间
+     */
+    public void getTimeReqeust() {
+
+        Map<String ,String > map=new HashMap<>();
+        map.put("ckey","telephone");
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+        map.put("token", SPUtilHelpr.getUserToken());
+        mSubscription.add( RetrofitUtils.getLoaderServer().getInfoByKey("807717", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(mActivity))
+                .filter(s-> s!=null && !TextUtils.isEmpty(s.getNote()))
+                .subscribe(s -> {
+                    mBinding.tvServiceTime.setText("服务时间:"+s.getNote());
+                },Throwable::printStackTrace));
+    }
+
+    /**
+     * 获取服务电话
+     */
+    public void getPhoneReqeust() {
+
+        Map<String ,String > map=new HashMap<>();
+        map.put("ckey","time");
+        map.put("systemCode", MyConfig.SYSTEMCODE);
+        map.put("token", SPUtilHelpr.getUserToken());
+        mSubscription.add( RetrofitUtils.getLoaderServer().getInfoByKey("807717", StringUtils.getJsonToString(map))
+                .compose(RxTransformerHelper.applySchedulerResult(mActivity))
+                .filter(s-> s!=null && !TextUtils.isEmpty(s.getNote()))
+                .subscribe(s -> {
+                    mBinding.imgPhone.setVisibility(View.VISIBLE);
+                    mBinding.tvServicePhone.setText(s.getNote());
+                },Throwable::printStackTrace));
+    }
+
 
     @Subscribe
     public void refeshEvent(EventBusModel e) {

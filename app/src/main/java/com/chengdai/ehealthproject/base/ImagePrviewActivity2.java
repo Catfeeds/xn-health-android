@@ -1,5 +1,6 @@
 package com.chengdai.ehealthproject.base;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -18,11 +20,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chengdai.ehealthproject.R;
+import com.chengdai.ehealthproject.model.common.model.activitys.ImageSelectActivity;
 import com.chengdai.ehealthproject.model.common.model.adapters.ImagePreviewAdapter2;
 import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.LogUtil;
+import com.chengdai.ehealthproject.uitls.PermissionHelper;
 import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
+import com.chengdai.ehealthproject.weigit.dialog.CommonDialog;
 import com.chengdai.ehealthproject.weigit.dialog.LoadingDialog;
 import com.lzy.ninegrid.ImageInfo;
 
@@ -33,6 +38,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -52,10 +58,14 @@ public class ImagePrviewActivity2 extends Activity implements ViewTreeObserver.O
     private int screenWidth;
     private int screenHeight;
 
-    public static  void open(Activity context,List<String> imageUrls,int index){
+    private PermissionHelper mHelper;
 
-        List<ImageInfo> imageInfo=new ArrayList<ImageInfo>();
-        for(String s:imageUrls){
+    protected CompositeDisposable mSubscription;
+
+    public static void open(Activity context, List<String> imageUrls, int index) {
+
+        List<ImageInfo> imageInfo = new ArrayList<ImageInfo>();
+        for (String s : imageUrls) {
             ImageInfo info = new ImageInfo();
             info.setThumbnailUrl(s);
             info.setBigImageUrl(s);
@@ -76,7 +86,8 @@ public class ImagePrviewActivity2 extends Activity implements ViewTreeObserver.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_preview2);
-
+        mHelper = new PermissionHelper(this);
+        mSubscription = new CompositeDisposable();
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         final TextView tv_pager = (TextView) findViewById(R.id.tv_pager);
         final TextView tv_save = (TextView) findViewById(R.id.tv_save);
@@ -105,45 +116,78 @@ public class ImagePrviewActivity2 extends Activity implements ViewTreeObserver.O
         tv_pager.setText(String.format(getString(R.string.select), currentItem + 1, imageInfo.size()));
 
         tv_save.setOnClickListener(v -> {       //保存图片
-            LoadingDialog  loadingDialog = new LoadingDialog(this);
-            loadingDialog.showDialog();
-            ToastUtil.show(ImagePrviewActivity2.this, "图片保存中");
-            Observable.just(imageInfo.get(currentItem).getBigImageUrl())
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(Schedulers.newThread())
-                    .map(s ->
-                            Glide.with(this)
-                                    .load(s)
-                                    .asBitmap()
-                                    .into(400, 400)
-                                    .get()
-                    )
-                    .map(bitmap -> AppUtils.saveFile(bitmap, "luntan"))
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doFinally(() -> {
-                        loadingDialog.closeDialog();
-                    })
-                    .subscribe(s -> {
-                        ToastUtil.show(ImagePrviewActivity2.this, "图片保存成功");
-                        // 最后通知图库更新
-                        try {
-                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                                    Uri.fromFile(new File(s))));
-                        }catch (Exception e){
-                        }
 
-                    }, throwable -> {
-                        ToastUtil.show(ImagePrviewActivity2.this, "图片保存出现错误");
-                        LogUtil.E("保存图片错误"+throwable);
-                    });
+            //手机读写权限申请
+            mHelper.requestPermissions(new PermissionHelper.PermissionListener() {
+                @Override
+                public void doAfterGrand(String... permission) {
+
+                    LoadingDialog loadingDialog = new LoadingDialog(ImagePrviewActivity2.this);
+                    loadingDialog.showDialog();
+                    ToastUtil.show(ImagePrviewActivity2.this, "图片保存中");
+                    mSubscription.add(Observable.just(imageInfo.get(currentItem).getBigImageUrl())
+                            .subscribeOn(AndroidSchedulers.mainThread())
+                            .observeOn(Schedulers.newThread())
+                            .map(s ->
+                                    Glide.with(ImagePrviewActivity2.this)
+                                            .load(s)
+                                            .asBitmap()
+                                            .into(400, 400)
+                                            .get()
+                            )
+                            .observeOn(Schedulers.io())
+                            .map(bitmap -> AppUtils.saveFile(bitmap, "luntan"))
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doFinally(() -> {
+                                loadingDialog.closeDialog();
+                            })
+                            .subscribe(s -> {
+                                ToastUtil.show(ImagePrviewActivity2.this, "图片保存成功");
+                                // 最后通知图库更新
+                                try {
+                                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                            Uri.fromFile(new File(s))));
+                                } catch (Exception e) {
+                                }
+
+                            }, throwable -> {
+                                ToastUtil.show(ImagePrviewActivity2.this, "图片保存失败");
+                                LogUtil.E("保存图片错误" + throwable);
+                            }));
+                }
+
+                @Override
+                public void doAfterDenied(String... permission) {
+                    new CommonDialog(ImagePrviewActivity2.this).builder()
+                            .setTitle("系统提示")
+                            .setContentMsg("未取得您的存储空间使用权限，图片无法保存,请授予存储权限")
+                            .setPositiveBtn("我知道了", null).show();
+                }
+            }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+
         });
 
+    }
+
+    //权限处理
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mHelper.handleRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 
     @Override
     public void onBackPressed() {
         finishActivityAnim();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mSubscription!=null){
+            mSubscription.clear();
+            mSubscription.dispose();
+        }
+        super.onDestroy();
     }
 
     /**

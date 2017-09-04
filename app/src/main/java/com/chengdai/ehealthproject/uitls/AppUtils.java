@@ -131,6 +131,26 @@ public class AppUtils {
         }
     }
 
+    /**
+     * 拨打电话
+     * <p>需添加权限 {@code <uses-permission android:name="android.permission.CALL_PHONE"/>}</p>
+     *
+     * @param phoneNumber 电话号码
+     */
+    public static void callPhone(Context context, String phoneNumber) {
+        if (context == null || TextUtils.isEmpty(phoneNumber)) {
+            return;
+        }
+        try {
+            Intent intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + phoneNumber));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }catch (Exception e){
+            ToastUtil.show(context,"电话拨打失败");
+        }
+
+    }
+
     public static Boolean getAndroidVersion(int version) {
         if (Build.VERSION.SDK_INT >= version) {
             return true;

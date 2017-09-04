@@ -71,7 +71,7 @@ public class OrderConfirmGetActivity extends AbsBaseActivity{
         Map<String,String> map=new HashMap<>();
         map.put("code",mOrderCode);
         map.put("updater",SPUtilHelpr.getUserId());
-        map.put("remark",mBinding.edit.getText().toString());
+//        map.put("remark",mBinding.edit.getText().toString());
         mSubscription.add(RetrofitUtils.getLoaderServer().confirmGetOrder("808057", StringUtils.getJsonToString(map))
                 .compose(RxTransformerHelper.applySchedulerResult(this))
                 .filter(isSuccessModes -> isSuccessModes!=null && isSuccessModes.isSuccess())

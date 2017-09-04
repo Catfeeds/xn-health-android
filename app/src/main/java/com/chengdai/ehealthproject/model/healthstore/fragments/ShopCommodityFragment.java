@@ -14,6 +14,7 @@ import com.chengdai.ehealthproject.databinding.FragmentShopCommodityBinding;
 import com.chengdai.ehealthproject.model.common.model.activitys.WebViewActivity;
 import com.chengdai.ehealthproject.model.healthstore.models.ShopListModel;
 import com.chengdai.ehealthproject.model.tabmy.fragments.HotelOrderRecordFragment;
+import com.chengdai.ehealthproject.uitls.LogUtil;
 import com.chengdai.ehealthproject.uitls.StringUtils;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
 import com.chengdai.ehealthproject.weigit.appmanager.MyConfig;
@@ -86,6 +87,7 @@ public class ShopCommodityFragment extends BaseFragment {
             }else{
                 mBinding.txtPrice.setText(StringUtils.getShowPriceSign(mData.getProductSpecsList().get(0).getPrice1()));
             }
+            mBinding.txtShichang.setText("市场参考价"+StringUtils.getShowPriceSign(mData.getProductSpecsList().get(0).getOriginalPrice()));
 
         }
 
@@ -107,7 +109,13 @@ public class ShopCommodityFragment extends BaseFragment {
         //banner设置方法全部调用完毕时最后调用
         mBinding.banner.start();
         mBinding.banner.startAutoPlay();
-
     }
 
+    @Override
+    public void onDestroy() {
+        if(mBinding.banner!=null){
+            mBinding.banner.stopAutoPlay();
+        }
+        super.onDestroy();
+    }
 }

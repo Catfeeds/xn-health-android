@@ -1,9 +1,11 @@
 package com.chengdai.ehealthproject.model.tabsurrounding.activitys;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.chengdai.ehealthproject.R;
@@ -12,8 +14,11 @@ import com.chengdai.ehealthproject.base.MapActivity;
 import com.chengdai.ehealthproject.databinding.ActivityStoreDetailsBinding;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.DZUpdateModel;
 import com.chengdai.ehealthproject.model.tabsurrounding.model.StoreDetailsModel;
+import com.chengdai.ehealthproject.uitls.AppUtils;
 import com.chengdai.ehealthproject.uitls.ImgUtils;
+import com.chengdai.ehealthproject.uitls.PermissionHelper;
 import com.chengdai.ehealthproject.uitls.StringUtils;
+import com.chengdai.ehealthproject.uitls.ToastUtil;
 import com.chengdai.ehealthproject.uitls.nets.RetrofitUtils;
 import com.chengdai.ehealthproject.uitls.nets.RxTransformerHelper;
 import com.chengdai.ehealthproject.weigit.GlideImageLoader;
@@ -41,6 +46,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
 
     private List<String> imgs;
 
+    private PermissionHelper permissionHelper;
     /**
      * 打开当前页面
      * @param context
@@ -67,7 +73,7 @@ public class StoredetailsActivity extends AbsBaseActivity {
         addMainView(mBinding.getRoot());
 
         setTopTitle(getString(R.string.store_details));
-
+        permissionHelper = new PermissionHelper(this);
         if(getIntent() != null) storeCode=getIntent().getStringExtra("storeCode");
 
         setSubLeftImgState(true);
@@ -132,7 +138,31 @@ public class StoredetailsActivity extends AbsBaseActivity {
             MapActivity.open(this,mStoreDetailsModel.getAddress(),mStoreDetailsModel.getLatitude(),mStoreDetailsModel.getLongitude());
         });
 
+
+        mBinding.layoutCallPhone.setOnClickListener(v -> {
+
+            permissionHelper.requestPermissions(new PermissionHelper.PermissionListener() {
+                @Override
+                public void doAfterGrand(String... permission) {
+                    AppUtils.callPhone(StoredetailsActivity.this,mBinding.tvPhoneNumber.getText().toString());
+                }
+
+                @Override
+                public void doAfterDenied(String... permission) {
+                    ToastUtil.show(StoredetailsActivity.this,"请授予拨打手机号权限");
+                }
+            }, Manifest.permission.CALL_PHONE);
+
+        });
+
     }
+
+    //权限处理
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionHelper.handleRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 
 
     /**
